@@ -5,12 +5,6 @@ import RxSwift
 import RxCocoa
 
 final class SocialSigninButton: BaseView {
-    enum SocialType {
-        case apple
-        case kakao
-        case naver
-    }
-    
     fileprivate let tapGesture = UITapGestureRecognizer()
     
     private let iconImage = UIImageView()

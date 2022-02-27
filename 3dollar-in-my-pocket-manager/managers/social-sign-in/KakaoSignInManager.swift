@@ -2,7 +2,13 @@ import RxSwift
 import KakaoSDKUser
 import KakaoSDKCommon
 
-struct KakaoManager {
+protocol KakaoSignInManagerProtocol {
+    func signIn() -> Observable<String>
+}
+
+final class KakaoSignInManager: KakaoSignInManagerProtocol {
+    static let shared = KakaoSignInManager()
+    
     /// 카카오톡으로 로그인을 하고 성공하면 token을 반환합니다.
     func signIn() -> Observable<String> {
         return .create { observer in
