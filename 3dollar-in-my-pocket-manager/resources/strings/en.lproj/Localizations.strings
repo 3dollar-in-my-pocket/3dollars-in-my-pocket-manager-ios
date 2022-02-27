@@ -1,0 +1,5 @@
+// Error
+"error_unknown" = "알 수 없는 에러입니다.";
+"error_time_out" = "알 수 없는 에러입니다.\n잠시후 다시 시도해주세요.";
+"error_fail_decode" = "알 수 없는 형태의 데이터입니다.";
+"error_nil_value" = "값이 없습니다.";

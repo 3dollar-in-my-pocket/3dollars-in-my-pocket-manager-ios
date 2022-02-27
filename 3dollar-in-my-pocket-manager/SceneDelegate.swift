@@ -1,11 +1,6 @@
-//
-//  SceneDelegate.swift
-//  3dollar-in-my-pocket-manager
-//
-//  Created by Hyun Sik Yoo on 2022/02/27.
-//
-
 import UIKit
+
+import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -22,6 +17,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.windowScene = windowScene
         self.window?.rootViewController = SignInViewController.instance()
         self.window?.makeKeyAndVisible()
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
