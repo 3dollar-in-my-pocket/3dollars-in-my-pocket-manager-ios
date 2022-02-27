@@ -9,11 +9,22 @@
 /* Begin PBXBuildFile section */
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
-		6EB94EA827CB208F00609E77 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA727CB208F00609E77 /* ViewController.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
 		6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */; };
-		6EE0CF9327CB4FEC0027A426 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE0CF9227CB4FEC0027A426 /* Base.framework */; platformFilter = ios; };
-		6EE0CF9427CB4FEC0027A426 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EE0CF9227CB4FEC0027A426 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838927CB395B00278E14 /* SnapKit */; };
+		6ED8838D27CB398300278E14 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838C27CB398300278E14 /* Then */; };
+		6ED8839027CB39E300278E14 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838F27CB39E300278E14 /* RxCocoa */; };
+		6ED8839227CB39E300278E14 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8839127CB39E300278E14 /* RxRelay */; };
+		6ED8839427CB39E300278E14 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8839327CB39E300278E14 /* RxSwift */; };
+		6ED8839927CB3A1700278E14 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED8839827CB3A1700278E14 /* SignInView.swift */; };
+		6ED8839C27CB3A7A00278E14 /* SocialSigninButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED8839B27CB3A7A00278E14 /* SocialSigninButton.swift */; };
+		6ED8839F27CB3BB300278E14 /* BaseViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED8839E27CB3BB300278E14 /* BaseViewExtensions.swift */; };
+		6ED883A327CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6ED883A227CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf */; };
+		6ED883A527CB3C7E00278E14 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A427CB3C7E00278E14 /* UIFontExtensions.swift */; };
+		6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A627CB443F00278E14 /* UIColorExtensions.swift */; };
+		6ED883A927CB456F00278E14 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A827CB456F00278E14 /* SignInViewController.swift */; };
+		6EE0CF9827CB51F00027A426 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ED883AA27CB46BD00278E14 /* Base.framework */; platformFilter = ios; };
+		6EE0CF9927CB51F00027A426 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6ED883AA27CB46BD00278E14 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,13 +38,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6EE0CF9527CB4FEC0027A426 /* Embed Frameworks */ = {
+		6EE0CF9A27CB51F00027A426 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6EE0CF9427CB4FEC0027A426 /* Base.framework in Embed Frameworks */,
+				6EE0CF9927CB51F00027A426 /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,11 +56,17 @@
 		6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "3dollar-in-my-pocket-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EB94EA327CB208F00609E77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EB94EA527CB208F00609E77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6EB94EA727CB208F00609E77 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6EB94EAC27CB209000609E77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EB94EAF27CB209000609E77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6EB94EB127CB209000609E77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6EE0CF9227CB4FEC0027A426 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-fseuqzaxxxejiyfpuramzdfhhlff/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
+		6ED8839827CB3A1700278E14 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		6ED8839B27CB3A7A00278E14 /* SocialSigninButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSigninButton.swift; sourceTree = "<group>"; };
+		6ED8839E27CB3BB300278E14 /* BaseViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewExtensions.swift; sourceTree = "<group>"; };
+		6ED883A227CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleSDGothicNeoEB00.ttf; sourceTree = "<group>"; };
+		6ED883A427CB3C7E00278E14 /* UIFontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
+		6ED883A627CB443F00278E14 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
+		6ED883A827CB456F00278E14 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		6ED883AA27CB46BD00278E14 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-fseuqzaxxxejiyfpuramzdfhhlff/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +74,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EE0CF9327CB4FEC0027A426 /* Base.framework in Frameworks */,
+				6ED8839427CB39E300278E14 /* RxSwift in Frameworks */,
+				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
+				6ED8838D27CB398300278E14 /* Then in Frameworks */,
+				6ED8839027CB39E300278E14 /* RxCocoa in Frameworks */,
+				6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */,
+				6EE0CF9827CB51F00027A426 /* Base.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,7 +97,7 @@
 		6E1AA1B827CB215700C96D92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6EE0CF9227CB4FEC0027A426 /* Base.framework */,
+				6ED883AA27CB46BD00278E14 /* Base.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -101,14 +123,76 @@
 		6EB94EA227CB208F00609E77 /* 3dollar-in-my-pocket-manager */ = {
 			isa = PBXGroup;
 			children = (
+				6ED883A027CB3C3A00278E14 /* resources */,
+				6ED8839D27CB3BA600278E14 /* extensions */,
+				6ED8839527CB39EE00278E14 /* domains */,
 				6EB94EA327CB208F00609E77 /* AppDelegate.swift */,
 				6EB94EA527CB208F00609E77 /* SceneDelegate.swift */,
-				6EB94EA727CB208F00609E77 /* ViewController.swift */,
 				6EB94EAC27CB209000609E77 /* Assets.xcassets */,
 				6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */,
 				6EB94EB127CB209000609E77 /* Info.plist */,
 			);
 			path = "3dollar-in-my-pocket-manager";
+			sourceTree = "<group>";
+		};
+		6ED8839527CB39EE00278E14 /* domains */ = {
+			isa = PBXGroup;
+			children = (
+				6ED8839627CB39F600278E14 /* membership */,
+			);
+			path = domains;
+			sourceTree = "<group>";
+		};
+		6ED8839627CB39F600278E14 /* membership */ = {
+			isa = PBXGroup;
+			children = (
+				6ED8839727CB39FB00278E14 /* sign-in */,
+			);
+			path = membership;
+			sourceTree = "<group>";
+		};
+		6ED8839727CB39FB00278E14 /* sign-in */ = {
+			isa = PBXGroup;
+			children = (
+				6ED8839A27CB3A6C00278E14 /* subviews */,
+				6ED8839827CB3A1700278E14 /* SignInView.swift */,
+				6ED883A827CB456F00278E14 /* SignInViewController.swift */,
+			);
+			path = "sign-in";
+			sourceTree = "<group>";
+		};
+		6ED8839A27CB3A6C00278E14 /* subviews */ = {
+			isa = PBXGroup;
+			children = (
+				6ED8839B27CB3A7A00278E14 /* SocialSigninButton.swift */,
+			);
+			path = subviews;
+			sourceTree = "<group>";
+		};
+		6ED8839D27CB3BA600278E14 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				6ED8839E27CB3BB300278E14 /* BaseViewExtensions.swift */,
+				6ED883A427CB3C7E00278E14 /* UIFontExtensions.swift */,
+				6ED883A627CB443F00278E14 /* UIColorExtensions.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		6ED883A027CB3C3A00278E14 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				6ED883A127CB3C5D00278E14 /* fonts */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		6ED883A127CB3C5D00278E14 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				6ED883A227CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,13 +205,20 @@
 				6EB94E9C27CB208F00609E77 /* Sources */,
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
-				6EE0CF9527CB4FEC0027A426 /* Embed Frameworks */,
+				6EE0CF9A27CB51F00027A426 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "3dollar-in-my-pocket-manager";
+			packageProductDependencies = (
+				6ED8838927CB395B00278E14 /* SnapKit */,
+				6ED8838C27CB398300278E14 /* Then */,
+				6ED8838F27CB39E300278E14 /* RxCocoa */,
+				6ED8839127CB39E300278E14 /* RxRelay */,
+				6ED8839327CB39E300278E14 /* RxSwift */,
+			);
 			productName = "3dollar-in-my-pocket-manager";
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
 			productType = "com.apple.product-type.application";
@@ -156,6 +247,11 @@
 				Base,
 			);
 			mainGroup = 6EB94E9727CB208E00609E77;
+			packageReferences = (
+				6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */,
+				6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -186,6 +282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6ED883A327CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf in Resources */,
 				6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */,
 				6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */,
 			);
@@ -198,9 +295,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EB94EA827CB208F00609E77 /* ViewController.swift in Sources */,
+				6ED8839C27CB3A7A00278E14 /* SocialSigninButton.swift in Sources */,
+				6ED883A527CB3C7E00278E14 /* UIFontExtensions.swift in Sources */,
 				6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */,
+				6ED8839927CB3A1700278E14 /* SignInView.swift in Sources */,
+				6ED883A927CB456F00278E14 /* SignInViewController.swift in Sources */,
 				6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */,
+				6ED8839F27CB3BB300278E14 /* BaseViewExtensions.swift in Sources */,
+				6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +448,7 @@
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -374,6 +477,7 @@
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -412,6 +516,61 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+		6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6ED8838927CB395B00278E14 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		6ED8838C27CB398300278E14 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		6ED8838F27CB39E300278E14 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		6ED8839127CB39E300278E14 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		6ED8839327CB39E300278E14 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6EB94E9827CB208E00609E77 /* Project object */;
 }
