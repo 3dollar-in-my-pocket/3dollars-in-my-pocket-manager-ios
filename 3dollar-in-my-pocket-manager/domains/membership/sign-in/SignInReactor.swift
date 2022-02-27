@@ -23,13 +23,16 @@ final class SignInReactor: Reactor {
     let goToMainPublisher = PublishRelay<Void>()
     private let kakaoSignInManager: KakaoSignInManagerProtocol
     private let appleSignInManager: AppleSignInManagerProtocol
+    private let authService: AuthServiceProtocol
     
     init(
         kakaoManager: KakaoSignInManagerProtocol,
-        appleSignInManager: AppleSignInManagerProtocol
+        appleSignInManager: AppleSignInManagerProtocol,
+        authService: AuthServiceProtocol
     ) {
         self.kakaoSignInManager = kakaoManager
         self.appleSignInManager = appleSignInManager
+        self.authService = authService
     }
     
     func mutate(action: Action) -> Observable<Mutation> {

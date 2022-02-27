@@ -27,7 +27,7 @@ struct HTTPUtils {
     }
     
     static func defaultHeader() -> HTTPHeaders {
-        var headers = ["Authorization": UserDefaultsUtil().getUserToken()] as HTTPHeaders
+        var headers = ["Authorization": UserDefaultsUtils().userToken] as HTTPHeaders
         
         headers.add(self.defaultUserAgent)
         return headers
@@ -36,20 +36,11 @@ struct HTTPUtils {
     static func jsonWithTokenHeader() -> HTTPHeaders {
         var headers = [
             "Accept": "application/json",
-            "Authorization": UserDefaultsUtil().getUserToken()
+            "Authorization": UserDefaultsUtils().userToken
         ] as HTTPHeaders
         
         headers.add(self.defaultUserAgent)
         return headers
-    }
-    
-    // Timeout header 테스트용으로 추가하는 함수
-    static func addTimeoutHeader(headers: HTTPHeaders) -> HTTPHeaders {
-        let timeOutHeader = HTTPHeader(name: "X-3DOLLAR-SLEEP-MILLISECONDS", value: "4000")
-        var newHeaders = headers
-        
-        newHeaders.add(timeOutHeader)
-        return newHeaders
     }
     
     static let defaultUserAgent: HTTPHeader = {

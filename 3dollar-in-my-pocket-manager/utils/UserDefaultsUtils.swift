@@ -15,19 +15,21 @@ struct UserDefaultsUtils {
         }
     }
     
-    func setUserToken(token: String) {
-        self.instance.set(token, forKey: UserDefaultsUtil.KEY_TOKEN)
+    var userToken: String {
+        set {
+            self.instance.set(newValue, forKey: self.KEY_TOKEN)
+        }
+        get {
+            return self.instance.string(forKey: self.KEY_TOKEN) ?? ""
+        }
     }
     
-    func getUserToken() -> String {
-        return self.instance.string(forKey: UserDefaultsUtil.KEY_TOKEN) ?? ""
-    }
-    
-    func setUserId(id: Int) {
-        self.instance.set(id, forKey: UserDefaultsUtil.KEY_USER_ID)
-    }
-    
-    func getUserId() -> Int {
-        return self.instance.integer(forKey: UserDefaultsUtil.KEY_USER_ID)
+    var userId: Int {
+        set {
+            self.instance.set(newValue, forKey: self.KEY_USER_ID)
+        }
+        get {
+            return self.instance.integer(forKey: self.KEY_USER_ID)
+        }
     }
 }

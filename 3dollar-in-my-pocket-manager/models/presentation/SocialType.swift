@@ -1,7 +1,7 @@
 import Foundation
 
-enum SocialType {
-    case apple
-    case kakao
-    case naver
+enum SocialType: String {
+    case apple = "APPLE"
+    case kakao = "GOOGLE"
+    case naver = "NAVER"
 }
