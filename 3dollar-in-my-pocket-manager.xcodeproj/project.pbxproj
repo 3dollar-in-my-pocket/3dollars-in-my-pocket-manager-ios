@@ -249,12 +249,12 @@
 		6ED8839627CB39F600278E14 /* membership */ = {
 			isa = PBXGroup;
 			children = (
-				6ED8839727CB39FB00278E14 /* sign-in */,
+				6ED8839727CB39FB00278E14 /* signin */,
 			);
 			path = membership;
 			sourceTree = "<group>";
 		};
-		6ED8839727CB39FB00278E14 /* sign-in */ = {
+		6ED8839727CB39FB00278E14 /* signin */ = {
 			isa = PBXGroup;
 			children = (
 				6ED8839A27CB3A6C00278E14 /* subviews */,
@@ -263,7 +263,7 @@
 				6EE0CFB227CB5D560027A426 /* SigninReactor.swift */,
 				6E142D5B27D77CEE0084480C /* SigninCoordinator.swift */,
 			);
-			path = "sign-in";
+			path = signin;
 			sourceTree = "<group>";
 		};
 		6ED8839A27CB3A6C00278E14 /* subviews */ = {
