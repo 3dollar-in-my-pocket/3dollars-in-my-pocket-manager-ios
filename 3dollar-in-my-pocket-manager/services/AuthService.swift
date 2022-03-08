@@ -13,15 +13,15 @@ struct AuthService: AuthServiceProtocol {
             let headers = HTTPUtils.jsonHeader()
             
             HTTPUtils.defaultSession.request(
-              urlString,
-              method: .post,
-              parameters: parameters,
-              headers: headers
+                urlString,
+                method: .post,
+                parameters: parameters,
+                headers: headers
             ).responseDecodable(of: ResponseContainer<LoginResponse>.self) { response in
                 if response.isSuccess() {
-                  observer.processValue(response: response)
+                    observer.processValue(response: response)
                 } else {
-                  observer.processHTTPError(response: response)
+                    observer.processHTTPError(response: response)
                 }
             }
             

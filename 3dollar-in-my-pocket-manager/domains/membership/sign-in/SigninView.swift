@@ -2,12 +2,12 @@ import UIKit
 
 import Base
 
-final class SignInView: BaseView {
-    private let appleButton = SocialSigninButton(socialType: .apple)
+final class SigninView: BaseView {
+    let appleButton = SocialSigninButton(socialType: .apple)
     
-    private let kakaoButton = SocialSigninButton(socialType: .kakao)
+    let kakaoButton = SocialSigninButton(socialType: .kakao)
     
-    private let naverButton = SocialSigninButton(socialType: .naver)
+    let naverButton = SocialSigninButton(socialType: .naver)
     
     override func setup() {
         self.backgroundColor = .gray0

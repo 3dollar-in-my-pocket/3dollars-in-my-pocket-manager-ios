@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         self.window?.windowScene = windowScene
-        self.window?.rootViewController = SignInViewController.instance()
+        self.window?.rootViewController = SigninViewController.instance()
         self.window?.makeKeyAndVisible()
     }
     

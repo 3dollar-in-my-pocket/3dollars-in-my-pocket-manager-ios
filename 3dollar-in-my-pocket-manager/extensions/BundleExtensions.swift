@@ -8,4 +8,12 @@ extension Bundle {
         
         return apiURL
     }
+    
+    static var kakaoAppKey: String {
+        guard let kakaoAppKey = Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as? String else {
+            fatalError("KAKAO_APP_KEY가 정의되지 않았습니다.")
+        }
+        
+        return kakaoAppKey
+    }
 }
