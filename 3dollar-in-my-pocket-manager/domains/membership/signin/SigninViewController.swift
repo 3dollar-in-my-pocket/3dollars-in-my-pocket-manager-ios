@@ -12,8 +12,10 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
     )
     private weak var coordinator: SigninCoordinator?
     
-    static func instance() -> SigninViewController {
-        return SigninViewController(nibName: nil, bundle: nil)
+    static func instance() -> UINavigationController {
+        let viewController = SigninViewController(nibName: nil, bundle: nil)
+        
+        return UINavigationController(rootViewController: viewController)
     }
     
     override func loadView() {
@@ -24,6 +26,7 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         super.viewDidLoad()
         
         self.reactor = self.signinReactor
+        self.coordinator = self
     }
     
     override func bindEvent() {

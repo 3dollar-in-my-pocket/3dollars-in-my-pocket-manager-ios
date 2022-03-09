@@ -15,3 +15,15 @@
 // signup
 "signup_title" = "회원가입";
 "signup_description" = "사장님, 가게 정보를\n입력해 주세요!";
+"signup_owner_name" = "사장님 성함";
+"signup_owner_name_placeholder" = "사장님 성함을 입력해주세요.";
+"signup_store_name" = "가게이름";
+"signup_store_name_description" = "최대 20자";
+"signup_store_name_placeholder" = "가게 이름을 입력해 주세요.";
+"signup_registeration_number_title" = "사업자 등록 번호";
+"signup_registeration_number_description" = "“-”를 제외한 숫자만 입력";
+"signup_registeration_number_placeholder" = "사업자 등록 번호를 입력해 주세요.";
+"signup_phone_number_title" = "전화번호";
+"signup_phone_number_description" = "“-”를 제외한 숫자만 입력";
+"signup_phone_number_placeholder" = "전화번호를 입력해 주세요.";
+
