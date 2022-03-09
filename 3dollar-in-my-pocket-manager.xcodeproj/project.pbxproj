@@ -23,6 +23,7 @@
 		6E1F54B027CB97FC0050BBBA /* ObserverExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54AF27CB97FC0050BBBA /* ObserverExtensions.swift */; };
 		6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54B127CB98540050BBBA /* HTTPError.swift */; };
 		6E1F54B427CB99100050BBBA /* ResponseContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54B327CB99100050BBBA /* ResponseContainer.swift */; };
+		6E64B28427D836920055354B /* SignupTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64B28327D836920055354B /* SignupTextField.swift */; };
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
@@ -96,6 +97,7 @@
 		6E1F54AF27CB97FC0050BBBA /* ObserverExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObserverExtensions.swift; sourceTree = "<group>"; };
 		6E1F54B127CB98540050BBBA /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		6E1F54B327CB99100050BBBA /* ResponseContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseContainer.swift; sourceTree = "<group>"; };
+		6E64B28327D836920055354B /* SignupTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupTextField.swift; sourceTree = "<group>"; };
 		6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "3dollar-in-my-pocket-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EB94EA327CB208F00609E77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EB94EA527CB208F00609E77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 		6E142D6027D7859B0084480C /* signup */ = {
 			isa = PBXGroup;
 			children = (
+				6E64B28127D836620055354B /* subviews */,
 				6E142D6127D785A40084480C /* SignupView.swift */,
 			);
 			path = signup;
@@ -209,6 +212,14 @@
 				6E1F54AB27CB94EB0050BBBA /* Requestable.swift */,
 			);
 			path = request;
+			sourceTree = "<group>";
+		};
+		6E64B28127D836620055354B /* subviews */ = {
+			isa = PBXGroup;
+			children = (
+				6E64B28327D836920055354B /* SignupTextField.swift */,
+			);
+			path = subviews;
 			sourceTree = "<group>";
 		};
 		6EB94E9727CB208E00609E77 = {
@@ -516,6 +527,7 @@
 				6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */,
 				6EE0CFB327CB5D560027A426 /* SigninReactor.swift in Sources */,
 				6E142D5C27D77CEE0084480C /* SigninCoordinator.swift in Sources */,
+				6E64B28427D836920055354B /* SignupTextField.swift in Sources */,
 				6EE0CFA927CB5B6C0027A426 /* BaseError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

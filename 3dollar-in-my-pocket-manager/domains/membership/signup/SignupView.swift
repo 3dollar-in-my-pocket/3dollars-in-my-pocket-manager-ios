@@ -23,4 +23,12 @@ final class SignupView: BaseView {
         $0.text = "signup_description".localized
         $0.setLineHeight(lineHeight: 31)
     }
+    
+    private let roundedBackgroundView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        $0.layer.shadowColor = UIColor(r: 0, g: 198, b: 103).cgColor
+        $0.layer.shadowOpacity = 0.04
+    }
+    
 }
