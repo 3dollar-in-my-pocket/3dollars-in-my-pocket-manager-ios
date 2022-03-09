@@ -34,6 +34,8 @@
 		6E7A49D227D891AA00E6653C /* SignupReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49D127D891AA00E6653C /* SignupReactor.swift */; };
 		6E7A49D427D89B7500E6653C /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1F549D27CB76520050BBBA /* Base.framework */; platformFilter = ios; };
 		6E7A49D527D89B7600E6653C /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1F549D27CB76520050BBBA /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6E7A49D827D8CDE300E6653C /* ImageUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49D727D8CDE300E6653C /* ImageUploadResponse.swift */; };
+		6E7A49DA27D8CE1800E6653C /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49D927D8CE1800E6653C /* ImageService.swift */; };
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
@@ -119,6 +121,8 @@
 		6E473BA527D87A3D00232139 /* UIButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 		6E64B28327D836920055354B /* SignupTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupTextField.swift; sourceTree = "<group>"; };
 		6E7A49D127D891AA00E6653C /* SignupReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupReactor.swift; sourceTree = "<group>"; };
+		6E7A49D727D8CDE300E6653C /* ImageUploadResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploadResponse.swift; sourceTree = "<group>"; };
+		6E7A49D927D8CE1800E6653C /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "3dollar-in-my-pocket-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EB94EA327CB208F00609E77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EB94EA527CB208F00609E77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -218,6 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				6E1F54A527CB7A130050BBBA /* AuthService.swift */,
+				6E7A49D927D8CE1800E6653C /* ImageService.swift */,
 			);
 			path = services;
 			sourceTree = "<group>";
@@ -227,6 +232,7 @@
 			children = (
 				6E1F54A227CB79120050BBBA /* LoginResponse.swift */,
 				6E1F54B327CB99100050BBBA /* ResponseContainer.swift */,
+				6E7A49D727D8CDE300E6653C /* ImageUploadResponse.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -560,6 +566,7 @@
 				6EE0CFA527CB573E0027A426 /* KakaoSignInManager.swift in Sources */,
 				6E1F54A627CB7A130050BBBA /* AuthService.swift in Sources */,
 				6EE0CFBE27CB64B60027A426 /* HTTPUtils.swift in Sources */,
+				6E7A49DA27D8CE1800E6653C /* ImageService.swift in Sources */,
 				6E473B9D27D870B900232139 /* SignupCategoryCollectionViewCell.swift in Sources */,
 				6E1F54B027CB97FC0050BBBA /* ObserverExtensions.swift in Sources */,
 				6ED8839927CB3A1700278E14 /* SigninView.swift in Sources */,
@@ -581,6 +588,7 @@
 				6E142D6227D785A40084480C /* SignupView.swift in Sources */,
 				6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */,
 				6E473B9427D85D1C00232139 /* SignupInputField.swift in Sources */,
+				6E7A49D827D8CDE300E6653C /* ImageUploadResponse.swift in Sources */,
 				6EE0CFB327CB5D560027A426 /* SigninReactor.swift in Sources */,
 				6E142D5C27D77CEE0084480C /* SigninCoordinator.swift in Sources */,
 				6E64B28427D836920055354B /* SignupTextField.swift in Sources */,
