@@ -26,4 +26,10 @@
 "signup_phone_number_title" = "전화번호";
 "signup_phone_number_description" = "“-”를 제외한 숫자만 입력";
 "signup_phone_number_placeholder" = "전화번호를 입력해 주세요.";
+"signup_category_title" = "카테고리 선택";
+"signup_category_description" = "최대 3개";
+"signup_photo_title" = "가게 인증 사진";
+"signup_photo_description" = "사진은 사장님 인증 용도로 사용됩니다.";
+"signup_upload_photo" = "이미지 업로드";
+"signup_button" = "회원 가입";
 

@@ -28,6 +28,7 @@ final class SignupView: BaseView {
     private let roundedBackgroundView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        $0.layer.cornerRadius = 8
         $0.layer.shadowColor = UIColor(r: 0, g: 198, b: 103).cgColor
         $0.layer.shadowOpacity = 0.04
     }
@@ -65,6 +66,19 @@ final class SignupView: BaseView {
         $0.keyboardType = .numberPad
     }
     
+    let categoryCollectionView = SignupCategorySelectView()
+    
+    let photoView = SignupPhotoView()
+    
+    let signupButton = UIButton().then {
+        $0.setTitle("signup_button".localized, for: .normal)
+        $0.titleLabel?.font = .medium(size: 16)
+        $0.setTitleColor(UIColor(r: 251, g: 251, b: 251), for: .normal)
+        $0.setBackgroundColor(color: .green, forState: .normal)
+        $0.setBackgroundColor(color: .gray30, forState: .disabled)
+        $0.isEnabled = false
+    }
+    
     override func setup() {
         self.backgroundColor = .gray0
         self.containerView.addSubViews([
@@ -73,13 +87,16 @@ final class SignupView: BaseView {
             self.ownerNameField,
             self.storeNameField,
             self.registerationNumberField,
-            self.phoneNumberField
+            self.phoneNumberField,
+            self.categoryCollectionView,
+            self.photoView
         ])
         self.scrollView.addSubview(self.containerView)
         self.addSubViews([
             self.backButton,
             self.titleLabel,
-            self.scrollView
+            self.scrollView,
+            self.signupButton
         ])
     }
     
@@ -99,13 +116,13 @@ final class SignupView: BaseView {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalTo(self.backButton.snp.bottom).offset(21)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(self.signupButton.snp.top)
         }
         
         self.containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.top.equalTo(self.descriptionLabel).priority(.high)
-            make.bottom.equalTo(self.phoneNumberField).priority(.high)
+            make.bottom.equalTo(self.roundedBackgroundView).priority(.high)
             make.width.equalTo(UIScreen.main.bounds.width)
         }
         
@@ -118,7 +135,7 @@ final class SignupView: BaseView {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalTo(self.descriptionLabel.snp.bottom).offset(21)
-            make.bottom.equalTo(self.phoneNumberField)
+            make.bottom.equalTo(self.photoView).offset(52)
         }
         
         self.ownerNameField.snp.makeConstraints { make in
@@ -143,6 +160,25 @@ final class SignupView: BaseView {
             make.left.equalTo(self.ownerNameField)
             make.right.equalTo(self.ownerNameField)
             make.top.equalTo(self.registerationNumberField.snp.bottom).offset(32)
+        }
+        
+        self.categoryCollectionView.snp.makeConstraints { make in
+            make.left.equalTo(self.ownerNameField)
+            make.right.equalTo(self.ownerNameField)
+            make.top.equalTo(self.phoneNumberField.snp.bottom).offset(32)
+        }
+        
+        self.photoView.snp.makeConstraints { make in
+            make.left.equalTo(self.ownerNameField)
+            make.right.equalTo(self.ownerNameField)
+            make.top.equalTo(self.categoryCollectionView.snp.bottom).offset(32)
+        }
+        
+        self.signupButton.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(82)
         }
     }
 }
