@@ -28,9 +28,9 @@ extension AnyObserver {
         }
     }
     
-    func processValue<T: Decodable>(response: DataResponse<T, AFError>) {
+    func processValue<T>(response: DataResponse<ResponseContainer<T>, AFError>) {
         if let value = response.value {
-            self.onNext(value as! Element)
+            self.onNext(value.data as! Element)
             self.onCompleted()
         } else {
             self.onError(BaseError.nilValue)

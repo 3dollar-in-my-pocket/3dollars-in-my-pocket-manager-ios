@@ -1,4 +1,4 @@
-struct StoreCategory {
+struct StoreCategory: Equatable {
     let categoryId: String
     let name: String
     

@@ -36,7 +36,7 @@ final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
         }
     }
     
-    func bind(category: String) {
-        self.titleLabel.text = category
+    func bind(category: StoreCategory) {
+        self.titleLabel.text = category.name
     }
 }

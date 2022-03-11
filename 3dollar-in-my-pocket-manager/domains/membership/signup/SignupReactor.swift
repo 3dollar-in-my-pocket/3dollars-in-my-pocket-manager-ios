@@ -6,6 +6,7 @@ import RxCocoa
 
 final class SignupReactor: BaseReactor, Reactor {
     enum Action {
+        case viewDidLoad
         case inputOwnerName(String)
         case inputStoreName(String)
         case inputRegisterationNumber(String)
@@ -20,6 +21,7 @@ final class SignupReactor: BaseReactor, Reactor {
         case setStoreName(String)
         case setRegisterationNumber(String)
         case setPhoneNumber(String)
+        case setCategories([StoreCategory])
         case setPhoto(UIImage)
         case setSignupButtonEnable(Bool)
         case pushWaiting
@@ -31,17 +33,25 @@ final class SignupReactor: BaseReactor, Reactor {
         var storeName = ""
         var registerationNumber = ""
         var phoneNumber = ""
-//        var categories
-//        var selectedCategories
+        var categories: [StoreCategory] = []
+        var selectedCategories: [StoreCategory] = []
         var photo: UIImage?
         var isEnableSignupButton = false
     }
     
     let initialState = State()
     let pushWaitingPublisher = PublishRelay<Void>()
+    private let categoryService: CategoryServiceType
+    
+    init(categoryService: CategoryServiceType) {
+        self.categoryService = categoryService
+    }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .viewDidLoad:
+            return self.fetchCategories()
+            
         case .inputOwnerName(let ownerName):
             return .just(.setOwnerName(ownerName))
             
@@ -89,6 +99,9 @@ final class SignupReactor: BaseReactor, Reactor {
         case .setPhoneNumber(let phoneNumber):
             newState.phoneNumber = phoneNumber
             
+        case .setCategories(let categories):
+            newState.categories = categories
+            
         case .setPhoto(let photo):
             newState.photo = photo
             
@@ -115,5 +128,12 @@ final class SignupReactor: BaseReactor, Reactor {
         && !storeName.isEmpty
         && !registerationNumber.isEmpty
         && photo != nil
+    }
+    
+    private func fetchCategories() -> Observable<Mutation> {
+        return self.categoryService.fetchCategories()
+            .map { $0.map(StoreCategory.init(response:)) }
+            .map { .setCategories($0) }
+            .catch { .just(.showErrorAlert($0)) }
     }
 }
