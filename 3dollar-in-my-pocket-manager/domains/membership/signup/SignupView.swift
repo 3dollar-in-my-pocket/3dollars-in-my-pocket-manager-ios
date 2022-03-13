@@ -1,6 +1,8 @@
 import UIKit
 
 final class SignupView: BaseView {
+    let tapBackground = UITapGestureRecognizer()
+    
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "ic_back"), for: .normal)
     }
@@ -28,7 +30,7 @@ final class SignupView: BaseView {
     private let roundedBackgroundView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.layer.cornerRadius = 8
+        $0.layer.cornerRadius = 24
         $0.layer.shadowColor = UIColor(r: 0, g: 198, b: 103).cgColor
         $0.layer.shadowOpacity = 0.04
     }
@@ -80,6 +82,20 @@ final class SignupView: BaseView {
     }
     
     override func setup() {
+        self.roundedBackgroundView.addGestureRecognizer(self.tapBackground)
+        self.tapBackground.rx.event
+            .map { _ in Void() }
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.endEditing(true)
+            })
+            .disposed(by: self.disposeBag)
+        self.scrollView.rx.willBeginDragging
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.endEditing(true)
+            })
+            .disposed(by: self.disposeBag)
         self.backgroundColor = .gray0
         self.containerView.addSubViews([
             self.descriptionLabel,

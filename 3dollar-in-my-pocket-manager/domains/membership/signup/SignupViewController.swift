@@ -53,7 +53,10 @@ final class SignupViewController: BaseViewController, View {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        // selectCategory
+        self.signupView.categoryCollectionView.categoryCollectionView.rx.itemSelected
+            .map { Reactor.Action.selectCategory(index: $0.row) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         self.signupView.signupButton.rx.tap
             .map { Reactor.Action.tapSignup }
@@ -65,6 +68,9 @@ final class SignupViewController: BaseViewController, View {
             .map { $0.categories }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
+            .do(onNext: { [weak self] categories in
+                self?.signupView.categoryCollectionView.updateCollectionViewHeight(categories: categories)
+            })
             .drive(self.signupView.categoryCollectionView.categoryCollectionView.rx.items(
                 cellIdentifier: SignupCategoryCollectionViewCell.registerID,
                 cellType: SignupCategoryCollectionViewCell.self

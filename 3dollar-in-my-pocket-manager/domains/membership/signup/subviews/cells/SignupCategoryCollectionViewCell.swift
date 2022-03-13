@@ -12,15 +12,20 @@ final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
             self.titleLabel.textColor = self.isSelected
             ? .white
             : .green
+            self.titleLabel.font = self.isSelected
+            ? .bold(size: 14)
+            : .regular(size: 14)
         }
     }
     
     private let titleLabel = UILabel().then {
         $0.textColor = .green
         $0.font = .regular(size: 14)
+        $0.textAlignment = .center
     }
     
     override func setup() {
+        self.backgroundColor = UIColor(r: 242, g: 251, b: 247)
         self.layer.cornerRadius = 8
         self.addSubViews([
             self.titleLabel
@@ -29,10 +34,11 @@ final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
     
     override func bindConstraints() {
         self.titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.left.equalToSuperview().offset(16).priority(.high)
+            make.right.equalToSuperview().offset(-16).priority(.high)
             make.top.equalToSuperview()
             make.bottom.equalToSuperview()
+            make.height.equalTo(40)
         }
     }
     

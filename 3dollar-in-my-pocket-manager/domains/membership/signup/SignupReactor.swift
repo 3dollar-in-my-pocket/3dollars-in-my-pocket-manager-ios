@@ -11,7 +11,7 @@ final class SignupReactor: BaseReactor, Reactor {
         case inputStoreName(String)
         case inputRegisterationNumber(String)
         case inputPhoneNumber(String)
-//        case selectCategory()
+        case selectCategory(index: Int)
         case selectPhoto(UIImage)
         case tapSignup
     }
@@ -21,6 +21,8 @@ final class SignupReactor: BaseReactor, Reactor {
         case setStoreName(String)
         case setRegisterationNumber(String)
         case setPhoneNumber(String)
+        case selectCategory(StoreCategory)
+        case deselectCategory(StoreCategory)
         case setCategories([StoreCategory])
         case setPhoto(UIImage)
         case setSignupButtonEnable(Bool)
@@ -64,6 +66,15 @@ final class SignupReactor: BaseReactor, Reactor {
         case .inputPhoneNumber(let phoneNumber):
             return .just(.setPhoneNumber(phoneNumber))
             
+        case .selectCategory(let index):
+            let selectedCategory = self.currentState.categories[index]
+            
+            if self.currentState.selectedCategories.contains(selectedCategory) {
+                return .just(.deselectCategory(selectedCategory))
+            } else {
+                return .just(.selectCategory(selectedCategory))
+            }
+            
         case .selectPhoto(let photo):
             return .just(.setPhoto(photo))
             
@@ -98,6 +109,14 @@ final class SignupReactor: BaseReactor, Reactor {
             
         case .setPhoneNumber(let phoneNumber):
             newState.phoneNumber = phoneNumber
+            
+        case .selectCategory(let category):
+            newState.selectedCategories.append(category)
+            
+        case .deselectCategory(let category):
+            if let targetIndex = state.selectedCategories.firstIndex(of: category) {
+                newState.selectedCategories.remove(at: targetIndex)
+            }
             
         case .setCategories(let categories):
             newState.categories = categories

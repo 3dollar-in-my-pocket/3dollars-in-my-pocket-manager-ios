@@ -35,6 +35,7 @@ final class SignupCategorySelectView: BaseView {
             SignupCategoryCollectionViewCell.self,
             forCellWithReuseIdentifier: SignupCategoryCollectionViewCell.registerID
         )
+        $0.allowsMultipleSelection = true
     }
     
     override func setup() {
@@ -44,6 +45,7 @@ final class SignupCategorySelectView: BaseView {
             self.descriptionLabel,
             self.categoryCollectionView
         ])
+        self.categoryCollectionView.delegate = self
     }
     
     override func bindConstraints() {
@@ -73,6 +75,44 @@ final class SignupCategorySelectView: BaseView {
         self.snp.makeConstraints { make in
             make.top.equalTo(self.titleLabel).priority(.high)
             make.bottom.equalTo(self.categoryCollectionView).priority(.high)
+        }
+    }
+    
+    func updateCollectionViewHeight(categories: [StoreCategory]) {
+        let maxWidth = UIScreen.main.bounds.width - 48
+        let spaceBetweenCells: CGFloat = 11
+        var height: CGFloat = SignupCategoryCollectionViewCell.estimatedSize.height
+        var currentWidth: CGFloat = 0
+        
+        for category in categories {
+            let stringWidth = (category.name as NSString).size(withAttributes: [
+                .font: UIFont.regular(size: 14) as Any
+            ]).width
+            let cellWidth = stringWidth + 32
+            
+            if currentWidth + cellWidth >= maxWidth { // 셀 포함해서 한줄 넘어가는 경우
+                currentWidth = cellWidth + spaceBetweenCells
+                height += SignupCategoryCollectionViewCell.estimatedSize.height + 12
+            } else {
+                currentWidth = currentWidth + cellWidth + spaceBetweenCells
+            }
+        }
+        
+        self.categoryCollectionView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+    }
+}
+
+extension SignupCategorySelectView: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        shouldSelectItemAt indexPath: IndexPath
+    ) -> Bool {
+        if let selectedCount = collectionView.indexPathsForSelectedItems?.count {
+            return selectedCount < 3
+        } else {
+            return true
         }
     }
 }

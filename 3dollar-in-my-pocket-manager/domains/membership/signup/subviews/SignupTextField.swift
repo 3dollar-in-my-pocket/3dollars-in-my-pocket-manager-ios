@@ -21,7 +21,7 @@ final class SignupTextField: BaseView {
     
     fileprivate let textField = UITextField().then {
         $0.font = .medium(size: 14)
-        $0.textColor = .gray30
+        $0.textColor = .gray100
     }
     
     init(placeholder: String?) {
@@ -40,22 +40,6 @@ final class SignupTextField: BaseView {
             self.textField
         ])
         self.textField.delegate = self
-        
-        self.textField.rx.controlEvent(.editingDidBegin)
-            .map { _ in true }
-            .asDriver(onErrorJustReturn: true)
-            .drive(onNext: { [weak self] isFocus in
-                self?.setFocusMode(isFocus: isFocus)
-            })
-            .disposed(by: self.disposeBag)
-        
-        self.textField.rx.controlEvent(.editingDidEnd)
-            .map { _ in false }
-            .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { [weak self] isFocus in
-                self?.setFocusMode(isFocus: isFocus)
-            })
-            .disposed(by: self.disposeBag)
     }
     
     override func bindConstraints() {
@@ -74,17 +58,6 @@ final class SignupTextField: BaseView {
         
         self.snp.makeConstraints { make in
             make.edges.equalTo(self.containerView)
-        }
-    }
-    
-    private func setFocusMode(isFocus: Bool) {
-        UIView.transition(
-            with: self,
-            duration: 0.3,
-            options: .curveEaseInOut
-        ) { [weak self] in
-            self?.containerView.backgroundColor = isFocus ? .white : .gray5
-            self?.textField.textColor = isFocus ? .gray100 : .gray30
         }
     }
     
