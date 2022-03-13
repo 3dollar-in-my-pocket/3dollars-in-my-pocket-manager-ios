@@ -2,10 +2,12 @@ import UIKit
 
 import ReactorKit
 import RxSwift
+import SPPermissions
 
-final class SignupViewController: BaseViewController, View {
+final class SignupViewController: BaseViewController, View, SignupCoordinator {
     private let signupView = SignupView()
     private let signupReactor = SignupReactor(categoryService: CategoryService())
+    private weak var coordinator: SignupCoordinator?
     
     static func instance() -> SignupViewController {
         return SignupViewController(nibName: nil, bundle: nil)
@@ -19,6 +21,7 @@ final class SignupViewController: BaseViewController, View {
         super.viewDidLoad()
         
         self.reactor = self.signupReactor
+        self.coordinator = self
         self.signupReactor.action.onNext(.viewDidLoad)
     }
     
@@ -29,6 +32,13 @@ final class SignupViewController: BaseViewController, View {
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: self.disposeBag)
+        
+        self.signupView.photoView.rx.tapUploadButton
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.showPhotoActionSheet()
+            })
+            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: SignupReactor) {
@@ -85,5 +95,37 @@ final class SignupViewController: BaseViewController, View {
             .asDriver(onErrorJustReturn: false)
             .drive(self.signupView.signupButton.rx.isEnabled)
             .disposed(by: self.disposeBag)
+    }
+}
+
+extension SignupViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        if let photo = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//          self.viewModel.input.registerPhoto.onNext(photo)
+        }
+
+        picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
+    }
+}
+
+extension SignupViewController: SPPermissionsDelegate {
+    func didAllowPermission(_ permission: SPPermissions.Permission) {
+        if permission == .camera {
+            self.coordinator?.showCamera()
+        } else if permission == .photoLibrary {
+//            self.coordinator?.showRegisterPhoto(storeId: self.viewModel.storeId)
+        }
+    }
+    
+    func didDeniedPermission(_ permission: SPPermissions.Permission) {
+        let texts = SPPermissionsDeniedAlertTexts()
+        
+        texts.titleText = "권한 거절"
+        texts.descriptionText = "설정에서 해당 권한을 허용해주세요."
+        texts.actionText = "설정"
+        texts.cancelText = "취소"
     }
 }

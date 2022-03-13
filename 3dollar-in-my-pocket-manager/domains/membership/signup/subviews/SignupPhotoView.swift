@@ -1,5 +1,8 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class SignupPhotoView: BaseView {
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 14)
@@ -92,5 +95,11 @@ final class SignupPhotoView: BaseView {
             make.top.equalTo(self.titleLabel).priority(.high)
             make.bottom.equalTo(self.containerView).priority(.high)
         }
+    }
+}
+
+extension Reactive where Base: SignupPhotoView {
+    var tapUploadButton: ControlEvent<Void> {
+        return base.uploadButton.rx.tap
     }
 }
