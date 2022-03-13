@@ -26,9 +26,11 @@ final class SignupPhotoView: BaseView {
         $0.layer.cornerRadius = 8
     }
     
-    private let imageView = UIImageView().then {
+    fileprivate let imageView = UIImageView().then {
         $0.backgroundColor = UIColor(r: 236, g: 236, b: 236)
+        $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 8
+        $0.layer.masksToBounds = true
     }
     
     fileprivate let uploadButton = UIButton().then {
@@ -101,5 +103,11 @@ final class SignupPhotoView: BaseView {
 extension Reactive where Base: SignupPhotoView {
     var tapUploadButton: ControlEvent<Void> {
         return base.uploadButton.rx.tap
+    }
+    
+    var photo: Binder<UIImage?> {
+        return Binder(self.base) { view, photo in
+            view.imageView.image = photo
+        }
     }
 }

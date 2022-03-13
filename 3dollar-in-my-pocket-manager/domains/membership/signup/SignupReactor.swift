@@ -55,16 +55,28 @@ final class SignupReactor: BaseReactor, Reactor {
             return self.fetchCategories()
             
         case .inputOwnerName(let ownerName):
-            return .just(.setOwnerName(ownerName))
+            return .merge([
+                .just(.setOwnerName(ownerName)),
+                .just(.setSignupButtonEnable(self.validate(ownerName: ownerName)))
+            ])
             
         case .inputStoreName(let storeName):
-            return .just(.setStoreName(storeName))
+            return .merge([
+                .just(.setStoreName(storeName)),
+                .just(.setSignupButtonEnable(self.validate(storeName: storeName)))
+            ])
             
         case .inputRegisterationNumber(let registerationNumber):
-            return .just(.setRegisterationNumber(registerationNumber))
+            return .merge([
+                .just(.setRegisterationNumber(registerationNumber)),
+                .just(.setSignupButtonEnable(self.validate(registerationNumber: registerationNumber)))
+            ])
             
         case .inputPhoneNumber(let phoneNumber):
-            return .just(.setPhoneNumber(phoneNumber))
+            return .merge([
+                .just(.setPhoneNumber(phoneNumber)),
+                .just(.setSignupButtonEnable(self.validate(phoneNumber: phoneNumber)))
+            ])
             
         case .selectCategory(let index):
             let selectedCategory = self.currentState.categories[index]
@@ -76,21 +88,13 @@ final class SignupReactor: BaseReactor, Reactor {
             }
             
         case .selectPhoto(let photo):
-            return .just(.setPhoto(photo))
+            return .merge([
+                .just(.setPhoto(photo)),
+                .just(.setSignupButtonEnable(self.validate(photo: photo)))
+            ])
             
         case .tapSignup:
-            if self.validate(
-                ownerName: self.currentState.ownerName,
-                storeName: self.currentState.storeName,
-                registerationNumber: self.currentState.registerationNumber,
-                photo: self.currentState.photo
-            ) {
-                // 회원가입
-                return .empty()
-            } else {
-                // 에러
-                return .empty()
-            }
+            return .empty()
         }
     }
     
@@ -138,14 +142,22 @@ final class SignupReactor: BaseReactor, Reactor {
     }
     
     private func validate(
-        ownerName: String,
-        storeName: String,
-        registerationNumber: String,
-        photo: UIImage?
+        ownerName: String? = nil,
+        storeName: String? = nil,
+        registerationNumber: String? = nil,
+        phoneNumber: String? = nil,
+        photo: UIImage? = nil
     ) -> Bool {
+        let ownerName = ownerName ?? self.currentState.ownerName
+        let storeName = storeName ?? self.currentState.storeName
+        let registerationNumber = registerationNumber ?? self.currentState.registerationNumber
+        let phoneNumber = phoneNumber ??  self.currentState.phoneNumber
+        let photo = photo ?? self.currentState.photo
+        
         return !ownerName.isEmpty
         && !storeName.isEmpty
         && !registerationNumber.isEmpty
+        && !phoneNumber.isEmpty
         && photo != nil
     }
     

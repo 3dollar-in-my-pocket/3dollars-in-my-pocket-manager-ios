@@ -1,4 +1,5 @@
 import UIKit
+import PhotosUI
 
 import SPPermissions
 import SPPermissionsPhotoLibrary
@@ -22,7 +23,7 @@ extension SignupCoordinator where Self: BaseViewController {
             style: .default
         ) { _ in
             if SPPermissions.Permission.photoLibrary.authorized {
-//                self.showRegisterPhoto(storeId: storeId)
+                self.showAlbumPicker()
             } else {
                 let controller = SPPermissions.native([.photoLibrary])
                 
@@ -62,9 +63,17 @@ extension SignupCoordinator where Self: BaseViewController {
             $0.cameraCaptureMode = .photo
         }
         
-        self.presenter.tabBarController?.present(
-            imagePicker,
-            animated: true
-        )
+        self.presenter.present(imagePicker, animated: true)
+    }
+    
+    func showAlbumPicker() {
+        var configuration = PHPickerConfiguration()
+        
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        
+        picker.delegate = self as? PHPickerViewControllerDelegate
+        self.presenter.present(picker, animated: true, completion: nil)
     }
 }

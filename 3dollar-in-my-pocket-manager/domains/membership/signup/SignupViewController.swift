@@ -1,4 +1,5 @@
 import UIKit
+import PhotosUI
 
 import ReactorKit
 import RxSwift
@@ -90,6 +91,13 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .disposed(by: self.disposeBag)
         
         reactor.state
+            .map { $0.photo }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: nil)
+            .drive(self.signupView.photoView.rx.photo)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
             .map { $0.isEnableSignupButton }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: false)
@@ -98,15 +106,17 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
     }
 }
 
-extension SignupViewController: UIImagePickerControllerDelegate {
+extension SignupViewController:
+    UIImagePickerControllerDelegate & UINavigationControllerDelegate
+{
     func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
         if let photo = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//          self.viewModel.input.registerPhoto.onNext(photo)
+            self.signupReactor.action.onNext(.selectPhoto(photo))
         }
-
+        
         picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
     }
 }
@@ -127,5 +137,24 @@ extension SignupViewController: SPPermissionsDelegate {
         texts.descriptionText = "설정에서 해당 권한을 허용해주세요."
         texts.actionText = "설정"
         texts.cancelText = "취소"
+    }
+}
+
+extension SignupViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        let itemProvider = results.first?.itemProvider
+        
+        if let itemProvider = itemProvider,
+            itemProvider.canLoadObject(ofClass: UIImage.self) {
+            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
+                if let photo = image as? UIImage {
+                    self.signupReactor.action.onNext(.selectPhoto(photo))
+                }
+            }
+        } else {
+            // TODO: Handle empty results or item provider not being able load UIImage
+        }
     }
 }
