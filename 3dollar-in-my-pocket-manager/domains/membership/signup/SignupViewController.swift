@@ -7,11 +7,26 @@ import SPPermissions
 
 final class SignupViewController: BaseViewController, View, SignupCoordinator {
     private let signupView = SignupView()
-    private let signupReactor = SignupReactor(categoryService: CategoryService())
+    private let signupReactor: SignupReactor
     private weak var coordinator: SignupCoordinator?
     
-    static func instance() -> SignupViewController {
-        return SignupViewController(nibName: nil, bundle: nil)
+    init(socialType: SocialType, token: String) {
+        self.signupReactor = SignupReactor(
+            socialType: socialType,
+            token: token,
+            categoryService: CategoryService(),
+            imageService: ImageService(),
+            authService: AuthService()
+        )
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    static func instance(socialType: SocialType, token: String) -> SignupViewController {
+        return SignupViewController(socialType: socialType, token: token)
     }
     
     override func loadView() {

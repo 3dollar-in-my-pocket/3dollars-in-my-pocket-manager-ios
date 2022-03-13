@@ -27,6 +27,7 @@ final class SignupReactor: BaseReactor, Reactor {
         case setPhoto(UIImage)
         case setSignupButtonEnable(Bool)
         case pushWaiting
+        case goToSignin
         case showErrorAlert(Error)
     }
     
@@ -43,10 +44,25 @@ final class SignupReactor: BaseReactor, Reactor {
     
     let initialState = State()
     let pushWaitingPublisher = PublishRelay<Void>()
+    let goToSigninPublisher = PublishRelay<Void>()
+    private let socialType: SocialType
+    private let token: String
     private let categoryService: CategoryServiceType
+    private let imageService: ImageServiceType
+    private let authService: AuthServiceType
     
-    init(categoryService: CategoryServiceType) {
+    init(
+        socialType: SocialType,
+        token: String,
+        categoryService: CategoryServiceType,
+        imageService: ImageServiceType,
+        authService: AuthServiceType
+    ) {
+        self.socialType = socialType
+        self.token = token
         self.categoryService = categoryService
+        self.imageService = imageService
+        self.authService = authService
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -94,7 +110,7 @@ final class SignupReactor: BaseReactor, Reactor {
             ])
             
         case .tapSignup:
-            return .empty()
+            return self.signup()
         }
     }
     
@@ -134,6 +150,9 @@ final class SignupReactor: BaseReactor, Reactor {
         case .pushWaiting:
             self.pushWaitingPublisher.accept(())
             
+        case .goToSignin:
+            self.goToSigninPublisher.accept(())
+            
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
         }
@@ -166,5 +185,47 @@ final class SignupReactor: BaseReactor, Reactor {
             .map { $0.map(StoreCategory.init(response:)) }
             .map { .setCategories($0) }
             .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func signup() -> Observable<Mutation> {
+        let ownerName = self.currentState.ownerName
+        let storeName = self.currentState.storeName
+        let registerationNumber = self.currentState.registerationNumber
+        let phoneNumber = self.currentState.phoneNumber
+        let categories = self.currentState.selectedCategories
+        let photo = self.currentState.photo ?? UIImage()
+        let socialType = self.socialType
+        let token = self.token
+        
+        return self.imageService.uploadImage(image: photo, fileType: .certification)
+            .flatMap { [weak self] imageResponse -> Observable<Mutation> in
+                guard let self = self else { return .error(BaseError.unknown) }
+                return self.authService.signup(
+                    ownerName: ownerName,
+                    storeName: storeName,
+                    registerationNumber: registerationNumber,
+                    phoneNumber: phoneNumber,
+                    categories: categories,
+                    photoUrl: imageResponse.imageUrl,
+                    socialType: socialType,
+                    token: token
+                )
+                    .map { _ in .pushWaiting }
+                    .catch { error in
+                        if let httpError = error as? HTTPError {
+                            switch httpError {
+                            case .forbidden:
+                                return .just(.pushWaiting)
+                                
+                            case .conflict:
+                                return .just(.goToSignin)
+                                
+                            default:
+                                break
+                            }
+                        }
+                        return .just(.showErrorAlert(error))
+                    }
+            }
     }
 }

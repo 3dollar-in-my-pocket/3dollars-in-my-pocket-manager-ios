@@ -6,7 +6,8 @@ struct LoginRequest: Requestable {
     
     var params: [String : Any] {
         return [
-            "socialType": socialType.rawValue
+            "socialType": socialType.rawValue,
+            "token": token
         ]
     }
 }

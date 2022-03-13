@@ -15,7 +15,9 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
     static func instance() -> UINavigationController {
         let viewController = SigninViewController(nibName: nil, bundle: nil)
         
-        return UINavigationController(rootViewController: viewController)
+        return UINavigationController(rootViewController: viewController).then {
+            $0.isNavigationBarHidden = true
+        }
     }
     
     override func loadView() {

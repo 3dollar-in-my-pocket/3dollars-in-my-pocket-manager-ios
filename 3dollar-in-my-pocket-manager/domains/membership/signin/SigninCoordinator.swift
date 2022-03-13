@@ -10,7 +10,7 @@ protocol SigninCoordinator: AnyObject, BaseCoordinator {
 
 extension SigninCoordinator {
     func pushSignup(socialType: SocialType, token: String) {
-        let viewControler = SignupViewController.instance()
+        let viewControler = SignupViewController.instance(socialType: socialType, token: token)
         
         self.presenter.navigationController?.pushViewController(viewControler, animated: true)
     }

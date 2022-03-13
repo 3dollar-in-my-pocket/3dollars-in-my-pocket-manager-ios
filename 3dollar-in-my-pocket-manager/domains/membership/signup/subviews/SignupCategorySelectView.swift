@@ -36,6 +36,7 @@ final class SignupCategorySelectView: BaseView {
             forCellWithReuseIdentifier: SignupCategoryCollectionViewCell.registerID
         )
         $0.allowsMultipleSelection = true
+        $0.backgroundColor = .clear
     }
     
     override func setup() {

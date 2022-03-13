@@ -24,12 +24,12 @@ final class SigninReactor: BaseReactor, Reactor {
     let goToMainPublisher = PublishRelay<Void>()
     private let kakaoSignInManager: KakaoSignInManagerProtocol
     private let appleSignInManager: AppleSignInManagerProtocol
-    private let authService: AuthServiceProtocol
+    private let authService: AuthServiceType
     
     init(
         kakaoManager: KakaoSignInManagerProtocol,
         appleSignInManager: AppleSignInManagerProtocol,
-        authService: AuthServiceProtocol
+        authService: AuthServiceType
     ) {
         self.kakaoSignInManager = kakaoManager
         self.appleSignInManager = appleSignInManager
