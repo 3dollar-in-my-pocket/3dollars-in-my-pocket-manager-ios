@@ -4,6 +4,7 @@ import PhotosUI
 import ReactorKit
 import RxSwift
 import SPPermissions
+import Base
 
 final class SignupViewController: BaseViewController, View, SignupCoordinator {
     private let signupView = SignupView()
@@ -53,6 +54,13 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .asDriver()
             .drive(onNext: { [weak self] in
                 self?.coordinator?.showPhotoActionSheet()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.signupReactor.showErrorAlert
+            .asDriver(onErrorJustReturn: BaseError.unknown)
+            .drive(onNext: { [weak self] error in
+                self?.coordinator?.showErrorAlert(error: error)
             })
             .disposed(by: self.eventDisposeBag)
     }
@@ -141,17 +149,22 @@ extension SignupViewController: SPPermissionsDelegate {
         if permission == .camera {
             self.coordinator?.showCamera()
         } else if permission == .photoLibrary {
-//            self.coordinator?.showRegisterPhoto(storeId: self.viewModel.storeId)
+            self.coordinator?.showAlbumPicker()
         }
     }
     
     func didDeniedPermission(_ permission: SPPermissions.Permission) {
-        let texts = SPPermissionsDeniedAlertTexts()
-        
-        texts.titleText = "권한 거절"
-        texts.descriptionText = "설정에서 해당 권한을 허용해주세요."
-        texts.actionText = "설정"
-        texts.cancelText = "취소"
+        AlertUtils.showWithCancel(
+            viewController: self,
+            title: "authorization_denied_title".localized,
+            message: "authorization_denied_description".localized,
+            okButtonTitle: "authorization_setting".localized
+        ) {
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        }
     }
 }
 
@@ -162,7 +175,7 @@ extension SignupViewController: PHPickerViewControllerDelegate {
         let itemProvider = results.first?.itemProvider
         
         if let itemProvider = itemProvider,
-            itemProvider.canLoadObject(ofClass: UIImage.self) {
+           itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                 if let photo = image as? UIImage {
                     self.signupReactor.action.onNext(.selectPhoto(photo))

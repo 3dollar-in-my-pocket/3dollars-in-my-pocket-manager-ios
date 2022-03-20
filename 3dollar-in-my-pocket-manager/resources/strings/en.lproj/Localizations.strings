@@ -13,6 +13,11 @@
 "http_error_maintenance" = "서버 점검중입니다.\n잠시 후 다시 시도해주세요.";
 "http_error_timeout" = "일시적인 오류가 발생했어요..ㅠㅠ\n잠시 후 다시 시도해주세요!";
 
+// authorization
+"authorization_denied_title" = "권한 거절";
+"authorization_denied_description" = "사진을 첨부하기 위해 권한이 필요합니다.\n설정에서 해당 권한을 허용해주세요.";
+"authorization_setting" = "설정";
+
 // signup
 "signup_title" = "회원가입";
 "signup_description" = "사장님, 가게 정보를\n입력해 주세요!";

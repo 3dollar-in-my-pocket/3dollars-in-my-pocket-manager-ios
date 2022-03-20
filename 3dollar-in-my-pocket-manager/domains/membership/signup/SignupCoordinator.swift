@@ -9,6 +9,8 @@ protocol SignupCoordinator: BaseCoordinator, AnyObject {
     func showPhotoActionSheet()
     
     func showCamera()
+    
+    func showAlbumPicker()
 }
 
 extension SignupCoordinator where Self: BaseViewController {

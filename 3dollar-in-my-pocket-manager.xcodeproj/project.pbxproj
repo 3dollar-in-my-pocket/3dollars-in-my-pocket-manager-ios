@@ -31,8 +31,6 @@
 		6E473BA427D874C500232139 /* SignupPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473BA327D874C500232139 /* SignupPhotoView.swift */; };
 		6E473BA627D87A3D00232139 /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473BA527D87A3D00232139 /* UIButtonExtensions.swift */; };
 		6E64B28427D836920055354B /* SignupTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64B28327D836920055354B /* SignupTextField.swift */; };
-		6E6F98F127DE001E001302A6 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1F549D27CB76520050BBBA /* Base.framework */; platformFilter = ios; };
-		6E6F98F227DE001E001302A6 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1F549D27CB76520050BBBA /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E6F98F527DE0BAE001302A6 /* FileType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6F98F427DE0BAE001302A6 /* FileType.swift */; };
 		6E7A49D227D891AA00E6653C /* SignupReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49D127D891AA00E6653C /* SignupReactor.swift */; };
 		6E7A49D827D8CDE300E6653C /* ImageUploadResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49D727D8CDE300E6653C /* ImageUploadResponse.swift */; };
@@ -41,6 +39,8 @@
 		6E7A49DE27D8D0A600E6653C /* StoreCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DD27D8D0A600E6653C /* StoreCategoryResponse.swift */; };
 		6E7A49E027D8D0E200E6653C /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DF27D8D0E200E6653C /* CategoryService.swift */; };
 		6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49E127D8D3F800E6653C /* StoreCategory.swift */; };
+		6E9F994F27E6FA4100C95C41 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E473B8F27D85B7C00232139 /* Base.framework */; };
+		6E9F995027E6FA4100C95C41 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E473B8F27D85B7C00232139 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
@@ -90,13 +90,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E6F98F327DE001E001302A6 /* Embed Frameworks */ = {
+		6E9F995127E6FA4100C95C41 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E6F98F227DE001E001302A6 /* Base.framework in Embed Frameworks */,
+				6E9F995027E6FA4100C95C41 /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,7 +174,7 @@
 				6EE2624C27DDBE64008B3531 /* SPPermissionsLocationAlways in Frameworks */,
 				6ED8839427CB39E300278E14 /* RxSwift in Frameworks */,
 				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
-				6E6F98F127DE001E001302A6 /* Base.framework in Frameworks */,
+				6E9F994F27E6FA4100C95C41 /* Base.framework in Frameworks */,
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
@@ -481,7 +481,7 @@
 				6EB94E9C27CB208F00609E77 /* Sources */,
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
-				6E6F98F327DE001E001302A6 /* Embed Frameworks */,
+				6E9F995127E6FA4100C95C41 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
