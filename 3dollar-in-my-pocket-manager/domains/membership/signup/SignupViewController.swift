@@ -57,6 +57,20 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             })
             .disposed(by: self.eventDisposeBag)
         
+        self.signupReactor.pushWaitingPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.pushWaiting()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.signupReactor.goToSigninPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.presenter.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.signupReactor.showErrorAlert
             .asDriver(onErrorJustReturn: BaseError.unknown)
             .drive(onNext: { [weak self] error in

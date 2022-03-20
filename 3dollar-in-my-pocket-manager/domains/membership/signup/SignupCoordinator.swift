@@ -11,6 +11,8 @@ protocol SignupCoordinator: BaseCoordinator, AnyObject {
     func showCamera()
     
     func showAlbumPicker()
+    
+    func pushWaiting()
 }
 
 extension SignupCoordinator where Self: BaseViewController {
@@ -77,5 +79,14 @@ extension SignupCoordinator where Self: BaseViewController {
         
         picker.delegate = self as? PHPickerViewControllerDelegate
         self.presenter.present(picker, animated: true, completion: nil)
+    }
+    
+    func pushWaiting() {
+        let viewController = WaitingViewController.instance()
+        
+        self.presenter.navigationController?.pushViewController(
+            viewController,
+            animated: true
+        )
     }
 }

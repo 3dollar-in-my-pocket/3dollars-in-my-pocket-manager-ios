@@ -17,9 +17,7 @@ extension BaseCoordinator where Self: BaseViewController {
     func showErrorAlert(error: Error) {
         AlertUtils.showWithAction(
             viewController: self,
-            title: nil,
             message: error.localizedDescription,
-            okbuttonTitle: nil,
             onTapOk: nil
         )
     }
