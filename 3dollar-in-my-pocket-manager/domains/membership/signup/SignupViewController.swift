@@ -71,6 +71,13 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             })
             .disposed(by: self.eventDisposeBag)
         
+        self.signupReactor.showLoadginPublisher
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isShow in
+                self?.coordinator?.showLoading(isShow: isShow)
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.signupReactor.showErrorAlert
             .asDriver(onErrorJustReturn: BaseError.unknown)
             .drive(onNext: { [weak self] error in

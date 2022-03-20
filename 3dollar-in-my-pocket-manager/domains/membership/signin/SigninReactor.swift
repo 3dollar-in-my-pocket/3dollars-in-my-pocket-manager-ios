@@ -11,6 +11,7 @@ final class SigninReactor: BaseReactor, Reactor {
         case pushSignUp(socialType: SocialType, token: String)
         case pushWaiting
         case goToMain
+        case showLoading(isShow: Bool)
         case showErrorAlert(Error)
     }
     
@@ -56,6 +57,9 @@ final class SigninReactor: BaseReactor, Reactor {
         case .goToMain:
             self.goToMainPublisher.accept(())
             
+        case .showLoading(let isShow):
+            self.showLoadginPublisher.accept(isShow)
+            
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
         }
@@ -87,7 +91,7 @@ final class SigninReactor: BaseReactor, Reactor {
     }
     
     private func signin(socialType: SocialType, token: String) -> Observable<Mutation> {
-        return self.authService.login(socialType: socialType, token: token)
+        let signinObservable = self.authService.login(socialType: socialType, token: token)
             .map { _ in .goToMain }
             .catch { error -> Observable<Mutation> in
                 if let httpError = error as? HTTPError {
@@ -102,7 +106,16 @@ final class SigninReactor: BaseReactor, Reactor {
                         break
                     }
                 }
-                return .just(.showErrorAlert(error))
+                return .merge([
+                    .just(.showErrorAlert(error)),
+                    .just(.showLoading(isShow: false))
+                ])
             }
+        
+        return .concat([
+            .just(.showLoading(isShow: true)),
+            signinObservable,
+            .just(.showLoading(isShow: false))
+        ])
     }
 }

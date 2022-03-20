@@ -16,7 +16,9 @@ extension SigninCoordinator {
     }
     
     func pushWaiting() {
+        let viewController = WaitingViewController.instance()
         
+        self.presenter.navigationController?.pushViewController(viewController, animated: true)
     }
     
     func goToMain() {

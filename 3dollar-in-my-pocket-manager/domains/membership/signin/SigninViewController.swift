@@ -52,6 +52,20 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
                 self?.coordinator?.goToMain()
             })
             .disposed(by: self.eventDisposeBag)
+        
+        self.signinReactor.showLoadginPublisher
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isShow in
+                self?.coordinator?.showLoading(isShow: isShow)
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.signinReactor.showErrorAlert
+            .asDriver(onErrorJustReturn: BaseError.unknown)
+            .drive(onNext: { [weak self] error in
+                self?.coordinator?.showErrorAlert(error: error)
+            })
+            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: SigninReactor) {

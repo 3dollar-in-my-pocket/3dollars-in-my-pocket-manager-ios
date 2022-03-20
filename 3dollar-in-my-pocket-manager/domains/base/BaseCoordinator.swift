@@ -5,7 +5,10 @@ protocol BaseCoordinator {
     var presenter: BaseViewController { get }
     
     func showErrorAlert(error: Error)
+    
     func openURL(url: String)
+    
+    func showLoading(isShow: Bool)
 }
 
 extension BaseCoordinator where Self: BaseViewController {
@@ -26,5 +29,9 @@ extension BaseCoordinator where Self: BaseViewController {
         guard let url = URL(string: url) else { return }
         
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func showLoading(isShow: Bool) {
+        LoadingManager.shared.showLoading(isShow: isShow)
     }
 }

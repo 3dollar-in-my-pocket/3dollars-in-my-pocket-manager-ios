@@ -26,6 +26,7 @@ final class SignupReactor: BaseReactor, Reactor {
         case setCategories([StoreCategory])
         case setPhoto(UIImage)
         case setSignupButtonEnable(Bool)
+        case showLoading(isShow: Bool)
         case pushWaiting
         case goToSignin
         case showErrorAlert(Error)
@@ -147,6 +148,9 @@ final class SignupReactor: BaseReactor, Reactor {
         case .setSignupButtonEnable(let isEnable):
             newState.isEnableSignupButton = isEnable
             
+        case .showLoading(let isShow):
+            self.showLoadginPublisher.accept(isShow)
+            
         case .pushWaiting:
             self.pushWaitingPublisher.accept(())
             
@@ -196,8 +200,7 @@ final class SignupReactor: BaseReactor, Reactor {
         let photo = self.currentState.photo ?? UIImage()
         let socialType = self.socialType
         let token = self.token
-        
-        return self.imageService.uploadImage(image: photo, fileType: .certification)
+        let signupObservable = self.imageService.uploadImage(image: photo, fileType: .certification)
             .flatMap { [weak self] imageResponse -> Observable<Mutation> in
                 guard let self = self else { return .error(BaseError.unknown) }
                 return self.authService.signup(
@@ -224,8 +227,23 @@ final class SignupReactor: BaseReactor, Reactor {
                                 break
                             }
                         }
-                        return .just(.showErrorAlert(error))
+                        return .merge([
+                            .just(.showErrorAlert(error)),
+                            .just(.showLoading(isShow: false))
+                        ])
                     }
             }
+            .catch { error in
+                return .merge([
+                    .just(.showErrorAlert(error)),
+                    .just(.showLoading(isShow: false))
+                ])
+            }
+        
+        return .concat([
+            .just(.showLoading(isShow: true)),
+            signupObservable,
+            .just(.showLoading(isShow: false))
+        ])
     }
 }
