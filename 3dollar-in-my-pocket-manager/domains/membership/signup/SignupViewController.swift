@@ -48,9 +48,12 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
         self.signupView.backButton.rx.tap
             .asDriver()
             .drive(onNext: { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+                self?.coordinator?
+                    .presenter
+                    .navigationController?
+                    .popViewController(animated: true)
             })
-            .disposed(by: self.disposeBag)
+            .disposed(by: self.eventDisposeBag)
         
         self.signupView.photoView.rx.tapUploadButton
             .asDriver()

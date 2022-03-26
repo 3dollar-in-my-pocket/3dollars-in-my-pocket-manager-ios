@@ -8,7 +8,8 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
     private let signinReactor = SigninReactor(
         kakaoManager: KakaoSignInManager.shared,
         appleSignInManager: AppleSigninManager.shared,
-        authService: AuthService()
+        authService: AuthService(),
+        userDefaultsUtils: UserDefaultsUtils()
     )
     private weak var coordinator: SigninCoordinator?
     
@@ -39,10 +40,10 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
             }
             .disposed(by: self.eventDisposeBag)
         
-        self.signinReactor.pushWaitingPublisher
+        self.signinReactor.goToWaitingPublisher
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] _ in
-                self?.coordinator?.pushWaiting()
+                self?.coordinator?.goToWaiting()
             })
             .disposed(by: self.eventDisposeBag)
         

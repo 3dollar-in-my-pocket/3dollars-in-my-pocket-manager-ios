@@ -3,7 +3,7 @@ import UIKit
 protocol SigninCoordinator: AnyObject, BaseCoordinator {
     func pushSignup(socialType: SocialType, token: String)
     
-    func pushWaiting()
+    func goToWaiting()
     
     func goToMain()
 }
@@ -15,10 +15,15 @@ extension SigninCoordinator {
         self.presenter.navigationController?.pushViewController(viewControler, animated: true)
     }
     
-    func pushWaiting() {
-        let viewController = WaitingViewController.instance()
+    func goToWaiting() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
+          }
         
-        self.presenter.navigationController?.pushViewController(viewController, animated: true)
+        sceneDelegate.goToWaiting()
     }
     
     func goToMain() {

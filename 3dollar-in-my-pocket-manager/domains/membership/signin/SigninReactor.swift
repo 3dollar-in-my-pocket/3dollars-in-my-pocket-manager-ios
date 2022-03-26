@@ -9,7 +9,7 @@ final class SigninReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case pushSignUp(socialType: SocialType, token: String)
-        case pushWaiting
+        case goToWaiting
         case goToMain
         case showLoading(isShow: Bool)
         case showErrorAlert(Error)
@@ -21,20 +21,23 @@ final class SigninReactor: BaseReactor, Reactor {
     
     var initialState = State()
     let pushSignUpPublisher = PublishRelay<(SocialType, String)>()
-    let pushWaitingPublisher = PublishRelay<Void>()
+    let goToWaitingPublisher = PublishRelay<Void>()
     let goToMainPublisher = PublishRelay<Void>()
     private let kakaoSignInManager: KakaoSignInManagerProtocol
     private let appleSignInManager: AppleSignInManagerProtocol
     private let authService: AuthServiceType
+    private var userDefaultsUtils: UserDefaultsUtils
     
     init(
         kakaoManager: KakaoSignInManagerProtocol,
         appleSignInManager: AppleSignInManagerProtocol,
-        authService: AuthServiceType
+        authService: AuthServiceType,
+        userDefaultsUtils: UserDefaultsUtils
     ) {
         self.kakaoSignInManager = kakaoManager
         self.appleSignInManager = appleSignInManager
         self.authService = authService
+        self.userDefaultsUtils = userDefaultsUtils
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -51,8 +54,8 @@ final class SigninReactor: BaseReactor, Reactor {
         case .pushSignUp(let socialType, let token):
             self.pushSignUpPublisher.accept((socialType, token))
             
-        case .pushWaiting:
-            self.pushWaitingPublisher.accept(())
+        case .goToWaiting:
+            self.goToWaitingPublisher.accept(())
             
         case .goToMain:
             self.goToMainPublisher.accept(())
@@ -92,7 +95,13 @@ final class SigninReactor: BaseReactor, Reactor {
     
     private func signin(socialType: SocialType, token: String) -> Observable<Mutation> {
         let signinObservable = self.authService.login(socialType: socialType, token: token)
-            .map { _ in .goToMain }
+            .do(onNext: { [weak self] response in
+                self?.userDefaultsUtils.userToken = response.token
+            })
+            .flatMap { [weak self] _ -> Observable<Mutation> in
+                guard let self = self else { return .error(BaseError.unknown) }
+                return self.fetchUserInfo()
+            }
             .catch { error -> Observable<Mutation> in
                 if let httpError = error as? HTTPError {
                     switch httpError {
@@ -100,7 +109,7 @@ final class SigninReactor: BaseReactor, Reactor {
                         return .just(.pushSignUp(socialType: socialType, token: token))
                         
                     case .forbidden:
-                        return .just(.pushWaiting)
+                        return .just(.goToWaiting)
                         
                     default:
                         break
@@ -117,5 +126,23 @@ final class SigninReactor: BaseReactor, Reactor {
             signinObservable,
             .just(.showLoading(isShow: false))
         ])
+    }
+    
+    private func fetchUserInfo() -> Observable<Mutation> {
+        return self.authService.fetchMyInfo()
+            .map{ _ in .goToMain }
+            .catch { error in
+                if let httpError = error as? HTTPError {
+                    switch httpError {
+                    case .forbidden: // 신청 대기중
+                        return .just(.goToWaiting)
+                        
+                    default:
+                        return .just(.showErrorAlert(error))
+                    }
+                } else {
+                    return .just(.showErrorAlert(error))
+                }
+            }
     }
 }

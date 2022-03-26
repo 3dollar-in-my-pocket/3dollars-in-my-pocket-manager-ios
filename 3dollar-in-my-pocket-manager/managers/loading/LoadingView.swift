@@ -2,7 +2,7 @@ import UIKit
 
 final class LoadingView: BaseView {
     let blurEffectView = UIVisualEffectView(
-        effect: UIBlurEffect(style: UIBlurEffect.Style.regular)
+        effect: UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialLight)
     ).then {
         $0.alpha = 0
     }
