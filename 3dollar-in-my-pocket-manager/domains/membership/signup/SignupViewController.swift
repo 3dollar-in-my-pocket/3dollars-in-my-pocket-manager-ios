@@ -5,6 +5,7 @@ import ReactorKit
 import RxSwift
 import SPPermissions
 import Base
+import CropViewController
 
 final class SignupViewController: BaseViewController, View, SignupCoordinator {
     private let signupView = SignupView()
@@ -158,10 +159,12 @@ extension SignupViewController:
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
         if let photo = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.signupReactor.action.onNext(.selectPhoto(photo))
+            picker.dismiss(animated: true) { [weak self] in
+                self?.coordinator?.presentPhotoCrop(photo: photo)
+            }
+        } else {
+            picker.dismiss(animated: true, completion: nil)
         }
-        
-        picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
     }
 }
 
@@ -191,19 +194,33 @@ extension SignupViewController: SPPermissionsDelegate {
 
 extension SignupViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
         let itemProvider = results.first?.itemProvider
         
         if let itemProvider = itemProvider,
            itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
                 if let photo = image as? UIImage {
-                    self.signupReactor.action.onNext(.selectPhoto(photo))
+                    DispatchQueue.main.async { [weak self] in
+                        picker.dismiss(animated: true) {
+                            self?.coordinator?.presentPhotoCrop(photo: photo)
+                        }
+                    }
                 }
             }
         } else {
             // TODO: Handle empty results or item provider not being able load UIImage
         }
+    }
+}
+
+extension SignupViewController: CropViewControllerDelegate {
+    func cropViewController(
+        _ cropViewController: CropViewController,
+        didCropToImage image: UIImage,
+        withRect cropRect: CGRect,
+        angle: Int
+    ) {
+        cropViewController.dismiss(animated: true, completion: nil)
+        self.signupReactor.action.onNext(.selectPhoto(image))
     }
 }

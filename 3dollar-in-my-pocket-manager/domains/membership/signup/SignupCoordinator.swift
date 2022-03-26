@@ -4,6 +4,7 @@ import PhotosUI
 import SPPermissions
 import SPPermissionsPhotoLibrary
 import SPPermissionsCamera
+import CropViewController
 
 protocol SignupCoordinator: BaseCoordinator, AnyObject {
     func showPhotoActionSheet()
@@ -13,6 +14,8 @@ protocol SignupCoordinator: BaseCoordinator, AnyObject {
     func showAlbumPicker()
     
     func pushWaiting()
+    
+    func presentPhotoCrop(photo: UIImage)
 }
 
 extension SignupCoordinator where Self: BaseViewController {
@@ -88,5 +91,16 @@ extension SignupCoordinator where Self: BaseViewController {
             viewController,
             animated: true
         )
+    }
+    
+    func presentPhotoCrop(photo: UIImage) {
+        let cropViewController = CropViewController(image: photo)
+        
+        cropViewController.customAspectRatio = CGSize(width: 2.227, height: 1)
+        cropViewController.aspectRatioLockEnabled = true
+        cropViewController.aspectRatioPickerButtonHidden = true
+        cropViewController.resetButtonHidden = true
+        cropViewController.delegate = self as? CropViewControllerDelegate
+        self.present(cropViewController, animated: true, completion: nil)
     }
 }

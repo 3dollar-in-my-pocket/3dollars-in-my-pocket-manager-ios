@@ -45,8 +45,10 @@
 		6E7A49DE27D8D0A600E6653C /* StoreCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DD27D8D0A600E6653C /* StoreCategoryResponse.swift */; };
 		6E7A49E027D8D0E200E6653C /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DF27D8D0E200E6653C /* CategoryService.swift */; };
 		6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49E127D8D3F800E6653C /* StoreCategory.swift */; };
-		6E9F994F27E6FA4100C95C41 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E473B8F27D85B7C00232139 /* Base.framework */; };
-		6E9F995027E6FA4100C95C41 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E473B8F27D85B7C00232139 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6E8E7F2A27EEBBE7005345BB /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1F549D27CB76520050BBBA /* Base.framework */; };
+		6E8E7F2B27EEBBE7005345BB /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1F549D27CB76520050BBBA /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
+		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
 		6E9F995427E7019700C95C41 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9F995327E7019700C95C41 /* WaitingView.swift */; };
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
@@ -97,13 +99,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E9F995127E6FA4100C95C41 /* Embed Frameworks */ = {
+		6E8E7F2C27EEBBE7005345BB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E9F995027E6FA4100C95C41 /* Base.framework in Embed Frameworks */,
+				6E8E7F2B27EEBBE7005345BB /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,12 +191,14 @@
 				6EE2624C27DDBE64008B3531 /* SPPermissionsLocationAlways in Frameworks */,
 				6ED8839427CB39E300278E14 /* RxSwift in Frameworks */,
 				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
-				6E9F994F27E6FA4100C95C41 /* Base.framework in Frameworks */,
+				6E8E7F2A27EEBBE7005345BB /* Base.framework in Frameworks */,
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
 				6EE2625027DDBE64008B3531 /* SPPermissionsNotification in Frameworks */,
+				6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */,
 				6EE0CFC127CB64E40027A426 /* Alamofire in Frameworks */,
+				6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */,
 				6ED8839027CB39E300278E14 /* RxCocoa in Frameworks */,
 				6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */,
 				6EE0CFB627CB5D850027A426 /* ReactorKit in Frameworks */,
@@ -520,7 +524,7 @@
 				6EB94E9C27CB208F00609E77 /* Sources */,
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
-				6E9F995127E6FA4100C95C41 /* Embed Frameworks */,
+				6E8E7F2C27EEBBE7005345BB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -543,6 +547,8 @@
 				6EE2624D27DDBE64008B3531 /* SPPermissionsLocationWhenInUse */,
 				6EE2624F27DDBE64008B3531 /* SPPermissionsNotification */,
 				6EE2625127DDBE64008B3531 /* SPPermissionsPhotoLibrary */,
+				6E8E7F2E27EEBDB7005345BB /* CropViewController */,
+				6E8E7F3027EEBDB7005345BB /* TOCropViewController */,
 			);
 			productName = "3dollar-in-my-pocket-manager";
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
@@ -580,6 +586,7 @@
 				6EE0CFB427CB5D850027A426 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				6EE2624827DDBE64008B3531 /* XCRemoteSwiftPackageReference "SPPermissions" */,
+				6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -910,6 +917,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -969,6 +984,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6E8E7F2E27EEBDB7005345BB /* CropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = CropViewController;
+		};
+		6E8E7F3027EEBDB7005345BB /* TOCropViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			productName = TOCropViewController;
+		};
 		6ED8838927CB395B00278E14 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */;
