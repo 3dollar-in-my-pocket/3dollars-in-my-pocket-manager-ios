@@ -51,19 +51,22 @@ final class SignupReactor: BaseReactor, Reactor {
     private let categoryService: CategoryServiceType
     private let imageService: ImageServiceType
     private let authService: AuthServiceType
+    private var userDefaultsUtils: UserDefaultsUtils
     
     init(
         socialType: SocialType,
         token: String,
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
-        authService: AuthServiceType
+        authService: AuthServiceType,
+        userDefaultsUtils: UserDefaultsUtils
     ) {
         self.socialType = socialType
         self.token = token
         self.categoryService = categoryService
         self.imageService = imageService
         self.authService = authService
+        self.userDefaultsUtils = userDefaultsUtils
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -213,25 +216,28 @@ final class SignupReactor: BaseReactor, Reactor {
                     socialType: socialType,
                     token: token
                 )
-                    .map { _ in .pushWaiting }
-                    .catch { error in
-                        if let httpError = error as? HTTPError {
-                            switch httpError {
-                            case .forbidden:
-                                return .just(.pushWaiting)
-                                
-                            case .conflict:
-                                return .just(.goToSignin)
-                                
-                            default:
-                                break
-                            }
+                .do(onNext: { [weak self] response in
+                    self?.userDefaultsUtils.userToken = response.token
+                })
+                .map { _ in .pushWaiting }
+                .catch { error in
+                    if let httpError = error as? HTTPError {
+                        switch httpError {
+                        case .forbidden:
+                            return .just(.pushWaiting)
+                            
+                        case .conflict:
+                            return .just(.goToSignin)
+                            
+                        default:
+                            break
                         }
-                        return .merge([
-                            .just(.showErrorAlert(error)),
-                            .just(.showLoading(isShow: false))
-                        ])
                     }
+                    return .merge([
+                        .just(.showErrorAlert(error)),
+                        .just(.showLoading(isShow: false))
+                    ])
+                }
             }
             .catch { error in
                 return .merge([

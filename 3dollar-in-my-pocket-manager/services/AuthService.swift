@@ -14,7 +14,9 @@ protocol AuthServiceType {
         photoUrl: String,
         socialType: SocialType,
         token: String
-    ) -> Observable<String>
+    ) -> Observable<LoginResponse>
+    
+    func fetchMyInfo() -> Observable<BossAccountInfoResponse>
 }
 
 struct AuthService: AuthServiceType {
@@ -51,7 +53,7 @@ struct AuthService: AuthServiceType {
         photoUrl: String,
         socialType: SocialType,
         token: String
-    ) -> Observable<String> {
+    ) -> Observable<LoginResponse> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/auth/signup"
             let parameters = SignupRequest(
@@ -72,7 +74,28 @@ struct AuthService: AuthServiceType {
                 parameters: parameters,
                 encoding: JSONEncoding.default,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            ).responseDecodable(of: ResponseContainer<LoginResponse>.self) { response in
+                if response.isSuccess() {
+                    observer.processValue(response: response)
+                } else {
+                    observer.processHTTPError(response: response)
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func fetchMyInfo() -> Observable<BossAccountInfoResponse> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/boss/account/my-info"
+            let headers = HTTPUtils.defaultHeader()
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .get,
+                headers: headers
+            ).responseDecodable(of: ResponseContainer<BossAccountInfoResponse>.self) { response in
                 if response.isSuccess() {
                     observer.processValue(response: response)
                 } else {

@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         self.window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         self.window?.windowScene = windowScene
-        self.window?.rootViewController = SigninViewController.instance()
+        self.window?.rootViewController = SplashViewController.instance()
         self.window?.makeKeyAndVisible()
     }
     
@@ -55,6 +55,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func goToSignin() {
+        self.window?.rootViewController = SigninViewController.instance()
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func goToWaiting() {
+        self.window?.rootViewController = WaitingViewController.instance()
+        self.window?.makeKeyAndVisible()
+    }
 
+    func goToMain() {
+        
+    }
 }
 

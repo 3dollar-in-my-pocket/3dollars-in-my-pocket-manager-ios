@@ -18,7 +18,8 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             token: token,
             categoryService: CategoryService(),
             imageService: ImageService(),
-            authService: AuthService()
+            authService: AuthService(),
+            userDefaultsUtils: UserDefaultsUtils()
         )
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,7 +62,7 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
         self.signupReactor.pushWaitingPublisher
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.coordinator?.pushWaiting()
+                self?.coordinator?.goToWaiting()
             })
             .disposed(by: self.eventDisposeBag)
         

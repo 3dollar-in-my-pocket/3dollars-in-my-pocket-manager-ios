@@ -13,7 +13,7 @@ protocol SignupCoordinator: BaseCoordinator, AnyObject {
     
     func showAlbumPicker()
     
-    func pushWaiting()
+    func goToWaiting()
     
     func presentPhotoCrop(photo: UIImage)
 }
@@ -84,13 +84,15 @@ extension SignupCoordinator where Self: BaseViewController {
         self.presenter.present(picker, animated: true, completion: nil)
     }
     
-    func pushWaiting() {
-        let viewController = WaitingViewController.instance()
+    func goToWaiting() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
+          }
         
-        self.presenter.navigationController?.pushViewController(
-            viewController,
-            animated: true
-        )
+        sceneDelegate.goToWaiting()
     }
     
     func presentPhotoCrop(photo: UIImage) {
