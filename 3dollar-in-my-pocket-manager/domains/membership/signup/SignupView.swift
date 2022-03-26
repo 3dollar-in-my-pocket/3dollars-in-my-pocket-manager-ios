@@ -57,6 +57,7 @@ final class SignupView: BaseView {
         placeholder: "signup_registeration_number_placeholder".localized
     ).then {
         $0.keyboardType = .numberPad
+        $0.format = "XXX-XX-XXXX"
     }
     
     let phoneNumberField = SignupInputField(
@@ -66,6 +67,7 @@ final class SignupView: BaseView {
         placeholder: "signup_phone_number_placeholder".localized
     ).then {
         $0.keyboardType = .numberPad
+        $0.format = "XXX-XXXX-XXXX"
     }
     
     let categoryCollectionView = SignupCategorySelectView()

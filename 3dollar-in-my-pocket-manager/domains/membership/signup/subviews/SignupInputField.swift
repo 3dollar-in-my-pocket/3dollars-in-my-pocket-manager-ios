@@ -16,6 +16,12 @@ final class SignupInputField: BaseView {
         }
     }
     
+    var format: String? {
+        willSet {
+            self.textField.format = newValue
+        }
+    }
+    
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 14)
         $0.textColor = .gray100
