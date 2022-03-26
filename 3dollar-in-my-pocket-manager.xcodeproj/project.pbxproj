@@ -53,6 +53,8 @@
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
 		6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */; };
+		6EC51D0627EEEC11009B5527 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC51D0527EEEC11009B5527 /* AddressView.swift */; };
+		6EC51D0827EEEF86009B5527 /* SalesToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC51D0727EEEF86009B5527 /* SalesToggleView.swift */; };
 		6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838927CB395B00278E14 /* SnapKit */; };
 		6ED8838D27CB398300278E14 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838C27CB398300278E14 /* Then */; };
 		6ED8839027CB39E300278E14 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838F27CB39E300278E14 /* RxCocoa */; };
@@ -172,6 +174,8 @@
 		6EB94EAC27CB209000609E77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EB94EAF27CB209000609E77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6EB94EB127CB209000609E77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EC51D0527EEEC11009B5527 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		6EC51D0727EEEF86009B5527 /* SalesToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalesToggleView.swift; sourceTree = "<group>"; };
 		6ED8839827CB3A1700278E14 /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
 		6ED8839B27CB3A7A00278E14 /* SocialSigninButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSigninButton.swift; sourceTree = "<group>"; };
 		6ED883A227CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppleSDGothicNeoEB00.ttf; sourceTree = "<group>"; };
@@ -398,6 +402,15 @@
 			path = "3dollar-in-my-pocket-manager";
 			sourceTree = "<group>";
 		};
+		6EC51D0327EEEC08009B5527 /* subviews */ = {
+			isa = PBXGroup;
+			children = (
+				6EC51D0527EEEC11009B5527 /* AddressView.swift */,
+				6EC51D0727EEEF86009B5527 /* SalesToggleView.swift */,
+			);
+			path = subviews;
+			sourceTree = "<group>";
+		};
 		6ED8839527CB39EE00278E14 /* domains */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +563,7 @@
 		6EF676BB27EEE57500D43E99 /* home */ = {
 			isa = PBXGroup;
 			children = (
+				6EC51D0327EEEC08009B5527 /* subviews */,
 				6EF676BC27EEE57A00D43E99 /* HomeView.swift */,
 				6E81503527EEEA110032C518 /* HomeViewController.swift */,
 			);
@@ -740,6 +754,7 @@
 				6E473BA627D87A3D00232139 /* UIButtonExtensions.swift in Sources */,
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
 				6E142D5A27D77B790084480C /* BaseViewController.swift in Sources */,
+				6EC51D0627EEEC11009B5527 /* AddressView.swift in Sources */,
 				6EE0CFBB27CB61CE0027A426 /* AppleSignInManager.swift in Sources */,
 				6E1F54AE27CB97D20050BBBA /* AFDataResponseExtensions.swift in Sources */,
 				6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */,
@@ -782,6 +797,7 @@
 				6EE0CFB327CB5D560027A426 /* SigninReactor.swift in Sources */,
 				6E142D5C27D77CEE0084480C /* SigninCoordinator.swift in Sources */,
 				6E37AF7827E715C1004FBE25 /* UIViewControllerExtensions.swift in Sources */,
+				6EC51D0827EEEF86009B5527 /* SalesToggleView.swift in Sources */,
 				6E64B28427D836920055354B /* SignupTextField.swift in Sources */,
 				6E473B9A27D86D9B00232139 /* SignupCategorySelectView.swift in Sources */,
 				6E7A49DC27D8D03E00E6653C /* SignupRequest.swift in Sources */,
