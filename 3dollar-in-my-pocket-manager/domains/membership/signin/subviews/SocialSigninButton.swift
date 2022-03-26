@@ -64,11 +64,8 @@ final class SocialSigninButton: BaseView {
             self.titleLabel.textColor = UIColor(r: 56, g: 30, b: 31)
             self.backgroundColor = UIColor(r: 247, g: 227, b: 23)
             
-        case .naver:
-            self.iconImage.image = UIImage(named: "ic_naver")
-            self.titleLabel.text = "네이버 계정으로 로그인"
-            self.titleLabel.textColor = UIColor(r: 255, g: 255, b: 255)
-            self.backgroundColor = UIColor(r: 93, g: 195, b: 81)
+        case .google:
+            break
         }
     }
 }

@@ -85,7 +85,7 @@ final class SigninReactor: BaseReactor, Reactor {
                     return self.signin(socialType: socialType, token: token)
                 }
             
-        case .naver:
+        case .google:
             return .empty()
         }
     }

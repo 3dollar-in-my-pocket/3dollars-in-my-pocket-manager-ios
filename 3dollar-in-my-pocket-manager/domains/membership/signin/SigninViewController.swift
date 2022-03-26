@@ -79,10 +79,5 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
             .map { Reactor.Action.tapSignInButton(socialType: .kakao) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
-        
-        self.signinView.naverButton.rx.tap
-            .map { Reactor.Action.tapSignInButton(socialType: .naver) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
     }
 }
