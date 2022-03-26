@@ -5,7 +5,7 @@ struct BossAccountInfoResponse: Decodable {
     let businessNumber: String
     let createdAt: String
     let name: String
-    let pushSettingsStatus: Bool
+    let isSetupNotification: Bool
     let socialType: SocialType
     let updatedAt: String
     
@@ -14,7 +14,7 @@ struct BossAccountInfoResponse: Decodable {
         case businessNumber
         case createdAt
         case name
-        case pushSettingsStatus
+        case isSetupNotification
         case socialType
         case updatedAt
     }
@@ -32,9 +32,9 @@ struct BossAccountInfoResponse: Decodable {
             forKey: .createdAt
         ) ?? ""
         self.name = try values.decodeIfPresent(String.self, forKey: .name) ?? ""
-        self.pushSettingsStatus = try values.decodeIfPresent(
+        self.isSetupNotification = try values.decodeIfPresent(
             Bool.self,
-            forKey: .pushSettingsStatus
+            forKey: .isSetupNotification
         ) ?? false
         self.socialType = try values.decodeIfPresent(
             SocialType.self,
