@@ -39,6 +39,14 @@
 "signup_upload_photo" = "이미지 업로드";
 "signup_button" = "회원 가입";
 
+// home
+"home_off_title" = "이 위치에서 영업을 시작할까요?";
+"home_off_description" = "영업을 시작하면 손님들에게 노출이 시작됩니다!";
+"home_off_toggle" = "영업 시작하기";
+"home_on_title" = "개시 후";
+"home_on_description" = "동안 영업 중입니다.";
+"home_on_toggle" = "영업 종료하기!";
+
 // waiting
 "waiting_title" = "승인 대기 중입니다.";
 "waiting_description" = "우리는 소규모로 운영되는 팀이라\n시간이 어느정도(3일-5일) 소요된다 어쩐다 하는\n구구절절 먹먹문";

@@ -8,12 +8,15 @@ final class HomeView: BaseView {
         $0.zoomLevel = 15
     }
     
-    private let addressView = AddressView()
+    let addressView = AddressView()
+    
+    let salesToggleView = SalesToggleView()
     
     override func setup() {
         self.addSubViews([
             self.mapView,
-            self.addressView
+            self.addressView,
+            self.salesToggleView
         ])
     }
     
@@ -26,6 +29,12 @@ final class HomeView: BaseView {
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
             make.top.equalTo(self.safeAreaLayoutGuide)
+        }
+        
+        self.salesToggleView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
 }
