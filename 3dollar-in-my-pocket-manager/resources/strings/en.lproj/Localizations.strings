@@ -1,0 +1,46 @@
+// Error
+"error_unknown" = "알 수 없는 에러입니다.";
+"error_time_out" = "알 수 없는 에러입니다.\n잠시후 다시 시도해주세요.";
+"error_fail_decode" = "알 수 없는 형태의 데이터입니다.";
+"error_nil_value" = "값이 없습니다.";
+"http_error_bad_request" = "요청에 오류가 있습니다.\n다시 확인해주세요.";
+"http_error_unauthorized" = "세션이 만료되었습니다.\n다시 로그인해주세요.";
+"http_error_forbidden" = "탈퇴한 사용자입니다.";
+"http_error_not_found" = "없는 데이터입니다.";
+"http_error_conflict" = "이미 존재하는 데이터입니다.";
+"http_error_internal_server_error" = "서버에서 오류가 발생했습니다.\n잠시 후 다시 시도해주세요!";
+"http_error_bad_gateway" = "일시적인 오류가 발생했어요..ㅠㅠ\n잠시 후 다시 시도해주세요!";
+"http_error_maintenance" = "서버 점검중입니다.\n잠시 후 다시 시도해주세요.";
+"http_error_timeout" = "일시적인 오류가 발생했어요..ㅠㅠ\n잠시 후 다시 시도해주세요!";
+
+// authorization
+"authorization_denied_title" = "권한 거절";
+"authorization_denied_description" = "사진을 첨부하기 위해 권한이 필요합니다.\n설정에서 해당 권한을 허용해주세요.";
+"authorization_setting" = "설정";
+
+// signup
+"signup_title" = "회원가입";
+"signup_description" = "사장님, 가게 정보를\n입력해 주세요!";
+"signup_owner_name" = "사장님 성함";
+"signup_owner_name_placeholder" = "사장님 성함을 입력해주세요.";
+"signup_store_name" = "가게이름";
+"signup_store_name_description" = "최대 20자";
+"signup_store_name_placeholder" = "가게 이름을 입력해 주세요.";
+"signup_registeration_number_title" = "사업자 등록 번호";
+"signup_registeration_number_description" = "“-”를 제외한 숫자만 입력";
+"signup_registeration_number_placeholder" = "사업자 등록 번호를 입력해 주세요.";
+"signup_phone_number_title" = "전화번호";
+"signup_phone_number_description" = "“-”를 제외한 숫자만 입력";
+"signup_phone_number_placeholder" = "전화번호를 입력해 주세요.";
+"signup_category_title" = "카테고리 선택";
+"signup_category_description" = "최대 3개";
+"signup_photo_title" = "가게 인증 사진";
+"signup_photo_description" = "사진은 사장님 인증 용도로 사용됩니다.";
+"signup_upload_photo" = "이미지 업로드";
+"signup_button" = "회원 가입";
+
+// waiting
+"waiting_title" = "승인 대기 중입니다.";
+"waiting_description" = "우리는 소규모로 운영되는 팀이라\n시간이 어느정도(3일-5일) 소요된다 어쩐다 하는\n구구절절 먹먹문";
+"waiting_question_button" = "이메일로 문의하기";
+
