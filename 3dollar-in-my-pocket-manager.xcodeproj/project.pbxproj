@@ -27,8 +27,6 @@
 		6E37AF7427E71455004FBE25 /* LoadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF7327E71455004FBE25 /* LoadingManager.swift */; };
 		6E37AF7627E714D6004FBE25 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF7527E714D6004FBE25 /* LoadingView.swift */; };
 		6E37AF7827E715C1004FBE25 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF7727E715C1004FBE25 /* UIViewControllerExtensions.swift */; };
-		6E408D3927EF1FB300322365 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E408D3827EF1FB300322365 /* Base.framework */; };
-		6E408D3A27EF1FB300322365 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E408D3827EF1FB300322365 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E408D4027EF2A8D00322365 /* HomeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E408D3F27EF2A8D00322365 /* HomeReactor.swift */; };
 		6E473B9427D85D1C00232139 /* SignupInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473B9327D85D1C00232139 /* SignupInputField.swift */; };
 		6E473B9627D861B800232139 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473B9527D861B800232139 /* SignupViewController.swift */; };
@@ -48,6 +46,8 @@
 		6E7A49DE27D8D0A600E6653C /* StoreCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DD27D8D0A600E6653C /* StoreCategoryResponse.swift */; };
 		6E7A49E027D8D0E200E6653C /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DF27D8D0E200E6653C /* CategoryService.swift */; };
 		6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49E127D8D3F800E6653C /* StoreCategory.swift */; };
+		6E808CAE27F016CF00C46459 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E808CAD27F016CF00C46459 /* Base.framework */; };
+		6E808CAF27F016CF00C46459 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E808CAD27F016CF00C46459 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E81503527EEEA110032C518 /* HomeViewController.swift */; };
 		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
 		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
@@ -110,13 +110,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E408D3B27EF1FB300322365 /* Embed Frameworks */ = {
+		6E808CB027F016CF00C46459 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E408D3A27EF1FB300322365 /* Base.framework in Embed Frameworks */,
+				6E808CAF27F016CF00C46459 /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,7 +148,6 @@
 		6E37AF7527E714D6004FBE25 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		6E37AF7727E715C1004FBE25 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		6E37AF7927E71F11004FBE25 /* 3dollar-in-my-pocket-manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "3dollar-in-my-pocket-manager.entitlements"; sourceTree = "<group>"; };
-		6E408D3827EF1FB300322365 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-cintsqyfrfisoodqdbyniuyngmnr/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 		6E408D3F27EF2A8D00322365 /* HomeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReactor.swift; sourceTree = "<group>"; };
 		6E473B9327D85D1C00232139 /* SignupInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupInputField.swift; sourceTree = "<group>"; };
 		6E473B9527D861B800232139 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +167,7 @@
 		6E7A49DD27D8D0A600E6653C /* StoreCategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategoryResponse.swift; sourceTree = "<group>"; };
 		6E7A49DF27D8D0E200E6653C /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		6E7A49E127D8D3F800E6653C /* StoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategory.swift; sourceTree = "<group>"; };
+		6E808CAD27F016CF00C46459 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-cpqyhqxhepkpbfajpzjhmdywgxbk/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6E9F995327E7019700C95C41 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
 		6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "3dollar-in-my-pocket-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,7 +214,7 @@
 				6EE2624C27DDBE64008B3531 /* SPPermissionsLocationAlways in Frameworks */,
 				6ED8839427CB39E300278E14 /* RxSwift in Frameworks */,
 				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
-				6E408D3927EF1FB300322365 /* Base.framework in Frameworks */,
+				6E808CAE27F016CF00C46459 /* Base.framework in Frameworks */,
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
@@ -269,7 +269,7 @@
 		6E1AA1B827CB215700C96D92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				6E408D3827EF1FB300322365 /* Base.framework */,
+				6E808CAD27F016CF00C46459 /* Base.framework */,
 				2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */,
 			);
 			name = Frameworks;
@@ -594,7 +594,7 @@
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6E408D3B27EF1FB300322365 /* Embed Frameworks */,
+				6E808CB027F016CF00C46459 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
