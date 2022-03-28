@@ -71,7 +71,7 @@ final class SalesToggleView: BaseView {
         self.toggleButton.snp.makeConstraints { make in
             make.left.equalTo(self.backgroundView).offset(24)
             make.right.equalTo(self.backgroundView).offset(-24)
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(self.backgroundView).offset(-32)
             make.height.equalTo(48)
         }
         

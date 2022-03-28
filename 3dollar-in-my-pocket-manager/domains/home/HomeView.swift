@@ -34,7 +34,7 @@ final class HomeView: BaseView {
         self.salesToggleView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalTo(self.safeAreaLayoutGuide)
         }
     }
 }
