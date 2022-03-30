@@ -28,6 +28,7 @@
 		6E37AF7627E714D6004FBE25 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF7527E714D6004FBE25 /* LoadingView.swift */; };
 		6E37AF7827E715C1004FBE25 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF7727E715C1004FBE25 /* UIViewControllerExtensions.swift */; };
 		6E408D4027EF2A8D00322365 /* HomeReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E408D3F27EF2A8D00322365 /* HomeReactor.swift */; };
+		6E4455B727F3E69E00A8DECF /* ShowOtherStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4455B627F3E69E00A8DECF /* ShowOtherStoreButton.swift */; };
 		6E473B9427D85D1C00232139 /* SignupInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473B9327D85D1C00232139 /* SignupInputField.swift */; };
 		6E473B9627D861B800232139 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473B9527D861B800232139 /* SignupViewController.swift */; };
 		6E473B9827D8624300232139 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473B9727D8624300232139 /* BaseCoordinator.swift */; };
@@ -46,8 +47,6 @@
 		6E7A49DE27D8D0A600E6653C /* StoreCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DD27D8D0A600E6653C /* StoreCategoryResponse.swift */; };
 		6E7A49E027D8D0E200E6653C /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DF27D8D0E200E6653C /* CategoryService.swift */; };
 		6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49E127D8D3F800E6653C /* StoreCategory.swift */; };
-		6E808CAE27F016CF00C46459 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E808CAD27F016CF00C46459 /* Base.framework */; };
-		6E808CAF27F016CF00C46459 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E808CAD27F016CF00C46459 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E81503527EEEA110032C518 /* HomeViewController.swift */; };
 		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
 		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
@@ -97,6 +96,8 @@
 		6EF676B827EECC6D00D43E99 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF676B727EECC6D00D43E99 /* SplashReactor.swift */; };
 		6EF676BA27EECF5400D43E99 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF676B927EECF5400D43E99 /* SplashCoordinator.swift */; };
 		6EF676BD27EEE57A00D43E99 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF676BC27EEE57A00D43E99 /* HomeView.swift */; };
+		6EFA3A0F27F3E1E000C13906 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFA3A0E27F3E1E000C13906 /* Base.framework */; platformFilter = ios; };
+		6EFA3A1027F3E1E000C13906 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFA3A0E27F3E1E000C13906 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */; };
 /* End PBXBuildFile section */
 
@@ -111,13 +112,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E808CB027F016CF00C46459 /* Embed Frameworks */ = {
+		6EFA3A1127F3E1E000C13906 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E808CAF27F016CF00C46459 /* Base.framework in Embed Frameworks */,
+				6EFA3A1027F3E1E000C13906 /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,6 +151,7 @@
 		6E37AF7727E715C1004FBE25 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		6E37AF7927E71F11004FBE25 /* 3dollar-in-my-pocket-manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "3dollar-in-my-pocket-manager.entitlements"; sourceTree = "<group>"; };
 		6E408D3F27EF2A8D00322365 /* HomeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReactor.swift; sourceTree = "<group>"; };
+		6E4455B627F3E69E00A8DECF /* ShowOtherStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOtherStoreButton.swift; sourceTree = "<group>"; };
 		6E473B9327D85D1C00232139 /* SignupInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupInputField.swift; sourceTree = "<group>"; };
 		6E473B9527D861B800232139 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		6E473B9727D8624300232139 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		6EF676B727EECC6D00D43E99 /* SplashReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; };
 		6EF676B927EECF5400D43E99 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		6EF676BC27EEE57A00D43E99 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6EFA3A0E27F3E1E000C13906 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-cintsqyfrfisoodqdbyniuyngmnr/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 		90AB2FCCDB6AA6ABA4B64642 /* Pods-3dollar-in-my-pocket-manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3dollar-in-my-pocket-manager.debug.xcconfig"; path = "Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,7 +219,7 @@
 				6EE2624C27DDBE64008B3531 /* SPPermissionsLocationAlways in Frameworks */,
 				6ED8839427CB39E300278E14 /* RxSwift in Frameworks */,
 				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
-				6E808CAE27F016CF00C46459 /* Base.framework in Frameworks */,
+				6EFA3A0F27F3E1E000C13906 /* Base.framework in Frameworks */,
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
@@ -272,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				6E808CAD27F016CF00C46459 /* Base.framework */,
+				6EFA3A0E27F3E1E000C13906 /* Base.framework */,
 				2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */,
 			);
 			name = Frameworks;
@@ -411,6 +415,7 @@
 			children = (
 				6EC51D0527EEEC11009B5527 /* AddressView.swift */,
 				6EC51D0727EEEF86009B5527 /* SalesToggleView.swift */,
+				6E4455B627F3E69E00A8DECF /* ShowOtherStoreButton.swift */,
 			);
 			path = subviews;
 			sourceTree = "<group>";
@@ -605,7 +610,7 @@
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6E808CB027F016CF00C46459 /* Embed Frameworks */,
+				6EFA3A1127F3E1E000C13906 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -800,6 +805,7 @@
 				6EE0CFC327CB65320027A426 /* BundleExtensions.swift in Sources */,
 				6E473B9627D861B800232139 /* SignupViewController.swift in Sources */,
 				6E1F54B427CB99100050BBBA /* ResponseContainer.swift in Sources */,
+				6E4455B727F3E69E00A8DECF /* ShowOtherStoreButton.swift in Sources */,
 				6EF676BA27EECF5400D43E99 /* SplashCoordinator.swift in Sources */,
 				6E37AF7427E71455004FBE25 /* LoadingManager.swift in Sources */,
 				6E37AF7127E707FC004FBE25 /* WaitingCoordinator.swift in Sources */,
