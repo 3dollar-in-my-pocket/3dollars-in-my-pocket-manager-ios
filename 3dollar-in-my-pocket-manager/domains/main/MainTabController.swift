@@ -25,9 +25,40 @@ final class MainTabController: UITabBarController {
         }
     }
     
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        self.feedbackGenerator.selectionChanged()
+        
+        guard let tabBarTag = TabBarTag(rawValue: item.tag) else { return }
+        
+        switch tabBarTag {
+        case .home, .myPage:
+            if #available(iOS 15, *) {
+                let appearance = UITabBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .white
+                self.tabBar.standardAppearance = appearance
+                self.tabBar.scrollEdgeAppearance = appearance
+            } else {
+                self.tabBar.barTintColor = .white
+                self.tabBar.backgroundColor = .white
+            }
+            
+        case .setting:
+            if #available(iOS 15, *) {
+                let appearance = UITabBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .gray100
+                self.tabBar.standardAppearance = appearance
+                self.tabBar.scrollEdgeAppearance = appearance
+            } else {
+                self.tabBar.barTintColor = .gray100
+                self.tabBar.backgroundColor = .gray100
+            }
+        }
+    }
+    
     private func setupTabBarController() {
         self.setViewControllers([
-            HomeViewController.instance(),
             HomeViewController.instance(),
             HomeViewController.instance(),
             HomeViewController.instance()
@@ -36,5 +67,6 @@ final class MainTabController: UITabBarController {
         self.tabBar.layer.borderWidth = 1
         self.tabBar.layer.borderColor = UIColor.gray5.cgColor
         self.tabBar.barTintColor = .white
+        self.tabBar.backgroundColor = .white
     }
 }

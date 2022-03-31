@@ -5,7 +5,7 @@ import NMapsMap
 final class HomeView: BaseView {
     let mapView = NMFMapView().then {
         $0.positionMode = .direction
-        $0.zoomLevel = 15
+        $0.zoomLevel = 17
     }
     
     let addressView = AddressView()
@@ -30,7 +30,10 @@ final class HomeView: BaseView {
     
     override func bindConstraints() {
         self.mapView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.left.equalToSuperview()
+            make.top.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalTo(self.salesToggleView.snp.top).offset(20)
         }
         
         self.addressView.snp.makeConstraints { make in

@@ -6,12 +6,16 @@ final class HomeViewController: BaseViewController, View {
     private let homeView = HomeView()
     private let homeReactor = HomeReactor()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     static func instance() -> HomeViewController {
         return HomeViewController(nibName: nil, bundle: nil).then {
             $0.tabBarItem = UITabBarItem(
                 title: nil,
                 image: UIImage(named: "ic_home"),
-                tag: 1
+                tag: TabBarTag.home.rawValue
             )
             $0.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
         }
