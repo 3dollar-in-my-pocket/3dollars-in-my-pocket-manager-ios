@@ -8,6 +8,10 @@ final class HomeView: BaseView {
         $0.zoomLevel = 17
     }
     
+    let marker = UIImageView().then {
+        $0.image = UIImage(named: "ic_marker_active")
+    }
+    
     let addressView = AddressView()
     
     let showOtherButton = ShowOtherButton()
@@ -21,6 +25,7 @@ final class HomeView: BaseView {
     override func setup() {
         self.addSubViews([
             self.mapView,
+            self.marker,
             self.addressView,
             self.showOtherButton,
             self.salesToggleView,
@@ -34,6 +39,12 @@ final class HomeView: BaseView {
             make.top.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalTo(self.salesToggleView.snp.top).offset(20)
+        }
+        
+        self.marker.snp.makeConstraints { make in
+            make.center.equalTo(self.mapView)
+            make.width.equalTo(30)
+            make.height.equalTo(40)
         }
         
         self.addressView.snp.makeConstraints { make in
@@ -58,5 +69,15 @@ final class HomeView: BaseView {
             make.right.equalToSuperview()
             make.bottom.equalTo(self.safeAreaLayoutGuide)
         }
+    }
+    
+    private func setupRangeOverlayView(latitude: Double, longitude: Double) {
+        let rangeOverlayView = NMFCircleOverlay().then {
+            $0.center = NMGLatLng(lat: latitude, lng: longitude)
+            $0.radius = 100
+            $0.fillColor = .pink.withAlphaComponent(0.2)
+        }
+        
+        rangeOverlayView.mapView = self.mapView
     }
 }
