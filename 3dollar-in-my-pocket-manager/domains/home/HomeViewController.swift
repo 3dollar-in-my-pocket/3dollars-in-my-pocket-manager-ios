@@ -4,7 +4,7 @@ import ReactorKit
 
 final class HomeViewController: BaseViewController, View {
     private let homeView = HomeView()
-    private let homeReactor = HomeReactor()
+    private let homeReactor = HomeReactor(locationManager: LocationManager.shared)
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent

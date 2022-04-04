@@ -12,6 +12,10 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
     private let signupReactor: SignupReactor
     private weak var coordinator: SignupCoordinator?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     init(socialType: SocialType, token: String) {
         self.signupReactor = SignupReactor(
             socialType: socialType,
