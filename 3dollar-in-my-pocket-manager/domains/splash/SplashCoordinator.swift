@@ -28,7 +28,7 @@ extension SplashCoordinator {
             return
         }
         
-        sceneDelegate.goToWaiting()
+        sceneDelegate.goToMain()
     }
     
     func goToWaiting() {
