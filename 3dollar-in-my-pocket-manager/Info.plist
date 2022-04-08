@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AppleSDGothicNeoEB00.ttf</string>

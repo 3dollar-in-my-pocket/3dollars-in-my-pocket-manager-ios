@@ -12,6 +12,7 @@ final class HomeReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case setAddress(String)
+        case setStore(Store)
         case setCameraPosition(CLLocation)
         case toggleSalesStatus
         case showErrorAlert(Error)
@@ -19,27 +20,33 @@ final class HomeReactor: BaseReactor, Reactor {
     
     struct State {
         var address = ""
-        var isOnSales = false
         var isShowOtherStore = true
         var cameraPosition: CLLocation?
+        var store: Store?
     }
     
     let initialState = State()
     private let mapService: MapServiceProtocol
+    private let storeSerivce: StoreServiceProtocol
     private let locationManager: LocationManagerProtocol
     
     init(
         mapService: MapServiceProtocol,
+        storeService: StoreServiceProtocol,
         locationManager: LocationManagerProtocol
     ) {
         self.mapService = mapService
+        self.storeSerivce = storeService
         self.locationManager = locationManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            return self.fetchCurrentLocation()
+            return .merge([
+                self.fetchCurrentLocation(),
+                self.fetchMyStoreInfo()
+            ])
             
         case .tapSalesToggle:
             return .just(.toggleSalesStatus)
@@ -53,11 +60,14 @@ final class HomeReactor: BaseReactor, Reactor {
         case .setAddress(let address):
             newState.address = address
             
+        case .setStore(let store):
+            newState.store = store
+            
         case .setCameraPosition(let location):
             newState.cameraPosition = location
             
         case .toggleSalesStatus:
-            newState.isOnSales.toggle()
+            newState.store?.isOpen.toggle()
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
@@ -87,4 +97,21 @@ final class HomeReactor: BaseReactor, Reactor {
         .map { .setAddress($0) }
         .catch { .just(.showErrorAlert($0)) }
     }
+    
+    private func fetchMyStoreInfo() -> Observable<Mutation> {
+        return self.storeSerivce.fetchMyStore()
+            .map(Store.init(response:))
+            .map { .setStore($0) }
+            .catch { .just(.showErrorAlert($0)) }
+    }
 }
+
+/// 1.내 가게 정보 조회
+/// 2. 오픈하지 않았다면
+/// 2-1. 가운데 마커 표시
+/// 2-2. 오픈전 상태 바인딩
+/// 3. 오픈한 상태라면
+/// 3-1. 내 가기 위치에 마커 표시
+/// 3-2. 내 위치와 주기적으로 비교해서 알럿 표시 여부 결정
+///
+

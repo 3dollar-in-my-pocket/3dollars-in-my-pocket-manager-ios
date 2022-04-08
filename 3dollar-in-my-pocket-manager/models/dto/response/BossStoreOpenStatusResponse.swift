@@ -1,5 +1,5 @@
 struct BossStoreOpenStatusResponse: Decodable {
-    let openStartDateTime: String
+    let openStartDateTime: String?
     let status: OpenStatus
     
     enum CodingKeys: String, CodingKey {
@@ -18,7 +18,7 @@ struct BossStoreOpenStatusResponse: Decodable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.openStartDateTime = try values.decodeIfPresent(String.self, forKey: .openStartDateTime) ?? ""
+        self.openStartDateTime = try values.decodeIfPresent(String.self, forKey: .openStartDateTime)
         self.status = try values.decodeIfPresent(OpenStatus.self, forKey: .status) ?? .closed
     }
 }

@@ -1,18 +1,18 @@
 struct BossStoreInfoResponse: Decodable {
-    let appearanceDays: BossStoreAppearanceDayResponse
+    let appearanceDays: [BossStoreAppearanceDayResponse]
     let bossStoreId: String
     let categories: [StoreCategoryResponse]
-    let contactsNumber: String
-    let createdAt: String
+    let contactsNumber: String?
+    let createdAt: String?
     let distance: Int
-    let imageUrl: String
-    let introduction: String
-    let location: LocationResponse
+    let imageUrl: String?
+    let introduction: String?
+    let location: LocationResponse?
     let menus: [BossStoreMenuResponse]
     let name: String
     let openStatus: BossStoreOpenStatusResponse
-    let snsUrl: String
-    let updatedAt: String
+    let snsUrl: String?
+    let updatedAt: String?
     
     enum CodingKeys: String, CodingKey {
         case appearanceDays
@@ -35,9 +35,9 @@ struct BossStoreInfoResponse: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
         self.appearanceDays = try values.decodeIfPresent(
-            BossStoreAppearanceDayResponse.self,
+            [BossStoreAppearanceDayResponse].self,
             forKey: .appearanceDays
-        ) ?? BossStoreAppearanceDayResponse()
+        ) ?? []
         self.bossStoreId = try values.decodeIfPresent(String.self, forKey: .bossStoreId) ?? ""
         self.categories = try values.decodeIfPresent(
             [StoreCategoryResponse].self,
@@ -46,11 +46,11 @@ struct BossStoreInfoResponse: Decodable {
         self.contactsNumber = try values.decodeIfPresent(
             String.self,
             forKey: .contactsNumber
-        ) ?? ""
-        self.createdAt = try values.decodeIfPresent(String.self, forKey: .createdAt) ?? ""
+        )
+        self.createdAt = try values.decodeIfPresent(String.self, forKey: .createdAt)
         self.distance = try values.decodeIfPresent(Int.self, forKey: .distance) ?? 0
-        self.imageUrl = try values.decodeIfPresent(String.self, forKey: .imageUrl) ?? ""
-        self.introduction = try values.decodeIfPresent(String.self, forKey: .introduction) ?? ""
+        self.imageUrl = try values.decodeIfPresent(String.self, forKey: .imageUrl)
+        self.introduction = try values.decodeIfPresent(String.self, forKey: .introduction)
         self.location = try values.decodeIfPresent(
             LocationResponse.self,
             forKey: .location
@@ -61,7 +61,7 @@ struct BossStoreInfoResponse: Decodable {
             BossStoreOpenStatusResponse.self,
             forKey: .openStatus
         ) ?? BossStoreOpenStatusResponse()
-        self.snsUrl = try values.decodeIfPresent(String.self, forKey: .snsUrl) ?? ""
-        self.updatedAt = try values.decodeIfPresent(String.self, forKey: .updatedAt) ?? ""
+        self.snsUrl = try values.decodeIfPresent(String.self, forKey: .snsUrl)
+        self.updatedAt = try values.decodeIfPresent(String.self, forKey: .updatedAt)
     }
 }

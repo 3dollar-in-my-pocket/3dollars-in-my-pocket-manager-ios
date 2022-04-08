@@ -1,5 +1,8 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class AddressView: BaseView {
     private let height:CGFloat = 56
     
@@ -11,10 +14,9 @@ final class AddressView: BaseView {
         $0.layer.shadowOpacity = 0.08
     }
     
-    private let addressLabel = UILabel().then {
+    fileprivate let addressLabel = UILabel().then {
         $0.textColor = .black
         $0.font = .semiBold(size: 16)
-        $0.text = "서울특별시 사직동"
         $0.textAlignment = .center
     }
     
@@ -39,6 +41,14 @@ final class AddressView: BaseView {
         
         self.snp.makeConstraints { make in
             make.edges.equalTo(self.containerView).priority(.high)
+        }
+    }
+}
+
+extension Reactive where Base: AddressView {
+    var address: Binder<String> {
+        return Binder(self.base) { view, address in
+            view.addressLabel.text = address
         }
     }
 }

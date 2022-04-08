@@ -2,9 +2,14 @@ import UIKit
 
 import ReactorKit
 
-final class HomeViewController: BaseViewController, View {
+final class HomeViewController: BaseViewController, View, HomeCoordinator {
     private let homeView = HomeView()
-    private let homeReactor = HomeReactor(locationManager: LocationManager.shared)
+    private let homeReactor = HomeReactor(
+        mapService: MapService(),
+        storeService: StoreService(),
+        locationManager: LocationManager.shared
+    )
+    private weak var coordinator: HomeCoordinator?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -23,12 +28,23 @@ final class HomeViewController: BaseViewController, View {
     
     override func loadView() {
         self.view = self.homeView
-        
-        self.reactor = self.homeReactor
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.coordinator = self
+        self.reactor = self.homeReactor
+        self.homeReactor.action.onNext(.viewDidLoad)
+    }
+    
+    override func bindEvent() {
+        self.homeReactor.showErrorAlert
+            .asDriver(onErrorJustReturn: BaseError.unknown)
+            .drive(onNext: { [weak self] error in
+                self?.coordinator?.showErrorAlert(error: error)
+            })
+            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: HomeReactor) {
@@ -40,7 +56,14 @@ final class HomeViewController: BaseViewController, View {
         
         // Bind state
         reactor.state
-            .map { $0.isOnSales }
+            .map { $0.address }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: "")
+            .drive(self.homeView.addressView.rx.address)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .compactMap { $0.store?.isOpen }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: false)
             .drive(self.homeView.salesToggleView.rx.isOn)
