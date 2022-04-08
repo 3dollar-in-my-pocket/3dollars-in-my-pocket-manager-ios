@@ -1,6 +1,8 @@
 import UIKit
 
 import NMapsMap
+import RxSwift
+import RxCocoa
 
 final class HomeView: BaseView {
     let mapView = NMFMapView().then {
@@ -8,7 +10,7 @@ final class HomeView: BaseView {
         $0.zoomLevel = 17
     }
     
-    let marker = UIImageView().then {
+    let centerMarker = UIImageView().then {
         $0.image = UIImage(named: "ic_marker_active")
     }
     
@@ -25,7 +27,7 @@ final class HomeView: BaseView {
     override func setup() {
         self.addSubViews([
             self.mapView,
-            self.marker,
+            self.centerMarker,
             self.addressView,
             self.showOtherButton,
             self.salesToggleView,
@@ -41,7 +43,7 @@ final class HomeView: BaseView {
             make.bottom.equalTo(self.salesToggleView.snp.top).offset(20)
         }
         
-        self.marker.snp.makeConstraints { make in
+        self.centerMarker.snp.makeConstraints { make in
             make.center.equalTo(self.mapView)
             make.width.equalTo(30)
             make.height.equalTo(40)
@@ -71,6 +73,45 @@ final class HomeView: BaseView {
         }
     }
     
+    fileprivate func moveCameraPosition(position: CLLocation) {
+        let cameraPosition = NMFCameraPosition(
+            NMGLatLng(
+                lat: position.coordinate.latitude,
+                lng: position.coordinate.longitude
+            ),
+            zoom: self.mapView.zoomLevel
+        )
+        let cameraUpdate = NMFCameraUpdate(position: cameraPosition)
+        
+        cameraUpdate.animation = .easeIn
+        self.mapView.moveCamera(cameraUpdate)
+    }
+    
+    fileprivate func bind(store: Store) {
+        self.centerMarker.isHidden = store.isOpen
+        if store.isOpen {
+            if let location = store.location {
+                let position = NMGLatLng(
+                    lat: location.coordinate.latitude,
+                    lng: location.coordinate.longitude
+                )
+                let marker = NMFMarker()
+                
+                marker.position = position
+                marker.iconImage = NMFOverlayImage(name: "ic_marker_active")
+                marker.width = 30
+                marker.height = 40
+                marker.mapView = self.mapView
+                
+                let circle = NMFCircleOverlay()
+                circle.center = position
+                circle.radius = 100
+                circle.fillColor = .pink.withAlphaComponent(0.2)
+                circle.mapView = mapView
+            }
+        }
+    }
+    
     private func setupRangeOverlayView(latitude: Double, longitude: Double) {
         let rangeOverlayView = NMFCircleOverlay().then {
             $0.center = NMGLatLng(lat: latitude, lng: longitude)
@@ -79,5 +120,19 @@ final class HomeView: BaseView {
         }
         
         rangeOverlayView.mapView = self.mapView
+    }
+}
+
+extension Reactive where Base: HomeView {
+    var cameraPosition: Binder<CLLocation> {
+        return Binder(self.base) { view, position in
+            view.moveCameraPosition(position: position)
+        }
+    }
+    
+    var myStore: Binder<Store> {
+        return Binder(self.base) { view, store in
+            view.bind(store: store)
+        }
     }
 }

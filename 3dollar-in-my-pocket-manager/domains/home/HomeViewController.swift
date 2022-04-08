@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 import ReactorKit
 
@@ -67,6 +68,23 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: false)
             .drive(self.homeView.salesToggleView.rx.isOn)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .compactMap { $0.cameraPosition }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: CLLocation(
+                latitude: 127.044155,
+                longitude: 37.547980
+            ))
+            .drive(self.homeView.rx.cameraPosition)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .compactMap { $0.store }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: Store())
+            .drive(self.homeView.rx.myStore)
             .disposed(by: self.disposeBag)
     }
 }

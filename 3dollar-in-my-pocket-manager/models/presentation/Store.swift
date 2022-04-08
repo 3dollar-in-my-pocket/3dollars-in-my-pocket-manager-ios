@@ -22,4 +22,16 @@ struct Store: Equatable {
             self.openTime = nil
         }
     }
+    
+    init(
+        id: String = "",
+        location: CLLocation = CLLocation(latitude: 0, longitude: 0),
+        isOpen: Bool = false,
+        openTime: Date? = nil
+    ) {
+        self.id = id
+        self.location = location
+        self.isOpen = isOpen
+        self.openTime = openTime
+    }
 }
