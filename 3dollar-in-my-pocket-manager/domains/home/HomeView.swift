@@ -55,7 +55,8 @@ final class HomeView: BaseView {
         }
         
         self.centerMarker.snp.makeConstraints { make in
-            make.center.equalTo(self.mapView)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.mapView.snp.centerY)
             make.width.equalTo(30)
             make.height.equalTo(40)
         }
