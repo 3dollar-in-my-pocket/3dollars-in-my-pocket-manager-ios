@@ -24,6 +24,17 @@ final class HomeView: BaseView {
         $0.setImage(nil, for: .normal)
     }
     
+    private let rangeOverlayView = NMFCircleOverlay().then {
+        $0.radius = 100
+        $0.fillColor = .pink.withAlphaComponent(0.2)
+    }
+    
+    private let marker = NMFMarker().then {
+        $0.iconImage = NMFOverlayImage(name: "ic_marker_active")
+        $0.width = 30
+        $0.height = 40
+    }
+    
     override func setup() {
         self.addSubViews([
             self.mapView,
@@ -88,6 +99,8 @@ final class HomeView: BaseView {
     }
     
     fileprivate func bind(store: Store) {
+        self.rangeOverlayView.mapView = nil
+        self.marker.mapView = nil
         self.centerMarker.isHidden = store.isOpen
         if store.isOpen {
             if let location = store.location {
@@ -95,31 +108,20 @@ final class HomeView: BaseView {
                     lat: location.coordinate.latitude,
                     lng: location.coordinate.longitude
                 )
-                let marker = NMFMarker()
                 
-                marker.position = position
-                marker.iconImage = NMFOverlayImage(name: "ic_marker_active")
-                marker.width = 30
-                marker.height = 40
-                marker.mapView = self.mapView
-                
-                let circle = NMFCircleOverlay()
-                circle.center = position
-                circle.radius = 100
-                circle.fillColor = .pink.withAlphaComponent(0.2)
-                circle.mapView = mapView
+                self.marker.position = position
+                self.marker.mapView = self.mapView
+                self.setupRangeOverlayView(
+                    latitude: location.coordinate.latitude,
+                    longitude: location.coordinate.longitude
+                )
             }
         }
     }
     
     private func setupRangeOverlayView(latitude: Double, longitude: Double) {
-        let rangeOverlayView = NMFCircleOverlay().then {
-            $0.center = NMGLatLng(lat: latitude, lng: longitude)
-            $0.radius = 100
-            $0.fillColor = .pink.withAlphaComponent(0.2)
-        }
-        
-        rangeOverlayView.mapView = self.mapView
+        self.rangeOverlayView.center = NMGLatLng(lat: latitude, lng: longitude)
+        self.rangeOverlayView.mapView = self.mapView
     }
 }
 

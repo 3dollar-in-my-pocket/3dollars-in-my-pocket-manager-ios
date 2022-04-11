@@ -8,12 +8,14 @@ final class HomeReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
         case tapSalesToggle
+        case moveCamera(CLLocation)
     }
     
     enum Mutation {
         case setAddress(String)
         case setStore(Store)
         case setCameraPosition(CLLocation)
+        case setStoreLocation(CLLocation)
         case toggleSalesStatus
         case showErrorAlert(Error)
     }
@@ -49,7 +51,14 @@ final class HomeReactor: BaseReactor, Reactor {
             ])
             
         case .tapSalesToggle:
-            return .just(.toggleSalesStatus)
+            if self.currentState.store?.isOpen == true {
+                return self.closeStore()
+            } else {
+                return self.openStore()
+            }
+            
+        case .moveCamera(let position):
+            return .just(.setCameraPosition(position))
         }
     }
     
@@ -65,6 +74,9 @@ final class HomeReactor: BaseReactor, Reactor {
             
         case .setCameraPosition(let location):
             newState.cameraPosition = location
+            
+        case .setStoreLocation(let location):
+            newState.store?.location = location
             
         case .toggleSalesStatus:
             newState.store?.isOpen.toggle()
@@ -102,6 +114,28 @@ final class HomeReactor: BaseReactor, Reactor {
         return self.storeSerivce.fetchMyStore()
             .map(Store.init(response:))
             .map { .setStore($0) }
+            .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func openStore() -> Observable<Mutation> {
+        guard let storeId = self.currentState.store?.id,
+              let location = self.currentState.cameraPosition else { return .empty() }
+        
+        return self.storeSerivce.openStore(storeId: storeId, location: location)
+            .flatMap { _ -> Observable<Mutation> in
+                return .merge([
+                    .just(.setStoreLocation(location)),
+                    .just(.toggleSalesStatus),
+                ])
+            }
+            .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func closeStore() -> Observable<Mutation> {
+        guard let storeId = self.currentState.store?.id else { return .empty() }
+        
+        return self.storeSerivce.closeStore(storeId: storeId)
+            .map { _ in .toggleSalesStatus }
             .catch { .just(.showErrorAlert($0)) }
     }
 }

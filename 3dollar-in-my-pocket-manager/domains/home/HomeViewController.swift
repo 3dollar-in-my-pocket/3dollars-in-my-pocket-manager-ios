@@ -2,6 +2,7 @@ import UIKit
 import CoreLocation
 
 import ReactorKit
+import NMapsMap
 
 final class HomeViewController: BaseViewController, View, HomeCoordinator {
     private let homeView = HomeView()
@@ -37,6 +38,7 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
         self.coordinator = self
         self.reactor = self.homeReactor
         self.homeReactor.action.onNext(.viewDidLoad)
+        self.homeView.mapView.addCameraDelegate(delegate: self)
     }
     
     override func bindEvent() {
@@ -86,5 +88,22 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .asDriver(onErrorJustReturn: Store())
             .drive(self.homeView.rx.myStore)
             .disposed(by: self.disposeBag)
+    }
+}
+
+extension HomeViewController: NMFMapViewCameraDelegate {
+    func mapView(
+        _ mapView: NMFMapView,
+        cameraDidChangeByReason reason: Int,
+        animated: Bool
+    ) {
+        if reason == NMFMapChangedByGesture {
+            let mapLocation = CLLocation(
+                latitude: mapView.cameraPosition.target.lat,
+                longitude: mapView.cameraPosition.target.lng
+            )
+            
+            self.homeReactor.action.onNext(.moveCamera(mapLocation))
+        }
     }
 }

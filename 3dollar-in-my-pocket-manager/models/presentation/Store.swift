@@ -3,9 +3,9 @@ import Base
 
 struct Store: Equatable {
     let id: String
-    let location: CLLocation?
+    var location: CLLocation?
     var isOpen: Bool
-    let openTime: Date?
+    var openTime: Date?
     
     init(response: BossStoreInfoResponse) {
         self.id = response.bossStoreId
