@@ -2,29 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄</string>
-	<key>UIAppFonts</key>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>AppleSDGothicNeoEB00.ttf</string>
+		<string>com.macgongmon.-dollar-in-my-pocket-manager-dev.background</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>가게 인증 사진을 가져오기 위해 앨범권한을 허용해주세요.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.</string>
-	<key>KAKAO_APP_KEY</key>
-	<string>$(KAKAO_APP_KEY)</string>
 	<key>API_URL</key>
 	<string>$(API_URL)</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kakaokompassauth</string>
-		<string>kakaolink</string>
-	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -35,6 +18,19 @@
 				<string>kakaob623fd2160694c4c2cb08e64df491d1c</string>
 			</array>
 		</dict>
+	</array>
+	<key>KAKAO_APP_KEY</key>
+	<string>$(KAKAO_APP_KEY)</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>kakaolink</string>
+	</array>
+	<key>NMFClientId</key>
+	<string>h14485sw4a</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>AppleSDGothicNeoEB00.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -53,7 +49,11 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NMFClientId</key>
-	<string>h14485sw4a</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>location</string>
+		<string>processing</string>
+	</array>
 </dict>
 </plist>

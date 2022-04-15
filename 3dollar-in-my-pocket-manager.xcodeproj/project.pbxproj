@@ -13,6 +13,7 @@
 		6E142D5F27D77EA50084480C /* NetworkActivityLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */; };
 		6E142D6227D785A40084480C /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D6127D785A40084480C /* SignupView.swift */; };
 		6E142D6427D785B50084480C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D6327D785B50084480C /* BaseView.swift */; };
+		6E1605862807039E00F6649C /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1605852807039E00F6649C /* BackgroundTaskManager.swift */; };
 		6E1F54A327CB79120050BBBA /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54A227CB79120050BBBA /* LoginResponse.swift */; };
 		6E1F54A627CB7A130050BBBA /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54A527CB7A130050BBBA /* AuthService.swift */; };
 		6E1F54AA27CB7D5C0050BBBA /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54A927CB7D5C0050BBBA /* LoginRequest.swift */; };
@@ -156,6 +157,7 @@
 		6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkActivityLogger.swift; sourceTree = "<group>"; };
 		6E142D6127D785A40084480C /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		6E142D6327D785B50084480C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		6E1605852807039E00F6649C /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		6E1AA1B227CB210800C96D92 /* Base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Base.xcodeproj; path = "../3dollars-in-my-pocket-ios-base/Base.xcodeproj"; sourceTree = "<group>"; };
 		6E1F54A227CB79120050BBBA /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		6E1F54A527CB7A130050BBBA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -305,6 +307,14 @@
 				6EE2624627DDB9F2008B3531 /* SignupCoordinator.swift */,
 			);
 			path = signup;
+			sourceTree = "<group>";
+		};
+		6E1605832807032100F6649C /* background-task */ = {
+			isa = PBXGroup;
+			children = (
+				6E1605852807039E00F6649C /* BackgroundTaskManager.swift */,
+			);
+			path = "background-task";
 			sourceTree = "<group>";
 		};
 		6E1AA1B327CB210800C96D92 /* Products */ = {
@@ -576,6 +586,7 @@
 		6EE0CF9B27CB54A70027A426 /* managers */ = {
 			isa = PBXGroup;
 			children = (
+				6E1605832807032100F6649C /* background-task */,
 				6E25FED427F5362A00BE2941 /* location */,
 				6E37AF7227E7144B004FBE25 /* loading */,
 				6EE0CF9C27CB54AE0027A426 /* social-sign-in */,
@@ -930,6 +941,7 @@
 				6E37AF6C27E7057F004FBE25 /* WaitingViewController.swift in Sources */,
 				6E7A49DE27D8D0A600E6653C /* StoreCategoryResponse.swift in Sources */,
 				6EF676B427EECBED00D43E99 /* SplashView.swift in Sources */,
+				6E1605862807039E00F6649C /* BackgroundTaskManager.swift in Sources */,
 				6E473BA427D874C500232139 /* SignupPhotoView.swift in Sources */,
 				6EE0CFA927CB5B6C0027A426 /* BaseError.swift in Sources */,
 			);
@@ -1086,6 +1098,11 @@
 				DEVELOPMENT_TEAM = X975A2HM62;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "가게 인증 사진을 가져오기 위해 앨범권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -1119,6 +1136,11 @@
 				DEVELOPMENT_TEAM = X975A2HM62;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "가게 인증 사진을 가져오기 위해 앨범권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
