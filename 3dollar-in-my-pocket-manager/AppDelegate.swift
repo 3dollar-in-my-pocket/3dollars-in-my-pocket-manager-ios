@@ -12,7 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.initializeKakaoSDK()
         self.initializeNetworkLogger()
         BackgroundTaskManager.shared.registerBackgroundTask()
-        BackgroundTaskManager.shared.scheduleBackgroundTask()
         return true
     }
 

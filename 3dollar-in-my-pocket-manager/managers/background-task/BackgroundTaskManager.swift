@@ -19,17 +19,15 @@ final class BackgroundTaskManager: BackgroundTaskManagerProtocol {
     }
     
     func scheduleBackgroundTask() {
-        let request = BGProcessingTaskRequest(identifier: self.backgroundTaskId)
+        let request = BGAppRefreshTaskRequest(identifier: self.backgroundTaskId)
         
         request.earliestBeginDate = Date(timeInterval: 5, since: Date())
-        request.requiresNetworkConnectivity = true
         do {
             try BGTaskScheduler.shared.submit(request)
+            print("BGTaskScheduler.shared.submit")
         } catch {
             print("Could not schedule background task: \(error)")
         }
-        
-        
     }
     
     private func renewOpenState(task: BGAppRefreshTask) {
