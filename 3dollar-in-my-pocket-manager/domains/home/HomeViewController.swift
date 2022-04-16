@@ -9,7 +9,8 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
     private let homeReactor = HomeReactor(
         mapService: MapService(),
         storeService: StoreService(),
-        locationManager: LocationManager.shared
+        locationManager: LocationManager.shared,
+        backgroundTaskManager: BackgroundTaskManager.shared
     )
     private weak var coordinator: HomeCoordinator?
     
@@ -57,6 +58,11 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
+        self.homeView.showOtherButton.rx.tap
+            .map { Reactor.Action.tapShowOtherStore }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
         // Bind state
         reactor.state
             .map { $0.address }
@@ -70,6 +76,13 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: false)
             .drive(self.homeView.salesToggleView.rx.isOn)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.isShowOtherStore }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: false)
+            .drive(self.homeView.showOtherButton.rx.isShowOtherStore)
             .disposed(by: self.disposeBag)
         
         reactor.state
@@ -88,6 +101,13 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .asDriver(onErrorJustReturn: Store())
             .drive(self.homeView.rx.myStore)
             .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.aroundStores }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: [])
+            .drive(self.homeView.rx.otherStores)
+            .disposed(by: self.disposeBag)
     }
 }
 
@@ -97,7 +117,7 @@ extension HomeViewController: NMFMapViewCameraDelegate {
         cameraDidChangeByReason reason: Int,
         animated: Bool
     ) {
-        if reason == NMFMapChangedByGesture {
+        if reason == NMFMapChangedByGesture && animated {
             let mapLocation = CLLocation(
                 latitude: mapView.cameraPosition.target.lat,
                 longitude: mapView.cameraPosition.target.lng

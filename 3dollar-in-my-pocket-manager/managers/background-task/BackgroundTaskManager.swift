@@ -5,6 +5,8 @@ import RxSwift
 protocol BackgroundTaskManagerProtocol {
     func registerBackgroundTask()
     
+    func scheduleBackgroundTask()
+    
     func cancelBackgroundTask()
 }
 
@@ -30,7 +32,7 @@ final class BackgroundTaskManager: BackgroundTaskManagerProtocol {
         BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: self.backgroundTaskId)
     }
     
-    private func scheduleBackgroundTask() {
+    func scheduleBackgroundTask() {
         let request = BGAppRefreshTaskRequest(identifier: self.backgroundTaskId)
         
         request.earliestBeginDate = Date(timeInterval: 60 * 15, since: Date())

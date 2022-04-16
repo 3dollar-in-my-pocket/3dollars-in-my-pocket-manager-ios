@@ -7,6 +7,7 @@ import RxCocoa
 final class HomeReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case tapShowOtherStore
         case tapSalesToggle
         case moveCamera(CLLocation)
     }
@@ -14,6 +15,8 @@ final class HomeReactor: BaseReactor, Reactor {
     enum Mutation {
         case setAddress(String)
         case setStore(Store)
+        case setAroundStores([Store])
+        case setShowOtherStore(Bool)
         case setCameraPosition(CLLocation)
         case setStoreLocation(CLLocation)
         case toggleSalesStatus
@@ -22,9 +25,10 @@ final class HomeReactor: BaseReactor, Reactor {
     
     struct State {
         var address = ""
-        var isShowOtherStore = true
+        var isShowOtherStore = false
         var cameraPosition: CLLocation?
         var store: Store?
+        var aroundStores: [Store] = []
     }
     
     let initialState = State()
@@ -53,17 +57,42 @@ final class HomeReactor: BaseReactor, Reactor {
                 self.fetchMyStoreInfo()
             ])
             
+        case .tapShowOtherStore:
+            if self.currentState.isShowOtherStore {
+                return .merge([
+                    .just(.setAroundStores([])),
+                    .just(.setShowOtherStore(false))
+                ])
+            } else {
+                if let cameraPosition = self.currentState.cameraPosition {
+                    return .merge([
+                        self.fetchAroundStores(location: cameraPosition),
+                        .just(.setShowOtherStore(true))
+                    ])
+                } else {
+                    return .just(.setShowOtherStore(true))
+                }
+            }
+            
         case .tapSalesToggle:
             if self.currentState.store?.isOpen == true {
                 self.backgroundTaskManager.cancelBackgroundTask()
                 return self.closeStore()
             } else {
-                self.backgroundTaskManager.registerBackgroundTask()
+                self.backgroundTaskManager.scheduleBackgroundTask()
                 return self.openStore()
             }
             
         case .moveCamera(let position):
-            return .just(.setCameraPosition(position))
+            if self.currentState.isShowOtherStore {
+                return .merge([
+                    .just(.setCameraPosition(position)),
+                    self.fetchAroundStores(location: position)
+                ])
+            } else {
+                return .just(.setCameraPosition(position))
+            }
+            
         }
     }
     
@@ -76,6 +105,12 @@ final class HomeReactor: BaseReactor, Reactor {
             
         case .setStore(let store):
             newState.store = store
+            
+        case .setShowOtherStore(let isShow):
+            newState.isShowOtherStore = isShow
+            
+        case .setAroundStores(let stores):
+            newState.aroundStores = stores
             
         case .setCameraPosition(let location):
             newState.cameraPosition = location
@@ -141,6 +176,13 @@ final class HomeReactor: BaseReactor, Reactor {
         
         return self.storeSerivce.closeStore(storeId: storeId)
             .map { _ in .toggleSalesStatus }
+            .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func fetchAroundStores(location: CLLocation) -> Observable<Mutation> {
+        return self.storeSerivce.fetchAroundStores(location: location, distance: 1)
+            .map { $0.map(Store.init) }
+            .map { Mutation.setAroundStores($0) }
             .catch { .just(.showErrorAlert($0)) }
     }
 }

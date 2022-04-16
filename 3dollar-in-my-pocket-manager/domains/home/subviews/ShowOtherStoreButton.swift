@@ -1,5 +1,8 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class ShowOtherButton: BaseView {
     fileprivate let tapGesture = UITapGestureRecognizer()
     
@@ -10,6 +13,7 @@ final class ShowOtherButton: BaseView {
     
     private let checkImageView = UIImageView().then {
         $0.image = UIImage(named: "ic_check")
+        $0.isHidden = true
     }
     
     private let titleLabel = UILabel().then {
@@ -50,6 +54,22 @@ final class ShowOtherButton: BaseView {
         
         self.snp.makeConstraints { make in
             make.edges.equalTo(self.backgroundView).priority(.high)
+        }
+    }
+    
+    fileprivate func setShowOtherStores(isShow: Bool) {
+        self.checkImageView.isHidden = !isShow
+    }
+}
+
+extension Reactive where Base: ShowOtherButton {
+    var tap: ControlEvent<Void> {
+        return ControlEvent(events: base.tapGesture.rx.event.map { _ in Void() })
+    }
+    
+    var isShowOtherStore: Binder<Bool> {
+        return Binder(self.base) { view, isShowOtherStore in
+            view.setShowOtherStores(isShow: isShowOtherStore)
         }
     }
 }

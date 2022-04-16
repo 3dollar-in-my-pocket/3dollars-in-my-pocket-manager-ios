@@ -35,6 +35,8 @@ final class HomeView: BaseView {
         $0.height = 40
     }
     
+    private var otherStoreMarkers: [NMFMarker] = []
+    
     override func setup() {
         self.addSubViews([
             self.mapView,
@@ -120,6 +122,34 @@ final class HomeView: BaseView {
         }
     }
     
+    fileprivate func setOtherStores(stores: [Store]) {
+        // 지도에 마커 추가
+        self.clearOtherStoreMarkers()
+        for store in stores {
+            if let location = store.location {
+                let marker = NMFMarker().then {
+                    $0.iconImage = NMFOverlayImage(name: "ic_store")
+                    $0.width = 24
+                    $0.height = 24
+                }
+                let position = NMGLatLng(
+                    lat: location.coordinate.latitude,
+                    lng: location.coordinate.longitude
+                )
+                marker.position = position
+                marker.mapView = self.mapView
+                self.otherStoreMarkers.append(marker)
+            }
+        }
+    }
+    
+    private func clearOtherStoreMarkers() {
+        for marker in self.otherStoreMarkers {
+            marker.mapView = nil
+        }
+        otherStoreMarkers.removeAll()
+    }
+    
     private func setupRangeOverlayView(latitude: Double, longitude: Double) {
         self.rangeOverlayView.center = NMGLatLng(lat: latitude, lng: longitude)
         self.rangeOverlayView.mapView = self.mapView
@@ -136,6 +166,12 @@ extension Reactive where Base: HomeView {
     var myStore: Binder<Store> {
         return Binder(self.base) { view, store in
             view.bind(store: store)
+        }
+    }
+    
+    var otherStores: Binder<[Store]> {
+        return Binder(self.base) { view, stores in
+            view.setOtherStores(stores: stores)
         }
     }
 }

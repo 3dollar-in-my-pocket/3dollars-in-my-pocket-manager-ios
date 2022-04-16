@@ -121,6 +121,7 @@
 		6EF676B827EECC6D00D43E99 /* SplashReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF676B727EECC6D00D43E99 /* SplashReactor.swift */; };
 		6EF676BA27EECF5400D43E99 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF676B927EECF5400D43E99 /* SplashCoordinator.swift */; };
 		6EF676BD27EEE57A00D43E99 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF676BC27EEE57A00D43E99 /* HomeView.swift */; };
+		6EF8D108280AA993004D27C9 /* BossStoreAroundInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8D107280AA993004D27C9 /* BossStoreAroundInfoResponse.swift */; };
 		CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */; };
 /* End PBXBuildFile section */
 
@@ -251,6 +252,7 @@
 		6EF676B727EECC6D00D43E99 /* SplashReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashReactor.swift; sourceTree = "<group>"; };
 		6EF676B927EECF5400D43E99 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		6EF676BC27EEE57A00D43E99 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		6EF8D107280AA993004D27C9 /* BossStoreAroundInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossStoreAroundInfoResponse.swift; sourceTree = "<group>"; };
 		6EFA3A0E27F3E1E000C13906 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-cintsqyfrfisoodqdbyniuyngmnr/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 		90AB2FCCDB6AA6ABA4B64642 /* Pods-3dollar-in-my-pocket-manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3dollar-in-my-pocket-manager.debug.xcconfig"; path = "Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -374,6 +376,7 @@
 				6E5DCE7727FDCD7800CA58EE /* BossStoreMenuResponse.swift */,
 				6E5DCE7927FDCEF400CA58EE /* BossStoreOpenStatusResponse.swift */,
 				6E5DCE7B27FDCF1F00CA58EE /* OpenStatus.swift */,
+				6EF8D107280AA993004D27C9 /* BossStoreAroundInfoResponse.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -869,6 +872,7 @@
 				6E473BA627D87A3D00232139 /* UIButtonExtensions.swift in Sources */,
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
 				6E142D5A27D77B790084480C /* BaseViewController.swift in Sources */,
+				6EF8D108280AA993004D27C9 /* BossStoreAroundInfoResponse.swift in Sources */,
 				6E5DCE6127FDB01F00CA58EE /* ReverseGeoLocation.swift in Sources */,
 				6EC51D0627EEEC11009B5527 /* AddressView.swift in Sources */,
 				6EE0CFBB27CB61CE0027A426 /* AppleSignInManager.swift in Sources */,
