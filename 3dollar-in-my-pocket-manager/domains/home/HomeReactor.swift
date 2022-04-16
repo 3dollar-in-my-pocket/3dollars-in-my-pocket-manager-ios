@@ -31,15 +31,18 @@ final class HomeReactor: BaseReactor, Reactor {
     private let mapService: MapServiceProtocol
     private let storeSerivce: StoreServiceProtocol
     private let locationManager: LocationManagerProtocol
+    private let backgroundTaskManager: BackgroundTaskManagerProtocol
     
     init(
         mapService: MapServiceProtocol,
         storeService: StoreServiceProtocol,
-        locationManager: LocationManagerProtocol
+        locationManager: LocationManagerProtocol,
+        backgroundTaskManager: BackgroundTaskManagerProtocol
     ) {
         self.mapService = mapService
         self.storeSerivce = storeService
         self.locationManager = locationManager
+        self.backgroundTaskManager = backgroundTaskManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -52,8 +55,10 @@ final class HomeReactor: BaseReactor, Reactor {
             
         case .tapSalesToggle:
             if self.currentState.store?.isOpen == true {
+                self.backgroundTaskManager.cancelBackgroundTask()
                 return self.closeStore()
             } else {
+                self.backgroundTaskManager.registerBackgroundTask()
                 return self.openStore()
             }
             
