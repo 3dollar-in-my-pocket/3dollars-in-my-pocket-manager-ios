@@ -29,6 +29,14 @@ final class MyStoreInfoView: BaseView {
                 ), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 
+                section.boundarySupplementaryItems = [.init(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .topLeading
+                )]
                 return section
             }
         }
@@ -42,6 +50,11 @@ final class MyStoreInfoView: BaseView {
         $0.register(
             MyStoreInfoIntroductionCell.self,
             forCellWithReuseIdentifier: MyStoreInfoIntroductionCell.registerId
+        )
+        $0.register(
+            MyStoreInfoHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: MyStoreInfoHeaderView.registerId
         )
     }
     

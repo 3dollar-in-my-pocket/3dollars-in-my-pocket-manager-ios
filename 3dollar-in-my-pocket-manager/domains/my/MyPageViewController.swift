@@ -14,6 +14,10 @@ final class MyPageViewController: BaseViewController {
         MyStoreInfoViewController.instance()
     ]
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     static func instance() -> MyPageViewController {
         return MyPageViewController(nibName: nil, bundle: nil).then {
             $0.tabBarItem = UITabBarItem(

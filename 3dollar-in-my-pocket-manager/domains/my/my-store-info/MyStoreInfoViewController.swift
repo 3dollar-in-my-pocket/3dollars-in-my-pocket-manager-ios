@@ -43,6 +43,26 @@ extension MyStoreInfoViewController: UICollectionViewDataSource {
             return cell
         }
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionHeader:
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: UICollectionView.elementKindSectionHeader,
+                withReuseIdentifier: MyStoreInfoHeaderView.registerId,
+                for: indexPath
+            ) as? MyStoreInfoHeaderView else { return UICollectionReusableView() }
+            
+            return headerView
+            
+        default:
+            return UICollectionReusableView()
+        }
+    }
 }
 
 extension MyStoreInfoViewController: UICollectionViewDelegate {
