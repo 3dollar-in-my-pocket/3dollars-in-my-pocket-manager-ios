@@ -1,4 +1,5 @@
 import UIKit
+import BackgroundTasks
 
 import KakaoSDKCommon
 
@@ -10,6 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         self.initializeKakaoSDK()
         self.initializeNetworkLogger()
+        BackgroundTaskManager.shared.registerBackgroundTask()
         return true
     }
 

@@ -1,0 +1,3 @@
+protocol HomeCoordinator: AnyObject, BaseCoordinator {
+    
+}
