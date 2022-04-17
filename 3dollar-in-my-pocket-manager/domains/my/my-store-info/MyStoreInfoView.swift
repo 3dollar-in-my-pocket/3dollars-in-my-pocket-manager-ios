@@ -6,28 +6,42 @@ final class MyStoreInfoView: BaseView {
         collectionViewLayout: UICollectionViewLayout()
     ).then {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            let item = NSCollectionLayoutItem(layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(477)
-            ))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(477)
-            ), subitems: [item])
-            let section = NSCollectionLayoutSection(group: group)
-            
-            return section
-//            if sectionIndex == 0 {
-//
-//            } else {
-//                return
-//            }
+            if sectionIndex == 0 {
+                let item = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MyStoreInfoOverviewCell.height)
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MyStoreInfoOverviewCell.height)
+                ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                
+                return section
+            } else {
+                let item = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoIntroductionCell.height)
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoIntroductionCell.height)
+                ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                
+                return section
+            }
         }
         
         $0.collectionViewLayout = layout
+        $0.backgroundColor = .gray0
         $0.register(
             MyStoreInfoOverviewCell.self,
             forCellWithReuseIdentifier: MyStoreInfoOverviewCell.registerId
+        )
+        $0.register(
+            MyStoreInfoIntroductionCell.self,
+            forCellWithReuseIdentifier: MyStoreInfoIntroductionCell.registerId
         )
     }
     

@@ -19,7 +19,7 @@ final class MyStoreInfoViewController: BaseViewController {
 
 extension MyStoreInfoViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -27,12 +27,21 @@ extension MyStoreInfoViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: MyStoreInfoOverviewCell.registerId,
-            for: indexPath
-        ) as? MyStoreInfoOverviewCell else { return BaseCollectionViewCell() }
-        
-        return cell
+        if indexPath.section == 0 {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: MyStoreInfoOverviewCell.registerId,
+                for: indexPath
+            ) as? MyStoreInfoOverviewCell else { return BaseCollectionViewCell() }
+            
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: MyStoreInfoIntroductionCell.registerId,
+                for: indexPath
+            ) as? MyStoreInfoIntroductionCell else { return BaseCollectionViewCell() }
+            
+            return cell
+        }
     }
 }
 
