@@ -43,7 +43,6 @@ final class SalesToggleView: BaseView {
         $0.layer.masksToBounds = true
         $0.textColor = .white
         $0.font = .bold(size: 16)
-        $0.text = "5시간 24분 23초"
     }
     
     private let onDescriptionLabel = UILabel().then {
@@ -150,7 +149,7 @@ final class SalesToggleView: BaseView {
             .bind { [weak self] time in
                 let dateFormatter = DateComponentsFormatter()
                 var calendar = Calendar.current
-                calendar.locale = Locale.current
+                calendar.locale = Locale(identifier: "ko_KR")
                 
                 dateFormatter.unitsStyle = .full
                 dateFormatter.calendar = calendar

@@ -19,6 +19,7 @@ final class HomeReactor: BaseReactor, Reactor {
         case setShowOtherStore(Bool)
         case setCameraPosition(CLLocation)
         case setStoreLocation(CLLocation)
+        case setStoreOpenTime(Date)
         case toggleSalesStatus
         case showErrorAlert(Error)
     }
@@ -118,6 +119,9 @@ final class HomeReactor: BaseReactor, Reactor {
         case .setStoreLocation(let location):
             newState.store?.location = location
             
+        case .setStoreOpenTime(let date):
+            newState.store?.openTime = date
+            
         case .toggleSalesStatus:
             newState.store?.isOpen.toggle()
             
@@ -165,6 +169,7 @@ final class HomeReactor: BaseReactor, Reactor {
             .flatMap { _ -> Observable<Mutation> in
                 return .merge([
                     .just(.setStoreLocation(location)),
+                    .just(.setStoreOpenTime(Date())),
                     .just(.toggleSalesStatus),
                 ])
             }
