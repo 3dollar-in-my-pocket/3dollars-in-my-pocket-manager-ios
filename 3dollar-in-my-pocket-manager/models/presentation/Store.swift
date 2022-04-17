@@ -6,6 +6,10 @@ struct Store: Equatable {
     var location: CLLocation?
     var isOpen: Bool
     var openTime: Date?
+    var imageUrl: String?
+    var categories: [StoreCategory]
+    var phoneNumber: String?
+    var snsUrl: String?
     
     init(response: BossStoreInfoResponse) {
         self.id = response.bossStoreId
@@ -21,6 +25,10 @@ struct Store: Equatable {
         } else {
             self.openTime = nil
         }
+        self.imageUrl = response.imageUrl
+        self.categories = response.categories.map(StoreCategory.init)
+        self.phoneNumber = response.contactsNumber
+        self.snsUrl = response.snsUrl
     }
     
     init(response: BossStoreAroundInfoResponse) {
@@ -37,17 +45,29 @@ struct Store: Equatable {
         } else {
             self.openTime = nil
         }
+        self.imageUrl = nil
+        self.categories = response.categories.map(StoreCategory.init)
+        self.phoneNumber = nil
+        self.snsUrl = nil
     }
     
     init(
         id: String = "",
         location: CLLocation = CLLocation(latitude: 0, longitude: 0),
         isOpen: Bool = false,
-        openTime: Date? = nil
+        openTime: Date? = nil,
+        imageUrl: String? = nil,
+        categories: [StoreCategory] = [],
+        phoneNumber: String? = nil,
+        snsUrl: String? = nil
     ) {
         self.id = id
         self.location = location
         self.isOpen = isOpen
         self.openTime = openTime
+        self.imageUrl = imageUrl
+        self.categories = categories
+        self.phoneNumber = phoneNumber
+        self.snsUrl = snsUrl
     }
 }

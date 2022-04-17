@@ -27,4 +27,7 @@ extension UIColor {
     
     /// r: 0, g: 198, b: 103
     static let green = UIColor(r: 0, g: 198, b: 103)
+    
+    /// r:5, g: 5, b: 5
+    static let black = UIColor(r: 5, g: 5, b: 5)
 }

@@ -61,7 +61,7 @@ final class MainTabController: UITabBarController {
         self.setViewControllers([
             HomeViewController.instance(),
             HomeViewController.instance(),
-            HomeViewController.instance()
+            MyPageViewController.instance()
         ], animated: true)
         self.tabBar.tintColor = .green
         self.tabBar.layer.borderWidth = 1
