@@ -18,7 +18,7 @@ final class MyStoreInfoView: BaseView {
                 let section = NSCollectionLayoutSection(group: group)
                 
                 return section
-            } else {
+            } else if sectionIndex == 1 {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .estimated(MyStoreInfoIntroductionCell.height)
@@ -26,6 +26,26 @@ final class MyStoreInfoView: BaseView {
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .estimated(MyStoreInfoIntroductionCell.height)
+                ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                
+                section.boundarySupplementaryItems = [.init(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .topLeading
+                )]
+                return section
+            } else {
+                let item = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoWorkDayCell.height)
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoWorkDayCell.height)
                 ), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 
@@ -50,6 +70,10 @@ final class MyStoreInfoView: BaseView {
         $0.register(
             MyStoreInfoIntroductionCell.self,
             forCellWithReuseIdentifier: MyStoreInfoIntroductionCell.registerId
+        )
+        $0.register(
+            MyStoreInfoWorkDayCell.self,
+            forCellWithReuseIdentifier: MyStoreInfoWorkDayCell.registerId
         )
         $0.register(
             MyStoreInfoHeaderView.self,
