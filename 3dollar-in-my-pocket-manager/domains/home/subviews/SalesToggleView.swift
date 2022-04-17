@@ -32,6 +32,20 @@ final class SalesToggleView: BaseView {
         $0.isHidden = true
     }
     
+    private let timerView = PaddingLabel(
+        topInset: 4,
+        bottomInset: 4,
+        leftInset: 8,
+        rightInset: 8
+    ).then {
+        $0.backgroundColor = UIColor(r: 51, g: 209, b: 133)
+        $0.layer.cornerRadius = 8
+        $0.layer.masksToBounds = true
+        $0.textColor = .white
+        $0.font = .bold(size: 16)
+        $0.text = "5시간 24분 23초"
+    }
+    
     private let onDescriptionLabel = UILabel().then {
         $0.font = .extraBold(size: 18)
         $0.textColor = .white
@@ -55,6 +69,7 @@ final class SalesToggleView: BaseView {
             self.offTitleLabel,
             self.offDescriptionLabel,
             self.onTitleLabel,
+            self.timerView,
             self.onDescriptionLabel,
             self.badgeImageView,
             self.toggleButton
@@ -96,6 +111,11 @@ final class SalesToggleView: BaseView {
             make.bottom.equalTo(self.onDescriptionLabel.snp.top).offset(-2)
         }
         
+        self.timerView.snp.makeConstraints { make in
+            make.left.equalTo(self.onTitleLabel.snp.right).offset(4)
+            make.centerY.equalTo(self.onTitleLabel)
+        }
+        
         self.badgeImageView.snp.makeConstraints { make in
             make.top.equalTo(self.backgroundView).offset(24)
             make.right.equalTo(self.backgroundView).offset(-24)
@@ -111,6 +131,7 @@ final class SalesToggleView: BaseView {
         self.offTitleLabel.isHidden = isOn
         self.offDescriptionLabel.isHidden = isOn
         self.onTitleLabel.isHidden = !isOn
+        self.timerView.isHidden = !isOn
         self.onDescriptionLabel.isHidden = !isOn
         self.toggleButton.setTitle(
             isOn ? "home_on_toggle".localized : "home_off_toggle".localized,
@@ -123,6 +144,23 @@ final class SalesToggleView: BaseView {
             self?.backgroundView.backgroundColor = isOn ? .green : .white
         }
     }
+    
+    fileprivate func setTimer(startDate: Date) {
+        Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
+            .bind { [weak self] time in
+                let dateFormatter = DateComponentsFormatter()
+                var calendar = Calendar.current
+                calendar.locale = Locale.current
+                
+                dateFormatter.unitsStyle = .full
+                dateFormatter.calendar = calendar
+                dateFormatter.allowedUnits = [.hour, .minute, .second]
+                let timeDiff = Date().timeIntervalSinceReferenceDate - startDate.timeIntervalSinceReferenceDate
+                
+                self?.timerView.text = dateFormatter.string(from: timeDiff)
+            }
+            .disposed(by: self.disposeBag)
+    }
 }
 
 extension Reactive where Base: SalesToggleView {
@@ -134,5 +172,11 @@ extension Reactive where Base: SalesToggleView {
     
     var tapButton: ControlEvent<Void> {
         return self.base.toggleButton.rx.tap
+    }
+    
+    var openTime: Binder<Date> {
+        return Binder(self.base) { view, openTime in
+            view.setTimer(startDate: openTime)
+        }
     }
 }

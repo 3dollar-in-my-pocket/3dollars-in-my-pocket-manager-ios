@@ -79,6 +79,13 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .disposed(by: self.disposeBag)
         
         reactor.state
+            .compactMap { $0.store?.openTime }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: Date())
+            .drive(self.homeView.salesToggleView.rx.openTime)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
             .map { $0.isShowOtherStore }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: false)
