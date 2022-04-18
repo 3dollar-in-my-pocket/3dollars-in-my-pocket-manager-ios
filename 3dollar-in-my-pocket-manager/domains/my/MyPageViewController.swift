@@ -9,7 +9,7 @@ final class MyPageViewController: BaseViewController {
         options: nil
     )
     
-    private let pageViewControllers: [BaseViewController] = [
+    private let pageViewControllers: [UIViewController] = [
         MyStoreInfoViewController.instance(),
         MyStoreInfoViewController.instance()
     ]
@@ -18,14 +18,18 @@ final class MyPageViewController: BaseViewController {
         return .darkContent
     }
     
-    static func instance() -> MyPageViewController {
-        return MyPageViewController(nibName: nil, bundle: nil).then {
+    static func instance() -> UINavigationController {
+        let viewController = MyPageViewController(nibName: nil, bundle: nil).then {
             $0.tabBarItem = UITabBarItem(
                 title: nil,
                 image: UIImage(named: "ic_home"),
                 tag: TabBarTag.myPage.rawValue
             )
             $0.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+        }
+        
+        return UINavigationController(rootViewController: viewController).then {
+            $0.isNavigationBarHidden = true
         }
     }
     
@@ -61,7 +65,7 @@ extension MyPageViewController: UIPageViewControllerDelegate, UIPageViewControll
         _ pageViewController: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard let viewController = viewController as? BaseViewController,
+        guard let viewController = viewController as? UIViewController,
               let index = self.pageViewControllers.firstIndex(of: viewController) else {
             return nil
         }
@@ -82,7 +86,7 @@ extension MyPageViewController: UIPageViewControllerDelegate, UIPageViewControll
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard let viewController = viewController as? BaseViewController,
+        guard let viewController = viewController as? UIViewController,
               let index = self.pageViewControllers.firstIndex(of: viewController) else {
             return nil
         }

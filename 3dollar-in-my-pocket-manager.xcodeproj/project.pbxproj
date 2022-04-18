@@ -14,6 +14,10 @@
 		6E142D6227D785A40084480C /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D6127D785A40084480C /* SignupView.swift */; };
 		6E142D6427D785B50084480C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D6327D785B50084480C /* BaseView.swift */; };
 		6E1605862807039E00F6649C /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1605852807039E00F6649C /* BackgroundTaskManager.swift */; };
+		6E1AB79D280D7ECF0059DCF4 /* MyStoreInfoReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoReactor.swift */; };
+		6E1AB7A1280D7F390059DCF4 /* EditIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */; };
+		6E1AB7A3280D84D60059DCF4 /* EditIntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */; };
+		6E1AB7A5280D8B040059DCF4 /* EditIntroductionReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A4280D8B040059DCF4 /* EditIntroductionReactor.swift */; };
 		6E1F54A327CB79120050BBBA /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54A227CB79120050BBBA /* LoginResponse.swift */; };
 		6E1F54A627CB7A130050BBBA /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54A527CB7A130050BBBA /* AuthService.swift */; };
 		6E1F54AA27CB7D5C0050BBBA /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1F54A927CB7D5C0050BBBA /* LoginRequest.swift */; };
@@ -171,6 +175,10 @@
 		6E142D6327D785B50084480C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		6E1605852807039E00F6649C /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		6E1AA1B227CB210800C96D92 /* Base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Base.xcodeproj; path = "../3dollars-in-my-pocket-ios-base/Base.xcodeproj"; sourceTree = "<group>"; };
+		6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoReactor.swift; sourceTree = "<group>"; };
+		6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionView.swift; sourceTree = "<group>"; };
+		6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionViewController.swift; sourceTree = "<group>"; };
+		6E1AB7A4280D8B040059DCF4 /* EditIntroductionReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionReactor.swift; sourceTree = "<group>"; };
 		6E1F54A227CB79120050BBBA /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		6E1F54A527CB7A130050BBBA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		6E1F54A927CB7D5C0050BBBA /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
@@ -359,6 +367,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6E1AB79F280D7F1F0059DCF4 /* edit-introduction */ = {
+			isa = PBXGroup;
+			children = (
+				6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */,
+				6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */,
+				6E1AB7A4280D8B040059DCF4 /* EditIntroductionReactor.swift */,
+			);
+			path = "edit-introduction";
+			sourceTree = "<group>";
+		};
 		6E1F54A127CB785B0050BBBA /* dto */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,9 +505,11 @@
 		6E6C9C6C280BD92B009AFAE8 /* my-store-info */ = {
 			isa = PBXGroup;
 			children = (
+				6E1AB79F280D7F1F0059DCF4 /* edit-introduction */,
 				6E6C9C6F280BDC3B009AFAE8 /* subviews */,
 				6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */,
 				6E6C9C73280BE7B3009AFAE8 /* MyStoreInfoViewController.swift */,
+				6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoReactor.swift */,
 			);
 			path = "my-store-info";
 			sourceTree = "<group>";
@@ -969,6 +989,7 @@
 				6E142D5F27D77EA50084480C /* NetworkActivityLogger.swift in Sources */,
 				6ED883A927CB456F00278E14 /* SigninViewController.swift in Sources */,
 				6E5DCE5F27FDB00200CA58EE /* NaverMapResponse.swift in Sources */,
+				6E1AB79D280D7ECF0059DCF4 /* MyStoreInfoReactor.swift in Sources */,
 				6EE0CFB127CB5C390027A426 /* StringExtensions.swift in Sources */,
 				6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */,
 				6E9F995427E7019700C95C41 /* WaitingView.swift in Sources */,
@@ -985,9 +1006,11 @@
 				6E7A49D227D891AA00E6653C /* SignupReactor.swift in Sources */,
 				6E5DCE7827FDCD7800CA58EE /* BossStoreMenuResponse.swift in Sources */,
 				6E142D5827D77AF50084480C /* BaseReactor.swift in Sources */,
+				6E1AB7A1280D7F390059DCF4 /* EditIntroductionView.swift in Sources */,
 				6EF676B827EECC6D00D43E99 /* SplashReactor.swift in Sources */,
 				6E473B9827D8624300232139 /* BaseCoordinator.swift in Sources */,
 				6EE0CFC327CB65320027A426 /* BundleExtensions.swift in Sources */,
+				6E1AB7A3280D84D60059DCF4 /* EditIntroductionViewController.swift in Sources */,
 				6E473B9627D861B800232139 /* SignupViewController.swift in Sources */,
 				6E5DCE6727FDB09400CA58EE /* Land.swift in Sources */,
 				6E6C9C69280BD513009AFAE8 /* MyPageViewController.swift in Sources */,
@@ -997,6 +1020,7 @@
 				6E37AF7427E71455004FBE25 /* LoadingManager.swift in Sources */,
 				6E37AF7127E707FC004FBE25 /* WaitingCoordinator.swift in Sources */,
 				6E142D6227D785A40084480C /* SignupView.swift in Sources */,
+				6E1AB7A5280D8B040059DCF4 /* EditIntroductionReactor.swift in Sources */,
 				6E5DCE6E27FDC93000CA58EE /* BossStoreAppearanceDayResponse.swift in Sources */,
 				6EEA3D6B27F1E74C00BC5F31 /* MainTabController.swift in Sources */,
 				6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */,

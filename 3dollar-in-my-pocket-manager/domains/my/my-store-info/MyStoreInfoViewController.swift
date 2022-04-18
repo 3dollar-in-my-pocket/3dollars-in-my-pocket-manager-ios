@@ -3,8 +3,12 @@ import UIKit
 final class MyStoreInfoViewController: BaseViewController {
     private let myStoreInfoView = MyStoreInfoView()
     
-    static func instance() -> MyStoreInfoViewController {
-        return MyStoreInfoViewController(nibName: nil, bundle: nil)
+    static func instance() -> UINavigationController {
+        let viewController = MyStoreInfoViewController(nibName: nil, bundle: nil)
+        
+        return UINavigationController(rootViewController: viewController).then {
+            $0.setNavigationBarHidden(true, animated: false)
+        }
     }
     
     override func loadView() {
@@ -67,6 +71,15 @@ extension MyStoreInfoViewController: UICollectionViewDataSource {
                 withReuseIdentifier: MyStoreInfoHeaderView.registerId,
                 for: indexPath
             ) as? MyStoreInfoHeaderView else { return UICollectionReusableView() }
+            
+            headerView.rx.tapRightButton
+                .asDriver()
+                .drive(onNext: { [weak self] in
+                    let viewController = EditIntroductionViewController.instance()
+                    
+                    self?.parent?.navigationController?.pushViewController(viewController, animated: true)
+                })
+                .disposed(by: headerView.disposeBag)
             
             return headerView
             

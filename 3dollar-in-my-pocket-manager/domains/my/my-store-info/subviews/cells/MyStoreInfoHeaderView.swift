@@ -1,8 +1,13 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class MyStoreInfoHeaderView: UICollectionReusableView {
     static let registerId = "\(MyStoreInfoHeaderView.self)"
     static let height: CGFloat = 69
+    
+    var disposeBag = DisposeBag()
     
     private let titleLabel = UILabel().then {
         $0.font = .extraBold(size: 18)
@@ -14,6 +19,12 @@ final class MyStoreInfoHeaderView: UICollectionReusableView {
         $0.setTitleColor(.green, for: .normal)
         $0.setTitle("정보 수정", for: .normal)
         $0.titleLabel?.font = .bold(size: 12)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.disposeBag = DisposeBag()
     }
     
     override init(frame: CGRect) {
@@ -45,5 +56,11 @@ final class MyStoreInfoHeaderView: UICollectionReusableView {
             make.right.equalToSuperview().offset(-24)
             make.centerY.equalTo(self.titleLabel)
         }
+    }
+}
+
+extension Reactive where Base: MyStoreInfoHeaderView {
+    var tapRightButton: ControlEvent<Void> {
+        return base.rightButton.rx.tap
     }
 }

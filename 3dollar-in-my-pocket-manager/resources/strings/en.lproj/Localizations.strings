@@ -62,3 +62,9 @@
 "waiting_description" = "우리는 소규모로 운영되는 팀이라\n시간이 어느정도(3일-5일) 소요된다 어쩐다 하는\n구구절절 먹먹문";
 "waiting_question_button" = "이메일로 문의하기";
 
+
+// Edit Introduction
+"edit_introduction_title" = "사장님 한마디 수정";
+"edit_introduction_main_description" = "손님들에게 하고 싶은 말을\n적어주세요!";
+"edit_introduction_sub_description" = "ex) 오전에 오시면 서비스가 있습니다 😋";
+"edit_introdution_edit_button" = "저장하기";
