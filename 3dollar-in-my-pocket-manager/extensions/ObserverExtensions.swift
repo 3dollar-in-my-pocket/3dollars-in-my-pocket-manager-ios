@@ -8,10 +8,8 @@ extension AnyObserver {
             if let httpError = HTTPError(rawValue: statusCode) {
                 self.onError(httpError)
             } else {
-                if let value = response.value {
-                    if let responseContainer: ResponseContainer<String> = JsonUtils.decode(object: value) {
-                        self.onError(BaseError.custom(responseContainer.message))
-                    }
+                if let value = response.value as? ResponseContainer<String> {
+                    self.onError(BaseError.custom(value.message))
                 } else {
                     self.onError(BaseError.unknown)
                 }

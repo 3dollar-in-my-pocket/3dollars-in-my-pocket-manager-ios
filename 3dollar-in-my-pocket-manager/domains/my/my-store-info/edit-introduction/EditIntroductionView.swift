@@ -1,6 +1,11 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class EditIntroductionView: BaseView {
+    fileprivate let tapGesture = UITapGestureRecognizer()
+    
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "ic_back"), for: .normal)
     }
@@ -38,7 +43,7 @@ final class EditIntroductionView: BaseView {
         $0.backgroundColor = .gray5
     }
     
-    private let textView = UITextView().then {
+    let textView = UITextView().then {
         $0.textColor = .gray100
         $0.font = .medium(size: 14)
         $0.backgroundColor = .clear
@@ -49,9 +54,11 @@ final class EditIntroductionView: BaseView {
         $0.titleLabel?.font = .medium(size: 16)
         $0.setTitleColor(UIColor(r: 251, g: 251, b: 251), for: .normal)
         $0.setBackgroundColor(color: .green, forState: .normal)
+        $0.setBackgroundColor(color: .gray30, forState: .disabled)
     }
     
     override func setup() {
+        self.addGestureRecognizer(self.tapGesture)
         self.backgroundColor = UIColor(r: 251, g: 251, b: 251)
         self.addSubViews([
             self.backButton,
@@ -107,5 +114,11 @@ final class EditIntroductionView: BaseView {
             make.bottom.equalToSuperview()
             make.top.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-64)
         }
+    }
+}
+
+extension Reactive where Base: EditIntroductionView {
+    var tapBackground: ControlEvent<Void> {
+        return ControlEvent(events: base.tapGesture.rx.event.map { _ in () })
     }
 }

@@ -75,7 +75,7 @@ extension MyStoreInfoViewController: UICollectionViewDataSource {
             headerView.rx.tapRightButton
                 .asDriver()
                 .drive(onNext: { [weak self] in
-                    let viewController = EditIntroductionViewController.instance()
+                    let viewController = EditIntroductionViewController.instance(storeId: "", introduction: nil)
                     
                     self?.parent?.navigationController?.pushViewController(viewController, animated: true)
                 })

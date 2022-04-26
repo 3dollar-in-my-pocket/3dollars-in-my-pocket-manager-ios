@@ -14,6 +14,11 @@ protocol StoreServiceProtocol {
         location: CLLocation,
         distance: Int
     ) -> Observable<[BossStoreAroundInfoResponse]>
+    
+    func updateStore(
+        storeId: String,
+        introduction: String?
+    ) -> Observable<String>
 }
 
 struct StoreService: StoreServiceProtocol {
@@ -110,6 +115,42 @@ struct StoreService: StoreServiceProtocol {
                     observer.processHTTPError(response: ressponse)
                 }
             }
+            return Disposables.create()
+        }
+    }
+    
+    func updateStore(
+        storeId: String,
+        introduction: String?
+    ) -> Observable<String> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/my-store/\(storeId)"
+            let headers = HTTPUtils.defaultHeader()
+            let parameters = PatchBossStoreInfoRequest(
+                appearanceDays: nil,
+                categoriesIds: nil,
+                contactsNumber: nil,
+                imageUrl: nil,
+                introduction: introduction,
+                menus: nil,
+                name: nil,
+                snsUrl: nil
+            )
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .patch,
+                parameters: parameters,
+                encoder: JSONParameterEncoder.default,
+                headers: headers
+            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+                if response.isSuccess() {
+                    observer.processValue(response: response)
+                } else {
+                    observer.processHTTPError(response: response)
+                }
+            }
+            
             return Disposables.create()
         }
     }

@@ -90,6 +90,7 @@
 		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
 		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
 		6E9F995427E7019700C95C41 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9F995327E7019700C95C41 /* WaitingView.swift */; };
+		6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */; };
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
@@ -252,6 +253,7 @@
 		6E808CAD27F016CF00C46459 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-cpqyhqxhepkpbfajpzjhmdywgxbk/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6E9F995327E7019700C95C41 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
+		6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionCoordinator.swift; sourceTree = "<group>"; };
 		6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "3dollar-in-my-pocket-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EB94EA327CB208F00609E77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EB94EA527CB208F00609E77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -381,6 +383,7 @@
 				6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */,
 				6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */,
 				6E1AB7A4280D8B040059DCF4 /* EditIntroductionReactor.swift */,
+				6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */,
 			);
 			path = "edit-introduction";
 			sourceTree = "<group>";
@@ -958,6 +961,7 @@
 				6ED8839C27CB3A7A00278E14 /* SocialSigninButton.swift in Sources */,
 				6E5DCE7027FDC97200CA58EE /* DayOfTheWeek.swift in Sources */,
 				6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */,
+				6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */,
 				6ED370F7280C33A300C445E5 /* MyStoreInfoHeaderView.swift in Sources */,
 				6E1AB7A7280D918F0059DCF4 /* PatchBossStoreInfoRequest.swift in Sources */,
 				6ED883A527CB3C7E00278E14 /* UIFontExtensions.swift in Sources */,
