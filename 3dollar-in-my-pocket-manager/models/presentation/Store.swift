@@ -10,6 +10,9 @@ struct Store: Equatable {
     var categories: [StoreCategory]
     var phoneNumber: String?
     var snsUrl: String?
+    var introduction: String?
+    let menus: [Menu]
+    let name: String
     
     init(response: BossStoreInfoResponse) {
         self.id = response.bossStoreId
@@ -29,6 +32,9 @@ struct Store: Equatable {
         self.categories = response.categories.map(StoreCategory.init)
         self.phoneNumber = response.contactsNumber
         self.snsUrl = response.snsUrl
+        self.introduction = response.introduction
+        self.menus = response.menus.map(Menu.init)
+        self.name = response.name
     }
     
     init(response: BossStoreAroundInfoResponse) {
@@ -49,6 +55,9 @@ struct Store: Equatable {
         self.categories = response.categories.map(StoreCategory.init)
         self.phoneNumber = nil
         self.snsUrl = nil
+        self.introduction = nil
+        self.menus = response.menus.map(Menu.init)
+        self.name = response.name
     }
     
     init(
@@ -59,7 +68,10 @@ struct Store: Equatable {
         imageUrl: String? = nil,
         categories: [StoreCategory] = [],
         phoneNumber: String? = nil,
-        snsUrl: String? = nil
+        snsUrl: String? = nil,
+        introduction: String? = nil,
+        menus: [Menu] = [],
+        name: String = ""
     ) {
         self.id = id
         self.location = location
@@ -69,5 +81,8 @@ struct Store: Equatable {
         self.categories = categories
         self.phoneNumber = phoneNumber
         self.snsUrl = snsUrl
+        self.introduction = introduction
+        self.menus = menus
+        self.name = name
     }
 }

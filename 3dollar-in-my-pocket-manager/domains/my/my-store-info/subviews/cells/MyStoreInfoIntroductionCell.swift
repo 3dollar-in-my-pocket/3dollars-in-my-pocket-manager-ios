@@ -40,7 +40,7 @@ final class MyStoreInfoIntroductionCell: BaseCollectionViewCell {
         }
     }
     
-    fileprivate func bind(introduction: String?) {
+    func bind(introduction: String?) {
         self.introductionLabel.text = introduction
     }
 }
