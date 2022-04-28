@@ -115,6 +115,10 @@ final class EditIntroductionView: BaseView {
             make.top.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-64)
         }
     }
+    
+    func bind(introduction: String?) {
+        self.textView.text = introduction
+    }
 }
 
 extension Reactive where Base: EditIntroductionView {

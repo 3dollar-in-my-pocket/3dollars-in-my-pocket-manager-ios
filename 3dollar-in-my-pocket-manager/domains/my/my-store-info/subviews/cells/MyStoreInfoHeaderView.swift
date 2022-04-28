@@ -9,15 +9,13 @@ final class MyStoreInfoHeaderView: UICollectionReusableView {
     
     var disposeBag = DisposeBag()
     
-    private let titleLabel = UILabel().then {
+    let titleLabel = UILabel().then {
         $0.font = .extraBold(size: 18)
         $0.textColor = .gray95
-        $0.text = "사장님 한마디"
     }
     
-    fileprivate let rightButton = UIButton().then {
+    let rightButton = UIButton().then {
         $0.setTitleColor(.green, for: .normal)
-        $0.setTitle("정보 수정", for: .normal)
         $0.titleLabel?.font = .bold(size: 12)
     }
     

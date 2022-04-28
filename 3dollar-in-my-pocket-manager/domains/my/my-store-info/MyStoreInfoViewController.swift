@@ -23,6 +23,8 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         self.setupDataSource()
         self.coordinator = self
         self.reactor = self.myStoreInfoReactor
@@ -34,6 +36,17 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             .asDriver(onErrorJustReturn: Store())
             .drive(onNext: { [weak self] store in
                 self?.coordinator?.pushEditStoreInfo(store: store)
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.myStoreInfoReactor.pushEditIntroductionPublisher
+            .debug()
+            .asDriver(onErrorJustReturn: ("", nil))
+            .drive(onNext: { [weak self] storeId, introduction in
+                self?.coordinator?.pushEditIntroduction(
+                    storeId: storeId,
+                    introduction: introduction
+                )
             })
             .disposed(by: self.eventDisposeBag)
     }
@@ -101,14 +114,28 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                     for: indexPath
                 ) as? MyStoreInfoHeaderView else { return UICollectionReusableView() }
                 
-                headerView.rx.tapRightButton
-                    .asDriver()
-                    .drive(onNext: { [weak self] in
-                        let viewController = EditIntroductionViewController.instance(storeId: "", introduction: nil)
-                        
-                        self?.parent?.navigationController?.pushViewController(viewController, animated: true)
-                    })
-                    .disposed(by: headerView.disposeBag)
+                if indexPath.section == 1 {
+                    headerView.titleLabel.text
+                    = "my_store_info_header_introduction".localized
+                    headerView.rightButton.setTitle(
+                        "my_store_info_header_introduction_button".localized,
+                        for: .normal
+                    )
+                    headerView.rx.tapRightButton
+                        .map { Reactor.Action.tapEditIntroduction }
+                        .bind(to: self.myStoreInfoReactor.action)
+                        .disposed(by: headerView.disposeBag)
+                } else if indexPath.section == 2 {
+                    headerView.titleLabel.text = "my_store_info_header_menus".localized
+                    headerView.rightButton.setTitle(
+                        "my_store_info_header_menus_button".localized,
+                        for: .normal
+                    )
+                    headerView.rx.tapRightButton
+                        .map { Reactor.Action.tapEditMenus }
+                        .bind(to: self.myStoreInfoReactor.action)
+                        .disposed(by: headerView.disposeBag)
+                }
                 
                 return headerView
                 
@@ -116,5 +143,11 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 return UICollectionReusableView()
             }
         }
+    }
+}
+
+extension MyStoreInfoViewController: EditIntroductionDelegate {
+    func onUpdateIntroduction(introduction: String) {
+        self.myStoreInfoReactor.action.onNext(.updateIntroduction(introduction))
     }
 }

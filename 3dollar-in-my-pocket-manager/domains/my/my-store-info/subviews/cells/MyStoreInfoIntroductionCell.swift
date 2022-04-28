@@ -41,6 +41,11 @@ final class MyStoreInfoIntroductionCell: BaseCollectionViewCell {
     }
     
     func bind(introduction: String?) {
-        self.introductionLabel.text = introduction
+        if let introduction = introduction {
+            self.introductionLabel.text = introduction
+        } else {
+            self.introductionLabel.text = "my_store_info_introduction_placeholder".localized
+        }
+        
     }
 }

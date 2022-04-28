@@ -7,12 +7,14 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case viewDidLoad
         case tapEditStoreInfo
         case tapEditIntroduction
+        case updateIntroduction(String)
         case tapEditMenus
         case tapEditSchedule
     }
     
     enum Mutation {
         case setStore(Store)
+        case updateIntorudction(String)
         case pushEditStoreInfo(store: Store)
         case pushEditIntroduction(storeId: String, introduction: String?)
         case pushEditMenus
@@ -47,6 +49,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
                 introduction: self.currentState.store.introduction
             ))
             
+        case .updateIntroduction(let introduction):
+            return .just(.updateIntorudction(introduction))
+            
         case .tapEditMenus:
             return .empty()
             
@@ -61,6 +66,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         switch mutation {
         case .setStore(let store):
             newState.store = store
+            
+        case .updateIntorudction(let introduction):
+            newState.store.introduction = introduction
             
         case .pushEditStoreInfo(let store):
             self.pushEditStoreInfoPublisher.accept(store)

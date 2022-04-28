@@ -3,10 +3,11 @@ import UIKit
 import ReactorKit
 
 protocol EditIntroductionDelegate: AnyObject {
-    func onUpdateIntroduction(introduction: String?)
+    func onUpdateIntroduction(introduction: String)
 }
 
-final class EditIntroductionViewController: BaseViewController, View, EditIntroductionCoordinator {
+final class EditIntroductionViewController:
+    BaseViewController, View, EditIntroductionCoordinator {
     weak var delegate: EditIntroductionDelegate?
     private let editIntroductionView = EditIntroductionView()
     private let editIntroductionReactor: EditIntroductionReactor
@@ -16,7 +17,10 @@ final class EditIntroductionViewController: BaseViewController, View, EditIntrod
         return .darkContent
     }
     
-    static func instance(storeId: String, introduction: String?) -> EditIntroductionViewController {
+    static func instance(
+        storeId: String,
+        introduction: String?
+    ) -> EditIntroductionViewController {
         return EditIntroductionViewController(
             storeId: storeId,
             introduction: introduction
@@ -33,6 +37,7 @@ final class EditIntroductionViewController: BaseViewController, View, EditIntrod
         )
         
         super.init(nibName: nil, bundle: nil)
+        self.editIntroductionView.bind(introduction: introduction)
     }
     
     required init?(coder: NSCoder) {
@@ -68,7 +73,8 @@ final class EditIntroductionViewController: BaseViewController, View, EditIntrod
         self.editIntroductionReactor.popupWithIntroductionPublisher
             .asDriver(onErrorJustReturn: "")
             .drive(onNext: { [weak self] introduction in
-                self?.coordinator?.popWithIntroduction(introduction: introduction)
+                self?.delegate?.onUpdateIntroduction(introduction: introduction)
+                self?.coordinator?.popViewController(animated: true)
             })
             .disposed(by: self.eventDisposeBag)
         

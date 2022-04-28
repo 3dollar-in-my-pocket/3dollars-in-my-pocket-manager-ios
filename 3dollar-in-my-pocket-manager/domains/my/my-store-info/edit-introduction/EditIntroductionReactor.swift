@@ -22,7 +22,7 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
     }
     
     let initialState: State
-    let popupWithIntroductionPublisher = PublishRelay<String?>()
+    let popupWithIntroductionPublisher = PublishRelay<String>()
     private let storeId: String
     private let storeService: StoreServiceProtocol
     
@@ -86,7 +86,7 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
             storeId: self.storeId,
             introduction: introduction
         )
-        .map { _ in Mutation.setIntroduction(introduction) }
+        .map { _ in Mutation.popWishIntroduction(introduction) }
         .catch {
             return .merge([
                 .just(.showLoading(isShow: false)),
