@@ -61,6 +61,10 @@
 "waiting_description" = "우리는 소규모로 운영되는 팀이라\n시간이 어느정도(3일-5일) 소요된다 어쩐다 하는\n구구절절 먹먹문";
 "waiting_question_button" = "이메일로 문의하기";
 
+// My Page
+"my_page_store_info" = "가제정보";
+"my_pate_statistics" = "통계";
+
 // My Store Info
 "my_store_info_introduction_placeholder" = "손님들에게 하고 싶은 말을 적어주세요!\nex) 오전에 오시면 서비스가 있습니다!";
 "my_store_info_header_introduction" = "사장님 한마디";

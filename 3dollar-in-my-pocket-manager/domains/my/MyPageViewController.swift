@@ -4,7 +4,7 @@ final class MyPageViewController: BaseViewController {
     private let myPageView = MyPageView()
     
     private let pageViewController = UIPageViewController(
-        transitionStyle: .pageCurl,
+        transitionStyle: .scroll,
         navigationOrientation: .horizontal,
         options: nil
     )
@@ -43,6 +43,21 @@ final class MyPageViewController: BaseViewController {
         self.setupPageViewController()
     }
     
+    override func bindEvent() {
+        self.myPageView.rx.tapTab
+            .asDriver()
+            .drive(onNext: { [weak self] index in
+                guard let self = self else { return }
+                self.pageViewController.setViewControllers(
+                    [self.pageViewControllers[index]],
+                    direction: .forward,
+                    animated: false,
+                    completion: nil
+                )
+            })
+            .disposed(by: self.eventDisposeBag)
+    }
+    
     private func setupPageViewController() {
         self.addChild(self.pageViewController)
         self.pageViewController.delegate = self
@@ -57,6 +72,12 @@ final class MyPageViewController: BaseViewController {
             animated: false,
             completion: nil
         )
+        
+        for view in self.pageViewController.view.subviews {
+            if let scrollView = view as? UIScrollView {
+                scrollView.isScrollEnabled = false
+            }
+        }
     }
 }
 
@@ -65,41 +86,13 @@ extension MyPageViewController: UIPageViewControllerDelegate, UIPageViewControll
         _ pageViewController: UIPageViewController,
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
-        guard let viewController = viewController as? UIViewController,
-              let index = self.pageViewControllers.firstIndex(of: viewController) else {
-            return nil
-        }
-        let previousIndex = index - 1
-        
-        guard previousIndex >= 0 else {
-            return nil
-        }
-        
-        guard self.pageViewControllers.count > previousIndex else {
-            return nil
-        }
-        
-        return self.pageViewControllers[previousIndex]
+        return nil
     }
     
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
-        guard let viewController = viewController as? UIViewController,
-              let index = self.pageViewControllers.firstIndex(of: viewController) else {
-            return nil
-        }
-        let nextIndex = index + 1
-        
-        guard nextIndex < self.pageViewControllers.count else {
-            return nil
-        }
-        
-        guard self.pageViewControllers.count > nextIndex else {
-            return nil
-        }
-        
-        return self.pageViewControllers[nextIndex]
+        return nil
     }
 }
