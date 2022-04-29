@@ -1,0 +1,3 @@
+protocol EditStoreInfoCoordinator: AnyObject, BaseCoordinator {
+    
+}

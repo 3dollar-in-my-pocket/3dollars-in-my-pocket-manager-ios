@@ -74,6 +74,9 @@
 		6E5F2132281976CD00922A99 /* MyStoreInfoSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F2131281976CD00922A99 /* MyStoreInfoSectionModel.swift */; };
 		6E5F21342819778E00922A99 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F21332819778E00922A99 /* Menu.swift */; };
 		6E5F21362819887C00922A99 /* MyStoreInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F21352819887C00922A99 /* MyStoreInfoCoordinator.swift */; };
+		6E63FF6C281C19DE00EC49DE /* EditStoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63FF6B281C19DE00EC49DE /* EditStoreInfoView.swift */; };
+		6E63FF6E281C1FEA00EC49DE /* EditStoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63FF6D281C1FEA00EC49DE /* EditStoreInfoViewController.swift */; };
+		6E63FF70281C203000EC49DE /* EditStoreInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63FF6F281C203000EC49DE /* EditStoreInfoCoordinator.swift */; };
 		6E64B28427D836920055354B /* SignupTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64B28327D836920055354B /* SignupTextField.swift */; };
 		6E6C9C69280BD513009AFAE8 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C68280BD513009AFAE8 /* MyPageViewController.swift */; };
 		6E6C9C6B280BD702009AFAE8 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C6A280BD702009AFAE8 /* MyPageView.swift */; };
@@ -242,6 +245,9 @@
 		6E5F2131281976CD00922A99 /* MyStoreInfoSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoSectionModel.swift; sourceTree = "<group>"; };
 		6E5F21332819778E00922A99 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		6E5F21352819887C00922A99 /* MyStoreInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoCoordinator.swift; sourceTree = "<group>"; };
+		6E63FF6B281C19DE00EC49DE /* EditStoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStoreInfoView.swift; sourceTree = "<group>"; };
+		6E63FF6D281C1FEA00EC49DE /* EditStoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStoreInfoViewController.swift; sourceTree = "<group>"; };
+		6E63FF6F281C203000EC49DE /* EditStoreInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStoreInfoCoordinator.swift; sourceTree = "<group>"; };
 		6E64B28327D836920055354B /* SignupTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupTextField.swift; sourceTree = "<group>"; };
 		6E6C9C68280BD513009AFAE8 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		6E6C9C6A280BD702009AFAE8 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -505,6 +511,16 @@
 			path = map;
 			sourceTree = "<group>";
 		};
+		6E63FF69281C192A00EC49DE /* edit-store-info */ = {
+			isa = PBXGroup;
+			children = (
+				6E63FF6B281C19DE00EC49DE /* EditStoreInfoView.swift */,
+				6E63FF6D281C1FEA00EC49DE /* EditStoreInfoViewController.swift */,
+				6E63FF6F281C203000EC49DE /* EditStoreInfoCoordinator.swift */,
+			);
+			path = "edit-store-info";
+			sourceTree = "<group>";
+		};
 		6E64B28127D836620055354B /* subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -530,6 +546,7 @@
 		6E6C9C6C280BD92B009AFAE8 /* my-store-info */ = {
 			isa = PBXGroup;
 			children = (
+				6E63FF69281C192A00EC49DE /* edit-store-info */,
 				6E1AB79F280D7F1F0059DCF4 /* edit-introduction */,
 				6E6C9C6F280BDC3B009AFAE8 /* subviews */,
 				6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */,
@@ -977,6 +994,7 @@
 				6ED8839C27CB3A7A00278E14 /* SocialSigninButton.swift in Sources */,
 				6E5DCE7027FDC97200CA58EE /* DayOfTheWeek.swift in Sources */,
 				6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */,
+				6E63FF6C281C19DE00EC49DE /* EditStoreInfoView.swift in Sources */,
 				6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */,
 				6ED370F7280C33A300C445E5 /* MyStoreInfoHeaderView.swift in Sources */,
 				6E1AB7A7280D918F0059DCF4 /* PatchBossStoreInfoRequest.swift in Sources */,
@@ -988,6 +1006,7 @@
 				6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */,
 				6E7A49E027D8D0E200E6653C /* CategoryService.swift in Sources */,
 				6E6C9C74280BE7B3009AFAE8 /* MyStoreInfoViewController.swift in Sources */,
+				6E63FF70281C203000EC49DE /* EditStoreInfoCoordinator.swift in Sources */,
 				6EF676B627EECC0600D43E99 /* SplashViewController.swift in Sources */,
 				6E1F54AA27CB7D5C0050BBBA /* LoginRequest.swift in Sources */,
 				6E473BA227D872E400232139 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
@@ -1062,6 +1081,7 @@
 				6EEA3D6B27F1E74C00BC5F31 /* MainTabController.swift in Sources */,
 				6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */,
 				6E5F21342819778E00922A99 /* Menu.swift in Sources */,
+				6E63FF6E281C1FEA00EC49DE /* EditStoreInfoViewController.swift in Sources */,
 				6E6C9C6E280BD943009AFAE8 /* MyStoreInfoView.swift in Sources */,
 				6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */,
 				6E1AB7AB280D92C70059DCF4 /* LocalTimeReq.swift in Sources */,
