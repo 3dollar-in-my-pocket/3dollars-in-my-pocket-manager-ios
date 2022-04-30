@@ -63,6 +63,10 @@ final class SignupTextField: BaseView {
         }
     }
     
+    func setText(text: String?) {
+        self.textField.text = text
+    }
+    
     fileprivate func format(with mask: String, text: String) -> String {
         let numbers = text.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
         var result = ""

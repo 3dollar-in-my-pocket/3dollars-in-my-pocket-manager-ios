@@ -24,11 +24,19 @@ extension BaseCoordinator where Self: BaseViewController {
     
     
     func showErrorAlert(error: Error) {
-        AlertUtils.showWithAction(
-            viewController: self,
-            message: error.localizedDescription,
-            onTapOk: nil
-        )
+        if let localizedError = error as? LocalizedError {
+            AlertUtils.showWithAction(
+                viewController: self,
+                message: localizedError.errorDescription,
+                onTapOk: nil
+            )
+        } else {
+            AlertUtils.showWithAction(
+                viewController: self,
+                message: error.localizedDescription,
+                onTapOk: nil
+            )
+        }
     }
     
     func openURL(url: String) {

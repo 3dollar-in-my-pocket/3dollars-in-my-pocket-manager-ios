@@ -98,6 +98,10 @@ final class SignupPhotoView: BaseView {
             make.bottom.equalTo(self.containerView).priority(.high)
         }
     }
+    
+    func setImage(imageUrl: String?) {
+        self.imageView.setImage(urlString: imageUrl)
+    }
 }
 
 extension Reactive where Base: SignupPhotoView {

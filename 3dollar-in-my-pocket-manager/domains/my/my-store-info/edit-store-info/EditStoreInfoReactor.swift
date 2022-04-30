@@ -10,6 +10,7 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
         case inputStoreName(String)
         case inputPhoneNumber(String)
         case selectCategory(index: Int)
+        case deselectCategory(index: Int)
         case selectPhoto(UIImage)
         case inputSNS(String)
         case tapSave
@@ -19,6 +20,9 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
         case setStoreName(String)
         case setPhoneNumber(String)
         case selectCategory(StoreCategory)
+        
+        /// 기존에 선택되어있는 카테고리 선택해주기
+        case selectCategories([Int])
         case deselectCategory(StoreCategory)
         case setCategories([StoreCategory])
         case setPhoto(UIImage)
@@ -32,33 +36,35 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     struct State {
         var store: Store
         var categories: [StoreCategory]
-        var selectedCategories: [StoreCategory]
         var photo: UIImage?
         var isEnableSaveButton: Bool
     }
     
     let initialState: State
     let popPublisher = PublishRelay<Void>()
+    let selectCategoriesPublisher = PublishRelay<[Int]>()
     private let storeService: StoreServiceType
     private let categoryService: CategoryServiceType
     private let imageService: ImageServiceType
+    private let globalState: GlobalState
     
     init(
+        store: Store,
         storeService: StoreService,
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
-        state: State = State(
-            store: Store(),
-            categories: [],
-            selectedCategories: [],
-            photo: nil,
-            isEnableSaveButton: false
-        )
+        globalState: GlobalState
     ) {
         self.storeService = storeService
         self.categoryService = categoryService
         self.imageService = imageService
-        self.initialState = state
+        self.globalState = globalState
+        self.initialState = State(
+            store: store,
+            categories: [],
+            photo: nil,
+            isEnableSaveButton: false
+        )
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -81,23 +87,21 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
         case .selectCategory(let index):
             let selectedCategory = self.currentState.categories[index]
             
-            if self.currentState.selectedCategories.contains(selectedCategory) {
-                return .just(.deselectCategory(selectedCategory))
-            } else {
-                return .just(.selectCategory(selectedCategory))
-            }
+            return .just(.selectCategory(selectedCategory))
+            
+        case .deselectCategory(let index):
+            let deselectedCategory = self.currentState.categories[index]
+            
+            return .just(.deselectCategory(deselectedCategory))
             
         case .selectPhoto(let photo):
-            return .merge([
-                .just(.setPhoto(photo)),
-                .just(.setSaveButtonEnable(self.validate(photo: photo)))
-            ])
+            return .just(.setPhoto(photo))
             
         case .inputSNS(let sns):
             return .just(.setSNS(sns))
             
         case .tapSave:
-            return .empty()
+            return self.updateStore(store: self.currentState.store, image: self.currentState.photo)
         }
     }
     
@@ -112,11 +116,14 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
             newState.store.phoneNumber = phoneNumber
             
         case .selectCategory(let category):
-            newState.selectedCategories.append(category)
+            newState.store.categories.append(category)
+            
+        case .selectCategories(let indexes):
+            self.selectCategoriesPublisher.accept(indexes)
             
         case .deselectCategory(let category):
-            if let targetIndex = state.selectedCategories.firstIndex(of: category) {
-                newState.selectedCategories.remove(at: targetIndex)
+            if let targetIndex = state.store.categories.firstIndex(of: category) {
+                newState.store.categories.remove(at: targetIndex)
             }
             
         case .setCategories(let categories):
@@ -147,24 +154,26 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     private func fetchCategories() -> Observable<Mutation> {
         return self.categoryService.fetchCategories()
             .map { $0.map(StoreCategory.init(response: )) }
-            .map { .setCategories($0) }
+            .flatMap { [weak self] categories -> Observable<Mutation> in
+                guard let self = self else { return .error(BaseError.unknown) }
+                let selectedCategoryIndexes = self.getSelectedCateogriesIndex(categories: categories)
+                
+                return .merge([
+                    .just(.setCategories(categories)),
+                    .just(.selectCategories(selectedCategoryIndexes))
+                ])
+            }
             .catch { .just(.showErrorAlert($0)) }
     }
     
     private func validate(
         storeName: String? = nil,
-        phoneNumber: String? = nil,
-        photo: UIImage? = nil
+        phoneNumber: String? = nil
     ) -> Bool {
         let storeName = storeName ?? self.currentState.store.name
         let phoneNumber = phoneNumber ??  self.currentState.store.phoneNumber
-        let photo = photo ?? self.currentState.photo
-        let originalPhoto = self.currentState.store.imageUrl
         
-        return !storeName.isEmpty
-        && !(phoneNumber ?? "").isEmpty
-        && photo != nil
-        || !(originalPhoto ?? "").isEmpty
+        return !storeName.isEmpty && !(phoneNumber ?? "").isEmpty
     }
     
     private func updateStore(store: Store, image: UIImage?) -> Observable<Mutation> {
@@ -178,6 +187,9 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
                     newStore.imageUrl = imageResponse.imageUrl
                     
                     return self.storeService.updateStore(store: newStore)
+                        .do(onNext: { _ in
+                            self.globalState.updateStorePublisher.onNext(newStore)
+                        })
                         .map { _ in .pop }
                 }
                 .catch {
@@ -194,6 +206,9 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
             ])
         } else {
             let updateStoreObservable = self.storeService.updateStore(store: store)
+                .do(onNext: { [weak self] _ in
+                    self?.globalState.updateStorePublisher.onNext(store)
+                })
                 .map { _ in Mutation.pop }
                 .catch {
                     return .merge([
@@ -208,5 +223,11 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
                 .just(.showLoading(isShow: false))
             ])
         }
+    }
+    
+    private func getSelectedCateogriesIndex(categories: [StoreCategory]) -> [Int] {
+        let currentCategories = self.currentState.store.categories
+        
+        return currentCategories.map { categories.firstIndex(of: $0) ?? 0 }
     }
 }

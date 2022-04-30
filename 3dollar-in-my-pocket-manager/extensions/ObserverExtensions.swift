@@ -4,15 +4,13 @@ import Base
 
 extension AnyObserver {
     func processHTTPError<T>(response: AFDataResponse<T>) {
-        if let statusCode = response.response?.statusCode {
+        if let errorResponse = response.value as? ResponseContainer<String> {
+            self.onError(BaseError.custom(errorResponse.message))
+        } else if let statusCode = response.response?.statusCode {
             if let httpError = HTTPError(rawValue: statusCode) {
                 self.onError(httpError)
             } else {
-                if let value = response.value as? ResponseContainer<String> {
-                    self.onError(BaseError.custom(value.message))
-                } else {
-                    self.onError(BaseError.unknown)
-                }
+                self.onError(BaseError.unknown)
             }
         } else {
             switch response.result {

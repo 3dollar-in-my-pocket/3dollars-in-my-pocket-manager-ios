@@ -1,6 +1,8 @@
 import UIKit
 
 final class EditStoreInfoView: BaseView {
+    let tapBackground = UITapGestureRecognizer()
+    
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "ic_back"), for: .normal)
     }
@@ -62,7 +64,13 @@ final class EditStoreInfoView: BaseView {
         $0.isEnabled = false
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func setup() {
+        self.roundedBackgroundView.addGestureRecognizer(self.tapBackground)
+        self.setupKeyboardEvent()
         self.backgroundColor = .gray0
         self.containerView.addSubViews([
             self.roundedBackgroundView,
@@ -79,6 +87,13 @@ final class EditStoreInfoView: BaseView {
             self.scrollView,
             self.saveButton
         ])
+        self.tapBackground.rx.event
+            .map { _ in Void() }
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.endEditing(true)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     override func bindConstraints() {
@@ -153,6 +168,51 @@ final class EditStoreInfoView: BaseView {
     }
     
     func bind(store: Store) {
+        self.storeNameField.setText(text: store.name)
+        self.phoneNumberField.setText(text: store.phoneNumber)
+        self.photoView.setImage(imageUrl: store.imageUrl)
+        self.snsField.setText(text: store.snsUrl)
+    }
+    
+    func selectCategories(indexes: [Int]) {
+        for index in indexes {
+            self.categoryCollectionView.categoryCollectionView.selectItem(
+                at: IndexPath(row: index, section: 0),
+                animated: true,
+                scrollPosition: .centeredVertically
+            )
+        }
+    }
+    
+    private func setupKeyboardEvent() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onShowKeyboard(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onHideKeyboard(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func onShowKeyboard(notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        var keyboardFrame
+        = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.convert(keyboardFrame, from: nil)
         
+        var contentInset = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 10
+        self.scrollView.contentInset = contentInset
+    }
+    
+    @objc func onHideKeyboard(notification: NSNotification) {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        
+        self.scrollView.contentInset = contentInset
     }
 }
