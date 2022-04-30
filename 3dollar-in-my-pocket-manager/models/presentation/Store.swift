@@ -12,7 +12,14 @@ struct Store: Equatable {
     var snsUrl: String?
     var introduction: String?
     let menus: [Menu]
-    let name: String
+    var name: String
+    
+    var isValid: Bool {
+        return !(self.imageUrl ?? "").isEmpty
+        && !(self.phoneNumber ?? "").isEmpty
+        && !(self.imageUrl ?? "").isEmpty
+        && !self.name.isEmpty
+    }
     
     init(response: BossStoreInfoResponse) {
         self.id = response.bossStoreId

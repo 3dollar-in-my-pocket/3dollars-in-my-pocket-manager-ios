@@ -8,10 +8,20 @@ final class EditStoreInfoViewController: BaseViewController, EditStoreInfoCoordi
         return .darkContent
     }
     
-    static func instance() -> EditStoreInfoViewController {
-        return EditStoreInfoViewController(nibName: nil, bundle: nil).then {
+    static func instance(store: Store) -> EditStoreInfoViewController {
+        return EditStoreInfoViewController(store: store).then {
             $0.hidesBottomBarWhenPushed = true
         }
+    }
+    
+    init(store: Store) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.editStoreInfoView.bind(store: store)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {

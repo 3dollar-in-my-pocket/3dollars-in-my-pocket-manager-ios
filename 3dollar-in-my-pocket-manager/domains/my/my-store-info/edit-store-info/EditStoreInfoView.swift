@@ -151,4 +151,8 @@ final class EditStoreInfoView: BaseView {
             make.height.equalTo(82)
         }
     }
+    
+    func bind(store: Store) {
+        
+    }
 }

@@ -13,6 +13,12 @@ struct MenuRequest: Encodable {
         case price
     }
     
+    init(menu: Menu) {
+        self.groupName = ""
+        self.imageUrl = menu.imageUrl
+        self.name = menu.name
+        self.price = menu.price
+    }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)

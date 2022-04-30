@@ -5,7 +5,10 @@ import RxDataSources
 
 final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoordinator {
     private let myStoreInfoView = MyStoreInfoView()
-    private let myStoreInfoReactor = MyStoreInfoReactor(storeService: StoreService())
+    private let myStoreInfoReactor = MyStoreInfoReactor(
+        storeService: StoreService(),
+        globalState: GlobalState.shared
+    )
     private weak var coordinator: MyStoreInfoCoordinator?
     private var myStoreInfoCollectionViewDataSource
     : RxCollectionViewSectionedReloadDataSource<MyStoreInfoSectionModel>!
@@ -40,13 +43,9 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             .disposed(by: self.eventDisposeBag)
         
         self.myStoreInfoReactor.pushEditIntroductionPublisher
-            .debug()
-            .asDriver(onErrorJustReturn: ("", nil))
-            .drive(onNext: { [weak self] storeId, introduction in
-                self?.coordinator?.pushEditIntroduction(
-                    storeId: storeId,
-                    introduction: introduction
-                )
+            .asDriver(onErrorJustReturn: Store())
+            .drive(onNext: { [weak self] store in
+                self?.coordinator?.pushEditIntroduction(store: store)
             })
             .disposed(by: self.eventDisposeBag)
     }
@@ -143,11 +142,5 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 return UICollectionReusableView()
             }
         }
-    }
-}
-
-extension MyStoreInfoViewController: EditIntroductionDelegate {
-    func onUpdateIntroduction(introduction: String) {
-        self.myStoreInfoReactor.action.onNext(.updateIntroduction(introduction))
     }
 }

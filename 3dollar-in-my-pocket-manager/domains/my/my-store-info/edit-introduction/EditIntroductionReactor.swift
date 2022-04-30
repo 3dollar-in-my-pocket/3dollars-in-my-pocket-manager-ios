@@ -11,31 +11,31 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
     enum Mutation {
         case setIntroduction(String?)
         case setEditButtonEnable(Bool)
-        case popWishIntroduction(String)
+        case pop
         case showLoading(isShow: Bool)
         case showErrorAlert(Error)
     }
     
     struct State {
-        var introduction: String?
+        var store: Store
         var isEditButtonEnable: Bool
     }
     
     let initialState: State
-    let popupWithIntroductionPublisher = PublishRelay<String>()
-    private let storeId: String
-    private let storeService: StoreServiceProtocol
+    let popupPublisher = PublishRelay<Void>()
+    private let storeService: StoreServiceType
+    private let globalState: GlobalState
     
     init(
-        storeId: String,
-        storeService: StoreServiceProtocol,
-        introduction: String? = nil
+        store: Store,
+        storeService: StoreServiceType,
+        globlaState: GlobalState
     ) {
-        self.storeId = storeId
         self.storeService = storeService
+        self.globalState = globlaState
         self.initialState = State(
-            introduction: introduction,
-            isEditButtonEnable: introduction?.isEmpty == false
+            store: store,
+            isEditButtonEnable: !(store.introduction ?? "").isEmpty
         )
     }
     
@@ -48,11 +48,9 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
             ])
             
         case .tapEditButton:
-            guard let introduction = self.currentState.introduction else { return .empty() }
-            
             return .concat([
                 .just(.showLoading(isShow: true)),
-                self.updateStore(introduction: introduction),
+                self.updateStore(store: self.currentState.store),
                 .just(.showLoading(isShow: false))
             ])
         }
@@ -63,13 +61,13 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
         
         switch mutation {
         case .setIntroduction(let introduction):
-            newState.introduction = introduction
+            newState.store.introduction = introduction
             
         case .setEditButtonEnable(let isEnable):
             newState.isEditButtonEnable = isEnable
             
-        case .popWishIntroduction(let introduction):
-            self.popupWithIntroductionPublisher.accept(introduction)
+        case .pop:
+            self.popupPublisher.accept(())
             
         case .showLoading(let isShow):
             self.showLoadginPublisher.accept(isShow)
@@ -81,17 +79,17 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
         return newState
     }
     
-    private func updateStore(introduction: String) -> Observable<Mutation> {
-        return self.storeService.updateStore(
-            storeId: self.storeId,
-            introduction: introduction
-        )
-        .map { _ in Mutation.popWishIntroduction(introduction) }
-        .catch {
-            return .merge([
-                .just(.showLoading(isShow: false)),
-                .just(.showErrorAlert($0))
-            ])
-        }
+    private func updateStore(store: Store) -> Observable<Mutation> {
+        return self.storeService.updateStore(store: store)
+            .do(onNext: { [weak self] _ in
+                self?.globalState.updateStorePublisher.onNext(store)
+            })
+            .map { _ in Mutation.pop }
+            .catch {
+                return .merge([
+                    .just(.showLoading(isShow: false)),
+                    .just(.showErrorAlert($0))
+                ])
+            }
     }
 }

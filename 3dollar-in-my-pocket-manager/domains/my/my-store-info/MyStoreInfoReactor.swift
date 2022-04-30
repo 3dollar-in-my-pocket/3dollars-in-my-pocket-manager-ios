@@ -7,7 +7,6 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case viewDidLoad
         case tapEditStoreInfo
         case tapEditIntroduction
-        case updateIntroduction(String)
         case tapEditMenus
         case tapEditSchedule
     }
@@ -16,7 +15,7 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case setStore(Store)
         case updateIntorudction(String)
         case pushEditStoreInfo(store: Store)
-        case pushEditIntroduction(storeId: String, introduction: String?)
+        case pushEditIntroduction(store: Store)
         case pushEditMenus
         case pushEditSchedule
         case showErrorAlert(Error)
@@ -28,11 +27,16 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
     
     let initialState = State()
     let pushEditStoreInfoPublisher = PublishRelay<Store>()
-    let pushEditIntroductionPublisher = PublishRelay<(String, String?)>()
-    private let storeService: StoreServiceProtocol
+    let pushEditIntroductionPublisher = PublishRelay<Store>()
+    private let storeService: StoreServiceType
+    private let globalState: GlobalState
     
-    init(storeService: StoreServiceProtocol) {
+    init(
+        storeService: StoreServiceType,
+        globalState: GlobalState
+    ) {
         self.storeService = storeService
+        self.globalState = globalState
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -44,13 +48,7 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             return .just(.pushEditStoreInfo(store: self.currentState.store))
             
         case .tapEditIntroduction:
-            return .just(.pushEditIntroduction(
-                storeId: self.currentState.store.id,
-                introduction: self.currentState.store.introduction
-            ))
-            
-        case .updateIntroduction(let introduction):
-            return .just(.updateIntorudction(introduction))
+            return .just(.pushEditIntroduction(store: self.currentState.store))
             
         case .tapEditMenus:
             return .empty()
@@ -58,6 +56,14 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case .tapEditSchedule:
             return .empty()
         }
+    }
+    
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        return .merge([
+            mutation,
+            self.globalState.updateStorePublisher
+                .map { .setStore($0) }
+        ])
     }
     
     func reduce(state: State, mutation: Mutation) -> State {
@@ -73,8 +79,8 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case .pushEditStoreInfo(let store):
             self.pushEditStoreInfoPublisher.accept(store)
             
-        case .pushEditIntroduction(let storeId, let introduction):
-            self.pushEditIntroductionPublisher.accept((storeId, introduction))
+        case .pushEditIntroduction(let store):
+            self.pushEditIntroductionPublisher.accept(store)
             
         case .pushEditMenus:
             break

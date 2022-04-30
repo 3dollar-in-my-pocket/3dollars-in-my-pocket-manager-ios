@@ -1,25 +1,21 @@
 protocol MyStoreInfoCoordinator: AnyObject, BaseCoordinator {
     func pushEditStoreInfo(store: Store)
     
-    func pushEditIntroduction(storeId: String, introduction: String?)
+    func pushEditIntroduction(store: Store)
 }
 
 extension MyStoreInfoCoordinator {
     func pushEditStoreInfo(store: Store) {
-        let viewController = EditStoreInfoViewController.instance()
+        let viewController = EditStoreInfoViewController.instance(store: store)
         
         self.presenter.parent?
             .navigationController?
             .pushViewController(viewController, animated: true)
     }
     
-    func pushEditIntroduction(storeId: String, introduction: String?) {
-        let viewController = EditIntroductionViewController.instance(
-            storeId: storeId,
-            introduction: introduction
-        )
+    func pushEditIntroduction(store: Store) {
+        let viewController = EditIntroductionViewController.instance(store: store)
         
-        viewController.delegate = self as? EditIntroductionDelegate
         self.presenter.parent?
             .navigationController?
             .pushViewController(viewController, animated: true)

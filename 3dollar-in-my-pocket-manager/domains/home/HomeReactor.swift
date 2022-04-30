@@ -34,13 +34,13 @@ final class HomeReactor: BaseReactor, Reactor {
     
     let initialState = State()
     private let mapService: MapServiceProtocol
-    private let storeSerivce: StoreServiceProtocol
+    private let storeSerivce: StoreServiceType
     private let locationManager: LocationManagerProtocol
     private let backgroundTaskManager: BackgroundTaskManagerProtocol
     
     init(
         mapService: MapServiceProtocol,
-        storeService: StoreServiceProtocol,
+        storeService: StoreServiceType,
         locationManager: LocationManagerProtocol,
         backgroundTaskManager: BackgroundTaskManagerProtocol
     ) {

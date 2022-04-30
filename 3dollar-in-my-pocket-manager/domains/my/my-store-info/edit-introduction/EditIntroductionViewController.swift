@@ -2,13 +2,8 @@ import UIKit
 
 import ReactorKit
 
-protocol EditIntroductionDelegate: AnyObject {
-    func onUpdateIntroduction(introduction: String)
-}
-
 final class EditIntroductionViewController:
     BaseViewController, View, EditIntroductionCoordinator {
-    weak var delegate: EditIntroductionDelegate?
     private let editIntroductionView = EditIntroductionView()
     private let editIntroductionReactor: EditIntroductionReactor
     private weak var coordinator: EditIntroductionCoordinator?
@@ -17,27 +12,21 @@ final class EditIntroductionViewController:
         return .darkContent
     }
     
-    static func instance(
-        storeId: String,
-        introduction: String?
-    ) -> EditIntroductionViewController {
-        return EditIntroductionViewController(
-            storeId: storeId,
-            introduction: introduction
-        ).then {
+    static func instance(store: Store) -> EditIntroductionViewController {
+        return EditIntroductionViewController(store: store).then {
             $0.hidesBottomBarWhenPushed = true
         }
     }
     
-    init(storeId: String, introduction: String?) {
+    init(store: Store) {
         self.editIntroductionReactor = EditIntroductionReactor(
-            storeId: storeId,
+            store: store,
             storeService: StoreService(),
-            introduction: introduction
+            globlaState: GlobalState.shared
         )
         
         super.init(nibName: nil, bundle: nil)
-        self.editIntroductionView.bind(introduction: introduction)
+        self.editIntroductionView.bind(introduction: store.introduction)
     }
     
     required init?(coder: NSCoder) {
@@ -70,10 +59,9 @@ final class EditIntroductionViewController:
             })
             .disposed(by: self.eventDisposeBag)
         
-        self.editIntroductionReactor.popupWithIntroductionPublisher
-            .asDriver(onErrorJustReturn: "")
-            .drive(onNext: { [weak self] introduction in
-                self?.delegate?.onUpdateIntroduction(introduction: introduction)
+        self.editIntroductionReactor.popupPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] _ in
                 self?.coordinator?.popViewController(animated: true)
             })
             .disposed(by: self.eventDisposeBag)

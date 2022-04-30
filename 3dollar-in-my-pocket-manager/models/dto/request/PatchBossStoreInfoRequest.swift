@@ -41,6 +41,17 @@ struct PatchBossStoreInfoRequest: Encodable {
         self.snsUrl = snsUrl
     }
     
+    init(store: Store) {
+        self.appearanceDays = []
+        self.categoriesIds = store.categories.map { $0.categoryId }
+        self.contactsNumber = store.phoneNumber
+        self.imageUrl = store.imageUrl
+        self.introduction = store.introduction
+        self.menus = store.menus.map(MenuRequest.init(menu:))
+        self.name = store.name
+        self.snsUrl = store.snsUrl
+    }
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         

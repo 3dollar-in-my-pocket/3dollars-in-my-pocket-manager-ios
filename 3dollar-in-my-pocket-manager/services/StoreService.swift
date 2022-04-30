@@ -3,7 +3,7 @@ import CoreLocation
 import RxSwift
 import Alamofire
 
-protocol StoreServiceProtocol {
+protocol StoreServiceType {
     func fetchMyStore() -> Observable<BossStoreInfoResponse>
     
     func openStore(storeId: String, location: CLLocation) -> Observable<String>
@@ -15,13 +15,10 @@ protocol StoreServiceProtocol {
         distance: Int
     ) -> Observable<[BossStoreAroundInfoResponse]>
     
-    func updateStore(
-        storeId: String,
-        introduction: String?
-    ) -> Observable<String>
+    func updateStore(store: Store) -> Observable<String>
 }
 
-struct StoreService: StoreServiceProtocol {
+struct StoreService: StoreServiceType {
     func fetchMyStore() -> Observable<BossStoreInfoResponse> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/store/my-store"
@@ -119,23 +116,11 @@ struct StoreService: StoreServiceProtocol {
         }
     }
     
-    func updateStore(
-        storeId: String,
-        introduction: String?
-    ) -> Observable<String> {
+    func updateStore(store: Store) -> Observable<String> {
         return .create { observer in
-            let urlString = HTTPUtils.url + "/boss/v1/boss/store/my-store/\(storeId)"
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/my-store/\(store.id)"
             let headers = HTTPUtils.defaultHeader()
-            let parameters = PatchBossStoreInfoRequest(
-                appearanceDays: nil,
-                categoriesIds: nil,
-                contactsNumber: nil,
-                imageUrl: nil,
-                introduction: introduction,
-                menus: nil,
-                name: nil,
-                snsUrl: nil
-            )
+            let parameters = PatchBossStoreInfoRequest(store: store)
             
             HTTPUtils.defaultSession.request(
                 urlString,
