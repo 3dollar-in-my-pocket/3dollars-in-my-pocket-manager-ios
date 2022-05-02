@@ -1,4 +1,4 @@
-struct TimeInterval: Decodable {
+struct TimeInterval: Decodable, Equatable {
     let endTime: LocalTimeRes
     let startTime: LocalTimeRes
     

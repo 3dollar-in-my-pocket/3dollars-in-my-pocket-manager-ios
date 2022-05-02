@@ -2,6 +2,8 @@ protocol MyStoreInfoCoordinator: AnyObject, BaseCoordinator {
     func pushEditStoreInfo(store: Store)
     
     func pushEditIntroduction(store: Store)
+    
+    func pushEditSchedule(store: Store)
 }
 
 extension MyStoreInfoCoordinator {
@@ -15,6 +17,14 @@ extension MyStoreInfoCoordinator {
     
     func pushEditIntroduction(store: Store) {
         let viewController = EditIntroductionViewController.instance(store: store)
+        
+        self.presenter.parent?
+            .navigationController?
+            .pushViewController(viewController, animated: true)
+    }
+    
+    func pushEditSchedule(store: Store) {
+        let viewController = EditScheduleViewController.instance(store: store)
         
         self.presenter.parent?
             .navigationController?

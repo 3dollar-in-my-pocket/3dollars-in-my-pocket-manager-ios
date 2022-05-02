@@ -1,4 +1,4 @@
-struct LocalTimeRes: Decodable {
+struct LocalTimeRes: Decodable, Equatable {
     let hour: Int
     let minute: Int
     let nano: Int

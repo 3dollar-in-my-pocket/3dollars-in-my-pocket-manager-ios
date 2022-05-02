@@ -13,6 +13,7 @@ struct Store: Equatable {
     var introduction: String?
     let menus: [Menu]
     var name: String
+    var appearanceDays: [AppearanceDay]
     
     var isValid: Bool {
         return !(self.imageUrl ?? "").isEmpty
@@ -42,6 +43,7 @@ struct Store: Equatable {
         self.introduction = response.introduction
         self.menus = response.menus.map(Menu.init)
         self.name = response.name
+        self.appearanceDays = response.appearanceDays.map(AppearanceDay.init)
     }
     
     init(response: BossStoreAroundInfoResponse) {
@@ -65,6 +67,7 @@ struct Store: Equatable {
         self.introduction = nil
         self.menus = response.menus.map(Menu.init)
         self.name = response.name
+        self.appearanceDays = []
     }
     
     init(
@@ -78,7 +81,8 @@ struct Store: Equatable {
         snsUrl: String? = nil,
         introduction: String? = nil,
         menus: [Menu] = [],
-        name: String = ""
+        name: String = "",
+        appearanceDays: [AppearanceDay] = []
     ) {
         self.id = id
         self.location = location
@@ -91,5 +95,6 @@ struct Store: Equatable {
         self.introduction = introduction
         self.menus = menus
         self.name = name
+        self.appearanceDays = appearanceDays
     }
 }

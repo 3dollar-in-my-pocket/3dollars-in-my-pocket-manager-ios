@@ -48,6 +48,13 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 self?.coordinator?.pushEditIntroduction(store: store)
             })
             .disposed(by: self.eventDisposeBag)
+        
+        self.myStoreInfoReactor.pushEditSchedulePublisher
+            .asDriver(onErrorJustReturn: Store())
+            .drive(onNext: { [weak self] store in
+                self?.coordinator?.pushEditSchedule(store: store)
+            })
+            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: MyStoreInfoReactor) {
@@ -56,7 +63,8 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             .map { [
                 MyStoreInfoSectionModel(store: $0.store),
                 MyStoreInfoSectionModel(introduction: $0.store.introduction),
-                MyStoreInfoSectionModel(menus: $0.store.menus)
+                MyStoreInfoSectionModel(menus: $0.store.menus),
+                MyStoreInfoSectionModel(appearanceDays: $0.store.appearanceDays)
             ] }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
@@ -100,6 +108,15 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                     ) as? MyStoreInfoWorkDayCell else { return BaseCollectionViewCell() }
                     
                     return cell
+                    
+                case .appearanceDay(let appearanceDay):
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: MyStoreInfoWorkDayCell.registerId,
+                        for: indexPath
+                    ) as? MyStoreInfoWorkDayCell else { return BaseCollectionViewCell() }
+                    
+                    cell.bind(appearanceDay: appearanceDay)
+                    return cell
                 }
         })
         
@@ -132,6 +149,16 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                     )
                     headerView.rx.tapRightButton
                         .map { Reactor.Action.tapEditMenus }
+                        .bind(to: self.myStoreInfoReactor.action)
+                        .disposed(by: headerView.disposeBag)
+                } else {
+                    headerView.titleLabel.text = "my_store_info_header_appearance_day".localized
+                    headerView.rightButton.setTitle(
+                        "my_store_info_header_appearance_day_button".localized,
+                        for: .normal
+                    )
+                    headerView.rx.tapRightButton
+                        .map { Reactor.Action.tapEditSchedule }
                         .bind(to: self.myStoreInfoReactor.action)
                         .disposed(by: headerView.disposeBag)
                 }

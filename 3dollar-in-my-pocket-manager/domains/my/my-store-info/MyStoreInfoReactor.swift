@@ -17,7 +17,7 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case pushEditStoreInfo(store: Store)
         case pushEditIntroduction(store: Store)
         case pushEditMenus
-        case pushEditSchedule
+        case pushEditSchedule(store: Store)
         case showErrorAlert(Error)
     }
     
@@ -28,6 +28,7 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
     let initialState = State()
     let pushEditStoreInfoPublisher = PublishRelay<Store>()
     let pushEditIntroductionPublisher = PublishRelay<Store>()
+    let pushEditSchedulePublisher = PublishRelay<Store>()
     private let storeService: StoreServiceType
     private let globalState: GlobalState
     
@@ -54,7 +55,7 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             return .empty()
             
         case .tapEditSchedule:
-            return .empty()
+            return .just(.pushEditSchedule(store: self.currentState.store))
         }
     }
     
@@ -85,8 +86,8 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case .pushEditMenus:
             break
             
-        case .pushEditSchedule:
-            break
+        case .pushEditSchedule(let store):
+            self.pushEditSchedulePublisher.accept(store)
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)

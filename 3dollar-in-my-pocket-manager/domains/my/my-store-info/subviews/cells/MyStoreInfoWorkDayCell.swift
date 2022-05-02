@@ -61,4 +61,8 @@ final class MyStoreInfoWorkDayCell: BaseCollectionViewCell {
             make.top.equalTo(self.timeLabel.snp.bottom).offset(2)
         }
     }
+    
+    func bind(appearanceDay: AppearanceDay) {
+        
+    }
 }

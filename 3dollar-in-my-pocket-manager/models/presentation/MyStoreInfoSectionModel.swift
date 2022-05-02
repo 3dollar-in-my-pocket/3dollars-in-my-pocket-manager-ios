@@ -11,6 +11,7 @@ extension MyStoreInfoSectionModel: SectionModelType {
         case overview(Store)
         case introduction(String?)
         case menu(Menu)
+        case appearanceDay(AppearanceDay)
     }
     
     init(original: MyStoreInfoSectionModel, items: [Item]) {
@@ -30,5 +31,11 @@ extension MyStoreInfoSectionModel: SectionModelType {
         let menus = menus.map { SectionItemType.menu($0) }
         
         self.items = menus
+    }
+    
+    init(appearanceDays: [AppearanceDay]) {
+        let appearanceDays = appearanceDays.map { SectionItemType.appearanceDay($0) }
+        
+        self.items = appearanceDays
     }
 }

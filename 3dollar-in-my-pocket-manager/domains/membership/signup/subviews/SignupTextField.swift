@@ -26,7 +26,7 @@ final class SignupTextField: BaseView {
         $0.textColor = .gray100
     }
     
-    init(placeholder: String?) {
+    init(placeholder: String? = nil) {
         super.init(frame: .zero)
         
         self.setPlaceholder(placeholder: placeholder)
