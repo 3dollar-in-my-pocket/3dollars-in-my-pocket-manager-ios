@@ -1,6 +1,6 @@
 import UIKit
 
-final class EditScheduleTableViewCell: BaseTableViewCell {
+final class EditScheduleTableViewCell: UITableViewCell {
     static let registerId = "\(EditScheduleTableViewCell.self)"
     static let size = CGSize(
         width: UIScreen.main.bounds.width - 48,
@@ -62,7 +62,19 @@ final class EditScheduleTableViewCell: BaseTableViewCell {
     
     private let locationField = SignupTextField()
     
-    override func setup() {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        self.setup()
+        self.bindConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setup() {
+        self.contentView.isUserInteractionEnabled = false
         self.backgroundColor = .clear
         self.selectionStyle = .none
         self.addSubViews([
@@ -77,7 +89,7 @@ final class EditScheduleTableViewCell: BaseTableViewCell {
         ])
     }
     
-    override func bindConstraints() {
+    private func bindConstraints() {
         self.containerView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.top.equalToSuperview().offset(16)
@@ -129,5 +141,9 @@ final class EditScheduleTableViewCell: BaseTableViewCell {
             make.right.equalTo(self.endTimeField)
             make.height.equalTo(48)
         }
+    }
+    
+    func bind(appearanceDay: AppearanceDay) {
+        self.titleLabel.text =  appearanceDay.dayOfTheWeek.fullText
     }
 }

@@ -1,7 +1,11 @@
 import UIKit
 
-final class EditScheduleViewController: BaseViewController, EditScheduleCoordinator {
+import ReactorKit
+
+final class EditScheduleViewController:
+    BaseViewController, View, EditScheduleCoordinator {
     private let editScheduleView = EditScheduleView()
+    private let editScheduleReactor: EditScheduleReactor
     private weak var coordinator: EditScheduleCoordinator?
     
     static func instance(store: Store) -> EditScheduleViewController {
@@ -11,6 +15,11 @@ final class EditScheduleViewController: BaseViewController, EditScheduleCoordina
     }
     
     init(store: Store) {
+        self.editScheduleReactor = EditScheduleReactor(
+            store: store,
+            storeService: StoreService(),
+            globalState: GlobalState.shared
+        )
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -26,7 +35,7 @@ final class EditScheduleViewController: BaseViewController, EditScheduleCoordina
         super.viewDidLoad()
         
         self.coordinator = self
-        self.editScheduleView.tableView.dataSource = self
+        self.reactor = self.editScheduleReactor
     }
     
     override func bindEvent() {
@@ -36,20 +45,40 @@ final class EditScheduleViewController: BaseViewController, EditScheduleCoordina
                 self?.coordinator?.popViewController(animated: true)
             })
             .disposed(by: self.eventDisposeBag)
-    }
-}
-
-extension EditScheduleViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        
+        self.editScheduleReactor.popPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.popViewController(animated: true)
+            })
+            .disposed(by: self.eventDisposeBag)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: EditScheduleTableViewCell.registerId,
-            for: indexPath
-        ) as? EditScheduleTableViewCell else { return BaseTableViewCell() }
+    func bind(reactor: EditScheduleReactor) {
+        // Bind Action
+        self.editScheduleView.weekDayStackView.rx.tap
+            .map { Reactor.Action.tapDayOfTheWeek($0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
-        return cell
+        // Bind State
+        reactor.state
+            .map { $0.store.appearanceDays.map { $0.dayOfTheWeek } }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: [])
+            .drive(self.editScheduleView.weekDayStackView.rx.selectedDay)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.store.appearanceDays }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: [])
+            .drive(self.editScheduleView.tableView.rx.items(
+                cellIdentifier: EditScheduleTableViewCell.registerId,
+                cellType: EditScheduleTableViewCell.self
+            )) { row, appearanceDay, cell in
+                cell.bind(appearanceDay: appearanceDay)
+            }
+            .disposed(by: self.disposeBag)
     }
 }

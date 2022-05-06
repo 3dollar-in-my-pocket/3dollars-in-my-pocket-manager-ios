@@ -155,6 +155,16 @@ final class WeekDayStackView: BaseView {
         }
     }
     
+    fileprivate func selectDaysOfTheWeek(daysOfTheWeek: [DayOfTheWeek]) {
+        self.mondayButton.isSelected = daysOfTheWeek.contains(.monday)
+        self.tuesdayButton.isSelected = daysOfTheWeek.contains(.tuesday)
+        self.wednesdayButton.isSelected = daysOfTheWeek.contains(.wednesday)
+        self.thursdayButton.isSelected = daysOfTheWeek.contains(.thursday)
+        self.fridayButton.isSelected = daysOfTheWeek.contains(.friday)
+        self.saturdayButton.isSelected = daysOfTheWeek.contains(.saturday)
+        self.sundayButton.isSelected = daysOfTheWeek.contains(.sunday)
+    }
+    
     private class weekDayButton: UIButton {
         override var isSelected: Bool {
             didSet {
@@ -172,6 +182,7 @@ final class WeekDayStackView: BaseView {
             self.setBackgroundColor(color: .black, forState: .selected)
             self.setTitleColor(.gray40, for: .normal)
             self.setTitleColor(.white, for: .selected)
+            self.titleLabel?.font = .bold(size: 14)
         }
         
         required init?(coder: NSCoder) {
@@ -183,5 +194,11 @@ final class WeekDayStackView: BaseView {
 extension Reactive where Base: WeekDayStackView {
     var tap: ControlEvent<DayOfTheWeek> {
         return ControlEvent(events: base.tapPublisher)
+    }
+    
+    var selectedDay: Binder<[DayOfTheWeek]> {
+        return Binder(self.base) { view, daysOfTheWeek in
+            view.selectDaysOfTheWeek(daysOfTheWeek: daysOfTheWeek)
+        }
     }
 }

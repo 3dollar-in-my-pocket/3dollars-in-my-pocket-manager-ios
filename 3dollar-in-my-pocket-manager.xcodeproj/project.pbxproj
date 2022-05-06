@@ -33,8 +33,6 @@
 		6E25FED027F531AB00BE2941 /* TabBarTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FECF27F531AB00BE2941 /* TabBarTag.swift */; };
 		6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED227F535F100BE2941 /* LocationManager.swift */; };
 		6E25FED627F5363600BE2941 /* LocationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED527F5363600BE2941 /* LocationError.swift */; };
-		6E2CE46A2809A12E00FBBA3F /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFA3A0E27F3E1E000C13906 /* Base.framework */; };
-		6E2CE46B2809A12E00FBBA3F /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFA3A0E27F3E1E000C13906 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E37AF6C27E7057F004FBE25 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF6B27E7057F004FBE25 /* WaitingViewController.swift */; };
 		6E37AF6F27E7069C004FBE25 /* WaitingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF6E27E7069C004FBE25 /* WaitingReactor.swift */; };
 		6E37AF7127E707FC004FBE25 /* WaitingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF7027E707FC004FBE25 /* WaitingCoordinator.swift */; };
@@ -113,6 +111,8 @@
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
 		6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */; };
+		6EBCE5802824E6BE00F07294 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E808CAD27F016CF00C46459 /* Base.framework */; };
+		6EBCE5812824E6BE00F07294 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E808CAD27F016CF00C46459 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6EBF1AE727FE65950011268B /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AE627FE65950011268B /* StoreService.swift */; };
 		6EBF1AE927FE6A980011268B /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AE827FE6A980011268B /* Store.swift */; };
 		6EBF1AEB27FE7A1D0011268B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AEA27FE7A1D0011268B /* HomeCoordinator.swift */; };
@@ -174,13 +174,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E2CE46C2809A12E00FBBA3F /* Embed Frameworks */ = {
+		6EBCE5822824E6BE00F07294 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E2CE46B2809A12E00FBBA3F /* Base.framework in Embed Frameworks */,
+				6EBCE5812824E6BE00F07294 /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,7 +342,7 @@
 				6E6C9C77280BEE26009AFAE8 /* Kingfisher in Frameworks */,
 				6E5F212F281976B200922A99 /* RxDataSources in Frameworks */,
 				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
-				6E2CE46A2809A12E00FBBA3F /* Base.framework in Frameworks */,
+				6EBCE5802824E6BE00F07294 /* Base.framework in Frameworks */,
 				6E5F212D281976B200922A99 /* Differentiator in Frameworks */,
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
@@ -889,7 +889,7 @@
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6E2CE46C2809A12E00FBBA3F /* Embed Frameworks */,
+				6EBCE5822824E6BE00F07294 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

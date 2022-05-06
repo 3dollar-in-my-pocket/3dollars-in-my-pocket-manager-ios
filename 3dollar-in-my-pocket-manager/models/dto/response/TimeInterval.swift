@@ -1,10 +1,15 @@
 struct TimeInterval: Decodable, Equatable {
-    let endTime: LocalTimeRes
-    let startTime: LocalTimeRes
+    var endTime: LocalTimeRes
+    var startTime: LocalTimeRes
     
     enum CodingKeys: String, CodingKey {
         case endTime
         case startTime
+    }
+    
+    init() {
+        self.startTime = LocalTimeRes()
+        self.endTime = LocalTimeRes()
     }
     
     init(

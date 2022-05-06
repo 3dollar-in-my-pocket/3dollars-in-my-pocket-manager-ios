@@ -32,7 +32,7 @@ final class EditScheduleView: BaseView {
         $0.text = "edit_schedule_sub_description".localized
     }
     
-    private let weekDayStackView = WeekDayStackView()
+    let weekDayStackView = WeekDayStackView()
     
     let tableView = UITableView().then {
         $0.tableFooterView = UIView()
