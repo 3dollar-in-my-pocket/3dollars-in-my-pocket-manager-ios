@@ -7,18 +7,21 @@ import RxCocoa
 final class EditScheduleReactor:  BaseReactor, Reactor {
     enum Action {
         case tapDayOfTheWeek(DayOfTheWeek)
-        case inputStartTime(day: DayOfTheWeek, time: Date)
-        case inputEndTime(day: DayOfTheWeek, time: Date)
+        case inputStartTime(day: DayOfTheWeek, time: String)
+        case inputEndTime(day: DayOfTheWeek, time: String)
         case inputLocation(day: DayOfTheWeek, location: String)
+        case tapEditButton
     }
     
     enum Mutation {
         case addDayOfWeek(DayOfTheWeek)
         case removeDayOfWeek(DayOfTheWeek)
-        case setStartTime(day: DayOfTheWeek, time: Date)
-        case setEndTime(day: DayOfTheWeek, time: Date)
+        case setStartTime(day: DayOfTheWeek, time: String)
+        case setEndTime(day: DayOfTheWeek, time: String)
         case setLocation(day: DayOfTheWeek, location: String)
         case pop
+        case showLoading(isShow: Bool)
+        case showErrorAlert(Error)
     }
     
     struct State {
@@ -28,7 +31,7 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
     let initialState: State
     let popPublisher = PublishRelay<Void>()
     private let storeService: StoreServiceType
-    private let globlaState: GlobalState
+    private let globalState: GlobalState
     
     init(
         store: Store,
@@ -37,7 +40,7 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
     ) {
         self.initialState = State(store: store)
         self.storeService = storeService
-        self.globlaState = globalState
+        self.globalState = globalState
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -61,6 +64,13 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
             
         case .inputLocation(let day, let location):
             return .just(.setLocation(day: day, location: location))
+            
+        case .tapEditButton:
+            return .concat([
+                .just(.showLoading(isShow: true)),
+                self.updateStore(store: self.currentState.store),
+                .just(.showLoading(isShow: false))
+            ])
         }
     }
     
@@ -86,14 +96,12 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
             
         case .setStartTime(let dayOfTheWeek, let time):
             if let index = self.getIndex(of: dayOfTheWeek) {
-                newState.store.appearanceDays[index].openingHours.startTime
-                = LocalTimeRes(date: time)
+                newState.store.appearanceDays[index].openingHours.startTime = time
             }
             
         case .setEndTime(let dayOfTheWeek, let time):
             if let index = self.getIndex(of: dayOfTheWeek) {
-                newState.store.appearanceDays[index].openingHours.endTime
-                = LocalTimeRes(date: time)
+                newState.store.appearanceDays[index].openingHours.endTime = time
             }
             
         case .setLocation(let dayOfTheWeek, let location):
@@ -102,8 +110,13 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
             }
             
         case .pop:
-            self.globlaState.updateStorePublisher.onNext(self.currentState.store)
             self.popPublisher.accept(())
+            
+        case .showLoading(let isShow):
+            self.showLoadginPublisher.accept(isShow)
+            
+        case .showErrorAlert(let error):
+            self.showErrorAlert.accept(error)
         }
         
         return newState
@@ -113,5 +126,19 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
         return self.currentState.store.appearanceDays.firstIndex {
             $0.dayOfTheWeek == dayOfTheWeek
         }
+    }
+    
+    private func updateStore(store: Store) -> Observable<Mutation> {
+        return self.storeService.updateStore(store: store)
+            .do(onNext: { [weak self] _ in
+                self?.globalState.updateStorePublisher.onNext(store)
+            })
+            .map { _ in Mutation.pop }
+            .catch {
+                return .merge([
+                    .just(.showLoading(isShow: false)),
+                    .just(.showErrorAlert($0))
+                ])
+            }
     }
 }

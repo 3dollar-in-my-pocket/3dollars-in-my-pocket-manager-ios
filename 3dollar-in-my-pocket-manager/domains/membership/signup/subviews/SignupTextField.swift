@@ -2,6 +2,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import Base
 
 final class SignupTextField: BaseView {
     var maxLength: Int?
@@ -15,6 +16,11 @@ final class SignupTextField: BaseView {
     }
     
     var format: String?
+    
+    fileprivate lazy var datePicker = UIDatePicker().then {
+        $0.datePickerMode = .time
+        $0.preferredDatePickerStyle = .wheels
+    }
     
     private let containerView = UIView().then {
         $0.backgroundColor = .gray5
@@ -65,6 +71,14 @@ final class SignupTextField: BaseView {
     
     func setText(text: String?) {
         self.textField.text = text
+    }
+    
+    func setDate(date: Date) {
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "HH:mm"
+        self.datePicker.date = date
+        self.textField.text = dateFormatter.string(from: date)
     }
     
     fileprivate func format(with mask: String, text: String) -> String {
@@ -124,5 +138,42 @@ extension SignupTextField: UITextFieldDelegate {
 extension Reactive where Base: SignupTextField {
     var text: ControlProperty<String> {
         return base.textField.rx.text.orEmpty
+    }
+    
+    var date: Observable<String> {
+        return base.datePicker.rx.date
+            .map { date -> String in
+                let dateFormatter = DateFormatter()
+                
+                dateFormatter.dateFormat = "HH:mm"
+                return dateFormatter.string(from: date)
+            }
+    }
+}
+
+extension SignupTextField {
+    func setDatePicker() {
+        let toolbar = UIToolbar()
+        let doneButton = UIBarButtonItem().then {
+            $0.title = "완료"
+        }
+        doneButton.rx.tap
+            .asDriver()
+            .drive(onNext: { [weak self] in
+                self?.endEditing(true)
+            })
+            .disposed(by: self.disposeBag)
+        
+        toolbar.sizeToFit()
+        toolbar.setItems([doneButton], animated: true)
+        self.textField.inputAccessoryView = toolbar
+        self.textField.inputView = self.datePicker
+        self.datePicker.rx.value
+            .asDriver()
+            .skip(1)
+            .drive(onNext: { [weak self] date in
+                self?.setDate(date: date)
+            })
+            .disposed(by: self.disposeBag)
     }
 }

@@ -1,4 +1,8 @@
 struct AppearanceDay: Equatable, Comparable {
+    static func == (lhs: AppearanceDay, rhs: AppearanceDay) -> Bool {
+        return lhs.dayOfTheWeek == rhs.dayOfTheWeek
+    }
+    
     static func < (lhs: AppearanceDay, rhs: AppearanceDay) -> Bool {
         return lhs.index < rhs.index
     }

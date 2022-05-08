@@ -42,7 +42,7 @@ struct PatchBossStoreInfoRequest: Encodable {
     }
     
     init(store: Store) {
-        self.appearanceDays = []
+        self.appearanceDays = store.appearanceDays.map(AppearanceDayRequest.init)
         self.categoriesIds = store.categories.map { $0.categoryId }
         self.contactsNumber = store.phoneNumber
         self.imageUrl = store.imageUrl

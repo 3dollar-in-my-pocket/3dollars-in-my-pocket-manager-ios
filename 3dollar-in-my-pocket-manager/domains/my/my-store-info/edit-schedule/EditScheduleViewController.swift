@@ -8,6 +8,10 @@ final class EditScheduleViewController:
     private let editScheduleReactor: EditScheduleReactor
     private weak var coordinator: EditScheduleCoordinator?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     static func instance(store: Store) -> EditScheduleViewController {
         return EditScheduleViewController(store: store).then {
             $0.hidesBottomBarWhenPushed = true
@@ -52,12 +56,32 @@ final class EditScheduleViewController:
                 self?.coordinator?.popViewController(animated: true)
             })
             .disposed(by: self.eventDisposeBag)
+        
+        self.editScheduleReactor.showLoadginPublisher
+            .asDriver(onErrorJustReturn: false)
+            .drive(onNext: { [weak self] isShow in
+                self?.coordinator?.showLoading(isShow: isShow)
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.editScheduleReactor.showErrorAlert
+            .asDriver(onErrorJustReturn: BaseError.unknown)
+            .drive(onNext: { [weak self] error in
+                self?.coordinator?.showErrorAlert(error: error)
+            })
+            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: EditScheduleReactor) {
         // Bind Action
         self.editScheduleView.weekDayStackView.rx.tap
             .map { Reactor.Action.tapDayOfTheWeek($0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        self.editScheduleView.saveButton.rx.tap
+            .throttle(.milliseconds(300), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.tapEditButton }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
@@ -78,6 +102,24 @@ final class EditScheduleViewController:
                 cellType: EditScheduleTableViewCell.self
             )) { row, appearanceDay, cell in
                 cell.bind(appearanceDay: appearanceDay)
+                cell.startTimeField.rx.date
+                    .map {
+                        Reactor.Action.inputStartTime(day: appearanceDay.dayOfTheWeek, time: $0)
+                    }
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
+                cell.endTimeField.rx.date
+                    .map {
+                        Reactor.Action.inputEndTime(day: appearanceDay.dayOfTheWeek, time: $0)
+                    }
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
+                cell.locationField.rx.text
+                    .map {
+                        Reactor.Action.inputLocation(day: appearanceDay.dayOfTheWeek, location: $0)
+                    }
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: self.disposeBag)
     }

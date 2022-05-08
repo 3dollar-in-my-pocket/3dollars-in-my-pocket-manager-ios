@@ -2,15 +2,22 @@ import Foundation
 
 struct AppearanceDayRequest: Encodable {
     let dayOfTheWeek: DayOfTheWeek
-    let endTime: LocalTimeReq
+    let endTime: String
     let locationDescription: String?
-    let startTime: LocalTimeReq
+    let startTime: String
     
     enum CodingKeys: String, CodingKey {
         case dayOfTheWeek
         case endTime
         case locationDescription
         case startTime
+    }
+    
+    init(appearance: AppearanceDay) {
+        self.dayOfTheWeek = appearance.dayOfTheWeek
+        self.endTime = appearance.openingHours.endTime
+        self.locationDescription = appearance.locationDescription
+        self.startTime = appearance.openingHours.startTime
     }
     
     

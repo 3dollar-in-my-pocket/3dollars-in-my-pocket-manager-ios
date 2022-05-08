@@ -1,11 +1,15 @@
 import UIKit
 
+import RxSwift
+import Base
+
 final class EditScheduleTableViewCell: UITableViewCell {
     static let registerId = "\(EditScheduleTableViewCell.self)"
     static let size = CGSize(
         width: UIScreen.main.bounds.width - 48,
         height: 224
     )
+    var disposeBag = DisposeBag()
     
     private let containerView = UIView().then {
         $0.backgroundColor = .white
@@ -17,7 +21,6 @@ final class EditScheduleTableViewCell: UITableViewCell {
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 16)
         $0.textColor = .black
-        $0.text = "화요일"
         $0.setContentHuggingPriority(.required, for: .horizontal)
     }
     
@@ -35,7 +38,9 @@ final class EditScheduleTableViewCell: UITableViewCell {
         $0.text = "edit_schedule_work_time".localized
     }
     
-    private let startTimeField = SignupTextField()
+    let startTimeField = SignupTextField().then {
+        $0.setDatePicker()
+    }
     
     private let dashLabel = UILabel().then {
         $0.text = "~"
@@ -44,7 +49,9 @@ final class EditScheduleTableViewCell: UITableViewCell {
         $0.textColor = .black
     }
     
-    private let endTimeField = SignupTextField()
+    let endTimeField = SignupTextField().then {
+        $0.setDatePicker()
+    }
     
     private let locationLabel = PaddingLabel(
         topInset: 4,
@@ -60,7 +67,7 @@ final class EditScheduleTableViewCell: UITableViewCell {
         $0.text = "edit_schedule_location".localized
     }
     
-    private let locationField = SignupTextField()
+    let locationField = SignupTextField()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -71,6 +78,12 @@ final class EditScheduleTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        self.disposeBag = DisposeBag()
     }
     
     private func setup() {
@@ -144,6 +157,24 @@ final class EditScheduleTableViewCell: UITableViewCell {
     }
     
     func bind(appearanceDay: AppearanceDay) {
+        if !appearanceDay.openingHours.startTime.isEmpty {
+            let startTime = DateUtils.toDate(
+                dateString: appearanceDay.openingHours.startTime,
+                format: "HH:mm"
+            )
+            
+            self.startTimeField.setDate(date: startTime)
+        }
+        
+        if !appearanceDay.openingHours.endTime.isEmpty {
+            let endTime = DateUtils.toDate(
+                dateString: appearanceDay.openingHours.endTime,
+                format: "HH:mm"
+            )
+            
+            self.endTimeField.setDate(date: endTime)
+        }
         self.titleLabel.text =  appearanceDay.dayOfTheWeek.fullText
+        self.locationField.setText(text: appearanceDay.locationDescription)
     }
 }

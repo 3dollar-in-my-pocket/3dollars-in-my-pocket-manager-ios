@@ -21,7 +21,7 @@ protocol StoreServiceType {
 struct StoreService: StoreServiceType {
     func fetchMyStore() -> Observable<BossStoreInfoResponse> {
         return .create { observer in
-            let urlString = HTTPUtils.url + "/boss/v1/boss/store/my-store"
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/me"
             let headers = HTTPUtils.defaultHeader()
             
             HTTPUtils.defaultSession.request(
@@ -118,7 +118,7 @@ struct StoreService: StoreServiceType {
     
     func updateStore(store: Store) -> Observable<String> {
         return .create { observer in
-            let urlString = HTTPUtils.url + "/boss/v1/boss/store/my-store/\(store.id)"
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/\(store.id)"
             let headers = HTTPUtils.defaultHeader()
             let parameters = PatchBossStoreInfoRequest(store: store)
             

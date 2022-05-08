@@ -1,6 +1,6 @@
-struct TimeInterval: Decodable, Equatable {
-    var endTime: LocalTimeRes
-    var startTime: LocalTimeRes
+struct TimeInterval: Decodable {
+    var endTime: String
+    var startTime: String
     
     enum CodingKeys: String, CodingKey {
         case endTime
@@ -8,13 +8,13 @@ struct TimeInterval: Decodable, Equatable {
     }
     
     init() {
-        self.startTime = LocalTimeRes()
-        self.endTime = LocalTimeRes()
+        self.startTime = ""
+        self.endTime = ""
     }
     
     init(
-        endTime: LocalTimeRes = LocalTimeRes(),
-        startTime: LocalTimeRes = LocalTimeRes()
+        endTime: String = "",
+        startTime: String = ""
     ) {
         self.endTime = endTime
         self.startTime = startTime
@@ -23,13 +23,7 @@ struct TimeInterval: Decodable, Equatable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.endTime = try values.decodeIfPresent(
-            LocalTimeRes.self,
-            forKey: .endTime
-        ) ?? LocalTimeRes()
-        self.startTime = try values.decodeIfPresent(
-            LocalTimeRes.self,
-            forKey: .startTime
-        ) ?? LocalTimeRes()
+        self.endTime = try values.decodeIfPresent(String.self, forKey: .endTime) ?? ""
+        self.startTime = try values.decodeIfPresent(String.self, forKey: .startTime) ?? ""
     }
 }

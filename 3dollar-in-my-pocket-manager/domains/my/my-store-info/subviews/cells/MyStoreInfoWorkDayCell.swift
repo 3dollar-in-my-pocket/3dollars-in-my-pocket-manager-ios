@@ -63,6 +63,9 @@ final class MyStoreInfoWorkDayCell: BaseCollectionViewCell {
     }
     
     func bind(appearanceDay: AppearanceDay) {
-        
+        self.weekDayLabel.text = appearanceDay.dayOfTheWeek.fullText
+        self.timeLabel.text
+        = "\(appearanceDay.openingHours.startTime) - \(appearanceDay.openingHours.endTime)"
+        self.locationLabel.text = appearanceDay.locationDescription
     }
 }
