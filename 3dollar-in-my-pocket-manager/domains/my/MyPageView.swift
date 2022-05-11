@@ -26,7 +26,7 @@ final class MyPageView: BaseView {
     let containerView = UIView()
     
     override func setup() {
-        self.backgroundColor = .white
+        self.backgroundColor = .gray0
         self.addSubViews([
             self.myStoreInfoButton,
             self.statisticsButton,

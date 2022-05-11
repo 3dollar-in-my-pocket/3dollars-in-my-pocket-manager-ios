@@ -11,7 +11,7 @@ final class MyPageViewController: BaseViewController {
     
     private let pageViewControllers: [UIViewController] = [
         MyStoreInfoViewController.instance(),
-        MyStoreInfoViewController.instance()
+        StatisticsViewController.instance()
     ]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
