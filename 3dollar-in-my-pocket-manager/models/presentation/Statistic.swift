@@ -1,4 +1,4 @@
-struct Statistic {
+struct Statistic: Equatable {
     let type: FeedbackType
     let count: Int
     

@@ -16,7 +16,7 @@ struct FeedbackService: FeedbackServiceType {
                 method: .get,
                 headers: headers
             ).responseDecodable(
-                of: ResponseContainer<BossStoreFeedbackCountResponse>.self
+                of: ResponseContainer<[BossStoreFeedbackCountResponse]>.self
             ) { response in
                 if response.isSuccess() {
                     observer.processValue(response: response)

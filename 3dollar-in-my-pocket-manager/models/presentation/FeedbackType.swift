@@ -3,7 +3,7 @@ import Foundation
 enum FeedbackType: String, Decodable {
     case bossIsKind = "BOSS_IS_KIND"
     case easyToEat = "EASY_TO_EAT"
-    case foodIsDelecious = "FOOD_IS_DELECIOUS"
+    case foodIsDelecious = "FOOD_IS_DELICIOUS"
     case platingIsBeautiful = "PLATING_IS_BEAUTIFUL"
     case priceIsCheap = "PRICE_IS_CHEAP"
     case thereArePlacesToEatAround = "THERE_ARE_PLACES_TO_EAT_AROUND"
@@ -11,22 +11,22 @@ enum FeedbackType: String, Decodable {
     var title: String {
         switch self {
         case .bossIsKind:
-            return "🙏 사장님이 친절해요"
+            return "statistics_boss_is_kind".localized
             
         case .easyToEat:
-            return "🚀 먹기 간편해요"
+            return "statistics_easy_to_eat".localized
             
         case .foodIsDelecious:
-            return "🍕 음식이 맛있어요"
+            return "statistics_food_is_delecious".localized
             
         case .platingIsBeautiful:
-            return "🎀 플레이팅이 예뻐요"
+            return "statistics_plating_is_beautiful".localized
             
         case .priceIsCheap:
-            return "🌈 가격이 저렴해요"
+            return "statistics_price_is_cheap".localized
             
         case .thereArePlacesToEatAround:
-            return "🛋 주변에 먹을 곳이 있어요"
+            return "statistics_there_are_places_to_eat_around".localized
         }
     }
 }

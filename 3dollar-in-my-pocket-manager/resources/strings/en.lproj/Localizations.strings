@@ -101,5 +101,13 @@
 "edit_schedule_location" = "출몰 지역";
 "edit_schedule_save" = "저장하기";
 
+// Statistics
+"statistics_boss_is_kind" = "🙏 사장님이 친절해요";
+"statistics_easy_to_eat" = "🚀 먹기 간편해요";
+"statistics_food_is_delecious" = "🍕 음식이 맛있어요";
+"statistics_plating_is_beautiful" = "🎀 플레이팅이 예뻐요";
+"statistics_price_is_cheap" = "🌈 가격이 저렴해요";
+"statistics_there_are_places_to_eat_around" = "🛋 주변에 먹을 곳이 있어요";
+
 // Seting
 "setting_title" = "설정";

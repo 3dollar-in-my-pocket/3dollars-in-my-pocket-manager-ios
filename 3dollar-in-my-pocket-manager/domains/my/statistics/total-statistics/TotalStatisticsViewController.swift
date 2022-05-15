@@ -1,7 +1,16 @@
 import UIKit
 
-final class TotalStatisticsViewController: BaseViewController {
+import RxSwift
+import RxCocoa
+import ReactorKit
+
+final class TotalStatisticsViewController: BaseViewController, View, TotalStatisticsCoordinator {
     private let totalStatisticsView = TotalStatisticsView()
+    private let totalStatisticsReactor = TotalStatisticsReactor(
+        feedbackService: FeedbackService(),
+        userDefaults: UserDefaultsUtils()
+    )
+    private weak var coordinator: TotalStatisticsCoordinator?
     
     static func instance() -> TotalStatisticsViewController {
         return TotalStatisticsViewController(nibName: nil, bundle: nil)
@@ -14,22 +23,32 @@ final class TotalStatisticsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.totalStatisticsView.tableView.dataSource = self
-        self.totalStatisticsView.tableView.delegate = self
-    }
-}
-
-extension TotalStatisticsViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        self.coordinator = self
+        self.reactor = self.totalStatisticsReactor
+        self.totalStatisticsReactor.action.onNext(.viewDidLoad)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: TotalStatisticsTableViewCell.registerId,
-            for: indexPath
-        ) as? TotalStatisticsTableViewCell else { return BaseTableViewCell() }
-        
-        return cell
+    override func bindEvent() {
+        self.totalStatisticsReactor.showErrorAlert
+            .asDriver(onErrorJustReturn: BaseError.unknown)
+            .drive(onNext: { [weak self] error in
+                self?.coordinator?.showErrorAlert(error: error)
+            })
+            .disposed(by: self.eventDisposeBag)
+    }
+    
+    func bind(reactor: TotalStatisticsReactor) {
+        // Bind State
+        reactor.state
+            .map { $0.statistics }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: [])
+            .drive(self.totalStatisticsView.tableView.rx.items(
+                cellIdentifier: TotalStatisticsTableViewCell.registerId,
+                cellType: TotalStatisticsTableViewCell.self
+            )) { row, statistic, cell in
+                cell.bind(statistics: statistic)
+            }
+            .disposed(by: self.disposeBag)
     }
 }

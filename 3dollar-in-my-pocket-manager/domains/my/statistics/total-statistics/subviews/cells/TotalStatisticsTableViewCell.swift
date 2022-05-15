@@ -6,7 +6,6 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 14)
         $0.textColor = .gray95
-        $0.text = "🍕 음식이 맛있어요"
     }
     
     private let countLabel = PaddingLabel(
@@ -17,7 +16,6 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
     ).then {
         $0.font = .regular(size: 12)
         $0.textColor = .green
-        $0.text = "400개"
         $0.layer.borderColor = UIColor.green.cgColor
         $0.layer.borderWidth = 1
         $0.layer.cornerRadius = 11
@@ -37,6 +35,7 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
     
     override func setup() {
         self.selectionStyle = .none
+        self.backgroundColor = .clear
         self.addSubViews([
             self.titleLabel,
             self.countLabel,
@@ -70,5 +69,10 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
             make.right.equalTo(self.progressBackgroundView).offset(-4)
             make.bottom.equalTo(self.progressBackgroundView).offset(-4)
         }
+    }
+    
+    func bind(statistics: Statistic) {
+        self.titleLabel.text = statistics.type.title
+        self.countLabel.text = "\(statistics.count)개"
     }
 }
