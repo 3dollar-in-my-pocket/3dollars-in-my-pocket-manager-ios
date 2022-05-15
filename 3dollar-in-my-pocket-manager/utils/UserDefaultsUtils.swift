@@ -3,6 +3,7 @@ import Foundation
 struct UserDefaultsUtils {
     private let KEY_TOKEN = "KEY_TOKEN"
     private let KEY_USER_ID = "KEY_USER_ID"
+    private let KEY_STORE_ID = "KEY_STORE_ID"
     
     let instance: UserDefaults
     
@@ -30,6 +31,15 @@ struct UserDefaultsUtils {
         }
         get {
             return self.instance.integer(forKey: self.KEY_USER_ID)
+        }
+    }
+    
+    var storeId: String {
+        set {
+            self.instance.set(newValue, forKey: self.KEY_STORE_ID)
+        }
+        get {
+            return self.instance.string(forKey: self.KEY_STORE_ID) ?? ""
         }
     }
 }
