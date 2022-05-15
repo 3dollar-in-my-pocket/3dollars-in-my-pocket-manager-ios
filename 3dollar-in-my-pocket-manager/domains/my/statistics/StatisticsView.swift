@@ -5,11 +5,14 @@ final class StatisticsView: BaseView {
     
     private let filterButton = StatisticsFilterButton()
     
+    let containerView = UIView()
+    
     override func setup() {
         self.backgroundColor = .gray0
         self.addSubViews([
             self.reviewCountLabel,
-            self.filterButton
+            self.filterButton,
+            self.containerView
         ])
     }
     
@@ -23,6 +26,13 @@ final class StatisticsView: BaseView {
             make.top.equalTo(self.reviewCountLabel.snp.bottom).offset(19)
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
+        }
+        
+        self.containerView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.top.equalTo(self.filterButton.snp.bottom).offset(28)
         }
     }
 }
