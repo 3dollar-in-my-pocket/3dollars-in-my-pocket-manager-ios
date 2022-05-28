@@ -1,6 +1,12 @@
 import UIKit
 
 final class StatisticsView: BaseView {
+    private let scrollView = UIScrollView().then {
+        $0.backgroundColor = .gray0
+    }
+    
+    private let scrollViewContainerView = UIView()
+    
     private let reviewCountLabel = ReviewCountLabel()
     
     private let filterButton = StatisticsFilterButton()
@@ -8,15 +14,30 @@ final class StatisticsView: BaseView {
     let containerView = UIView()
     
     override func setup() {
-        self.backgroundColor = .gray0
-        self.addSubViews([
+        self.scrollViewContainerView.addSubViews([
             self.reviewCountLabel,
             self.filterButton,
             self.containerView
         ])
+        self.scrollView.addSubview(self.scrollViewContainerView)
+        self.addSubview(self.scrollView)
     }
     
     override func bindConstraints() {
+        self.scrollView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+        
+        self.scrollViewContainerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+            make.top.equalTo(self.reviewCountLabel).offset(-20).priority(.high)
+            make.bottom.equalTo(self.containerView).priority(.high)
+        }
+        
         self.reviewCountLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.top.equalToSuperview().offset(20)
@@ -33,6 +54,13 @@ final class StatisticsView: BaseView {
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
             make.top.equalTo(self.filterButton.snp.bottom).offset(28)
+            make.height.equalTo(0)
+        }
+    }
+    
+    func updateContainerViewHeight(tableViewHeight: CGFloat) {
+        self.containerView.snp.updateConstraints { make in
+            make.height.equalTo(tableViewHeight)
         }
     }
 }

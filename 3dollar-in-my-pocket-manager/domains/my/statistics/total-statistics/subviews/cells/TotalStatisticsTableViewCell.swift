@@ -2,6 +2,7 @@ import UIKit
 
 final class TotalStatisticsTableViewCell: BaseTableViewCell {
     static let registerId = "\(TotalStatisticsTableViewCell.self)"
+    static let height: CGFloat = 74
     
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 14)
@@ -30,7 +31,6 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
         $0.progressTintColor = .green
         $0.layer.cornerRadius = 4
         $0.trackTintColor = .clear
-        $0.progress = 0.5
     }
     
     override func setup() {
@@ -71,8 +71,16 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
         }
     }
     
-    func bind(statistics: Statistic) {
+    func bind(statistics: Statistic, isTopRate: Bool) {
         self.titleLabel.text = statistics.type.title
         self.countLabel.text = "\(statistics.count)개"
+        self.progressView.progress = Float(statistics.ratio)
+        self.setProgressBar(isTopRate: isTopRate)
+    }
+    
+    private func setProgressBar(isTopRate: Bool) {
+        self.progressBackgroundView.backgroundColor
+        = isTopRate ? UIColor(r: 242, g: 251, b: 247) : .gray5
+        self.progressView.progressTintColor = isTopRate ? .green : .gray10
     }
 }

@@ -15,7 +15,8 @@ final class TotalStatisticsView: BaseView {
             TotalStatisticsTableViewCell.self,
             forCellReuseIdentifier: TotalStatisticsTableViewCell.registerId
         )
-        $0.rowHeight = UITableView.automaticDimension
+        $0.rowHeight = TotalStatisticsTableViewCell.height
+        $0.isScrollEnabled = false
     }
     
     override func setup() {
@@ -28,8 +29,17 @@ final class TotalStatisticsView: BaseView {
         self.tableView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
             make.top.equalToSuperview()
+            make.height.equalTo(0)
         }
+    }
+    
+    func calculatorTableViewHeight(itemCount: Int) -> CGFloat {
+        let height = TotalStatisticsTableViewCell.height * CGFloat(itemCount) + 16
+        
+        self.tableView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+        return height
     }
 }

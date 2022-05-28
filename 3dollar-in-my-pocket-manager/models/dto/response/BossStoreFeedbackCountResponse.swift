@@ -1,10 +1,12 @@
 struct BossStoreFeedbackCountResponse: Decodable {
     let count: Int
     let feedbackType: FeedbackType
+    let ratio: Double
     
     enum CodingKeys: String, CodingKey {
         case count
         case feedbackType
+        case ratio
     }
     
     init(from decoder: Decoder) throws {
@@ -15,5 +17,6 @@ struct BossStoreFeedbackCountResponse: Decodable {
             FeedbackType.self,
             forKey: .feedbackType
         ) ?? .bossIsKind
+        self.ratio = try values.decodeIfPresent(Double.self, forKey: .ratio) ?? 0
     }
 }

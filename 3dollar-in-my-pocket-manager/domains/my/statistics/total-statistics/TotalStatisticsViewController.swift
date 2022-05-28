@@ -43,11 +43,20 @@ final class TotalStatisticsViewController: BaseViewController, View, TotalStatis
             .map { $0.statistics }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: [])
+            .do(onNext: { [weak self] statistics in
+                if let statisticsView = self?.parent?.parent?.view as? StatisticsView,
+                let totalStatisticsViewHeight = self?.totalStatisticsView
+                    .calculatorTableViewHeight(itemCount: statistics.count) {
+                    statisticsView.updateContainerViewHeight(
+                        tableViewHeight: totalStatisticsViewHeight
+                    )
+                }
+            })
             .drive(self.totalStatisticsView.tableView.rx.items(
                 cellIdentifier: TotalStatisticsTableViewCell.registerId,
                 cellType: TotalStatisticsTableViewCell.self
             )) { row, statistic, cell in
-                cell.bind(statistics: statistic)
+                cell.bind(statistics: statistic, isTopRate: row < 3)
             }
             .disposed(by: self.disposeBag)
     }
