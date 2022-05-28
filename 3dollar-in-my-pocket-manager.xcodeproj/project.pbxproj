@@ -126,6 +126,9 @@
 		6E91A98B2841DCAF0090361F /* DailyStatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A98A2841DCAF0090361F /* DailyStatisticsViewController.swift */; };
 		6E91A98F2841DD9C0090361F /* DailyStatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A98E2841DD9C0090361F /* DailyStatisticsTableViewCell.swift */; };
 		6E91A9912841E09C0090361F /* DailyStatisticsDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9902841E09C0090361F /* DailyStatisticsDayView.swift */; };
+		6E91A9932841ED370090361F /* BossStoreFeedbackGroupingDateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9922841ED370090361F /* BossStoreFeedbackGroupingDateResponse.swift */; };
+		6E91A9952841EE620090361F /* CursorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9942841EE620090361F /* CursorResponse.swift */; };
+		6E91A9972841EF090090361F /* BossStoreFeedbackCursorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9962841EF090090361F /* BossStoreFeedbackCursorResponse.swift */; };
 		6E95E856282FD2140004C08D /* TotalStatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E95E855282FD2140004C08D /* TotalStatisticsViewController.swift */; };
 		6E95E85B282FD3E40004C08D /* TotalStatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E95E85A282FD3E40004C08D /* TotalStatisticsTableViewCell.swift */; };
 		6E9F995427E7019700C95C41 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9F995327E7019700C95C41 /* WaitingView.swift */; };
@@ -326,6 +329,9 @@
 		6E91A98A2841DCAF0090361F /* DailyStatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsViewController.swift; sourceTree = "<group>"; };
 		6E91A98E2841DD9C0090361F /* DailyStatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		6E91A9902841E09C0090361F /* DailyStatisticsDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsDayView.swift; sourceTree = "<group>"; };
+		6E91A9922841ED370090361F /* BossStoreFeedbackGroupingDateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossStoreFeedbackGroupingDateResponse.swift; sourceTree = "<group>"; };
+		6E91A9942841EE620090361F /* CursorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorResponse.swift; sourceTree = "<group>"; };
+		6E91A9962841EF090090361F /* BossStoreFeedbackCursorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossStoreFeedbackCursorResponse.swift; sourceTree = "<group>"; };
 		6E95E855282FD2140004C08D /* TotalStatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStatisticsViewController.swift; sourceTree = "<group>"; };
 		6E95E85A282FD3E40004C08D /* TotalStatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		6E9F995327E7019700C95C41 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
@@ -545,6 +551,9 @@
 				6E5DCE7B27FDCF1F00CA58EE /* OpenStatus.swift */,
 				6EF8D107280AA993004D27C9 /* BossStoreAroundInfoResponse.swift */,
 				6E5E14A52830F89D00B1F450 /* BossStoreFeedbackCountResponse.swift */,
+				6E91A9922841ED370090361F /* BossStoreFeedbackGroupingDateResponse.swift */,
+				6E91A9942841EE620090361F /* CursorResponse.swift */,
+				6E91A9962841EF090090361F /* BossStoreFeedbackCursorResponse.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -1239,6 +1248,7 @@
 				6E473BA227D872E400232139 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				6E473BA627D87A3D00232139 /* UIButtonExtensions.swift in Sources */,
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
+				6E91A9952841EE620090361F /* CursorResponse.swift in Sources */,
 				6E142D5A27D77B790084480C /* BaseViewController.swift in Sources */,
 				6EF8D108280AA993004D27C9 /* BossStoreAroundInfoResponse.swift in Sources */,
 				6E91A9892841DC110090361F /* DailyStatisticsView.swift in Sources */,
@@ -1267,7 +1277,9 @@
 				6E473B9D27D870B900232139 /* SignupCategoryCollectionViewCell.swift in Sources */,
 				6E5DCE7627FDCCED00CA58EE /* LocationResponse.swift in Sources */,
 				6E1F54B027CB97FC0050BBBA /* ObserverExtensions.swift in Sources */,
+				6E91A9932841ED370090361F /* BossStoreFeedbackGroupingDateResponse.swift in Sources */,
 				6E5DCE5D27FDAE0000CA58EE /* MapService.swift in Sources */,
+				6E91A9972841EF090090361F /* BossStoreFeedbackCursorResponse.swift in Sources */,
 				6ED8839927CB3A1700278E14 /* SigninView.swift in Sources */,
 				6E5DCE7A27FDCEF400CA58EE /* BossStoreOpenStatusResponse.swift in Sources */,
 				6E1E5BA82827EB33003A1B51 /* SettingView.swift in Sources */,
