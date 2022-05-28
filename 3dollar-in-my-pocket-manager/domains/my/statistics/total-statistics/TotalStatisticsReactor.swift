@@ -9,11 +9,13 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case setStatistics([Statistic])
+        case setReviewTotalCount(Int)
         case showErrorAlert(Error)
     }
     
     struct State {
         var statistics: [Statistic] = []
+        var reviewTotalCount: Int = 0
     }
     
     var initialState = State()
@@ -42,6 +44,9 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         case .setStatistics(let statistics):
             newState.statistics = statistics
             
+        case .setReviewTotalCount(let totalCount):
+            newState.reviewTotalCount = totalCount
+            
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
         }
@@ -54,7 +59,14 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         
         return self.feedbackService.fetchTotalStatistics(storeId: storeId)
             .map { $0.map(Statistic.init(response:)) }
-            .map { .setStatistics($0) }
+            .flatMap { statistics -> Observable<Mutation> in
+                let reviewTotalCount = statistics.map { $0.count }.reduce(0, +)
+                
+                return .merge([
+                    .just(.setStatistics(statistics)),
+                    .just(.setReviewTotalCount(reviewTotalCount))
+                ])
+            }
             .catch { .just(.showErrorAlert($0)) }
     }
 }

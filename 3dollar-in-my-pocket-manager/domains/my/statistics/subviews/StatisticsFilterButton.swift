@@ -22,14 +22,15 @@ final class StatisticsFilterButton: BaseView {
     }
     
     private let totalButton = UIButton().then {
-        $0.setTitle("전체", for: .normal)
+        $0.setTitle("statistics_filter_total".localized, for: .normal)
         $0.setTitleColor(.green, for: .selected)
         $0.setTitleColor(.gray40, for: .normal)
         $0.titleLabel?.font = .medium(size: 14)
+        $0.isSelected = true
     }
     
     private let dayButton = UIButton().then {
-        $0.setTitle("일별", for: .normal)
+        $0.setTitle("statistics_filter_day".localized, for: .normal)
         $0.setTitleColor(.green, for: .selected)
         $0.setTitleColor(.gray40, for: .normal)
         $0.titleLabel?.font = .medium(size: 14)

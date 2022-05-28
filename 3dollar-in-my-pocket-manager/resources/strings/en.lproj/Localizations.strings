@@ -102,6 +102,9 @@
 "edit_schedule_save" = "저장하기";
 
 // Statistics
+"statistics_filter_total" = "전체";
+"statistics_filter_day" = "일별";
+"statistics_review_count" = "리뷰가 사장님께 도착했어요 :)";
 "statistics_boss_is_kind" = "🙏 사장님이 친절해요";
 "statistics_easy_to_eat" = "🚀 먹기 간편해요";
 "statistics_food_is_delecious" = "🍕 음식이 맛있어요";

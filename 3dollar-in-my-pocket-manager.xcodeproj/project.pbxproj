@@ -35,6 +35,8 @@
 		6E25FED027F531AB00BE2941 /* TabBarTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FECF27F531AB00BE2941 /* TabBarTag.swift */; };
 		6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED227F535F100BE2941 /* LocationManager.swift */; };
 		6E25FED627F5363600BE2941 /* LocationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED527F5363600BE2941 /* LocationError.swift */; };
+		6E2CD76C284101B9007506FB /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; platformFilter = ios; };
+		6E2CD76D284101B9007506FB /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E37AF6C27E7057F004FBE25 /* WaitingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF6B27E7057F004FBE25 /* WaitingViewController.swift */; };
 		6E37AF6F27E7069C004FBE25 /* WaitingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF6E27E7069C004FBE25 /* WaitingReactor.swift */; };
 		6E37AF7127E707FC004FBE25 /* WaitingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37AF7027E707FC004FBE25 /* WaitingCoordinator.swift */; };
@@ -119,6 +121,11 @@
 		6E89A867281E5C4900B795EF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A866281E5C4900B795EF /* BaseTableViewCell.swift */; };
 		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
 		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
+		6E91A9852841D4B30090361F /* StatisticsReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9842841D4B30090361F /* StatisticsReactor.swift */; };
+		6E91A9892841DC110090361F /* DailyStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9882841DC110090361F /* DailyStatisticsView.swift */; };
+		6E91A98B2841DCAF0090361F /* DailyStatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A98A2841DCAF0090361F /* DailyStatisticsViewController.swift */; };
+		6E91A98F2841DD9C0090361F /* DailyStatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A98E2841DD9C0090361F /* DailyStatisticsTableViewCell.swift */; };
+		6E91A9912841E09C0090361F /* DailyStatisticsDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9902841E09C0090361F /* DailyStatisticsDayView.swift */; };
 		6E95E856282FD2140004C08D /* TotalStatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E95E855282FD2140004C08D /* TotalStatisticsViewController.swift */; };
 		6E95E85B282FD3E40004C08D /* TotalStatisticsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E95E85A282FD3E40004C08D /* TotalStatisticsTableViewCell.swift */; };
 		6E9F995427E7019700C95C41 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9F995327E7019700C95C41 /* WaitingView.swift */; };
@@ -138,8 +145,6 @@
 		6EC5E434282BDDDA00AD571C /* StatisticsFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5E433282BDDDA00AD571C /* StatisticsFilterButton.swift */; };
 		6ED370F7280C33A300C445E5 /* MyStoreInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED370F6280C33A300C445E5 /* MyStoreInfoHeaderView.swift */; };
 		6ED370FA280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED370F9280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift */; };
-		6ED5DF252827565300BE8FD0 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFA3A0E27F3E1E000C13906 /* Base.framework */; };
-		6ED5DF262827565300BE8FD0 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFA3A0E27F3E1E000C13906 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838927CB395B00278E14 /* SnapKit */; };
 		6ED8838D27CB398300278E14 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838C27CB398300278E14 /* Then */; };
 		6ED8839027CB39E300278E14 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838F27CB39E300278E14 /* RxCocoa */; };
@@ -195,13 +200,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6ED5DF272827565300BE8FD0 /* Embed Frameworks */ = {
+		6E2CD76E284101B9007506FB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6ED5DF262827565300BE8FD0 /* Base.framework in Embed Frameworks */,
+				6E2CD76D284101B9007506FB /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +321,11 @@
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		6E89A866281E5C4900B795EF /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		6E91A9842841D4B30090361F /* StatisticsReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsReactor.swift; sourceTree = "<group>"; };
+		6E91A9882841DC110090361F /* DailyStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsView.swift; sourceTree = "<group>"; };
+		6E91A98A2841DCAF0090361F /* DailyStatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsViewController.swift; sourceTree = "<group>"; };
+		6E91A98E2841DD9C0090361F /* DailyStatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsTableViewCell.swift; sourceTree = "<group>"; };
+		6E91A9902841E09C0090361F /* DailyStatisticsDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsDayView.swift; sourceTree = "<group>"; };
 		6E95E855282FD2140004C08D /* TotalStatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStatisticsViewController.swift; sourceTree = "<group>"; };
 		6E95E85A282FD3E40004C08D /* TotalStatisticsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalStatisticsTableViewCell.swift; sourceTree = "<group>"; };
 		6E9F995327E7019700C95C41 /* WaitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingView.swift; sourceTree = "<group>"; };
@@ -379,7 +389,6 @@
 				6E6C9C77280BEE26009AFAE8 /* Kingfisher in Frameworks */,
 				6E5F212F281976B200922A99 /* RxDataSources in Frameworks */,
 				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
-				6ED5DF252827565300BE8FD0 /* Base.framework in Frameworks */,
 				6E4C8BD428351E33005D9D9B /* FirebaseMessaging in Frameworks */,
 				6E5F212D281976B200922A99 /* Differentiator in Frameworks */,
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
@@ -396,6 +405,7 @@
 				6E4C8BD628351E33005D9D9B /* FirebaseRemoteConfigSwift in Frameworks */,
 				6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */,
 				6EE2624A27DDBE64008B3531 /* SPPermissionsCamera in Frameworks */,
+				6E2CD76C284101B9007506FB /* Base.framework in Frameworks */,
 				CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */,
 				6E4C8BD228351E33005D9D9B /* FirebaseFirestore in Frameworks */,
 				6E4C8BD028351E33005D9D9B /* FirebaseAppDistribution-Beta in Frameworks */,
@@ -699,6 +709,33 @@
 			path = cells;
 			sourceTree = "<group>";
 		};
+		6E91A9872841DBF10090361F /* daily-statistics */ = {
+			isa = PBXGroup;
+			children = (
+				6E91A98C2841DD870090361F /* subviews */,
+				6E91A9882841DC110090361F /* DailyStatisticsView.swift */,
+				6E91A98A2841DCAF0090361F /* DailyStatisticsViewController.swift */,
+			);
+			path = "daily-statistics";
+			sourceTree = "<group>";
+		};
+		6E91A98C2841DD870090361F /* subviews */ = {
+			isa = PBXGroup;
+			children = (
+				6E91A98D2841DD8B0090361F /* cells */,
+				6E91A9902841E09C0090361F /* DailyStatisticsDayView.swift */,
+			);
+			path = subviews;
+			sourceTree = "<group>";
+		};
+		6E91A98D2841DD8B0090361F /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				6E91A98E2841DD9C0090361F /* DailyStatisticsTableViewCell.swift */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
 		6E95E858282FD3CE0004C08D /* subviews */ = {
 			isa = PBXGroup;
 			children = (
@@ -779,10 +816,12 @@
 		6EC5E42A282BD73900AD571C /* statistics */ = {
 			isa = PBXGroup;
 			children = (
+				6E91A9872841DBF10090361F /* daily-statistics */,
 				6EF1D496282D361100DA9D35 /* total-statistics */,
 				6EC5E42E282BD7D200AD571C /* subviews */,
 				6EC5E42C282BD77A00AD571C /* StatisticsView.swift */,
 				6EC5E431282BDB3000AD571C /* StatisticsViewController.swift */,
+				6E91A9842841D4B30090361F /* StatisticsReactor.swift */,
 			);
 			path = statistics;
 			sourceTree = "<group>";
@@ -1011,7 +1050,7 @@
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6ED5DF272827565300BE8FD0 /* Embed Frameworks */,
+				6E2CD76E284101B9007506FB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1202,6 +1241,7 @@
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
 				6E142D5A27D77B790084480C /* BaseViewController.swift in Sources */,
 				6EF8D108280AA993004D27C9 /* BossStoreAroundInfoResponse.swift in Sources */,
+				6E91A9892841DC110090361F /* DailyStatisticsView.swift in Sources */,
 				6EC5E432282BDB3000AD571C /* StatisticsViewController.swift in Sources */,
 				6E5F3DDE281D6435002282B6 /* AppearanceDay.swift in Sources */,
 				6E5DCE6127FDB01F00CA58EE /* ReverseGeoLocation.swift in Sources */,
@@ -1213,6 +1253,7 @@
 				6E1E5BAE2827EE5F003A1B51 /* SettingTableViewCell.swift in Sources */,
 				6E5DCE6327FDB04600CA58EE /* Region.swift in Sources */,
 				6E408D4027EF2A8D00322365 /* HomeReactor.swift in Sources */,
+				6E91A98B2841DCAF0090361F /* DailyStatisticsViewController.swift in Sources */,
 				6EE0CFA527CB573E0027A426 /* KakaoSignInManager.swift in Sources */,
 				6E6F98F527DE0BAE001302A6 /* FileType.swift in Sources */,
 				6E1F54A627CB7A130050BBBA /* AuthService.swift in Sources */,
@@ -1237,6 +1278,7 @@
 				6E5F2132281976CD00922A99 /* MyStoreInfoSectionModel.swift in Sources */,
 				6EE0CFC527CB65C80027A426 /* UserDefaultsUtils.swift in Sources */,
 				6E5F3DDC281D61AA002282B6 /* EditScheduleCoordinator.swift in Sources */,
+				6E91A98F2841DD9C0090361F /* DailyStatisticsTableViewCell.swift in Sources */,
 				6E5DCE7427FDCA4A00CA58EE /* LocalTimeRes.swift in Sources */,
 				6EF1D499282D366400DA9D35 /* TotalStatisticsView.swift in Sources */,
 				6E5E14A12830F5E400B1F450 /* FeedbackService.swift in Sources */,
@@ -1284,6 +1326,7 @@
 				6E142D6227D785A40084480C /* SignupView.swift in Sources */,
 				6E1AB7A5280D8B040059DCF4 /* EditIntroductionReactor.swift in Sources */,
 				6E5DCE6E27FDC93000CA58EE /* BossStoreAppearanceDayResponse.swift in Sources */,
+				6E91A9852841D4B30090361F /* StatisticsReactor.swift in Sources */,
 				6EEA3D6B27F1E74C00BC5F31 /* MainTabController.swift in Sources */,
 				6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */,
 				6E5F21342819778E00922A99 /* Menu.swift in Sources */,
@@ -1311,6 +1354,7 @@
 				6E37AF6C27E7057F004FBE25 /* WaitingViewController.swift in Sources */,
 				6E7A49DE27D8D0A600E6653C /* StoreCategoryResponse.swift in Sources */,
 				6EF676B427EECBED00D43E99 /* SplashView.swift in Sources */,
+				6E91A9912841E09C0090361F /* DailyStatisticsDayView.swift in Sources */,
 				6E1605862807039E00F6649C /* BackgroundTaskManager.swift in Sources */,
 				6E473BA427D874C500232139 /* SignupPhotoView.swift in Sources */,
 				6EC5E430282BD7E200AD571C /* ReviewCountLabel.swift in Sources */,

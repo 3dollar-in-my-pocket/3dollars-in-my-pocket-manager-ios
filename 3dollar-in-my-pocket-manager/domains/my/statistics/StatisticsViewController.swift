@@ -1,7 +1,10 @@
 import UIKit
 
-final class StatisticsViewController: BaseViewController {
+import ReactorKit
+
+final class StatisticsViewController: BaseViewController, View {
     private let statisticsView = StatisticsView()
+    private let statisticsReactor = StatisticsReactor()
     
     private let pageViewController = UIPageViewController(
         transitionStyle: .scroll,
@@ -9,10 +12,13 @@ final class StatisticsViewController: BaseViewController {
         options: nil
     )
     
-    private let pageViewControllers: [UIViewController] = [
-        TotalStatisticsViewController.instance(),
-        TotalStatisticsViewController.instance()
-    ]
+    private let totalStatisticsViewController
+    = TotalStatisticsViewController.instance()
+    
+    private let dailyStatisticsViewController
+    = DailyStatisticsViewController.instance()
+    
+    private var pageViewControllers: [UIViewController] = []
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -30,9 +36,40 @@ final class StatisticsViewController: BaseViewController {
         super.viewDidLoad()
         
         self.setupPageViewController()
+        self.reactor = self.statisticsReactor
+    }
+    
+    func bind(reactor: StatisticsReactor) {
+        // BindAction
+        self.statisticsView.filterButton.rx.tap
+            .map { Reactor.Action.tapFilterButton($0) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        // Bind State
+        reactor.state
+            .map { $0.totalReviewCount }
+            .asDriver(onErrorJustReturn: 0)
+            .distinctUntilChanged()
+            .drive(self.statisticsView.reviewCountLabel.rx.reviewCount)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.selectedFilter }
+            .asDriver(onErrorJustReturn: .total)
+            .distinctUntilChanged()
+            .drive(onNext: { [weak self] filterType in
+                self?.setPage(filterType: filterType)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     private func setupPageViewController() {
+        self.totalStatisticsViewController.delegate = self
+        self.pageViewControllers = [
+            self.totalStatisticsViewController,
+            self.dailyStatisticsViewController
+        ]
         self.addChild(self.pageViewController)
         self.pageViewController.delegate = self
         self.pageViewController.dataSource = self
@@ -53,6 +90,26 @@ final class StatisticsViewController: BaseViewController {
             }
         }
     }
+    
+    private func setPage(filterType: StatisticsFilterButton.FilterType) {
+        switch filterType {
+        case .total:
+            self.pageViewController.setViewControllers(
+                [self.pageViewControllers[0]],
+                direction: .forward,
+                animated: false,
+                completion: nil
+            )
+            
+        case .day:
+            self.pageViewController.setViewControllers(
+                [self.pageViewControllers[1]],
+                direction: .forward,
+                animated: false,
+                completion: nil
+            )
+        }
+    }
 }
 
 extension StatisticsViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
@@ -71,3 +128,8 @@ extension StatisticsViewController: UIPageViewControllerDelegate, UIPageViewCont
     }
 }
 
+extension StatisticsViewController: TotalStatisticsDelegate {
+    func onUpdateTotalReviewCount(count: Int) {
+        self.statisticsReactor.action.onNext(.updateTotalReviewCount(count))
+    }
+}

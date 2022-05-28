@@ -7,9 +7,9 @@ final class StatisticsView: BaseView {
     
     private let scrollViewContainerView = UIView()
     
-    private let reviewCountLabel = ReviewCountLabel()
+    let reviewCountLabel = ReviewCountLabel()
     
-    private let filterButton = StatisticsFilterButton()
+    let filterButton = StatisticsFilterButton()
     
     let containerView = UIView()
     

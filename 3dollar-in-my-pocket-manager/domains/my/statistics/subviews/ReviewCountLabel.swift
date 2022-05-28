@@ -21,7 +21,6 @@ final class ReviewCountLabel: BaseView {
         $0.backgroundColor = UIColor(r: 225, g: 243, b: 234)
         $0.layer.cornerRadius = 8
         $0.layer.masksToBounds = true
-        $0.text = "800개"
     }
     
     private let ofLabel = UILabel().then {
@@ -33,7 +32,7 @@ final class ReviewCountLabel: BaseView {
     private let descriptionLabel = UILabel().then {
         $0.font = .bold(size: 24)
         $0.textColor = .gray95
-        $0.text = "리뷰가 사장님께 도착했어요 :)"
+        $0.text = "statistics_review_count".localized
     }
     
     override func setup() {
