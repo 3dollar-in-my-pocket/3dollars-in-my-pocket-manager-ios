@@ -24,16 +24,31 @@ final class DailyStatisticsView: BaseView {
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalToSuperview()
-            make.height.equalTo(0)
+            make.height.equalTo(1000)
         }
     }
     
-//    func calculatorTableViewHeight(itemCount: Int) -> CGFloat {
-//        let height = TotalStatisticsTableViewCell.height * CGFloat(itemCount) + 16
-//
-//        self.tableView.snp.updateConstraints { make in
-//            make.height.equalTo(height)
-//        }
-//        return height
-//    }
+    func calculatorTableViewHeight(statisticGroups: [StatisticGroup]) -> CGFloat {
+        var height: CGFloat = 0
+        
+        for statistic in statisticGroups {
+            var stackViewHeight
+            = CGFloat(statistic.feedbacks.count) * DailyStatisticsStackItemView.height
+            stackViewHeight += CGFloat(statistic.feedbacks.count - 1) * 16 // space
+            stackViewHeight += 42 // contentInset
+            let dayViewHeight: CGFloat = 64
+            
+            if dayViewHeight >= stackViewHeight {
+                height += dayViewHeight
+            } else {
+                height += stackViewHeight
+            }
+            height += 20
+        }
+        self.tableView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+        
+        return height
+    }
 }

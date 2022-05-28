@@ -5,10 +5,12 @@ import RxCocoa
 final class TotalStatisticsReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case viewWillAppear
     }
     
     enum Mutation {
         case setStatistics([Statistic])
+        case updateTableViewHeight([Statistic])
         case setReviewTotalCount(Int)
         case showErrorAlert(Error)
     }
@@ -18,7 +20,8 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         var reviewTotalCount: Int = 0
     }
     
-    var initialState = State()
+    let initialState = State()
+    let updateTableViewHeightPublisher = PublishRelay<[Statistic]>()
     private let feedbackService: FeedbackServiceType
     private var userDefaults: UserDefaultsUtils
     
@@ -34,6 +37,9 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         switch action {
         case .viewDidLoad:
             return self.fetchStatistics()
+            
+        case .viewWillAppear:
+            return .just(.updateTableViewHeight(self.currentState.statistics))
         }
     }
     
@@ -43,6 +49,9 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         switch mutation {
         case .setStatistics(let statistics):
             newState.statistics = statistics
+            
+        case .updateTableViewHeight(let statistics):
+            self.updateTableViewHeightPublisher.accept(statistics)
             
         case .setReviewTotalCount(let totalCount):
             newState.reviewTotalCount = totalCount

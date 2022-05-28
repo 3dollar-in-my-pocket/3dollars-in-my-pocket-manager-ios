@@ -33,11 +33,30 @@ final class TotalStatisticsViewController: BaseViewController, View, TotalStatis
         self.totalStatisticsReactor.action.onNext(.viewDidLoad)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.totalStatisticsReactor.action.onNext(.viewWillAppear)
+    }
+    
     override func bindEvent() {
         self.totalStatisticsReactor.showErrorAlert
             .asDriver(onErrorJustReturn: BaseError.unknown)
             .drive(onNext: { [weak self] error in
                 self?.coordinator?.showErrorAlert(error: error)
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.totalStatisticsReactor.updateTableViewHeightPublisher
+            .asDriver(onErrorJustReturn: [])
+            .drive(onNext: { [weak self] statistics in
+                if let statisticsView = self?.parent?.parent?.view as? StatisticsView,
+                let totalStatisticsViewHeight = self?.totalStatisticsView
+                    .calculatorTableViewHeight(itemCount: statistics.count) {
+                    statisticsView.updateContainerViewHeight(
+                        tableViewHeight: totalStatisticsViewHeight
+                    )
+                }
             })
             .disposed(by: self.eventDisposeBag)
     }

@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class DailyStatisticsDayView: BaseView {
     private let dayLabel = UILabel().then {
         $0.font = .bold(size: 16)
@@ -34,5 +36,19 @@ final class DailyStatisticsDayView: BaseView {
             make.centerX.equalToSuperview()
             make.top.equalTo(self.dayLabel.snp.bottom).offset(2)
         }
+    }
+    
+    func bind(dateString: String) {
+        let date = DateUtils.toDate(dateString: dateString, format: "yyyy-MM-dd")
+        let isToday = dateString == DateUtils.todayString(format: "yyyy-MM-dd")
+        
+        self.dayLabel.text = "\(date.get(.day))일"
+        self.dateLabel.text = "\(date.get(.year)).\(date.get(.month))"
+        self.backgroundColor = isToday ? .green : .white
+        self.dayLabel.textColor = isToday ? .white : .green
+        self.dateLabel.textColor = isToday ? .white : .gray30
+        self.layer.shadowColor = isToday
+        ? UIColor(r: 0, g: 198, b: 103).cgColor
+        : UIColor.black.cgColor
     }
 }

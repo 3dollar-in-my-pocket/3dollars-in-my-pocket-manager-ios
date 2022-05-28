@@ -1,0 +1,3 @@
+protocol DailyStatisticCoordinator: BaseCoordinator, AnyObject {
+    
+}
