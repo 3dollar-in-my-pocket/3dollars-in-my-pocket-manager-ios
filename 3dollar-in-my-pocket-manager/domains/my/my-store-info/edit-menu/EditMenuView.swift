@@ -43,8 +43,13 @@ final class EditMenuView: BaseView {
         $0.setBackgroundColor(color: .gray30, forState: .disabled)
     }
     
+    let tableViewFooterView = EditMenuTableFooterView(
+        frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 56)
+    )
+    
     override func setup() {
         self.backgroundColor = .gray0
+        self.menuTableView.tableFooterView = self.tableViewFooterView
         self.addSubViews([
             self.backButton,
             self.titleLabel,
