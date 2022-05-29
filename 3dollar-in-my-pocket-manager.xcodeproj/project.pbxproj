@@ -123,6 +123,10 @@
 		6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E81503527EEEA110032C518 /* HomeViewController.swift */; };
 		6E89A865281E5A3300B795EF /* EditScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */; };
 		6E89A867281E5C4900B795EF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A866281E5C4900B795EF /* BaseTableViewCell.swift */; };
+		6E8D01322843333300FAB49E /* EditMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01312843333300FAB49E /* EditMenuView.swift */; };
+		6E8D01342843361700FAB49E /* EditMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01332843361700FAB49E /* EditMenuViewController.swift */; };
+		6E8D01362843365E00FAB49E /* EditMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01352843365E00FAB49E /* EditMenuCoordinator.swift */; };
+		6E8D013A2843396800FAB49E /* EditMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01392843396800FAB49E /* EditMenuTableViewCell.swift */; };
 		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
 		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
 		6E91A9852841D4B30090361F /* StatisticsReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9842841D4B30090361F /* StatisticsReactor.swift */; };
@@ -332,6 +336,10 @@
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		6E89A866281E5C4900B795EF /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		6E8D01312843333300FAB49E /* EditMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuView.swift; sourceTree = "<group>"; };
+		6E8D01332843361700FAB49E /* EditMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuViewController.swift; sourceTree = "<group>"; };
+		6E8D01352843365E00FAB49E /* EditMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuCoordinator.swift; sourceTree = "<group>"; };
+		6E8D01392843396800FAB49E /* EditMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuTableViewCell.swift; sourceTree = "<group>"; };
 		6E91A9842841D4B30090361F /* StatisticsReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsReactor.swift; sourceTree = "<group>"; };
 		6E91A9882841DC110090361F /* DailyStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsView.swift; sourceTree = "<group>"; };
 		6E91A98A2841DCAF0090361F /* DailyStatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsViewController.swift; sourceTree = "<group>"; };
@@ -687,6 +695,7 @@
 		6E6C9C6C280BD92B009AFAE8 /* my-store-info */ = {
 			isa = PBXGroup;
 			children = (
+				6E8D012F2843331C00FAB49E /* edit-menu */,
 				6E5F3DD3281D5F10002282B6 /* edit-schedule */,
 				6E63FF69281C192A00EC49DE /* edit-store-info */,
 				6E1AB79F280D7F1F0059DCF4 /* edit-introduction */,
@@ -722,6 +731,33 @@
 			isa = PBXGroup;
 			children = (
 				6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */,
+			);
+			path = cells;
+			sourceTree = "<group>";
+		};
+		6E8D012F2843331C00FAB49E /* edit-menu */ = {
+			isa = PBXGroup;
+			children = (
+				6E8D01372843395C00FAB49E /* subviews */,
+				6E8D01312843333300FAB49E /* EditMenuView.swift */,
+				6E8D01332843361700FAB49E /* EditMenuViewController.swift */,
+				6E8D01352843365E00FAB49E /* EditMenuCoordinator.swift */,
+			);
+			path = "edit-menu";
+			sourceTree = "<group>";
+		};
+		6E8D01372843395C00FAB49E /* subviews */ = {
+			isa = PBXGroup;
+			children = (
+				6E8D01382843396000FAB49E /* cells */,
+			);
+			path = subviews;
+			sourceTree = "<group>";
+		};
+		6E8D01382843396000FAB49E /* cells */ = {
+			isa = PBXGroup;
+			children = (
+				6E8D01392843396800FAB49E /* EditMenuTableViewCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -1239,6 +1275,7 @@
 				6E95E85B282FD3E40004C08D /* TotalStatisticsTableViewCell.swift in Sources */,
 				6E5ECC1A282013BB0033BAAA /* EditScheduleReactor.swift in Sources */,
 				6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */,
+				6E8D013A2843396800FAB49E /* EditMenuTableViewCell.swift in Sources */,
 				6E89A867281E5C4900B795EF /* BaseTableViewCell.swift in Sources */,
 				6E63FF6C281C19DE00EC49DE /* EditStoreInfoView.swift in Sources */,
 				6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */,
@@ -1291,6 +1328,7 @@
 				6E5DCE7627FDCCED00CA58EE /* LocationResponse.swift in Sources */,
 				6E1F54B027CB97FC0050BBBA /* ObserverExtensions.swift in Sources */,
 				6E91A9932841ED370090361F /* BossStoreFeedbackGroupingDateResponse.swift in Sources */,
+				6E8D01322843333300FAB49E /* EditMenuView.swift in Sources */,
 				6E5DCE5D27FDAE0000CA58EE /* MapService.swift in Sources */,
 				6E91A9972841EF090090361F /* BossStoreFeedbackCursorResponse.swift in Sources */,
 				6ED8839927CB3A1700278E14 /* SigninView.swift in Sources */,
@@ -1306,6 +1344,7 @@
 				6E5F3DDC281D61AA002282B6 /* EditScheduleCoordinator.swift in Sources */,
 				6E91A98F2841DD9C0090361F /* DailyStatisticsTableViewCell.swift in Sources */,
 				6E5DCE7427FDCA4A00CA58EE /* LocalTimeRes.swift in Sources */,
+				6E8D01362843365E00FAB49E /* EditMenuCoordinator.swift in Sources */,
 				6EF1D499282D366400DA9D35 /* TotalStatisticsView.swift in Sources */,
 				6E5E14A12830F5E400B1F450 /* FeedbackService.swift in Sources */,
 				6E7964AB28420D2C005EA0E2 /* DailyStatisticsReactor.swift in Sources */,
@@ -1369,6 +1408,7 @@
 				6EC5E434282BDDDA00AD571C /* StatisticsFilterButton.swift in Sources */,
 				6E37AF6F27E7069C004FBE25 /* WaitingReactor.swift in Sources */,
 				6E479462280AE42000A3D96C /* PaddingLabel.swift in Sources */,
+				6E8D01342843361700FAB49E /* EditMenuViewController.swift in Sources */,
 				6EE0CFB327CB5D560027A426 /* SigninReactor.swift in Sources */,
 				6E142D5C27D77CEE0084480C /* SigninCoordinator.swift in Sources */,
 				6ED370FA280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift in Sources */,

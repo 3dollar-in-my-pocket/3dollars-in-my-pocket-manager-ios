@@ -101,6 +101,11 @@
 "edit_schedule_location" = "출몰 지역";
 "edit_schedule_save" = "저장하기";
 
+// Eidt Menu
+"edit_menu_title" = "메뉴 관리";
+"edit_menu_delete" = "삭제";
+"edit_menu_save" = "저장하기";
+
 // Statistics
 "statistics_filter_total" = "전체";
 "statistics_filter_day" = "일별";

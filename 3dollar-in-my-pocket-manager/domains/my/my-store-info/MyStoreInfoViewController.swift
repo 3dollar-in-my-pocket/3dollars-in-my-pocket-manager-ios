@@ -49,6 +49,13 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             })
             .disposed(by: self.eventDisposeBag)
         
+        self.myStoreInfoReactor.pushEditMenuPublisher
+            .asDriver(onErrorJustReturn: Store())
+            .drive(onNext: { [weak self] store in
+                self?.coordinator?.pushEditMenu(store: store)
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.myStoreInfoReactor.pushEditSchedulePublisher
             .asDriver(onErrorJustReturn: Store())
             .drive(onNext: { [weak self] store in
