@@ -26,7 +26,7 @@ extension MyStoreInfoCoordinator {
     }
     
     func pushEditMenu(store: Store) {
-        let viewController = EditMenuViewController.instance()
+        let viewController = EditMenuViewController.instance(store: store)
         
         self.presenter.parent?
             .navigationController?

@@ -97,5 +97,8 @@ final class EditMenuTableViewCell: BaseTableViewCell {
             make.height.equalTo(self.menuNameTextFieldBackground)
         }
     }
+    
+    func bind(menu: Menu) {
+    }
 }
 

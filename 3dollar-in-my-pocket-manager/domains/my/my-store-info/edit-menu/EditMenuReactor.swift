@@ -37,19 +37,19 @@ final class EditMenuReactor: BaseReactor, Reactor {
     private let globalState: GlobalState
     
     init(
+        store: Store,
         storeService: StoreServiceType,
         imageService: ImageServiceType,
-        globalState: GlobalState,
-        state: State = State(
-            store: Store(),
-            isAddMenuButtonHidden: false,
-            isEnableSaveButton: true
-        )
+        globalState: GlobalState
     ) {
         self.storeService = storeService
         self.imageService = imageService
         self.globalState = globalState
-        self.initialState = state
+        self.initialState = .init(
+            store: store,
+            isAddMenuButtonHidden: store.menus.count == 5,
+            isEnableSaveButton: false
+        )
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
