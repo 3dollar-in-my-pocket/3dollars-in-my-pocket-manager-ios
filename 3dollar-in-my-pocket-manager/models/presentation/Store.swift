@@ -11,7 +11,7 @@ struct Store: Equatable {
     var phoneNumber: String?
     var snsUrl: String?
     var introduction: String?
-    let menus: [Menu]
+    var menus: [Menu]
     var name: String
     var appearanceDays: [AppearanceDay]
     

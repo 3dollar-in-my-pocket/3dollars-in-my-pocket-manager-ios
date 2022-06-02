@@ -1,9 +1,9 @@
 import Foundation
 
 struct Menu: Equatable {
-    let imageUrl: String
-    let name: String
-    let price: Int
+    var imageUrl: String
+    var name: String
+    var price: Int
     
     init(response: BossStoreMenuResponse) {
         self.imageUrl = response.imageUrl
