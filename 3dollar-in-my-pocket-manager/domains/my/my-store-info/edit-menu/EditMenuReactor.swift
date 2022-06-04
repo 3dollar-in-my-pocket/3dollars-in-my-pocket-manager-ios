@@ -20,12 +20,14 @@ final class EditMenuReactor: BaseReactor, Reactor {
         case deleteMenu(index: Int)
         case addMenu
         case dismiss
+        case refreshSaveButtonEnable
         case showLoading(isShow: Bool)
         case showErrorAlert(error: Error)
     }
     
     struct State {
         var store: Store
+        var originalMenuCount: Int
         var isAddMenuButtonHidden: Bool
         var isEnableSaveButton: Bool
     }
@@ -45,9 +47,16 @@ final class EditMenuReactor: BaseReactor, Reactor {
         self.storeService = storeService
         self.imageService = imageService
         self.globalState = globalState
+        
+        var newStore = store
+        if store.menus.isEmpty {
+            newStore.menus.append(Menu())
+        }
+        
         self.initialState = .init(
-            store: store,
-            isAddMenuButtonHidden: store.menus.count == 5,
+            store: newStore,
+            originalMenuCount: store.menus.count,
+            isAddMenuButtonHidden: store.menus.count == 20,
             isEnableSaveButton: false
         )
     }
@@ -60,16 +69,31 @@ final class EditMenuReactor: BaseReactor, Reactor {
                 .catch { .just(.showErrorAlert(error: $0)) }
             
         case .inputMenuName(let index, let name):
-            return .just(.setMenuName(index: index, name: name))
+            return .merge([
+                .just(.setMenuName(index: index, name: name)),
+                .just(.refreshSaveButtonEnable)
+            ])
             
         case .inputMenuPrice(let index, let price):
-            return .just(.setMenuPrice(index: index, price: price))
+            return .merge([
+                .just(.setMenuPrice(index: index, price: price)),
+                .just(.refreshSaveButtonEnable)
+            ])
+                
             
         case .tapDeleteMenuButton(let index):
-            return .just(.deleteMenu(index: index))
+            return .merge([
+                .just(.deleteMenu(index: index)),
+                .just(.refreshSaveButtonEnable)
+            ])
+                
             
         case .tapAddMenuButton:
-            return .just(.addMenu)
+            return .merge([
+                .just(.addMenu),
+                .just(.refreshSaveButtonEnable)
+            ])
+                
             
         case .tapSaveButton:
             return .concat([
@@ -95,12 +119,17 @@ final class EditMenuReactor: BaseReactor, Reactor {
             
         case .deleteMenu(let index):
             newState.store.menus.remove(at: index)
+            newState.isAddMenuButtonHidden = newState.store.menus.count == 20
             
         case .addMenu:
             newState.store.menus.append(Menu())
+            newState.isAddMenuButtonHidden = newState.store.menus.count == 20
             
         case .dismiss:
             self.dismissPublisher.accept(())
+            
+        case .refreshSaveButtonEnable:
+            newState.isEnableSaveButton = newState.store !=  self.initialState.store
             
         case .showLoading(let isShow):
             self.showLoadginPublisher.accept(isShow)

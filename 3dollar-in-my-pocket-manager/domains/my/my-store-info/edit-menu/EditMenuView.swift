@@ -4,6 +4,8 @@ import RxSwift
 import RxCocoa
 
 final class EditMenuView: BaseView {
+    private let tapBackgroundGesture = UITapGestureRecognizer()
+    
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "ic_back"), for: .normal)
     }
@@ -14,9 +16,9 @@ final class EditMenuView: BaseView {
         $0.text = "edit_menu_title".localized
     }
     
-    fileprivate let menuCountLabel = UILabel().then {
+    private let menuCountLabel = UILabel().then {
         $0.font = .medium(size: 14)
-        $0.textColor = .black
+        $0.textColor = .gray30
     }
     
     let deleteButton = UIButton().then {
@@ -33,6 +35,7 @@ final class EditMenuView: BaseView {
             EditMenuTableViewCell.self,
             forCellReuseIdentifier: EditMenuTableViewCell.registerId
         )
+        $0.contentInset = .init(top: 0, left: 0, bottom: 72, right: 0)
     }
     
     let saveButton = UIButton().then {
@@ -47,9 +50,15 @@ final class EditMenuView: BaseView {
         frame: .init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 56)
     )
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func setup() {
+        self.addGestureRecognizer(self.tapBackgroundGesture)
         self.backgroundColor = .gray0
         self.menuTableView.tableFooterView = self.tableViewFooterView
+        self.setupKeyboardEvent()
         self.addSubViews([
             self.backButton,
             self.titleLabel,
@@ -58,6 +67,14 @@ final class EditMenuView: BaseView {
             self.menuTableView,
             self.saveButton
         ])
+        
+        self.tapBackgroundGesture.rx.event
+            .asDriver()
+            .throttle(.milliseconds(500))
+            .drive(onNext: { [weak self] _ in
+                self?.endEditing(true)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     override func bindConstraints() {
@@ -97,13 +114,67 @@ final class EditMenuView: BaseView {
             make.top.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-64)
         }
     }
+    
+    func setPhotoInCell(index: Int, photo: UIImage) {
+        guard let cell = self.menuTableView.cellForRow(
+            at: IndexPath(row: index, section: 0)
+        ) as? EditMenuTableViewCell else { return }
+        
+        cell.cameraButton.setImage(photo, for: .normal)
+    }
+    
+    fileprivate func setMenuCount(count: Int) {
+        let text = "\(count)/20개의 메뉴가 등록되어 있습니다."
+        let attributedTextRange = (text as NSString).range(of: "개의 메뉴가 등록되어 있습니다.")
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: UIColor.gray70,
+            range: attributedTextRange
+        )
+        
+        self.menuCountLabel.attributedText = attributedString
+    }
+    
+    private func setupKeyboardEvent() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onShowKeyboard(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onHideKeyboard(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func onShowKeyboard(notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        var keyboardFrame
+        = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.convert(keyboardFrame, from: nil)
+        
+        var contentInset = self.menuTableView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 10
+        self.menuTableView.contentInset = contentInset
+    }
+    
+    @objc func onHideKeyboard(notification: NSNotification) {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        
+        self.menuTableView.contentInset = contentInset
+    }
 }
 
 
 extension Reactive where Base: EditMenuView {
     var menuCount: Binder<Int> {
         return Binder(self.base) { view, count in
-            view.menuCountLabel.text = "\(count)/20개의 메뉴가 등록되어 있습니다."
+            view.setMenuCount(count: count)
         }
     }
 }
