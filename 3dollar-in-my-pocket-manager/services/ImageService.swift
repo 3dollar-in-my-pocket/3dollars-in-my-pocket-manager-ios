@@ -57,23 +57,21 @@ struct ImageService: ImageServiceType {
                 for index in datas.indices {
                     multipartFormData.append(
                         datas[index],
-                        withName: "file",
+                        withName: "files",
                         fileName: DateUtils.todayString(format: "yyyy-MM-dd'T'HH-mm-ss") + "_image\(index).png",
                         mimeType: "image/png"
                     )
                 }
             }, to: urlString)
-                .responseDecodable(of: ResponseContainer<ImageUploadResponse>.self) { response in
-                    if response.isSuccess() {
-                        observer.processValue(response: response)
-                    } else {
-                        observer.processHTTPError(response: response)
-                    }
+            .responseDecodable(of: ResponseContainer<[ImageUploadResponse]>.self) { response in
+                if response.isSuccess() {
+                    observer.processValue(response: response)
+                } else {
+                    observer.processHTTPError(response: response)
                 }
+            }
             
             return Disposables.create()
         }
-        
-        
     }
 }

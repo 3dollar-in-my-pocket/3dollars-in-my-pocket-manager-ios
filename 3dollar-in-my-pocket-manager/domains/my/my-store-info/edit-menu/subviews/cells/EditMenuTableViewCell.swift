@@ -11,7 +11,7 @@ final class EditMenuTableViewCell: BaseTableViewCell {
     
     let cameraButton = UIButton().then {
         $0.backgroundColor = .gray10
-        $0.contentMode = .scaleAspectFill
+        $0.imageView?.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 16
         $0.clipsToBounds = true
         $0.setImage(UIImage(named: "ic_camera"), for: .normal)
@@ -111,6 +111,16 @@ final class EditMenuTableViewCell: BaseTableViewCell {
     }
     
     func bind(menu: Menu) {
+        if !menu.imageUrl.isEmpty {
+            self.cameraButton.setImage(urlString: menu.imageUrl)
+        }
+        
+        if let photo = menu.photo {
+            self.cameraButton.setImage(photo, for: .normal)
+        }
+        
+        self.menuNameTextField.text = menu.name
+        self.menuPriceTextField.text = menu.price == 0 ? "" : "\(menu.price)"
     }
 }
 

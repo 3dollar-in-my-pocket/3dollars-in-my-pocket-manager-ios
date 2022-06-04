@@ -14,12 +14,12 @@ final class EditMenuReactor: BaseReactor, Reactor {
     }
     
     enum Mutation {
-        case setPhoto(index: Int, photoURL: String)
+        case setPhoto(index: Int, photo: UIImage)
         case setMenuName(index: Int, name: String)
         case setMenuPrice(index: Int, price: Int)
         case deleteMenu(index: Int)
         case addMenu
-        case dismiss
+        case pop
         case refreshSaveButtonEnable
         case showLoading(isShow: Bool)
         case showErrorAlert(error: Error)
@@ -30,10 +30,12 @@ final class EditMenuReactor: BaseReactor, Reactor {
         var originalMenuCount: Int
         var isAddMenuButtonHidden: Bool
         var isEnableSaveButton: Bool
+        ///  변경되거나 추가된 이미지들
+        var newPhotos: [(Int, UIImage)]
     }
     
     let initialState: State
-    let dismissPublisher = PublishRelay<Void>()
+    let popPublisher = PublishRelay<Void>()
     private let storeService: StoreServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
@@ -57,16 +59,15 @@ final class EditMenuReactor: BaseReactor, Reactor {
             store: newStore,
             originalMenuCount: store.menus.count,
             isAddMenuButtonHidden: store.menus.count == 20,
-            isEnableSaveButton: false
+            isEnableSaveButton: false,
+            newPhotos: []
         )
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .addPhoto(let index, let photo):
-            return self.uploadImage(image: photo)
-                .map { .setPhoto(index: index, photoURL: $0) }
-                .catch { .just(.showErrorAlert(error: $0)) }
+            return .just(.setPhoto(index: index, photo: photo))
             
         case .inputMenuName(let index, let name):
             return .merge([
@@ -98,7 +99,10 @@ final class EditMenuReactor: BaseReactor, Reactor {
         case .tapSaveButton:
             return .concat([
                 .just(.showLoading(isShow: true)),
-                self.updateStore(store: self.currentState.store),
+                self.updateStore(
+                    store: self.currentState.store,
+                    newPhotos: self.currentState.newPhotos
+                ),
                 .just(.showLoading(isShow: false))
             ])
         }
@@ -108,8 +112,13 @@ final class EditMenuReactor: BaseReactor, Reactor {
         var newState = state
         
         switch mutation {
-        case .setPhoto(let index, let photoURL):
-            newState.store.menus[index].imageUrl = photoURL
+        case .setPhoto(let index, let photo):
+            newState.store.menus[index].photo = photo
+            if let index = state.newPhotos.firstIndex(where: { $0.0 == index }) {
+                newState.newPhotos[index] = (index, photo)
+            } else {
+                newState.newPhotos.append((index, photo))
+            }
             
         case .setMenuName(let index, let name):
             newState.store.menus[index].name = name
@@ -125,8 +134,8 @@ final class EditMenuReactor: BaseReactor, Reactor {
             newState.store.menus.append(Menu())
             newState.isAddMenuButtonHidden = newState.store.menus.count == 20
             
-        case .dismiss:
-            self.dismissPublisher.accept(())
+        case .pop:
+            self.popPublisher.accept(())
             
         case .refreshSaveButtonEnable:
             newState.isEnableSaveButton = newState.store !=  self.initialState.store
@@ -141,19 +150,38 @@ final class EditMenuReactor: BaseReactor, Reactor {
         return newState
     }
     
-    private func uploadImage(image: UIImage) -> Observable<String> {
-        return self.imageService.uploadImage(image: image, fileType: .menu)
-            .map { $0.imageUrl }
-    }
-    
-    private func updateStore(store: Store) -> Observable<Mutation> {
-        return self.storeService.updateStore(store: self.currentState.store)
-            .map { _ in Mutation.dismiss }
-            .catch {
-                .merge([
-                    .just(.showErrorAlert(error: $0)),
-                    .just(.showLoading(isShow: false))
-                ])
-            }
+    private func updateStore(store: Store, newPhotos: [(Int, UIImage)]) -> Observable<Mutation> {
+        if newPhotos.isEmpty {
+            return self.storeService.updateStore(store: self.currentState.store)
+                .map { _ in Mutation.pop }
+                .catch {
+                    .merge([
+                        .just(.showErrorAlert(error: $0)),
+                        .just(.showLoading(isShow: false))
+                    ])
+                }
+        } else {
+            let images = newPhotos.map { $0.1 }
+            
+            return self.imageService.uploadImages(images: images, fileType: .menu)
+                .flatMap { response -> Observable<Mutation> in
+                    var newStore = store
+                    let imageURLs = response.map { $0.imageUrl }
+                    let newPhotoIndex = newPhotos.map { $0.0 }
+                    
+                    for index in imageURLs.indices {
+                        newStore.menus[newPhotoIndex[index]].imageUrl = imageURLs[index]
+                    }
+                    
+                    return self.storeService.updateStore(store: newStore)
+                        .map { _ in Mutation.pop }
+                }
+                .catch {
+                    .merge([
+                        .just(.showErrorAlert(error: $0)),
+                        .just(.showLoading(isShow: false))
+                    ])
+                }
+        }
     }
 }

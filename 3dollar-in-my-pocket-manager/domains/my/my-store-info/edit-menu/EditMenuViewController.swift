@@ -51,10 +51,10 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
             })
             .disposed(by: self.eventDisposeBag)
         
-        self.editMenuReactor.dismissPublisher
+        self.editMenuReactor.popPublisher
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.coordinator?.presenter.dismiss(animated: true)
+                self?.coordinator?.popViewController(animated: true)
             })
             .disposed(by: self.eventDisposeBag)
         
@@ -97,6 +97,16 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
                 cellType: EditMenuTableViewCell.self
             )) { row, menu, cell in
                 cell.bind(menu: menu)
+                cell.menuNameTextField.rx.controlEvent(.editingDidEnd)
+                    .map { cell.menuNameTextField.text ?? "" }
+                    .map { Reactor.Action.inputMenuName(index: row, name: $0) }
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
+                cell.menuPriceTextField.rx.controlEvent(.editingDidEnd)
+                    .map { cell.menuPriceTextField.text ?? "" }
+                    .map { Reactor.Action.inputMenuPrice(index: row, price: Int($0) ?? 0) }
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
                 cell.cameraButton.rx.tap
                     .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
                     .asDriver(onErrorJustReturn: ())
