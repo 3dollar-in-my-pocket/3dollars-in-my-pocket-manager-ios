@@ -5,6 +5,7 @@ import RxRelay
 
 final class EditMenuReactor: BaseReactor, Reactor {
     enum Action {
+        case tapBackButton
         case addPhoto(index: Int, photo: UIImage)
         case inputMenuName(index: Int, name: String)
         case inputMenuPrice(index: Int, price: Int)
@@ -14,6 +15,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
     }
     
     enum Mutation {
+        case showSaveAlert
         case setPhoto(index: Int, photo: UIImage)
         case setMenuName(index: Int, name: String)
         case setMenuPrice(index: Int, price: Int)
@@ -36,6 +38,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
     
     let initialState: State
     let popPublisher = PublishRelay<Void>()
+    let showSavePublisher = PublishRelay<Void>()
     private let storeService: StoreServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
@@ -66,6 +69,13 @@ final class EditMenuReactor: BaseReactor, Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .tapBackButton:
+            if self.initialState.store != self.currentState.store {
+                return .just(.showSaveAlert)
+            } else {
+                return .just(.pop)
+            }
+            
         case .addPhoto(let index, let photo):
             return .just(.setPhoto(index: index, photo: photo))
             
@@ -112,6 +122,9 @@ final class EditMenuReactor: BaseReactor, Reactor {
         var newState = state
         
         switch mutation {
+        case .showSaveAlert:
+            self.showSavePublisher.accept(())
+            
         case .setPhoto(let index, let photo):
             newState.store.menus[index].photo = photo
             if let index = state.newPhotos.firstIndex(where: { $0.0 == index }) {

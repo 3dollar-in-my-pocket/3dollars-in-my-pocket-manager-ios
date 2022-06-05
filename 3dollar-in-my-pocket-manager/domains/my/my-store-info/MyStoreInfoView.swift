@@ -38,6 +38,26 @@ final class MyStoreInfoView: BaseView {
                     alignment: .topLeading
                 )]
                 return section
+            } else if sectionIndex == 2 {
+                let item = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoMenuCell.height)
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoMenuCell.height)
+                ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                
+                section.boundarySupplementaryItems = [.init(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .topLeading
+                )]
+                return section
             } else {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -70,6 +90,10 @@ final class MyStoreInfoView: BaseView {
         $0.register(
             MyStoreInfoIntroductionCell.self,
             forCellWithReuseIdentifier: MyStoreInfoIntroductionCell.registerId
+        )
+        $0.register(
+            MyStoreInfoMenuCell.self,
+            forCellWithReuseIdentifier: MyStoreInfoMenuCell.registerId
         )
         $0.register(
             MyStoreInfoWorkDayCell.self,

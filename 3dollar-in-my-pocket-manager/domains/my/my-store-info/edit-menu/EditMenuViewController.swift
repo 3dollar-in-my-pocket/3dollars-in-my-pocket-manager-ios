@@ -44,17 +44,17 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
     }
     
     override func bindEvent() {
-        self.editMenuView.backButton.rx.tap
-            .asDriver()
+        self.editMenuReactor.popPublisher
+            .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
                 self?.coordinator?.popViewController(animated: true)
             })
             .disposed(by: self.eventDisposeBag)
         
-        self.editMenuReactor.popPublisher
+        self.editMenuReactor.showSavePublisher
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
-                self?.coordinator?.popViewController(animated: true)
+                self?.coordinator?.showSaveAlert()
             })
             .disposed(by: self.eventDisposeBag)
         
@@ -75,6 +75,12 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
     
     func bind(reactor: EditMenuReactor) {
         // Bind Action
+        self.editMenuView.backButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.tapBackButton }
+            .bind(to: reactor.action)
+            .disposed(by: self.eventDisposeBag)
+        
         self.editMenuView.tableViewFooterView.addMenuButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .map { Reactor.Action.tapAddMenuButton }

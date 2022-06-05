@@ -4,8 +4,11 @@ import PhotosUI
 import SPPermissions
 import SPPermissionsPhotoLibrary
 import SPPermissionsCamera
+import Base
 
 protocol EditMenuCoordinator: BaseCoordinator, AnyObject {
+    func showSaveAlert()
+    
     func showPhotoActionSheet()
     
     func showCamera()
@@ -14,6 +17,17 @@ protocol EditMenuCoordinator: BaseCoordinator, AnyObject {
 }
 
 extension EditMenuCoordinator where Self: BaseViewController {
+    func showSaveAlert() {
+        AlertUtils.showWithCancel(
+            viewController: self,
+            title: nil,
+            message: "edit_menu_save_alert_message".localized,
+            okButtonTitle: "edit_menu_save_alert_ok".localized
+        ) { [weak self] in
+            self?.popViewController(animated: true)
+        }
+    }
+    
     func showPhotoActionSheet() {
         let alert = UIAlertController(
             title: "이미지 불러오기",

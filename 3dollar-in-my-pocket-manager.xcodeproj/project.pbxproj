@@ -120,6 +120,7 @@
 		6E7A49DE27D8D0A600E6653C /* StoreCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DD27D8D0A600E6653C /* StoreCategoryResponse.swift */; };
 		6E7A49E027D8D0E200E6653C /* CategoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49DF27D8D0E200E6653C /* CategoryService.swift */; };
 		6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7A49E127D8D3F800E6653C /* StoreCategory.swift */; };
+		6E7DFAF7284C2ECE006F0078 /* MyStoreInfoMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E7DFAF6284C2ECE006F0078 /* MyStoreInfoMenuCell.swift */; };
 		6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E81503527EEEA110032C518 /* HomeViewController.swift */; };
 		6E89A865281E5A3300B795EF /* EditScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */; };
 		6E89A867281E5C4900B795EF /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A866281E5C4900B795EF /* BaseTableViewCell.swift */; };
@@ -334,6 +335,7 @@
 		6E7A49DD27D8D0A600E6653C /* StoreCategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategoryResponse.swift; sourceTree = "<group>"; };
 		6E7A49DF27D8D0E200E6653C /* CategoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryService.swift; sourceTree = "<group>"; };
 		6E7A49E127D8D3F800E6653C /* StoreCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCategory.swift; sourceTree = "<group>"; };
+		6E7DFAF6284C2ECE006F0078 /* MyStoreInfoMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoMenuCell.swift; sourceTree = "<group>"; };
 		6E808CAD27F016CF00C46459 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-cpqyhqxhepkpbfajpzjhmdywgxbk/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScheduleTableViewCell.swift; sourceTree = "<group>"; };
@@ -727,6 +729,7 @@
 				6E6C9C7A280BF1EF009AFAE8 /* MyStoreInfoIntroductionCell.swift */,
 				6ED370F6280C33A300C445E5 /* MyStoreInfoHeaderView.swift */,
 				6ED370F9280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift */,
+				6E7DFAF6284C2ECE006F0078 /* MyStoreInfoMenuCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -1303,6 +1306,7 @@
 				6E1F54AA27CB7D5C0050BBBA /* LoginRequest.swift in Sources */,
 				6E473BA227D872E400232139 /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				6E473BA627D87A3D00232139 /* UIButtonExtensions.swift in Sources */,
+				6E7DFAF7284C2ECE006F0078 /* MyStoreInfoMenuCell.swift in Sources */,
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
 				6E91A9952841EE620090361F /* CursorResponse.swift in Sources */,
 				6E142D5A27D77B790084480C /* BaseViewController.swift in Sources */,

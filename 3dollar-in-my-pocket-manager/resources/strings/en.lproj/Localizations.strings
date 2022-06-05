@@ -108,6 +108,8 @@
 "edit_menu_add" = "메뉴 추가하기";
 "edit_menu_name_placeholder" = "메뉴를 입력해주세요.";
 "edit_menu_price_placeholder" = "가격을 입력해 주세요.";
+"edit_menu_save_alert_message" = "수정된 내용을 저장하지 않고 나갈까요?";
+"edit_menu_save_alert_ok" = "나가기";
 
 // Statistics
 "statistics_filter_total" = "전체";
