@@ -137,6 +137,16 @@ final class EditMenuView: BaseView {
         self.menuCountLabel.attributedText = attributedString
     }
     
+    fileprivate func setDeleteMode(isDeleteMode: Bool) {
+        if isDeleteMode {
+            self.deleteButton.setTitle("edit_menu_delete_all".localized, for: .normal)
+            self.saveButton.setTitle("edit_menu_finish_delete".localized, for: .normal)
+        } else {
+            self.deleteButton.setTitle("edit_menu_delete".localized, for: .normal)
+            self.saveButton.setTitle("edit_menu_save".localized, for: .normal)
+        }
+    }
+    
     private func setupKeyboardEvent() {
         NotificationCenter.default.addObserver(
             self,
@@ -175,6 +185,12 @@ extension Reactive where Base: EditMenuView {
     var menuCount: Binder<Int> {
         return Binder(self.base) { view, count in
             view.setMenuCount(count: count)
+        }
+    }
+    
+    var isDeleteMode: Binder<Bool> {
+        return Binder(self.base) { view, isDeleteMode in
+            view.setDeleteMode(isDeleteMode: isDeleteMode)
         }
     }
 }

@@ -8,6 +8,12 @@ struct Menu: Equatable {
     var name: String
     var price: Int
     
+    var isValid: Bool {
+        return (self.photo != nil || !self.imageUrl.isEmpty)
+        && (!name.isEmpty)
+        && (price != 0)
+    }
+    
     init(response: BossStoreMenuResponse) {
         self.photo = nil
         self.imageUrl = response.imageUrl

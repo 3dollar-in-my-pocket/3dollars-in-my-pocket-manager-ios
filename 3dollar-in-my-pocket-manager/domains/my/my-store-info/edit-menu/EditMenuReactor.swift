@@ -9,6 +9,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
         case addPhoto(index: Int, photo: UIImage)
         case inputMenuName(index: Int, name: String)
         case inputMenuPrice(index: Int, price: Int)
+        case tapDeleteButton
         case tapDeleteMenuButton(index: Int)
         case tapAddMenuButton
         case tapSaveButton
@@ -21,6 +22,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
         case setMenuPrice(index: Int, price: Int)
         case deleteMenu(index: Int)
         case addMenu
+        case toggleDeleteMode
         case pop
         case refreshSaveButtonEnable
         case showLoading(isShow: Bool)
@@ -34,6 +36,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
         var isEnableSaveButton: Bool
         ///  변경되거나 추가된 이미지들
         var newPhotos: [(Int, UIImage)]
+        var isDeleteMode: Bool
     }
     
     let initialState: State
@@ -63,7 +66,8 @@ final class EditMenuReactor: BaseReactor, Reactor {
             originalMenuCount: store.menus.count,
             isAddMenuButtonHidden: store.menus.count == 20,
             isEnableSaveButton: false,
-            newPhotos: []
+            newPhotos: [],
+            isDeleteMode: false
         )
     }
     
@@ -90,7 +94,9 @@ final class EditMenuReactor: BaseReactor, Reactor {
                 .just(.setMenuPrice(index: index, price: price)),
                 .just(.refreshSaveButtonEnable)
             ])
-                
+            
+        case .tapDeleteButton:
+            return .just(.toggleDeleteMode)
             
         case .tapDeleteMenuButton(let index):
             return .merge([
@@ -147,6 +153,9 @@ final class EditMenuReactor: BaseReactor, Reactor {
             newState.store.menus.append(Menu())
             newState.isAddMenuButtonHidden = newState.store.menus.count == 20
             
+        case .toggleDeleteMode:
+            newState.isDeleteMode.toggle()
+            
         case .pop:
             self.popPublisher.accept(())
             
@@ -196,5 +205,12 @@ final class EditMenuReactor: BaseReactor, Reactor {
                     ])
                 }
         }
+    }
+    
+    private func getValidStore(store: Store) -> Store {
+        var newStore = store
+        
+        newStore.menus = newStore.menus.filter { $0.isValid }
+        return newStore
     }
 }

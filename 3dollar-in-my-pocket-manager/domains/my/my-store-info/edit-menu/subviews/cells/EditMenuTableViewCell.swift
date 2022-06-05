@@ -46,6 +46,10 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         $0.keyboardType = .decimalPad
     }
     
+    let deleteButon = UIButton().then {
+        $0.setImage(UIImage(named: "ic_delete"), for: .normal)
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -56,13 +60,16 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         self.contentView.isUserInteractionEnabled = false
         self.backgroundColor = .clear
         self.selectionStyle = .none
-        self.addSubViews([
-            self.containerView,
+        self.containerView.addSubViews([
             self.cameraButton,
             self.menuNameTextFieldBackground,
             self.menuNameTextField,
             self.menuPriceTextFieldBackground,
             self.menuPriceTextField
+        ])
+        self.addSubViews([
+            self.containerView,
+            self.deleteButon
         ])
     }
     
@@ -76,15 +83,15 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         }
         
         self.cameraButton.snp.makeConstraints { make in
-            make.left.equalTo(self.containerView).offset(12)
-            make.top.equalTo(self.containerView).offset(12)
+            make.left.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(12)
             make.width.equalTo(self.cameraButton.snp.height)
         }
         
         self.menuNameTextFieldBackground.snp.makeConstraints { make in
             make.left.equalTo(self.cameraButton.snp.right).offset(12)
             make.top.equalTo(self.cameraButton)
-            make.right.equalTo(self.containerView).offset(-12)
+            make.right.equalToSuperview().offset(-12)
             make.height.equalTo(48)
         }
         
@@ -108,9 +115,16 @@ final class EditMenuTableViewCell: BaseTableViewCell {
             make.bottom.equalTo(self.menuPriceTextFieldBackground).offset(-15)
             make.right.equalTo(self.menuPriceTextFieldBackground).offset(-12)
         }
+        
+        self.deleteButon.snp.makeConstraints { make in
+            make.centerY.equalTo(self.containerView)
+            make.width.equalTo(32)
+            make.height.equalTo(32)
+            make.right.equalToSuperview().offset(32)
+        }
     }
     
-    func bind(menu: Menu) {
+    func bind(menu: Menu, isDeleteMode: Bool) {
         if !menu.imageUrl.isEmpty {
             self.cameraButton.setImage(urlString: menu.imageUrl)
         }
@@ -121,6 +135,13 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         
         self.menuNameTextField.text = menu.name
         self.menuPriceTextField.text = menu.price == 0 ? "" : "\(menu.price)"
+        
+        UIView.transition(with: self, duration: 0.3) { [weak self] in
+            self?.containerView.transform
+            = isDeleteMode ? .init(translationX: -56, y: 0) : .identity
+            self?.deleteButon.transform
+            = isDeleteMode ? .init(translationX: -56, y: 0) : .identity
+        }
     }
 }
 

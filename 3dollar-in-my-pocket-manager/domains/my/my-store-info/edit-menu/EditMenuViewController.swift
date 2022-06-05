@@ -79,7 +79,13 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .map { Reactor.Action.tapBackButton }
             .bind(to: reactor.action)
-            .disposed(by: self.eventDisposeBag)
+            .disposed(by: self.disposeBag)
+        
+        self.editMenuView.deleteButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.tapDeleteButton }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         self.editMenuView.tableViewFooterView.addMenuButton.rx.tap
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
@@ -95,14 +101,15 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
         
         // Bind State
         reactor.state
-            .map { $0.store.menus }
-            .distinctUntilChanged()
+            .map { state in
+                return state.store.menus.map { ($0, state.isDeleteMode) }
+            }
             .asDriver(onErrorJustReturn: [])
             .drive(self.editMenuView.menuTableView.rx.items(
                 cellIdentifier: EditMenuTableViewCell.registerId,
                 cellType: EditMenuTableViewCell.self
             )) { row, menu, cell in
-                cell.bind(menu: menu)
+                cell.bind(menu: menu.0, isDeleteMode: menu.1)
                 cell.menuNameTextField.rx.controlEvent(.editingDidEnd)
                     .map { cell.menuNameTextField.text ?? "" }
                     .map { Reactor.Action.inputMenuName(index: row, name: $0) }
@@ -123,6 +130,11 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
                         self?.coordinator?.showPhotoActionSheet()
                     })
                     .disposed(by: cell.disposeBag)
+                cell.deleteButon.rx.tap
+                    .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+                    .map { Reactor.Action.tapDeleteMenuButton(index: row) }
+                    .bind(to: reactor.action)
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: self.disposeBag)
         
@@ -138,6 +150,13 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: true)
             .drive(self.editMenuView.tableViewFooterView.rx.isHidden)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .map { $0.isDeleteMode }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: false)
+            .drive(self.editMenuView.rx.isDeleteMode)
             .disposed(by: self.disposeBag)
         
         reactor.state

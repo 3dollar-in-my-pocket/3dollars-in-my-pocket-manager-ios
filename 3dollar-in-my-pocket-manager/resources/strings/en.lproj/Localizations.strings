@@ -104,7 +104,9 @@
 // Eidt Menu
 "edit_menu_title" = "메뉴 관리";
 "edit_menu_delete" = "삭제";
+"edit_menu_delete_all" = "전체 삭제";
 "edit_menu_save" = "저장하기";
+"edit_menu_finish_delete" = "삭제 완료";
 "edit_menu_add" = "메뉴 추가하기";
 "edit_menu_name_placeholder" = "메뉴를 입력해주세요.";
 "edit_menu_price_placeholder" = "가격을 입력해 주세요.";
