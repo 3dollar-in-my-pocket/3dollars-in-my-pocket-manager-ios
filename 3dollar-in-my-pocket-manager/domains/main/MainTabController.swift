@@ -5,6 +5,7 @@ import RxSwift
 final class MainTabController: UITabBarController {
     private let feedbackGenerator = UISelectionFeedbackGenerator()
     private let disposeBag = DisposeBag()
+    private let borderLayer = CALayer()
     
     static func instance() -> MainTabController {
         return MainTabController(nibName: nil, bundle: nil)
@@ -42,6 +43,7 @@ final class MainTabController: UITabBarController {
                 self.tabBar.barTintColor = .white
                 self.tabBar.backgroundColor = .white
             }
+            self.borderLayer.backgroundColor = UIColor.gray5.cgColor
             
         case .setting:
             if #available(iOS 15, *) {
@@ -54,6 +56,7 @@ final class MainTabController: UITabBarController {
                 self.tabBar.barTintColor = .gray100
                 self.tabBar.backgroundColor = .gray100
             }
+            self.borderLayer.backgroundColor = UIColor.gray90.cgColor
         }
     }
     
@@ -63,10 +66,13 @@ final class MainTabController: UITabBarController {
             MyPageViewController.instance(),
             SettingViewController.instance()
         ], animated: true)
+        
+        self.borderLayer.backgroundColor = UIColor.gray5.cgColor
+        self.borderLayer.frame = .init(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 1)
+        
         self.tabBar.tintColor = .green
-        self.tabBar.layer.borderWidth = 1
-        self.tabBar.layer.borderColor = UIColor.gray5.cgColor
         self.tabBar.barTintColor = .white
         self.tabBar.backgroundColor = .white
+        self.tabBar.layer.addSublayer(self.borderLayer)
     }
 }
