@@ -10,6 +10,17 @@ struct Store: Equatable {
     var categories: [StoreCategory]
     var phoneNumber: String?
     var snsUrl: String?
+    var introduction: String?
+    var menus: [Menu]
+    var name: String
+    var appearanceDays: [AppearanceDay]
+    
+    var isValid: Bool {
+        return !(self.imageUrl ?? "").isEmpty
+        && !(self.phoneNumber ?? "").isEmpty
+        && !(self.imageUrl ?? "").isEmpty
+        && !self.name.isEmpty
+    }
     
     init(response: BossStoreInfoResponse) {
         self.id = response.bossStoreId
@@ -29,6 +40,10 @@ struct Store: Equatable {
         self.categories = response.categories.map(StoreCategory.init)
         self.phoneNumber = response.contactsNumber
         self.snsUrl = response.snsUrl
+        self.introduction = response.introduction
+        self.menus = response.menus.map(Menu.init)
+        self.name = response.name
+        self.appearanceDays = response.appearanceDays.map(AppearanceDay.init)
     }
     
     init(response: BossStoreAroundInfoResponse) {
@@ -49,6 +64,10 @@ struct Store: Equatable {
         self.categories = response.categories.map(StoreCategory.init)
         self.phoneNumber = nil
         self.snsUrl = nil
+        self.introduction = nil
+        self.menus = response.menus.map(Menu.init)
+        self.name = response.name
+        self.appearanceDays = []
     }
     
     init(
@@ -59,7 +78,11 @@ struct Store: Equatable {
         imageUrl: String? = nil,
         categories: [StoreCategory] = [],
         phoneNumber: String? = nil,
-        snsUrl: String? = nil
+        snsUrl: String? = nil,
+        introduction: String? = nil,
+        menus: [Menu] = [],
+        name: String = "",
+        appearanceDays: [AppearanceDay] = []
     ) {
         self.id = id
         self.location = location
@@ -69,5 +92,9 @@ struct Store: Equatable {
         self.categories = categories
         self.phoneNumber = phoneNumber
         self.snsUrl = snsUrl
+        self.introduction = introduction
+        self.menus = menus
+        self.name = name
+        self.appearanceDays = appearanceDays
     }
 }

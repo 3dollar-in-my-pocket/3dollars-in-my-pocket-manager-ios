@@ -93,6 +93,10 @@ final class SignupInputField: BaseView {
             make.bottom.equalTo(self.textField).priority(.high)
         }
     }
+    
+    func setText(text: String?) {
+        self.textField.setText(text: text)
+    }
 }
 
 extension Reactive where Base: SignupInputField {

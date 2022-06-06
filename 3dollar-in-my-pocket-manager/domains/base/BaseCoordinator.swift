@@ -4,6 +4,8 @@ import Base
 protocol BaseCoordinator {
     var presenter: BaseViewController { get }
     
+    func popViewController(animated: Bool)
+    
     func showErrorAlert(error: Error)
     
     func openURL(url: String)
@@ -16,13 +18,25 @@ extension BaseCoordinator where Self: BaseViewController {
         return self
     }
     
+    func popViewController(animated: Bool) {
+        self.presenter.navigationController?.popViewController(animated: true)
+    }
+    
     
     func showErrorAlert(error: Error) {
-        AlertUtils.showWithAction(
-            viewController: self,
-            message: error.localizedDescription,
-            onTapOk: nil
-        )
+        if let localizedError = error as? LocalizedError {
+            AlertUtils.showWithAction(
+                viewController: self,
+                message: localizedError.errorDescription,
+                onTapOk: nil
+            )
+        } else {
+            AlertUtils.showWithAction(
+                viewController: self,
+                message: error.localizedDescription,
+                onTapOk: nil
+            )
+        }
     }
     
     func openURL(url: String) {

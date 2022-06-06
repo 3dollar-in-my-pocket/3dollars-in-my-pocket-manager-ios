@@ -27,6 +27,13 @@ extension SigninCoordinator {
     }
     
     func goToMain() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
+        }
         
+        sceneDelegate.goToMain()
     }
 }

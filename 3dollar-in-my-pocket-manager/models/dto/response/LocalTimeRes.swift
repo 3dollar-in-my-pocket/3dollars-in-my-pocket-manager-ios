@@ -1,4 +1,6 @@
-struct LocalTimeRes: Decodable {
+import Foundation
+
+struct LocalTimeRes: Decodable, Equatable {
     let hour: Int
     let minute: Int
     let nano: Int
@@ -21,6 +23,15 @@ struct LocalTimeRes: Decodable {
         self.minute = minute
         self.nano = nano
         self.second = second
+    }
+    
+    init(date: Date) {
+        let calendar = Calendar.current
+        
+        self.hour = calendar.component(.hour, from: date)
+        self.minute = calendar.component(.minute, from: date)
+        self.second = calendar.component(.second, from: date)
+        self.nano = calendar.component(.nanosecond, from: date)
     }
     
     init(from decoder: Decoder) throws {

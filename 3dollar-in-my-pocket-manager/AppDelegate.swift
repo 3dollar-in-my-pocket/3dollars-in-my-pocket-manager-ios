@@ -2,6 +2,7 @@ import UIKit
 import BackgroundTasks
 
 import KakaoSDKCommon
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
         self.initializeKakaoSDK()
         self.initializeNetworkLogger()
+        self.initializeFirebase()
         BackgroundTaskManager.shared.registerBackgroundTask()
         return true
     }
@@ -43,6 +45,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initializeNetworkLogger() {
         NetworkActivityLogger.shared.startLogging()
         NetworkActivityLogger.shared.level = .debug
+    }
+    
+    private func initializeFirebase() {
+        FirebaseApp.configure()
     }
 }
 

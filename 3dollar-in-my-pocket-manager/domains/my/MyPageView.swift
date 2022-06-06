@@ -1,27 +1,54 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class MyPageView: BaseView {
+    fileprivate let tapTabPublisher = PublishSubject<Int>()
+    
     private let myStoreInfoButton = UIButton().then {
-        $0.setTitle("가게정보", for: .normal)
-        $0.setTitleColor(.gray95, for: .normal)
+        $0.setTitle("my_page_store_info".localized, for: .normal)
+        $0.setTitleColor(.gray30, for: .normal)
+        $0.setTitleColor(.gray95, for: .selected)
         $0.titleLabel?.font = .extraBold(size: 18)
+        $0.isSelected = true
     }
     
     private let statisticsButton = UIButton().then {
-        $0.setTitle("통계", for: .normal)
+        $0.setTitle("my_pate_statistics".localized, for: .normal)
         $0.setTitleColor(.gray95, for: .normal)
+        $0.setTitleColor(.gray30, for: .normal)
+        $0.setTitleColor(.gray95, for: .selected)
         $0.titleLabel?.font = .extraBold(size: 18)
+        $0.isSelected = false
     }
     
     let containerView = UIView()
     
     override func setup() {
-        self.backgroundColor = .white
+        self.backgroundColor = .gray0
         self.addSubViews([
             self.myStoreInfoButton,
             self.statisticsButton,
             self.containerView
         ])
+        self.myStoreInfoButton.rx.tap
+            .do(onNext: { [weak self] in
+                self?.myStoreInfoButton.isSelected = true
+                self?.statisticsButton.isSelected = false
+            })
+            .map { _ in 0 }
+            .bind(to: self.tapTabPublisher)
+            .disposed(by: self.disposeBag)
+        
+        self.statisticsButton.rx.tap
+            .do(onNext: { [weak self] in
+                self?.myStoreInfoButton.isSelected = false
+                self?.statisticsButton.isSelected = true
+            })
+            .map { _ in 1 }
+            .bind(to: self.tapTabPublisher)
+            .disposed(by: self.disposeBag)
     }
     
     override func bindConstraints() {
@@ -41,5 +68,11 @@ final class MyPageView: BaseView {
             make.bottom.equalToSuperview()
             make.top.equalTo(self.myStoreInfoButton.snp.bottom).offset(16)
         }
+    }
+}
+
+extension Reactive where Base: MyPageView {
+    var tapTab: ControlEvent<Int> {
+        return ControlEvent(events: base.tapTabPublisher)
     }
 }

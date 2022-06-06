@@ -29,7 +29,8 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     private let categoryStackView = UIStackView().then {
         $0.axis = .horizontal
         $0.spacing = 4
-        $0.distribution = .equalCentering
+        $0.distribution = .equalSpacing
+        $0.alignment = .fill
     }
     
     private let contactContainerView = UIView().then {
@@ -47,7 +48,6 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     private let phoneNumberValueLabel = UILabel().then {
         $0.font = .regular(size: 12)
         $0.textColor = .gray50
-        $0.text = "010-1245-5456"
         $0.textAlignment = .right
     }
     
@@ -61,12 +61,11 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     private let snsValueLabel = UILabel().then {
         $0.font = .regular(size: 12)
         $0.textColor = .gray50
-        $0.text = "instagram.com/3dollar_in_my_pocket?utm_medium=copy_link"
         $0.textAlignment = .right
         $0.numberOfLines = 2
     }
     
-    private let editButton = UIButton().then {
+    let editButton = UIButton().then {
         $0.layer.cornerRadius = 8
         $0.layer.masksToBounds = true
         $0.setBackgroundColor(color: .green, forState: .normal)
@@ -120,8 +119,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         }
         
         self.categoryStackView.snp.makeConstraints { make in
-            make.left.equalTo(self.containerView).offset(16)
-            make.right.equalTo(self.containerView).offset(-16)
+            make.centerX.equalTo(self.containerView)
             make.top.equalTo(self.nameLabel.snp.bottom).offset(8)
         }
         
@@ -162,7 +160,8 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         }
     }
     
-    fileprivate func bind(store: Store) {
+    func bind(store: Store) {
+        self.nameLabel.text = store.name
         self.photoView.setImage(urlString: store.imageUrl)
         
         for category in store.categories {
@@ -172,10 +171,12 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
                 leftInset: 8,
                 rightInset: 8
             ).then {
-                $0.backgroundColor = UIColor(r: 0, g: 198, b: 103)
+                $0.backgroundColor = UIColor(r: 0, g: 198, b: 103, a: 0.1)
                 $0.textColor = .green
                 $0.layer.cornerRadius = 8
                 $0.text = category.name
+                $0.layer.masksToBounds = true
+                $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             }
             
             self.categoryStackView.addArrangedSubview(categoryLagel)

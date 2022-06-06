@@ -1,5 +1,7 @@
 import UIKit
 
+import Kingfisher
+
 extension UIButton {
     func setBackgroundColor(color: UIColor, forState: UIControl.State) {
         self.clipsToBounds = true  // add this to maintain corner radius
@@ -10,6 +12,13 @@ extension UIButton {
             let colorImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             self.setBackgroundImage(colorImage, for: forState)
+        }
+    }
+    
+    func setImage(urlString: String?, for state: UIControl.State = .normal) {
+        if let urlString = urlString,
+           let url = URL(string: urlString) {
+            self.kf.setImage(with: url, for: state)
         }
     }
 }

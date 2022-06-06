@@ -3,7 +3,7 @@ import CoreLocation
 import RxSwift
 import Alamofire
 
-protocol StoreServiceProtocol {
+protocol StoreServiceType {
     func fetchMyStore() -> Observable<BossStoreInfoResponse>
     
     func openStore(storeId: String, location: CLLocation) -> Observable<String>
@@ -14,12 +14,14 @@ protocol StoreServiceProtocol {
         location: CLLocation,
         distance: Int
     ) -> Observable<[BossStoreAroundInfoResponse]>
+    
+    func updateStore(store: Store) -> Observable<String>
 }
 
-struct StoreService: StoreServiceProtocol {
+struct StoreService: StoreServiceType {
     func fetchMyStore() -> Observable<BossStoreInfoResponse> {
         return .create { observer in
-            let urlString = HTTPUtils.url + "/boss/v1/boss/store/my-store"
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/me"
             let headers = HTTPUtils.defaultHeader()
             
             HTTPUtils.defaultSession.request(
@@ -110,6 +112,30 @@ struct StoreService: StoreServiceProtocol {
                     observer.processHTTPError(response: ressponse)
                 }
             }
+            return Disposables.create()
+        }
+    }
+    
+    func updateStore(store: Store) -> Observable<String> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/\(store.id)"
+            let headers = HTTPUtils.defaultHeader()
+            let parameters = PatchBossStoreInfoRequest(store: store)
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .patch,
+                parameters: parameters,
+                encoder: JSONParameterEncoder.default,
+                headers: headers
+            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+                if response.isSuccess() {
+                    observer.processValue(response: response)
+                } else {
+                    observer.processHTTPError(response: response)
+                }
+            }
+            
             return Disposables.create()
         }
     }

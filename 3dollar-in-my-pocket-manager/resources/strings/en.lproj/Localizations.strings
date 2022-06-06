@@ -26,7 +26,14 @@
 "location_disable_service" = "위치 서비스가 비활성화되어있습니다.\n서비스를 활성화시켜주세요.";
 "location_address_unknown" = "주소를 알 수 없는 위치입니다.";
 
-
+// Day Of The Week
+"monday_full" = "월요일";
+"tuesday_full" = "화요일";
+"wednesday_full" = "수요일";
+"thursday_full" = "목요일";
+"friday_full" = "금요일";
+"saturday_full" = "토요일";
+"sunday_full" = "일요일";
 
 // Signup
 "signup_title" = "회원가입";
@@ -62,3 +69,62 @@
 "waiting_description" = "우리는 소규모로 운영되는 팀이라\n시간이 어느정도(3일-5일) 소요된다 어쩐다 하는\n구구절절 먹먹문";
 "waiting_question_button" = "이메일로 문의하기";
 
+// My Page
+"my_page_store_info" = "가게정보";
+"my_pate_statistics" = "통계";
+
+// My Store Info
+"my_store_info_introduction_placeholder" = "손님들에게 하고 싶은 말을 적어주세요!\nex) 오전에 오시면 서비스가 있습니다!";
+"my_store_info_header_introduction" = "사장님 한마디";
+"my_store_info_header_introduction_button" = "정보 수정";
+"my_store_info_header_menus" = "메뉴 정보";
+"my_store_info_menu_more_format" = "%d개의 메뉴가 더 있습니다.";
+"my_store_info_header_menus_button" = "메뉴 수정";
+"my_store_info_header_appearance_day" = "영업 일정";
+"my_store_info_header_appearance_day_button" = "일정 관리";
+
+// Edit Introduction
+"edit_introduction_title" = "사장님 한마디 수정";
+"edit_introduction_main_description" = "손님들에게 하고 싶은 말을\n적어주세요!";
+"edit_introduction_sub_description" = "ex) 오전에 오시면 서비스가 있습니다 😋";
+"edit_introdution_edit_button" = "저장하기";
+
+// Edit Store Info
+"edit_store_info_title" = "대표 정보 수정";
+"edit_store_info_sns" = "SNS";
+"edit_store_info_save" = "저장하기";
+
+// Edit Schedule
+"edit_schedule_title" = "일정 관리";
+"edit_schedule_main_description" = "영업 요일을 선택해주세요!";
+"edit_schedule_sub_description" = "선택하지 않은 요일은 휴무로 표시됩니다.";
+"edit_schedule_work_time" = "영업 시간";
+"edit_schedule_location" = "출몰 지역";
+"edit_schedule_save" = "저장하기";
+
+// Eidt Menu
+"edit_menu_title" = "메뉴 관리";
+"edit_menu_delete" = "삭제";
+"edit_menu_delete_all" = "전체 삭제";
+"edit_menu_save" = "저장하기";
+"edit_menu_finish_delete" = "삭제 완료";
+"edit_menu_delete_all_message" = "전체 메뉴를 삭제하시겠습니까?";
+"edit_menu_add" = "메뉴 추가하기";
+"edit_menu_name_placeholder" = "메뉴를 입력해주세요.";
+"edit_menu_price_placeholder" = "가격을 입력해 주세요.";
+"edit_menu_save_alert_message" = "수정된 내용을 저장하지 않고 나갈까요?";
+"edit_menu_save_alert_ok" = "나가기";
+
+// Statistics
+"statistics_filter_total" = "전체";
+"statistics_filter_day" = "일별";
+"statistics_review_count" = "리뷰가 사장님께 도착했어요 :)";
+"statistics_boss_is_kind" = "🙏 사장님이 친절해요";
+"statistics_easy_to_eat" = "🚀 먹기 간편해요";
+"statistics_food_is_delecious" = "🍕 음식이 맛있어요";
+"statistics_plating_is_beautiful" = "🎀 플레이팅이 예뻐요";
+"statistics_price_is_cheap" = "🌈 가격이 저렴해요";
+"statistics_there_are_places_to_eat_around" = "🛋 주변에 먹을 곳이 있어요";
+
+// Seting
+"setting_title" = "설정";

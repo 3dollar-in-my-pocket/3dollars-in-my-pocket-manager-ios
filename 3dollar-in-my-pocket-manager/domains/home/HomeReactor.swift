@@ -34,20 +34,23 @@ final class HomeReactor: BaseReactor, Reactor {
     
     let initialState = State()
     private let mapService: MapServiceProtocol
-    private let storeSerivce: StoreServiceProtocol
+    private let storeSerivce: StoreServiceType
     private let locationManager: LocationManagerProtocol
     private let backgroundTaskManager: BackgroundTaskManagerProtocol
+    private var userDefaults: UserDefaultsUtils
     
     init(
         mapService: MapServiceProtocol,
-        storeService: StoreServiceProtocol,
+        storeService: StoreServiceType,
         locationManager: LocationManagerProtocol,
-        backgroundTaskManager: BackgroundTaskManagerProtocol
+        backgroundTaskManager: BackgroundTaskManagerProtocol,
+        userDefaults: UserDefaultsUtils
     ) {
         self.mapService = mapService
         self.storeSerivce = storeService
         self.locationManager = locationManager
         self.backgroundTaskManager = backgroundTaskManager
+        self.userDefaults = userDefaults
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -157,6 +160,9 @@ final class HomeReactor: BaseReactor, Reactor {
     private func fetchMyStoreInfo() -> Observable<Mutation> {
         return self.storeSerivce.fetchMyStore()
             .map(Store.init(response:))
+            .do(onNext: { [weak self] store in
+                self?.userDefaults.storeId = store.id
+            })
             .map { .setStore($0) }
             .catch { .just(.showErrorAlert($0)) }
     }

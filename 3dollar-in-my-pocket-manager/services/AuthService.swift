@@ -88,7 +88,7 @@ struct AuthService: AuthServiceType {
     
     func fetchMyInfo() -> Observable<BossAccountInfoResponse> {
         return .create { observer in
-            let urlString = HTTPUtils.url + "/boss/v1/boss/account/my-info"
+            let urlString = HTTPUtils.url + "/boss/v1/boss/account/me"
             let headers = HTTPUtils.defaultHeader()
             
             HTTPUtils.defaultSession.request(
