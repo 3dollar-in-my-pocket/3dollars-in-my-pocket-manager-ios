@@ -136,6 +136,7 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         
         self.menuNameTextField.text = menu.name
         self.menuPriceTextField.text = menu.price == 0 ? "" : "\(menu.price)"
+        self.containerView.isUserInteractionEnabled = !isDeleteMode
         
         UIView.transition(with: self, duration: 0.3) { [weak self] in
             self?.containerView.transform

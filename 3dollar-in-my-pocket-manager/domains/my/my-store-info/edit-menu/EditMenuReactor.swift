@@ -19,6 +19,8 @@ final class EditMenuReactor: BaseReactor, Reactor {
     enum Mutation {
         case showSaveAlert
         case showDeleteAllAlert
+        case setStore(store: Store)
+        case setMenus(menus: [Menu])
         case setPhoto(index: Int, photo: UIImage)
         case setMenuName(index: Int, name: String)
         case setMenuPrice(index: Int, price: Int)
@@ -38,8 +40,6 @@ final class EditMenuReactor: BaseReactor, Reactor {
         var originalMenuCount: Int
         var isAddMenuButtonHidden: Bool
         var isEnableSaveButton: Bool
-        ///  변경되거나 추가된 이미지들
-        var newPhotos: [(Int, UIImage)]
         var isDeleteMode: Bool
     }
     
@@ -71,7 +71,6 @@ final class EditMenuReactor: BaseReactor, Reactor {
             originalMenuCount: store.menus.count,
             isAddMenuButtonHidden: store.menus.count == 20,
             isEnableSaveButton: false,
-            newPhotos: [],
             isDeleteMode: false
         )
     }
@@ -111,7 +110,10 @@ final class EditMenuReactor: BaseReactor, Reactor {
             if self.currentState.isDeleteMode {
                 return .just(.showDeleteAllAlert)
             } else {
+                let validStore = self.getValidStore(store: self.currentState.store)
+                
                 return .merge([
+                    .just(.setStore(store: validStore)),
                     .just(.toggleDeleteMode),
                     .just(.setSaveButtonEnable(isEnable: true))
                 ])
@@ -133,14 +135,20 @@ final class EditMenuReactor: BaseReactor, Reactor {
             
         case .tapSaveButton:
             if self.currentState.isDeleteMode {
-                return .just(.toggleDeleteMode)
+                if self.currentState.store.menus.isEmpty {
+                    return .merge([
+                        .just(.setMenus(menus: [Menu()])),
+                        .just(.toggleDeleteMode)
+                    ])
+                } else {
+                    return .just(.toggleDeleteMode)
+                }
             } else {
+                let validStore = self.getValidStore(store: self.currentState.store)
+                
                 return .concat([
                     .just(.showLoading(isShow: true)),
-                    self.updateStore(
-                        store: self.currentState.store,
-                        newPhotos: self.currentState.newPhotos
-                    ),
+                    self.updateStore(store: validStore),
                     .just(.showLoading(isShow: false))
                 ])
             }
@@ -157,13 +165,14 @@ final class EditMenuReactor: BaseReactor, Reactor {
         case .showDeleteAllAlert:
             self.showDeleteAllAlertPublisher.accept(())
             
+        case .setStore(let store):
+            newState.store = store
+            
+        case .setMenus(let menus):
+            newState.store.menus = menus
+            
         case .setPhoto(let index, let photo):
             newState.store.menus[index].photo = photo
-            if let index = state.newPhotos.firstIndex(where: { $0.0 == index }) {
-                newState.newPhotos[index] = (index, photo)
-            } else {
-                newState.newPhotos.append((index, photo))
-            }
             
         case .setMenuName(let index, let name):
             newState.store.menus[index].name = name
@@ -184,6 +193,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
             
         case .toggleDeleteMode:
             newState.isDeleteMode.toggle()
+            newState.isAddMenuButtonHidden = newState.isDeleteMode
             
         case .pop:
             self.popPublisher.accept(())
@@ -204,9 +214,19 @@ final class EditMenuReactor: BaseReactor, Reactor {
         return newState
     }
     
-    private func updateStore(store: Store, newPhotos: [(Int, UIImage)]) -> Observable<Mutation> {
+    private func updateStore(store: Store) -> Observable<Mutation> {
+        let newPhotos = store.menus
+            .filter { $0.photo != nil }
+            .compactMap { $0.photo }
+        let newPhotosIndex = store.menus
+            .filter { $0.photo != nil }
+            .compactMap { store.menus.firstIndex(of: $0) }
+        
         if newPhotos.isEmpty {
             return self.storeService.updateStore(store: self.currentState.store)
+                .do(onNext: { [weak self] _ in
+                    self?.globalState.updateStorePublisher.onNext(store)
+                })
                 .map { _ in Mutation.pop }
                 .catch {
                     .merge([
@@ -215,19 +235,19 @@ final class EditMenuReactor: BaseReactor, Reactor {
                     ])
                 }
         } else {
-            let images = newPhotos.map { $0.1 }
-            
-            return self.imageService.uploadImages(images: images, fileType: .menu)
+            return self.imageService.uploadImages(images: newPhotos, fileType: .menu)
                 .flatMap { response -> Observable<Mutation> in
                     var newStore = store
                     let imageURLs = response.map { $0.imageUrl }
-                    let newPhotoIndex = newPhotos.map { $0.0 }
                     
                     for index in imageURLs.indices {
-                        newStore.menus[newPhotoIndex[index]].imageUrl = imageURLs[index]
+                        newStore.menus[newPhotosIndex[index]].imageUrl = imageURLs[index]
                     }
                     
                     return self.storeService.updateStore(store: newStore)
+                        .do(onNext: { [weak self] _ in
+                            self?.globalState.updateStorePublisher.onNext(newStore)
+                        })
                         .map { _ in Mutation.pop }
                 }
                 .catch {
