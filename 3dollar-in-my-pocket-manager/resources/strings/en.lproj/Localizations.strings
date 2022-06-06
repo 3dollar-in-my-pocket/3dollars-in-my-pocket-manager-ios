@@ -128,3 +128,10 @@
 
 // Seting
 "setting_title" = "설정";
+"setting_name_description" = "오늘도 적게 일하고 많이 버세요!";
+"setting_registeration_number" = "사업자번호";
+"setting_contact" = "가슴속 삼천원팀에 연락하기";
+"setting_faq" = "FAQ";
+"setting_privacy" = "개인정보 처리방침";
+"setting_logout" = "로그아웃";
+"setting_signout" = "회원탈퇴";

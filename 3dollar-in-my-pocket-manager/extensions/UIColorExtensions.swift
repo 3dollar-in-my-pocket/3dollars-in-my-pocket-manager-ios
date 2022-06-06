@@ -25,6 +25,9 @@ extension UIColor {
     /// r: 50 g: 50, b: 50
     static let gray80 = UIColor(r: 50, g: 50, b: 50)
     
+    /// r: 35 g: 35, b: 35
+    static let gray90 = UIColor(r: 35, g: 35, b: 35)
+    
     /// r: 26, g: 26, b: 26
     static let gray95 = UIColor(r: 26, g: 26, b: 26)
     

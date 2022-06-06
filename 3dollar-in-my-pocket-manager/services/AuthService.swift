@@ -5,6 +5,8 @@ import UIKit
 protocol AuthServiceType {
     func login(socialType: SocialType, token: String) -> Observable<LoginResponse>
     
+    func logout() -> Observable<String>
+    
     func signup(
         ownerName: String,
         storeName: String,
@@ -15,6 +17,8 @@ protocol AuthServiceType {
         socialType: SocialType,
         token: String
     ) -> Observable<LoginResponse>
+    
+    func signout() -> Observable<String>
     
     func fetchMyInfo() -> Observable<BossAccountInfoResponse>
 }
@@ -33,6 +37,27 @@ struct AuthService: AuthServiceType {
                 encoding: JSONEncoding.default,
                 headers: headers
             ).responseDecodable(of: ResponseContainer<LoginResponse>.self) { response in
+                if response.isSuccess() {
+                    observer.processValue(response: response)
+                } else {
+                    observer.processHTTPError(response: response)
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func logout() -> Observable<String> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/auth/logout"
+            let headers = HTTPUtils.defaultHeader()
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .post,
+                headers: headers
+            ).responseDecodable(of: ResponseContainer<String>.self) { response in
                 if response.isSuccess() {
                     observer.processValue(response: response)
                 } else {
@@ -75,6 +100,27 @@ struct AuthService: AuthServiceType {
                 encoding: JSONEncoding.default,
                 headers: headers
             ).responseDecodable(of: ResponseContainer<LoginResponse>.self) { response in
+                if response.isSuccess() {
+                    observer.processValue(response: response)
+                } else {
+                    observer.processHTTPError(response: response)
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func signout() -> Observable<String> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/auth/signout"
+            let headers = HTTPUtils.defaultHeader()
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .delete,
+                headers: headers
+            ).responseDecodable(of: ResponseContainer<String>.self) { response in
                 if response.isSuccess() {
                     observer.processValue(response: response)
                 } else {

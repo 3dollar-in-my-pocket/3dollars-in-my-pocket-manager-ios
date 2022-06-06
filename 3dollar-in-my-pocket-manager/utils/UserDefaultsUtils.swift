@@ -42,4 +42,10 @@ struct UserDefaultsUtils {
             return self.instance.string(forKey: self.KEY_STORE_ID) ?? ""
         }
     }
+    
+    func clear() {
+        self.instance.removeObject(forKey: self.KEY_TOKEN)
+        self.instance.removeObject(forKey: self.KEY_USER_ID)
+        self.instance.removeObject(forKey: self.KEY_STORE_ID)
+    }
 }
