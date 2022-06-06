@@ -223,7 +223,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
             .compactMap { store.menus.firstIndex(of: $0) }
         
         if newPhotos.isEmpty {
-            return self.storeService.updateStore(store: self.currentState.store)
+            return self.storeService.updateStore(store: store)
                 .do(onNext: { [weak self] _ in
                     self?.globalState.updateStorePublisher.onNext(store)
                 })

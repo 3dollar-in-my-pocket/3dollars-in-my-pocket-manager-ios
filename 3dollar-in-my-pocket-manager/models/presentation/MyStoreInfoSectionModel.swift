@@ -11,6 +11,7 @@ extension MyStoreInfoSectionModel: SectionModelType {
         case overview(Store)
         case introduction(String?)
         case menu(Menu)
+        case menuMore([Menu])
         case appearanceDay(AppearanceDay)
     }
     
@@ -28,9 +29,17 @@ extension MyStoreInfoSectionModel: SectionModelType {
     }
     
     init(menus: [Menu]) {
-        let menus = menus.map { SectionItemType.menu($0) }
-        
-        self.items = menus
+        if menus.count < 4 {
+            let menus = menus.map { SectionItemType.menu($0) }
+            
+            self.items = menus
+        } else {
+            var sectionItemTypes = menus[..<3].map { SectionItemType.menu($0) }
+            let moreItemType = SectionItemType.menuMore(Array(menus[3...]))
+            
+            sectionItemTypes.append(moreItemType)
+            self.items = sectionItemTypes
+        }
     }
     
     init(appearanceDays: [AppearanceDay]) {

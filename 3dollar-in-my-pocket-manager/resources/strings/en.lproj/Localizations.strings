@@ -70,7 +70,7 @@
 "waiting_question_button" = "이메일로 문의하기";
 
 // My Page
-"my_page_store_info" = "가제정보";
+"my_page_store_info" = "가게정보";
 "my_pate_statistics" = "통계";
 
 // My Store Info
@@ -78,6 +78,7 @@
 "my_store_info_header_introduction" = "사장님 한마디";
 "my_store_info_header_introduction_button" = "정보 수정";
 "my_store_info_header_menus" = "메뉴 정보";
+"my_store_info_menu_more_format" = "%d개의 메뉴가 더 있습니다.";
 "my_store_info_header_menus_button" = "메뉴 수정";
 "my_store_info_header_appearance_day" = "영업 일정";
 "my_store_info_header_appearance_day_button" = "일정 관리";

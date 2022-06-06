@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E07F9B9284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */; };
 		6E142D5827D77AF50084480C /* BaseReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D5727D77AF50084480C /* BaseReactor.swift */; };
 		6E142D5A27D77B790084480C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D5927D77B790084480C /* BaseViewController.swift */; };
 		6E142D5C27D77CEE0084480C /* SigninCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D5B27D77CEE0084480C /* SigninCoordinator.swift */; };
@@ -230,6 +231,7 @@
 /* Begin PBXFileReference section */
 		2485BFD46CCBCCA4FDB38FB3 /* Pods-3dollar-in-my-pocket-manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3dollar-in-my-pocket-manager.release.xcconfig"; path = "Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager.release.xcconfig"; sourceTree = "<group>"; };
 		2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_3dollar_in_my_pocket_manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoMenuMoreCell.swift; sourceTree = "<group>"; };
 		6E142D5727D77AF50084480C /* BaseReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseReactor.swift; sourceTree = "<group>"; };
 		6E142D5927D77B790084480C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		6E142D5B27D77CEE0084480C /* SigninCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninCoordinator.swift; sourceTree = "<group>"; };
@@ -730,6 +732,7 @@
 				6ED370F6280C33A300C445E5 /* MyStoreInfoHeaderView.swift */,
 				6ED370F9280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift */,
 				6E7DFAF6284C2ECE006F0078 /* MyStoreInfoMenuCell.swift */,
+				6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -1413,6 +1416,7 @@
 				6E6C9C6E280BD943009AFAE8 /* MyStoreInfoView.swift in Sources */,
 				6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */,
 				6EF676BD27EEE57A00D43E99 /* HomeView.swift in Sources */,
+				6E07F9B9284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift in Sources */,
 				6E473B9427D85D1C00232139 /* SignupInputField.swift in Sources */,
 				6E7A49D827D8CDE300E6653C /* ImageUploadResponse.swift in Sources */,
 				6E6C9C72280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift in Sources */,
