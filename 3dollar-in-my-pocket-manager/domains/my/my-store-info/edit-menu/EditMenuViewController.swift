@@ -7,7 +7,7 @@ import SPPermissions
 
 final class EditMenuViewController: BaseViewController, View, EditMenuCoordinator {
     private let editMenuView = EditMenuView()
-    private let editMenuReactor: EditMenuReactor
+    let editMenuReactor: EditMenuReactor
     private weak var coordinator: EditMenuCoordinator?
     private var selectedCellIndex = 0 // 사진 추가시, 셀 인덱스 확인을 위해 사용
     
@@ -55,6 +55,13 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
                 self?.coordinator?.showSaveAlert()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.editMenuReactor.showDeleteAllAlertPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.showDeleteAllAlert()
             })
             .disposed(by: self.eventDisposeBag)
         

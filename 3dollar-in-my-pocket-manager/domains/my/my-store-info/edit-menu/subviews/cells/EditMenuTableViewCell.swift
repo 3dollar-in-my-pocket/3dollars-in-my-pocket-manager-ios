@@ -1,4 +1,5 @@
 import UIKit
+import RxSwift
 
 final class EditMenuTableViewCell: BaseTableViewCell {
     static let registerId = "\(EditMenuTableViewCell.self)"

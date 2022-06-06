@@ -9,6 +9,8 @@ import Base
 protocol EditMenuCoordinator: BaseCoordinator, AnyObject {
     func showSaveAlert()
     
+    func showDeleteAllAlert()
+    
     func showPhotoActionSheet()
     
     func showCamera()
@@ -25,6 +27,17 @@ extension EditMenuCoordinator where Self: BaseViewController {
             okButtonTitle: "edit_menu_save_alert_ok".localized
         ) { [weak self] in
             self?.popViewController(animated: true)
+        }
+    }
+    
+    func showDeleteAllAlert() {
+        AlertUtils.showWithCancel(
+            viewController: self,
+            title: nil,
+            message: "edit_menu_delete_all_message".localized,
+            okButtonTitle: "edit_menu_delete".localized
+        ) { [weak self] in
+            (self as? EditMenuViewController)?.editMenuReactor.action.onNext(.deleteAllMenu)
         }
     }
     

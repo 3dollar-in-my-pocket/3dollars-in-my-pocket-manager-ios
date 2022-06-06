@@ -10,6 +10,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
         case inputMenuName(index: Int, name: String)
         case inputMenuPrice(index: Int, price: Int)
         case tapDeleteButton
+        case deleteAllMenu
         case tapDeleteMenuButton(index: Int)
         case tapAddMenuButton
         case tapSaveButton
@@ -17,13 +18,16 @@ final class EditMenuReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case showSaveAlert
+        case showDeleteAllAlert
         case setPhoto(index: Int, photo: UIImage)
         case setMenuName(index: Int, name: String)
         case setMenuPrice(index: Int, price: Int)
         case deleteMenu(index: Int)
+        case deleteAllMenu
         case addMenu
         case toggleDeleteMode
         case pop
+        case setSaveButtonEnable(isEnable: Bool)
         case refreshSaveButtonEnable
         case showLoading(isShow: Bool)
         case showErrorAlert(error: Error)
@@ -42,6 +46,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
     let initialState: State
     let popPublisher = PublishRelay<Void>()
     let showSavePublisher = PublishRelay<Void>()
+    let showDeleteAllAlertPublisher = PublishRelay<Void>()
     private let storeService: StoreServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
@@ -95,8 +100,22 @@ final class EditMenuReactor: BaseReactor, Reactor {
                 .just(.refreshSaveButtonEnable)
             ])
             
+        case .deleteAllMenu:
+            return .merge([
+                .just(.deleteAllMenu),
+                .just(.refreshSaveButtonEnable)
+            ])
+                
+            
         case .tapDeleteButton:
-            return .just(.toggleDeleteMode)
+            if self.currentState.isDeleteMode {
+                return .just(.showDeleteAllAlert)
+            } else {
+                return .merge([
+                    .just(.toggleDeleteMode),
+                    .just(.setSaveButtonEnable(isEnable: true))
+                ])
+            }
             
         case .tapDeleteMenuButton(let index):
             return .merge([
@@ -113,14 +132,18 @@ final class EditMenuReactor: BaseReactor, Reactor {
                 
             
         case .tapSaveButton:
-            return .concat([
-                .just(.showLoading(isShow: true)),
-                self.updateStore(
-                    store: self.currentState.store,
-                    newPhotos: self.currentState.newPhotos
-                ),
-                .just(.showLoading(isShow: false))
-            ])
+            if self.currentState.isDeleteMode {
+                return .just(.toggleDeleteMode)
+            } else {
+                return .concat([
+                    .just(.showLoading(isShow: true)),
+                    self.updateStore(
+                        store: self.currentState.store,
+                        newPhotos: self.currentState.newPhotos
+                    ),
+                    .just(.showLoading(isShow: false))
+                ])
+            }
         }
     }
     
@@ -130,6 +153,9 @@ final class EditMenuReactor: BaseReactor, Reactor {
         switch mutation {
         case .showSaveAlert:
             self.showSavePublisher.accept(())
+            
+        case .showDeleteAllAlert:
+            self.showDeleteAllAlertPublisher.accept(())
             
         case .setPhoto(let index, let photo):
             newState.store.menus[index].photo = photo
@@ -149,6 +175,9 @@ final class EditMenuReactor: BaseReactor, Reactor {
             newState.store.menus.remove(at: index)
             newState.isAddMenuButtonHidden = newState.store.menus.count == 20
             
+        case .deleteAllMenu:
+            newState.store.menus = []
+            
         case .addMenu:
             newState.store.menus.append(Menu())
             newState.isAddMenuButtonHidden = newState.store.menus.count == 20
@@ -158,6 +187,9 @@ final class EditMenuReactor: BaseReactor, Reactor {
             
         case .pop:
             self.popPublisher.accept(())
+            
+        case .setSaveButtonEnable(let isEnable):
+            newState.isEnableSaveButton = isEnable
             
         case .refreshSaveButtonEnable:
             newState.isEnableSaveButton = newState.store !=  self.initialState.store
