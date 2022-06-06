@@ -7,13 +7,34 @@ final class SettingView: BaseView {
         $0.text = "setting_title".localized
     }
     
+    let tableHeaderView = SettingTableHeaderView(frame: .init(
+        x: 0,
+        y: 0,
+        width: UIScreen.main.bounds.width,
+        height: SettingTableHeaderView.height
+    ))
+    
+    let tableFooterView = SettingTableFooterView(frame: .init(
+        x: 0,
+        y: 0,
+        width: UIScreen.main.bounds.width,
+        height: SettingTableFooterView.height
+    ))
+    
     let tableView = UITableView().then {
-        $0.tableFooterView = UIView()
         $0.separatorStyle = .none
+        $0.backgroundColor = .clear
+        $0.rowHeight = SettingTableViewCell.height
+        $0.register(
+            SettingTableViewCell.self,
+            forCellReuseIdentifier: SettingTableViewCell.registerId
+        )
     }
     
     override func setup() {
         self.backgroundColor = .gray100
+        self.tableView.tableHeaderView = self.tableHeaderView
+        self.tableView.tableFooterView = self.tableFooterView
         self.addSubViews([
             self.titleLabel,
             self.tableView
