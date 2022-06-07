@@ -83,7 +83,7 @@ final class SignupPhotoView: BaseView {
             make.left.equalTo(self.containerView).offset(12)
             make.top.equalTo(self.containerView).offset(14)
             make.right.equalTo(self.containerView).offset(-12)
-            make.height.equalTo(136)
+            make.height.equalTo(self.imageView.snp.width).dividedBy(2.227)
         }
         
         self.uploadButton.snp.makeConstraints { make in
@@ -111,7 +111,12 @@ extension Reactive where Base: SignupPhotoView {
     
     var photo: Binder<UIImage?> {
         return Binder(self.base) { view, photo in
-            view.imageView.image = photo
+            if let photo = photo {
+                view.imageView.image = photo
+            } else {
+                view.imageView.image = UIImage(named: "img_store_default")
+            }
+            
         }
     }
 }

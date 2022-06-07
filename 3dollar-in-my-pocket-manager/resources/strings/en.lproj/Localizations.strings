@@ -37,11 +37,11 @@
 
 // Signup
 "signup_title" = "회원가입";
-"signup_description" = "사장님, 가게 정보를\n입력해 주세요!";
+"signup_description" = "사장님, 가게 정보 등록하시고\n부자 되세요~!";
 "signup_owner_name" = "사장님 성함";
 "signup_owner_name_placeholder" = "사장님 성함을 입력해주세요.";
 "signup_store_name" = "가게이름";
-"signup_store_name_description" = "최대 20자";
+"signup_store_name_description" = "공백 포함 최대 20자";
 "signup_store_name_placeholder" = "가게 이름을 입력해 주세요.";
 "signup_registeration_number_title" = "사업자 등록 번호";
 "signup_registeration_number_description" = "“-”를 제외한 숫자만 입력";
@@ -54,7 +54,7 @@
 "signup_photo_title" = "가게 인증 사진";
 "signup_photo_description" = "사진은 사장님 인증 용도로 사용됩니다.";
 "signup_upload_photo" = "이미지 업로드";
-"signup_button" = "회원 가입";
+"signup_button" = "가입 신청하기";
 
 // Home
 "home_off_title" = "이 위치에서 영업을 시작할까요?";
