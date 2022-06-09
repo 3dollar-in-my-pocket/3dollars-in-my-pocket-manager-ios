@@ -173,7 +173,8 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
         let storeName = storeName ?? self.currentState.store.name
         let phoneNumber = phoneNumber ??  self.currentState.store.phoneNumber
         
-        return !storeName.isEmpty && !(phoneNumber ?? "").isEmpty
+        return !storeName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        && !(phoneNumber ?? "").isEmpty
     }
     
     private func updateStore(store: Store, image: UIImage?) -> Observable<Mutation> {
