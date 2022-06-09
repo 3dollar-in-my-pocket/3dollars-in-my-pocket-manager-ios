@@ -35,13 +35,13 @@ final class SignupView: BaseView {
         $0.layer.shadowOpacity = 0.04
     }
     
-    let ownerNameField = SignupInputField(
+    let ownerNameField = InputField(
         title: "signup_owner_name".localized,
         isRequired: true,
         placeholder: "signup_owner_name_placeholder".localized
     )
     
-    let storeNameField = SignupInputField(
+    let storeNameField = InputField(
         title: "signup_store_name".localized,
         isRequired: true,
         description: "signup_store_name_description".localized,
@@ -50,7 +50,7 @@ final class SignupView: BaseView {
         $0.maxLength = 20
     }
     
-    let registerationNumberField = SignupInputField(
+    let registerationNumberField = InputField(
         title: "signup_registeration_number_title".localized,
         isRequired: true,
         description: "signup_registeration_number_description".localized,
@@ -60,7 +60,7 @@ final class SignupView: BaseView {
         $0.format = "XXX-XX-XXXXX"
     }
     
-    let phoneNumberField = SignupInputField(
+    let phoneNumberField = InputField(
         title: "signup_phone_number_title".localized,
         isRequired: true,
         description: "signup_phone_number_description".localized,
@@ -70,9 +70,9 @@ final class SignupView: BaseView {
         $0.format = "XXX-XXXX-XXXX"
     }
     
-    let categoryCollectionView = SignupCategorySelectView()
+    let categoryCollectionView = CategorySelectView()
     
-    let photoView = SignupPhotoView()
+    let photoView = PhotoUploadView(type: .signup)
     
     let signupButton = UIButton().then {
         $0.setTitle("signup_button".localized, for: .normal)

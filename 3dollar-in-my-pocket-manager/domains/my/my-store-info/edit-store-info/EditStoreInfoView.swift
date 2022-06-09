@@ -27,7 +27,7 @@ final class EditStoreInfoView: BaseView {
         $0.layer.shadowOpacity = 0.04
     }
     
-    let storeNameField = SignupInputField(
+    let storeNameField = InputField(
         title: "signup_store_name".localized,
         isRequired: true,
         description: "signup_store_name_description".localized,
@@ -36,7 +36,7 @@ final class EditStoreInfoView: BaseView {
         $0.maxLength = 20
     }
     
-    let phoneNumberField = SignupInputField(
+    let phoneNumberField = InputField(
         title: "signup_phone_number_title".localized,
         isRequired: true,
         description: "signup_phone_number_description".localized,
@@ -46,11 +46,11 @@ final class EditStoreInfoView: BaseView {
         $0.format = "XXX-XXXX-XXXX"
     }
     
-    let categoryCollectionView = SignupCategorySelectView()
+    let categoryCollectionView = CategorySelectView()
     
-    let photoView = SignupPhotoView()
+    let photoView = PhotoUploadView(type: .edit)
     
-    let snsField = SignupInputField(
+    let snsField = InputField(
         title: "edit_store_info_sns".localized,
         isRequired: false
     )

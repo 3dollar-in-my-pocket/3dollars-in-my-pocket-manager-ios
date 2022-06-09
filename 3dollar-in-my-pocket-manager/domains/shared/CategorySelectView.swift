@@ -3,7 +3,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SignupCategorySelectView: BaseView {
+final class CategorySelectView: BaseView {
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 14)
         $0.textColor = .gray100
@@ -105,7 +105,7 @@ final class SignupCategorySelectView: BaseView {
     }
 }
 
-extension SignupCategorySelectView: UICollectionViewDelegate {
+extension CategorySelectView: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath

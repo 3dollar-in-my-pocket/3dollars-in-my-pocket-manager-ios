@@ -4,7 +4,7 @@ import RxSwift
 import RxCocoa
 import Base
 
-final class SignupTextField: BaseView {
+final class TextField: BaseView {
     var maxLength: Int?
     
     var keyboardType: UIKeyboardType? {
@@ -113,7 +113,7 @@ final class SignupTextField: BaseView {
     }
 }
 
-extension SignupTextField: UITextFieldDelegate {
+extension TextField: UITextFieldDelegate {
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
@@ -135,7 +135,7 @@ extension SignupTextField: UITextFieldDelegate {
     }
 }
 
-extension Reactive where Base: SignupTextField {
+extension Reactive where Base: TextField {
     var text: ControlProperty<String> {
         return base.textField.rx.text.orEmpty
     }
@@ -151,7 +151,7 @@ extension Reactive where Base: SignupTextField {
     }
 }
 
-extension SignupTextField {
+extension TextField {
     func setDatePicker() {
         let toolbar = UIToolbar()
         let doneButton = UIBarButtonItem().then {
