@@ -54,6 +54,12 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
     
     func bind(reactor: HomeReactor) {
         // Bind action
+        self.homeView.currentLocationButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.tapCurrentLocation }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
         self.homeView.salesToggleView.rx.tapButton
             .map { Reactor.Action.tapSalesToggle }
             .bind(to: reactor.action)

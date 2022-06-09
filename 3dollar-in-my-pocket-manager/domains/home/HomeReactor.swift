@@ -8,6 +8,7 @@ final class HomeReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
         case tapShowOtherStore
+        case tapCurrentLocation
         case tapSalesToggle
         case moveCamera(CLLocation)
     }
@@ -60,6 +61,9 @@ final class HomeReactor: BaseReactor, Reactor {
                 self.fetchCurrentLocation(),
                 self.fetchMyStoreInfo()
             ])
+            
+        case .tapCurrentLocation:
+            return self.fetchCurrentLocation()
             
         case .tapShowOtherStore:
             if self.currentState.isShowOtherStore {

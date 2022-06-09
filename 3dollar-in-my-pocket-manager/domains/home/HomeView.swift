@@ -21,7 +21,15 @@ final class HomeView: BaseView {
     let salesToggleView = SalesToggleView()
     
     let currentLocationButton = UIButton().then {
-        $0.setImage(nil, for: .normal)
+        $0.setImage(UIImage(named: "ic_location"), for: .normal)
+        $0.contentEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 20
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray20.cgColor
+        $0.layer.shadowColor = UIColor.black.cgColor
+        $0.layer.shadowOffset = CGSize(width: 0, height: 4)
+        $0.layer.shadowOpacity = 0.15
     }
     
     private let rangeOverlayView = NMFCircleOverlay().then {

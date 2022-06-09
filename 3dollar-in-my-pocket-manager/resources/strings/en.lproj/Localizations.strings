@@ -63,6 +63,7 @@
 "home_on_title" = "개시 후";
 "home_on_description" = "동안 영업 중입니다.";
 "home_on_toggle" = "영업 종료하기!";
+"home_show_other" = "다른 푸드트럭 보기"; 
 
 // Waiting
 "waiting_title" = "승인 대기 중입니다.";
