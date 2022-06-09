@@ -30,7 +30,7 @@ struct AuthService: AuthServiceType {
             let parameters = LoginRequest(socialType: socialType, token: token).params
             let headers = HTTPUtils.jsonHeader()
             
-            HTTPUtils.defaultSession.request(
+            HTTPUtils.loginSession.request(
                 urlString,
                 method: .post,
                 parameters: parameters,
