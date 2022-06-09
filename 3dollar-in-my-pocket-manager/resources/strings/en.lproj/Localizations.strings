@@ -57,13 +57,13 @@
 "signup_button" = "가입 신청하기";
 
 // Home
-"home_off_title" = "이 위치에서 영업을 시작할까요?";
-"home_off_description" = "영업을 시작하면 손님들에게 노출이 시작됩니다!";
-"home_off_toggle" = "영업 시작하기";
-"home_on_title" = "개시 후";
-"home_on_description" = "동안 영업 중입니다.";
-"home_on_toggle" = "영업 종료하기!";
-"home_show_other" = "다른 푸드트럭 보기"; 
+"home_off_title" = "지금 계신 위치에서 영업을 시작할까요?";
+"home_off_description" = "영업을 시작하면 위치가 손님들에게 공개됩니다.";
+"home_off_toggle" = "오늘의 영업 시작하기";
+"home_on_title" = "오늘은";
+"home_on_description" = "동안 영업중이시네요! 오늘도 대박나세요!";
+"home_on_toggle" = "셔텨 내리기";
+"home_show_other" = "다른 푸드트럭 보기";
 
 // Waiting
 "waiting_title" = "승인 대기 중입니다.";
