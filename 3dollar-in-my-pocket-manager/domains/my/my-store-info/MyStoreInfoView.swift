@@ -1,6 +1,11 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class MyStoreInfoView: BaseView {
+    fileprivate let refreshControl = UIRefreshControl()
+    
     let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewLayout()
@@ -115,6 +120,7 @@ final class MyStoreInfoView: BaseView {
     }
     
     override func setup() {
+        self.collectionView.refreshControl = self.refreshControl
         self.addSubViews([
             self.collectionView
         ])
@@ -126,6 +132,20 @@ final class MyStoreInfoView: BaseView {
             make.top.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
+        }
+    }
+}
+
+extension Reactive where Base: MyStoreInfoView {
+    var pullToRefresh: ControlEvent<Void> {
+        return ControlEvent(events: base.refreshControl.rx.controlEvent(.valueChanged)
+            .map { _ in () })
+        
+    }
+    
+    var endRefreshing: Binder<Void> {
+        return Binder(self.base) { view, _ in
+            view.refreshControl.endRefreshing()
         }
     }
 }

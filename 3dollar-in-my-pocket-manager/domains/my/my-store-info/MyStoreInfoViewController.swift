@@ -20,6 +20,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             $0.setNavigationBarHidden(true, animated: false)
         }
     }
+    private var isRefreshing = false
     
     override func loadView() {
         self.view = self.myStoreInfoView
@@ -30,11 +31,18 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
         
         self.setupDataSource()
         self.coordinator = self
+        self.myStoreInfoView.collectionView.delegate = self
         self.reactor = self.myStoreInfoReactor
         self.myStoreInfoReactor.action.onNext(.viewDidLoad)
     }
     
     override func bindEvent() {
+        self.myStoreInfoView.rx.pullToRefresh
+            .bind(onNext: { [weak self] _ in
+                self?.isRefreshing = true
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.myStoreInfoReactor.pushEditStoreInfoPublisher
             .asDriver(onErrorJustReturn: Store())
             .drive(onNext: { [weak self] store in
@@ -62,6 +70,11 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 self?.coordinator?.pushEditSchedule(store: store)
             })
             .disposed(by: self.eventDisposeBag)
+        
+//        self.myStoreInfoReactor.endRefreshingPublisher
+//            .asDriver(onErrorJustReturn: ())
+//            .drive(self.myStoreInfoView.rx.endRefreshing)
+//            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: MyStoreInfoReactor) {
@@ -74,6 +87,9 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 MyStoreInfoSectionModel(appearanceDays: $0.store.appearanceDays)
             ] }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.myStoreInfoView.rx.endRefreshing.onNext(())
+            })
             .asDriver(onErrorJustReturn: [])
             .drive(self.myStoreInfoView.collectionView.rx.items(
                 dataSource: self.myStoreInfoCollectionViewDataSource
@@ -185,6 +201,15 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             default:
                 return UICollectionReusableView()
             }
+        }
+    }
+}
+
+extension MyStoreInfoViewController: UICollectionViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if self.isRefreshing {
+            self.myStoreInfoReactor.action.onNext(.refresh)
+            self.isRefreshing = false
         }
     }
 }
