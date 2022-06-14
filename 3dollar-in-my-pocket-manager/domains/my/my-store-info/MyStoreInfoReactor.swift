@@ -14,7 +14,6 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case setStore(Store)
-        case endRefreshiing
         case updateIntorudction(String)
         case pushEditStoreInfo(store: Store)
         case pushEditIntroduction(store: Store)
@@ -32,7 +31,6 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
     let pushEditIntroductionPublisher = PublishRelay<Store>()
     let pushEditMenuPublisher = PublishRelay<Store>()
     let pushEditSchedulePublisher = PublishRelay<Store>()
-    let endRefreshingPublisher = PublishRelay<Void>()
     private let storeService: StoreServiceType
     private let globalState: GlobalState
     
@@ -51,12 +49,6 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             
         case .refresh:
             return self.fetchMyStore()
-                .flatMap { mutation -> Observable<Mutation> in
-                    return .concat([
-                        .just(.endRefreshiing),
-                        .just(mutation)
-                    ])
-                }
             
         case .tapEditStoreInfo:
             return .just(.pushEditStoreInfo(store: self.currentState.store))
@@ -86,9 +78,6 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         switch mutation {
         case .setStore(let store):
             newState.store = store
-            
-        case .endRefreshiing:
-            self.endRefreshingPublisher.accept(())
             
         case .updateIntorudction(let introduction):
             newState.store.introduction = introduction

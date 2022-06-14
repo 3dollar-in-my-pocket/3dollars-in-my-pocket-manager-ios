@@ -69,12 +69,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             .drive(onNext: { [weak self] store in
                 self?.coordinator?.pushEditSchedule(store: store)
             })
-            .disposed(by: self.eventDisposeBag)
-        
-//        self.myStoreInfoReactor.endRefreshingPublisher
-//            .asDriver(onErrorJustReturn: ())
-//            .drive(self.myStoreInfoView.rx.endRefreshing)
-//            .disposed(by: self.eventDisposeBag)
+            .disposed(by: self.eventDisposeBag)        
     }
     
     func bind(reactor: MyStoreInfoReactor) {
@@ -91,6 +86,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 self?.myStoreInfoView.rx.endRefreshing.onNext(())
             })
             .asDriver(onErrorJustReturn: [])
+            .delay(.milliseconds(500))
             .drive(self.myStoreInfoView.collectionView.rx.items(
                 dataSource: self.myStoreInfoCollectionViewDataSource
             ))

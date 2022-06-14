@@ -140,7 +140,6 @@ extension Reactive where Base: MyStoreInfoView {
     var pullToRefresh: ControlEvent<Void> {
         return ControlEvent(events: base.refreshControl.rx.controlEvent(.valueChanged)
             .map { _ in () })
-        
     }
     
     var endRefreshing: Binder<Void> {
