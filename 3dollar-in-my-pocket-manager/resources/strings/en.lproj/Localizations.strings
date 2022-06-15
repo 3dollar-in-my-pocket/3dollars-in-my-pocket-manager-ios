@@ -69,6 +69,7 @@
 "waiting_title" = "승인 대기 중입니다.";
 "waiting_description" = "우리는 소규모로 운영되는 팀이라\n시간이 어느정도(3일-5일) 소요된다 어쩐다 하는\n구구절절 먹먹문";
 "waiting_question_button" = "이메일로 문의하기";
+"waiting_logout" = "로그아웃";
 
 // My Page
 "my_page_store_info" = "가게정보";

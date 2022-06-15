@@ -22,12 +22,19 @@ final class WaitingView: BaseView {
         $0.layer.cornerRadius = 8
     }
     
+    let logoutButton = UIButton().then {
+        $0.setTitle("waiting_logout".localized, for: .normal)
+        $0.setTitleColor(.red, for: .normal)
+        $0.titleLabel?.font = .regular(size: 12)
+    }
+    
     override func setup() {
         self.backgroundColor = .white
         self.addSubViews([
             self.titleLabel,
             self.descriptionLabel,
-            self.questionButton
+            self.questionButton,
+            self.logoutButton
         ])
     }
     
@@ -45,8 +52,13 @@ final class WaitingView: BaseView {
         self.questionButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
-            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-50)
+            make.bottom.equalTo(self.logoutButton.snp.top).offset(-20)
             make.height.equalTo(48)
+        }
+        
+        self.logoutButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(self.safeAreaLayoutGuide).offset(-16)
         }
     }
 }
