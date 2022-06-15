@@ -122,12 +122,6 @@
 "statistics_filter_total" = "전체";
 "statistics_filter_day" = "일별";
 "statistics_review_count" = "리뷰가 사장님께 도착했어요 :)";
-"statistics_boss_is_kind" = "🙏 사장님이 친절해요";
-"statistics_easy_to_eat" = "🚀 먹기 간편해요";
-"statistics_food_is_delecious" = "🍕 음식이 맛있어요";
-"statistics_plating_is_beautiful" = "🎀 플레이팅이 예뻐요";
-"statistics_price_is_cheap" = "🌈 가격이 저렴해요";
-"statistics_there_are_places_to_eat_around" = "🛋 주변에 먹을 곳이 있어요";
 
 // Seting
 "setting_title" = "설정";

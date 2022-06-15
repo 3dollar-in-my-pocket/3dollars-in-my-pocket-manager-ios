@@ -11,6 +11,7 @@ final class SplashReactor: BaseReactor, Reactor {
         case goToSignin
         case goToMain
         case goToWaiting
+        case setFeedbackTypes([FeedbackType])
         case showErrorAlert(Error)
     }
     
@@ -23,21 +24,37 @@ final class SplashReactor: BaseReactor, Reactor {
     let goToMainPublisher = PublishRelay<Void>()
     let goToWaitingPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
+    private let feedbackService: FeedbackServiceType
     private let userDefaultsUtils: UserDefaultsUtils
+    private let context: Context
     
     
-    init(authService: AuthServiceType, userDefaultsUtils: UserDefaultsUtils) {
+    init(
+        authService: AuthServiceType,
+        feedbackService: FeedbackServiceType,
+        userDefaultsUtils: UserDefaultsUtils,
+        context: Context
+    ) {
         self.authService = authService
+        self.feedbackService = feedbackService
         self.userDefaultsUtils = userDefaultsUtils
+        self.context = context
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
             if self.userDefaultsUtils.userToken.isEmpty {
-                return .just(.goToSignin)
+                return .merge([
+                    self.fetchFeedbackTypes(),
+                    .just(.goToSignin)
+                ])
+                    
             } else {
-                return self.fetchUserInfo()
+                return .merge([
+                    self.fetchFeedbackTypes(),
+                    self.fetchUserInfo()
+                ])
             }
         }
     }
@@ -52,6 +69,9 @@ final class SplashReactor: BaseReactor, Reactor {
             
         case .goToWaiting:
             self.goToWaitingPublisher.accept(())
+            
+        case .setFeedbackTypes(let feedbackTypes):
+            self.context.feedbackTypes = feedbackTypes
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
@@ -82,5 +102,12 @@ final class SplashReactor: BaseReactor, Reactor {
                     return .just(.showErrorAlert(error))
                 }
             }
+    }
+    
+    private func fetchFeedbackTypes() -> Observable<Mutation> {
+        return self.feedbackService.fetchFeedbackTypes()
+            .map { $0.map(FeedbackType.init(response:)) }
+            .map { .setFeedbackTypes($0) }
+            .catch { .just(.showErrorAlert($0)) }
     }
 }

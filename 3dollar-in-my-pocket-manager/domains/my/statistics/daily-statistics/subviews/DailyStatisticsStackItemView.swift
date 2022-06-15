@@ -49,7 +49,7 @@ final class DailyStatisticsStackItemView: BaseView {
     }
     
     func bind(statistic: Statistic) {
-        self.titleLabel.text = statistic.type.title
+        self.titleLabel.text = "\(statistic.type.emoji) \(statistic.type.description)"
         self.countLabel.text = "\(statistic.count)개"
     }
 }
