@@ -7,11 +7,13 @@ import RxRelay
 final class DailyStatisticsReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case refresh
         case viewWillAppear
         case willDisplayCell(index: Int)
     }
     
     enum Mutation {
+        case clearStatisticGroups
         case appendStatisticGroups([StatisticGroup])
         case updateTableViewHeight([StatisticGroup])
         case showErrorAlert(Error)
@@ -43,6 +45,12 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         case .viewDidLoad:
             return self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
             
+        case .refresh:
+            return .concat([
+                .just(.clearStatisticGroups),
+                self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
+            ])
+            
         case .viewWillAppear:
             return .just(.updateTableViewHeight(self.currentState.statisticGroups))
             
@@ -57,6 +65,9 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         var newState = state
         
         switch mutation {
+        case .clearStatisticGroups:
+            newState.statisticGroups = []
+            
         case .appendStatisticGroups(let statisticGroup):
             newState.statisticGroups.append(contentsOf: statisticGroup)
             

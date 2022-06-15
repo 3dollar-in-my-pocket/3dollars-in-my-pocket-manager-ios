@@ -75,6 +75,7 @@ final class DailyStatisticsViewController: BaseViewController, View, DailyStatis
                     )
                 }
             })
+            .delay(.milliseconds(500))
             .drive(self.dailyStatisticsView.tableView.rx.items(
                 cellIdentifier: DailyStatisticsTableViewCell.registerId,
                 cellType: DailyStatisticsTableViewCell.self
@@ -82,5 +83,9 @@ final class DailyStatisticsViewController: BaseViewController, View, DailyStatis
                 cell.bind(statisticGroup: statisticGroup)
             }
             .disposed(by: self.disposeBag)
+    }
+    
+    func refreshData() {
+        self.dailyStatisticsReactor.action.onNext(.refresh)
     }
 }

@@ -1,7 +1,12 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class StatisticsView: BaseView {
-    private let scrollView = UIScrollView().then {
+    fileprivate let refreshControl = UIRefreshControl()
+    
+    let scrollView = UIScrollView().then {
         $0.backgroundColor = .gray0
     }
     
@@ -14,6 +19,7 @@ final class StatisticsView: BaseView {
     let containerView = UIView()
     
     override func setup() {
+        self.scrollView.refreshControl = self.refreshControl
         self.scrollViewContainerView.addSubViews([
             self.reviewCountLabel,
             self.filterButton,
@@ -61,6 +67,19 @@ final class StatisticsView: BaseView {
     func updateContainerViewHeight(tableViewHeight: CGFloat) {
         self.containerView.snp.updateConstraints { make in
             make.height.equalTo(tableViewHeight)
+        }
+    }
+}
+
+extension Reactive where Base: StatisticsView {
+    var pullToRefresh: ControlEvent<Void> {
+        return ControlEvent(events: base.refreshControl.rx.controlEvent(.valueChanged)
+            .map { _ in () })
+    }
+    
+    var endRefreshing: Binder<Void> {
+        return Binder(self.base) { view, _ in
+            view.refreshControl.endRefreshing()
         }
     }
 }

@@ -5,6 +5,7 @@ import RxCocoa
 final class TotalStatisticsReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case refresh
         case viewWillAppear
     }
     
@@ -36,6 +37,9 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            return self.fetchStatistics()
+            
+        case .refresh:
             return self.fetchStatistics()
             
         case .viewWillAppear:

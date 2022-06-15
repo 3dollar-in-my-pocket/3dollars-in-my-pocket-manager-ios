@@ -12,6 +12,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
     private weak var coordinator: MyStoreInfoCoordinator?
     private var myStoreInfoCollectionViewDataSource
     : RxCollectionViewSectionedReloadDataSource<MyStoreInfoSectionModel>!
+    private var isRefreshing = false
     
     static func instance() -> UINavigationController {
         let viewController = MyStoreInfoViewController(nibName: nil, bundle: nil)
@@ -20,7 +21,6 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             $0.setNavigationBarHidden(true, animated: false)
         }
     }
-    private var isRefreshing = false
     
     override func loadView() {
         self.view = self.myStoreInfoView
