@@ -99,13 +99,14 @@ struct AuthService: AuthServiceType {
                 parameters: parameters,
                 encoding: JSONEncoding.default,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<LoginResponse>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: LoginResponse.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
