@@ -14,7 +14,7 @@ struct HTTPUtils {
     
     static let loginSession: Session = {
         let configuration = URLSessionConfiguration.default
-        configuration.timeoutIntervalForRequest = 6
+        configuration.timeoutIntervalForRequest = 7
         
         return Session(configuration: configuration)
     }()
