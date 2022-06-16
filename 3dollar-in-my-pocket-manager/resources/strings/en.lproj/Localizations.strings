@@ -89,6 +89,7 @@
 "edit_introduction_title" = "사장님 한마디 수정";
 "edit_introduction_main_description" = "손님들에게 하고 싶은 말을\n적어주세요!";
 "edit_introduction_sub_description" = "ex) 오전에 오시면 서비스가 있습니다 😋";
+"edit_introduction_sns" = "SNS주소를 적어주세요.";
 "edit_introdution_edit_button" = "저장하기";
 
 // Edit Store Info

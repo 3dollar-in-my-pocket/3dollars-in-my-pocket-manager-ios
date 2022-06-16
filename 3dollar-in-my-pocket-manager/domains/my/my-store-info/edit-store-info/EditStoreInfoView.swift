@@ -52,7 +52,8 @@ final class EditStoreInfoView: BaseView {
     
     let snsField = InputField(
         title: "edit_store_info_sns".localized,
-        isRequired: false
+        isRequired: false,
+        placeholder: "edit_introduction_sns".localized
     )
     
     let saveButton = UIButton().then {
