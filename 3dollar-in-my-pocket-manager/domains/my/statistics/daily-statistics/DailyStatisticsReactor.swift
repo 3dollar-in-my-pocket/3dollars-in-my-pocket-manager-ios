@@ -46,6 +46,7 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
             return self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
             
         case .refresh:
+            self.resetDate()
             return .concat([
                 .just(.clearStatisticGroups),
                 self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
@@ -104,7 +105,24 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
                 self.endDate = nil
             }
         })
-        .map { .appendStatisticGroups($0.contents.map(StatisticGroup.init(response:))) }
+        .flatMap { [weak self] response -> Observable<Mutation> in
+            guard let self = self else { return .error(BaseError.unknown) }
+            if response.contents.isEmpty {
+                return self.fetchStatistics(
+                    startDate: self.startDate,
+                    endDate: self.endDate
+                )
+            } else {
+                let statisticGroup = response.contents.map(StatisticGroup.init(response:))
+                
+                return .just(.appendStatisticGroups(statisticGroup))
+            }
+        }
         .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func resetDate() {
+        self.endDate = Date()
+        self.startDate = Date().addWeek(week: -1)
     }
 }

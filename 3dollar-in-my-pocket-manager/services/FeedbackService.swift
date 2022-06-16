@@ -81,15 +81,16 @@ struct FeedbackService: FeedbackServiceType {
                 method: .get,
                 parameters: paramerters,
                 headers: headers
-            ).responseDecodable(
-                of: ResponseContainer<BossStoreFeedbackCursorResponse>.self
-            ) { response in
+            ).responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(
+                        type: BossStoreFeedbackCursorResponse.self,
+                        response: response
+                    )
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }

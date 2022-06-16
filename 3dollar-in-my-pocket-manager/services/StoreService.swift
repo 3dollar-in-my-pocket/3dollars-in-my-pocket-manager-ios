@@ -128,13 +128,13 @@ struct StoreService: StoreServiceType {
                 parameters: parameters,
                 encoder: JSONParameterEncoder.default,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            ).responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: String.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
