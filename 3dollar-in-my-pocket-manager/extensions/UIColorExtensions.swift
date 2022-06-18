@@ -7,6 +7,9 @@ extension UIColor {
     /// r: 244, g: 244, b: 244
     static let gray5 = UIColor(r: 244, g: 244, b: 244)
     
+    /// r:242, g: 242, b: 242
+    static let gray6 = UIColor(r: 242, g: 242, b: 242)
+    
     /// r: 226, g: 226, b: 226
     static let gray10 = UIColor(r: 226, g: 226, b: 226)
     

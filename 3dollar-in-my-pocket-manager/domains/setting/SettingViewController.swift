@@ -42,17 +42,30 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     }
     
     override func bindEvent() {
+        self.settingView.tableView.rx.itemSelected
+            .filter { $0.row == 1 }
+            .map { _ in () }
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.goToKakaoTalkChannel()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.settingView.tableView.rx.itemSelected
+            .filter { $0.row == 2 }
+            .map { _ in () }
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.pushFAQ()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.settingReactor.goToSigninPublisher
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
                 self?.coordinator?.goToSignin()
-            })
-            .disposed(by: self.eventDisposeBag)
-        
-        self.settingReactor.goToKakaotalkChannel
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.goToKakaoTalkChannel()
             })
             .disposed(by: self.eventDisposeBag)
         
@@ -80,13 +93,6 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     }
     
     func bind(reactor: SettingReactor) {
-        // Bind Action
-        self.settingView.tableView.rx.itemSelected
-            .filter { $0.row == 1 }
-            .map { _ in Reactor.Action.tapInquiry }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
         // Bind State
         reactor.state
             .map { $0.user }

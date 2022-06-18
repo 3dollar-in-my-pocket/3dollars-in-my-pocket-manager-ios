@@ -10,6 +10,8 @@ protocol SettingCoordinator: BaseCoordinator, AnyObject {
     func goToSignin()
     
     func goToKakaoTalkChannel()
+    
+    func pushFAQ()
 }
 
 extension SettingCoordinator where Self: SettingViewController {
@@ -50,5 +52,11 @@ extension SettingCoordinator where Self: SettingViewController {
         guard let url = URL(string: Bundle.kakaoChannelUrl) else { return }
         
         UIApplication.shared.open(url)
+    }
+    
+    func pushFAQ() {
+        let viewController = FAQViewController.instance()
+        
+        self.presenter.navigationController?.pushViewController(viewController, animated: true)
     }
 }
