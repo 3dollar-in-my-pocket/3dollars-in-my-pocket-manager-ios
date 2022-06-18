@@ -11,3 +11,9 @@ struct FAQ {
         self.question = response.question
     }
 }
+
+extension FAQ: Comparable {
+    static func < (lhs: FAQ, rhs: FAQ) -> Bool {
+        return lhs.faqId == rhs.faqId
+    }
+}

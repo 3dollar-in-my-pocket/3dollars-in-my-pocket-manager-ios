@@ -18,7 +18,7 @@ final class FAQView: BaseView {
         $0.text = "faq_description".localized
     }
     
-    private let collectionView = UICollectionView(
+    let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewLayout()
     ).then {
@@ -47,6 +47,7 @@ final class FAQView: BaseView {
         
         $0.collectionViewLayout = layout
         $0.backgroundColor = .clear
+        $0.showsVerticalScrollIndicator = false
         $0.register(
             FAQCollectionViewCell.self,
             forCellWithReuseIdentifier: FAQCollectionViewCell.registerId

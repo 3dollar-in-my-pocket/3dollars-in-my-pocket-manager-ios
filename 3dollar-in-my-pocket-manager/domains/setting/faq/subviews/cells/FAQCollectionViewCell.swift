@@ -43,17 +43,19 @@ final class FAQCollectionViewCell: BaseCollectionViewCell {
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
             make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.bottom.equalTo(self.answerLabel).offset(16)
+            make.bottom.equalToSuperview().offset(-12)
+            make.bottom.equalTo(self.answerLabel).offset(16).priority(.high)
         }
         
         self.questionMarkLabel.snp.makeConstraints { make in
             make.left.equalTo(self.containerView).offset(16)
             make.top.equalTo(self.containerView).offset(16)
+            make.width.equalTo(12)
         }
         
         self.questionLabel.snp.makeConstraints { make in
             make.left.equalTo(self.questionMarkLabel.snp.right).offset(8)
+            make.top.equalTo(self.questionMarkLabel)
             make.right.equalTo(self.containerView).offset(-20)
         }
         
@@ -62,5 +64,10 @@ final class FAQCollectionViewCell: BaseCollectionViewCell {
             make.right.equalTo(self.questionLabel)
             make.top.equalTo(self.questionLabel.snp.bottom).offset(12)
         }
+    }
+    
+    func bind(faq: FAQ) {
+        self.questionLabel.text = faq.question
+        self.answerLabel.text = faq.answer
     }
 }

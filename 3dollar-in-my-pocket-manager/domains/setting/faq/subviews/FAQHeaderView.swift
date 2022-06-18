@@ -4,7 +4,7 @@ import RxSwift
 
 final class FAQHeaderView: UICollectionReusableView {
     static let registerId = "\(FAQHeaderView.self)"
-    static let height: CGFloat = 51
+    static let height: CGFloat = 63
     
     var disposeBag = DisposeBag()
     
@@ -32,6 +32,10 @@ final class FAQHeaderView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func bind(title: String) {
+        self.titleLabel.text = title
     }
     
     private func setup() {
