@@ -138,6 +138,14 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                     cell.bind(menus: menus)
                     return cell
                     
+                case .emptyMenu:
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: MyStoreInfoMenuEmptyCell.registerId,
+                        for: indexPath
+                    ) as? MyStoreInfoMenuEmptyCell else { return BaseCollectionViewCell() }
+                    
+                    return cell
+                    
                 case .appearanceDay(let appearanceDay):
                     guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: MyStoreInfoWorkDayCell.registerId,

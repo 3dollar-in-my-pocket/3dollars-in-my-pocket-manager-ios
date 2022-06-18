@@ -12,6 +12,7 @@ extension MyStoreInfoSectionModel: SectionModelType {
         case introduction(String?)
         case menu(Menu)
         case menuMore([Menu])
+        case emptyMenu
         case appearanceDay(AppearanceDay)
     }
     
@@ -29,7 +30,9 @@ extension MyStoreInfoSectionModel: SectionModelType {
     }
     
     init(menus: [Menu]) {
-        if menus.count < 4 {
+        if menus.isEmpty {
+            self.items = [.emptyMenu]
+        } else if menus.count < 4 {
             let menus = menus.map { SectionItemType.menu($0) }
             
             self.items = menus
