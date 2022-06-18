@@ -83,6 +83,9 @@ final class EditScheduleTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        self.startTimeField.setText(text: nil)
+        self.endTimeField.setText(text: nil)
+        self.locationField.setText(text: nil)
         self.disposeBag = DisposeBag()
     }
     

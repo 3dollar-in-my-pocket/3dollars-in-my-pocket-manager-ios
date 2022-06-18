@@ -1,6 +1,8 @@
 import UIKit
 
 final class EditScheduleView: BaseView {
+    private let tapBackgroundGesture = UITapGestureRecognizer()
+    
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "ic_back"), for: .normal)
     }
@@ -29,7 +31,21 @@ final class EditScheduleView: BaseView {
     private let subDescriptionLabel = UILabel().then {
         $0.font = .regular(size: 14)
         $0.textColor = .black
-        $0.text = "edit_schedule_sub_description".localized
+        
+        let text = "edit_schedule_sub_description".localized
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        attributedString.addAttribute(
+            .font,
+            value: UIFont.bold(size: 14) as Any,
+            range: (text as NSString).range(of: "휴무")
+        )
+        attributedString.addAttribute(
+            .foregroundColor,
+            value: UIColor.red,
+            range: (text as NSString).range(of: "휴무")
+        )
+        $0.attributedText = attributedString
     }
     
     let weekDayStackView = WeekDayStackView()
@@ -53,8 +69,14 @@ final class EditScheduleView: BaseView {
         $0.setBackgroundColor(color: .gray30, forState: .disabled)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func setup() {
+        self.addGestureRecognizer(self.tapBackgroundGesture)
         self.backgroundColor = .gray0
+        self.setupKeyboardEvent()
         self.addSubViews([
             self.backButton,
             self.titleLabel,
@@ -64,6 +86,14 @@ final class EditScheduleView: BaseView {
             self.tableView,
             self.saveButton
         ])
+        
+        self.tapBackgroundGesture.rx.event
+            .asDriver()
+            .throttle(.milliseconds(500))
+            .drive(onNext: { [weak self] _ in
+                self?.endEditing(true)
+            })
+            .disposed(by: self.disposeBag)
     }
     
     override func bindConstraints() {
@@ -108,5 +138,37 @@ final class EditScheduleView: BaseView {
             make.bottom.equalToSuperview()
             make.top.equalTo(self.safeAreaLayoutGuide.snp.bottom).offset(-64)
         }
+    }
+    
+    private func setupKeyboardEvent() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onShowKeyboard(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onHideKeyboard(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func onShowKeyboard(notification: NSNotification) {
+        let userInfo = notification.userInfo!
+        var keyboardFrame
+        = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.convert(keyboardFrame, from: nil)
+        
+        var contentInset = self.tableView.contentInset
+        contentInset.bottom = keyboardFrame.size.height + 10
+        self.tableView.contentInset = contentInset
+    }
+    
+    @objc func onHideKeyboard(notification: NSNotification) {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        
+        self.tableView.contentInset = contentInset
     }
 }

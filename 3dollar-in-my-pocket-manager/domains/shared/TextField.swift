@@ -141,7 +141,7 @@ extension Reactive where Base: TextField {
     }
     
     var date: Observable<String> {
-        return base.datePicker.rx.date
+        return base.datePicker.rx.date.changed
             .map { date -> String in
                 let dateFormatter = DateFormatter()
                 
