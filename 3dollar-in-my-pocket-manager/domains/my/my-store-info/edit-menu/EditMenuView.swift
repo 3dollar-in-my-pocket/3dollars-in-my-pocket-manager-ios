@@ -30,7 +30,7 @@ final class EditMenuView: BaseView {
     let menuTableView = UITableView().then {
         $0.backgroundColor = .clear
         $0.separatorStyle = .none
-        $0.rowHeight = EditMenuTableViewCell.height
+        $0.estimatedRowHeight = EditMenuTableViewCell.height
         $0.register(
             EditMenuTableViewCell.self,
             forCellReuseIdentifier: EditMenuTableViewCell.registerId

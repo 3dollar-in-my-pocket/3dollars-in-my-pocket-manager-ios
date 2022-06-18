@@ -109,14 +109,14 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
         // Bind State
         reactor.state
             .map { state in
-                return state.store.menus.map { ($0, state.isDeleteMode) }
+                return state.store.menus.map { ($0, state.isDeleteMode, state.invalidIndex) }
             }
             .asDriver(onErrorJustReturn: [])
             .drive(self.editMenuView.menuTableView.rx.items(
                 cellIdentifier: EditMenuTableViewCell.registerId,
                 cellType: EditMenuTableViewCell.self
             )) { row, menu, cell in
-                cell.bind(menu: menu.0, isDeleteMode: menu.1)
+                cell.bind(menu: menu.0, isDeleteMode: menu.1, isInvalid: row == menu.2)
                 cell.menuNameTextField.rx.controlEvent(.editingDidEnd)
                     .map { cell.menuNameTextField.text ?? "" }
                     .map { Reactor.Action.inputMenuName(index: row, name: $0) }
