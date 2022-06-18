@@ -52,9 +52,6 @@ final class SalesToggleView: BaseView {
         $0.isHidden = true
     }
     
-    private let badgeImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_badge")
-    }
     
     fileprivate let toggleButton = UIButton().then {
         $0.titleLabel?.font = .bold(size: 16)
@@ -70,7 +67,6 @@ final class SalesToggleView: BaseView {
             self.onTitleLabel,
             self.timerView,
             self.onDescriptionLabel,
-            self.badgeImageView,
             self.toggleButton
         ])
     }
@@ -113,12 +109,6 @@ final class SalesToggleView: BaseView {
         self.timerView.snp.makeConstraints { make in
             make.left.equalTo(self.onTitleLabel.snp.right).offset(4)
             make.centerY.equalTo(self.onTitleLabel)
-        }
-        
-        self.badgeImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.backgroundView).offset(24)
-            make.right.equalTo(self.backgroundView).offset(-24)
-            make.width.height.equalTo(40)
         }
         
         self.snp.makeConstraints { make in
