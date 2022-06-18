@@ -4,6 +4,8 @@ import RxSwift
 import RxCocoa
 
 final class SalesToggleView: BaseView {
+    private var timerDisposeBag = DisposeBag()
+    
     private let backgroundView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -135,6 +137,7 @@ final class SalesToggleView: BaseView {
     }
     
     fileprivate func setTimer(startDate: Date) {
+        self.resetTimer()
         Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .bind { [weak self] time in
                 let dateFormatter = DateComponentsFormatter()
@@ -148,7 +151,12 @@ final class SalesToggleView: BaseView {
                 
                 self?.timerView.text = dateFormatter.string(from: timeDiff)
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: self.timerDisposeBag)
+    }
+    
+    private func resetTimer() {
+        self.timerDisposeBag = DisposeBag()
+        self.timerView.text = nil
     }
 }
 
