@@ -49,6 +49,13 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
             })
             .disposed(by: self.eventDisposeBag)
         
+        self.settingReactor.goToKakaotalkChannel
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.goToKakaoTalkChannel()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.settingReactor.showLoadginPublisher
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { [weak self] isShow in
@@ -73,6 +80,13 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     }
     
     func bind(reactor: SettingReactor) {
+        // Bind Action
+        self.settingView.tableView.rx.itemSelected
+            .filter { $0.row == 1 }
+            .map { _ in Reactor.Action.tapInquiry }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
         // Bind State
         reactor.state
             .map { $0.user }

@@ -16,4 +16,12 @@ extension Bundle {
         
         return kakaoAppKey
     }
+    
+    static var kakaoChannelUrl: String {
+        guard let kakaoChannelUrl = Bundle.main.infoDictionary?["KAKAO_CHANNEL_URL"] as? String else {
+            fatalError("KAKAO_CHANNEL_URL가 정의되지 않았습니다.")
+        }
+        
+        return kakaoChannelUrl
+    }
 }

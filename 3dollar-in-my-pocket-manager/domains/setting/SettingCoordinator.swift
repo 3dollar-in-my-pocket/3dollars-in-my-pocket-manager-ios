@@ -8,6 +8,8 @@ protocol SettingCoordinator: BaseCoordinator, AnyObject {
     func showSignoutAlert()
     
     func goToSignin()
+    
+    func goToKakaoTalkChannel()
 }
 
 extension SettingCoordinator where Self: SettingViewController {
@@ -15,8 +17,8 @@ extension SettingCoordinator where Self: SettingViewController {
         AlertUtils.showWithCancel(
             viewController: self,
             title: nil,
-            message: "로그아웃하시겠습니까?",
-            okButtonTitle: "로그아웃"
+            message: "setting_logout_message".localized,
+            okButtonTitle: "setting_logout".localized
         ) {
             self.settingReactor.action.onNext(.tapLogout)
         }
@@ -25,9 +27,9 @@ extension SettingCoordinator where Self: SettingViewController {
     func showSignoutAlert() {
         AlertUtils.showWithCancel(
             viewController: self,
-            title: "회원탈퇴",
-            message: "회원 탈퇴 시, 그동안의 데이터가 모두 삭제됩니다.\n회원탈퇴하시겠습니까?",
-            okButtonTitle: "탈퇴"
+            title: "setting_signout".localized,
+            message: "setting_signout_title".localized,
+            okButtonTitle: "setting_signout_button".localized
         ) {
             self.settingReactor.action.onNext(.tapSignout)
         }
@@ -42,5 +44,11 @@ extension SettingCoordinator where Self: SettingViewController {
         }
         
         sceneDelegate.goToSignin()
+    }
+    
+    func goToKakaoTalkChannel() {
+        guard let url = URL(string: Bundle.kakaoChannelUrl) else { return }
+        
+        UIApplication.shared.open(url)
     }
 }

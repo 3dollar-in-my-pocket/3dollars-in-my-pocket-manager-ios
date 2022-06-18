@@ -5,6 +5,7 @@ import RxCocoa
 final class SettingReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case tapInquiry
         case tapLogout
         case tapSignout
     }
@@ -12,6 +13,7 @@ final class SettingReactor: BaseReactor, Reactor {
     enum Mutation {
         case setUser(user: User)
         case goToSignin
+        case goToKakaotalkChannel
         case showLoading(isShow: Bool)
         case showErrorAlert(Error)
     }
@@ -22,6 +24,7 @@ final class SettingReactor: BaseReactor, Reactor {
     
     let initialState: State
     let goToSigninPublisher = PublishRelay<Void>()
+    let goToKakaotalkChannel = PublishRelay<Void>()
     private let authService: AuthServiceType
     private let userDefaults: UserDefaultsUtils
     
@@ -39,6 +42,9 @@ final class SettingReactor: BaseReactor, Reactor {
         switch action {
         case .viewDidLoad:
             return self.fetchMyInfo()
+            
+        case .tapInquiry:
+            return .just(.goToKakaotalkChannel)
             
         case .tapLogout:
             return .concat([
@@ -65,6 +71,9 @@ final class SettingReactor: BaseReactor, Reactor {
             
         case .goToSignin:
             self.goToSigninPublisher.accept(())
+            
+        case .goToKakaotalkChannel:
+            self.goToKakaotalkChannel.accept(())
             
         case .showLoading(let isShow):
             self.showLoadginPublisher.accept(isShow)

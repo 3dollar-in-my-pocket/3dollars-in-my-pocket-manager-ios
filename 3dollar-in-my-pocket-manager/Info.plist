@@ -32,6 +32,8 @@
 	<array>
 		<string>AppleSDGothicNeoEB00.ttf</string>
 	</array>
+	<key>KAKAO_CHANNEL_URL</key>
+	<string>$(KAKAO_CHANNEL_URL)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
