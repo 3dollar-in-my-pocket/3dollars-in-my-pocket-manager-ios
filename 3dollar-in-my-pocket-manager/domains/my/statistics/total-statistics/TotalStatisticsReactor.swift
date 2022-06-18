@@ -71,7 +71,7 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         let storeId = self.userDefaults.storeId
         
         return self.feedbackService.fetchTotalStatistics(storeId: storeId)
-            .map { $0.map(Statistic.init(response:)) }
+            .map { $0.map(Statistic.init(response:)).sorted() }
             .flatMap { statistics -> Observable<Mutation> in
                 let reviewTotalCount = statistics.map { $0.count }.reduce(0, +)
                 

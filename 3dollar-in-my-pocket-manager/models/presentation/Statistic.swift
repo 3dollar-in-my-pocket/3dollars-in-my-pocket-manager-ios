@@ -1,4 +1,6 @@
-struct Statistic: Equatable {
+struct Statistic: Equatable, Comparable {
+    
+    
     let type: FeedbackType
     let count: Int
     let ratio: Double
@@ -7,5 +9,9 @@ struct Statistic: Equatable {
         self.type = Context.shared.getFeedbackType(by: response.feedbackType)
         self.count = response.count
         self.ratio = response.ratio
+    }
+    
+    static func < (lhs: Statistic, rhs: Statistic) -> Bool {
+        return lhs.count > rhs.count
     }
 }
