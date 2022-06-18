@@ -84,6 +84,7 @@
 "my_store_info_menu_more_format" = "%d개의 메뉴가 더 있습니다.";
 "my_store_info_header_menus_button" = "메뉴 수정";
 "my_store_info_header_appearance_day" = "영업 일정";
+"my_store_info_appearance_closed_day" = "휴무일";
 "my_store_info_header_appearance_day_button" = "일정 관리";
 
 // Edit Introduction

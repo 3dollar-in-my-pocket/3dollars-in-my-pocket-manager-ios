@@ -46,7 +46,21 @@ extension MyStoreInfoSectionModel: SectionModelType {
     }
     
     init(appearanceDays: [AppearanceDay]) {
-        let appearanceDays = appearanceDays.map { SectionItemType.appearanceDay($0) }
+        var initialAppearanceDays = [
+            AppearanceDay(dayOfTheWeek: .monday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .tuesday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .wednesday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .thursday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .friday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .saturday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .sunday, isClosed: true)
+        ]
+        
+        for appearanceDay in appearanceDays {
+            initialAppearanceDays[appearanceDay.index] = appearanceDay
+        }
+        
+        let appearanceDays = initialAppearanceDays.map { SectionItemType.appearanceDay($0) }
         
         self.items = appearanceDays
     }
