@@ -10,6 +10,8 @@ protocol StoreServiceType {
     
     func closeStore(storeId: String) -> Observable<String>
     
+    func renewStore(storeId: String, location: CLLocation) -> Observable<String>
+    
     func fetchAroundStores(
         location: CLLocation,
         distance: Int
@@ -51,7 +53,7 @@ struct StoreService: StoreServiceType {
             
             HTTPUtils.defaultSession.request(
                 urlString,
-                method: .put,
+                method: .post,
                 parameters: parameters,
                 headers: headers
             ).responseDecodable(of: ResponseContainer<String>.self) { response in
@@ -73,7 +75,7 @@ struct StoreService: StoreServiceType {
             
             HTTPUtils.defaultSession.request(
                 urlString,
-                method: .put,
+                method: .delete,
                 headers: headers
             ).responseDecodable(of: ResponseContainer<String>.self) { response in
                 if response.isSuccess() {
@@ -82,6 +84,33 @@ struct StoreService: StoreServiceType {
                     observer.processHTTPError(response: response)
                 }
             }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func renewStore(storeId: String, location: CLLocation) -> Observable<String> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/\(storeId)/renew"
+            let headers = HTTPUtils.defaultHeader()
+            let parameters: [String: Any] = [
+                "mapLatitude": location.coordinate.latitude,
+                "mapLongitude": location.coordinate.longitude
+            ]
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .put,
+                parameters: parameters,
+                headers: headers
+            ).responseData(completionHandler: { response in
+                if response.isSuccess() {
+                    observer.processValue(type: String.self, response: response)
+                } else {
+                    observer.processAPIError(response: response)
+                }
+                
+            })
             
             return Disposables.create()
         }
