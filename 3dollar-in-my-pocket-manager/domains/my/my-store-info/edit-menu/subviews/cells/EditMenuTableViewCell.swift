@@ -51,6 +51,13 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         $0.setImage(UIImage(named: "ic_delete"), for: .normal)
     }
     
+    private let warningLabel = UILabel().then {
+        $0.font = .regular(size: 12)
+        $0.textColor = .red
+        $0.text = "edit_menu_warning".localized
+        $0.isHidden = true
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -66,7 +73,8 @@ final class EditMenuTableViewCell: BaseTableViewCell {
             self.menuNameTextFieldBackground,
             self.menuNameTextField,
             self.menuPriceTextFieldBackground,
-            self.menuPriceTextField
+            self.menuPriceTextField,
+            self.warningLabel
         ])
         self.addSubViews([
             self.containerView,
@@ -80,13 +88,14 @@ final class EditMenuTableViewCell: BaseTableViewCell {
             make.right.equalToSuperview().offset(-24)
             make.top.equalToSuperview().offset(16)
             make.bottom.equalToSuperview()
-            make.bottom.equalTo(self.cameraButton).offset(12)
+            make.bottom.equalTo(self.warningLabel).offset(12).priority(.high)
         }
         
         self.cameraButton.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(12)
             make.top.equalToSuperview().offset(12)
-            make.width.equalTo(self.cameraButton.snp.height)
+            make.width.equalTo(104)
+            make.height.equalTo(104)
         }
         
         self.menuNameTextFieldBackground.snp.makeConstraints { make in
@@ -117,6 +126,12 @@ final class EditMenuTableViewCell: BaseTableViewCell {
             make.right.equalTo(self.menuPriceTextFieldBackground).offset(-12)
         }
         
+        self.warningLabel.snp.makeConstraints { make in
+            make.left.equalTo(self.containerView).offset(12)
+            make.top.equalTo(self.cameraButton.snp.bottom).offset(8)
+            make.height.equalTo(0)
+        }
+        
         self.deleteButon.snp.makeConstraints { make in
             make.centerY.equalTo(self.containerView)
             make.width.equalTo(32)
@@ -125,7 +140,7 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         }
     }
     
-    func bind(menu: Menu, isDeleteMode: Bool) {
+    func bind(menu: Menu, isDeleteMode: Bool, isInvalid: Bool) {
         if !menu.imageUrl.isEmpty {
             self.cameraButton.setImage(urlString: menu.imageUrl)
         }
@@ -137,6 +152,7 @@ final class EditMenuTableViewCell: BaseTableViewCell {
         self.menuNameTextField.text = menu.name
         self.menuPriceTextField.text = menu.price == 0 ? "" : "\(menu.price)"
         self.containerView.isUserInteractionEnabled = !isDeleteMode
+        self.setInvalidLayout(isInvalid: isInvalid)
         
         UIView.transition(with: self, duration: 0.3) { [weak self] in
             self?.containerView.transform
@@ -144,6 +160,26 @@ final class EditMenuTableViewCell: BaseTableViewCell {
             self?.deleteButon.transform
             = isDeleteMode ? .init(translationX: -56, y: 0) : .identity
         }
+    }
+    
+    private func setInvalidLayout(isInvalid: Bool) {
+        if isInvalid {
+            self.containerView.layer.borderColor = UIColor.red.cgColor
+            self.containerView.layer.borderWidth = 1
+            self.containerView.backgroundColor = .clear
+            self.warningLabel.isHidden = false
+            self.warningLabel.snp.updateConstraints { make in
+                make.height.equalTo(14)
+            }
+        } else {
+            self.containerView.layer.borderWidth = 0
+            self.containerView.backgroundColor = .white
+            self.warningLabel.isHidden = true
+            self.warningLabel.snp.updateConstraints { make in
+                make.height.equalTo(0)
+            }
+        }
+        
     }
 }
 

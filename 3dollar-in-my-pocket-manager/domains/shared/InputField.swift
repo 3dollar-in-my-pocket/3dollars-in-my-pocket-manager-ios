@@ -3,7 +3,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SignupInputField: BaseView {
+final class InputField: BaseView {
     var maxLength: Int? {
         willSet(newValue) {
             self.textField.maxLength = newValue
@@ -37,7 +37,7 @@ final class SignupInputField: BaseView {
         $0.font = .bold(size: 12)
     }
     
-    fileprivate let textField: SignupTextField
+    fileprivate let textField: TextField
     
     init(
         title: String,
@@ -45,7 +45,7 @@ final class SignupInputField: BaseView {
         description: String? = nil,
         placeholder: String? = nil
     ) {
-        self.textField = SignupTextField(placeholder: placeholder)
+        self.textField = TextField(placeholder: placeholder)
         super.init(frame: .zero)
         
         self.titleLabel.text = title
@@ -99,7 +99,7 @@ final class SignupInputField: BaseView {
     }
 }
 
-extension Reactive where Base: SignupInputField {
+extension Reactive where Base: InputField {
     var text: ControlProperty<String> {
         return base.textField.rx.text
     }

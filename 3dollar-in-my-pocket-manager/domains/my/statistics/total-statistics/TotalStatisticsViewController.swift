@@ -76,6 +76,7 @@ final class TotalStatisticsViewController: BaseViewController, View, TotalStatis
                     )
                 }
             })
+            .delay(.milliseconds(500))
             .drive(self.totalStatisticsView.tableView.rx.items(
                 cellIdentifier: TotalStatisticsTableViewCell.registerId,
                 cellType: TotalStatisticsTableViewCell.self
@@ -92,5 +93,9 @@ final class TotalStatisticsViewController: BaseViewController, View, TotalStatis
                 self?.delegate?.onUpdateTotalReviewCount(count: reviewTotalCount)
             })
             .disposed(by: self.disposeBag)
+    }
+    
+    func refreshData() {
+        self.totalStatisticsReactor.action.onNext(.refresh)
     }
 }

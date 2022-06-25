@@ -5,6 +5,7 @@ import RxCocoa
 final class MyStoreInfoReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case refresh
         case tapEditStoreInfo
         case tapEditIntroduction
         case tapEditMenus
@@ -44,6 +45,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            return self.fetchMyStore()
+            
+        case .refresh:
             return self.fetchMyStore()
             
         case .tapEditStoreInfo:

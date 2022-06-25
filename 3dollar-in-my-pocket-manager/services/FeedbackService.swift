@@ -5,6 +5,8 @@ import Alamofire
 import Base
 
 protocol FeedbackServiceType {
+    func fetchFeedbackTypes() -> Observable<[BossStoreFeedbackTypeResponse]>
+    
     func fetchTotalStatistics(storeId: String) -> Observable<[BossStoreFeedbackCountResponse]>
     
     func fetchDailyStatistics(
@@ -15,6 +17,29 @@ protocol FeedbackServiceType {
 }
 
 struct FeedbackService: FeedbackServiceType {
+    func fetchFeedbackTypes() -> Observable<[BossStoreFeedbackTypeResponse]> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/boss/store/feedback/types"
+            let headers = HTTPUtils.jsonHeader()
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .get,
+                headers: headers
+            ).responseDecodable(
+                of: ResponseContainer<[BossStoreFeedbackTypeResponse]>.self
+            ) { response in
+                if response.isSuccess() {
+                    observer.processValue(response: response)
+                } else {
+                    observer.processHTTPError(response: response)
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
     func fetchTotalStatistics(storeId: String) -> Observable<[BossStoreFeedbackCountResponse]> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/store/\(storeId)/feedbacks/full"
@@ -56,15 +81,16 @@ struct FeedbackService: FeedbackServiceType {
                 method: .get,
                 parameters: paramerters,
                 headers: headers
-            ).responseDecodable(
-                of: ResponseContainer<BossStoreFeedbackCursorResponse>.self
-            ) { response in
+            ).responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(
+                        type: BossStoreFeedbackCursorResponse.self,
+                        response: response
+                    )
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }

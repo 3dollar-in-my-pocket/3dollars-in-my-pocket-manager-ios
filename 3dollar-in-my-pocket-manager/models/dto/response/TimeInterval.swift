@@ -1,3 +1,5 @@
+import Base
+
 struct TimeInterval: Decodable {
     var endTime: String
     var startTime: String
@@ -7,14 +9,9 @@ struct TimeInterval: Decodable {
         case startTime
     }
     
-    init() {
-        self.startTime = ""
-        self.endTime = ""
-    }
-    
     init(
-        endTime: String = "",
-        startTime: String = ""
+        endTime: String = DateUtils.toString(date: Date(), format: "HH:mm"),
+        startTime: String = DateUtils.toString(date: Date(), format: "HH:mm")
     ) {
         self.endTime = endTime
         self.startTime = startTime

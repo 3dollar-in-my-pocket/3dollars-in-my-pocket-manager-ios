@@ -5,6 +5,7 @@ import RxCocoa
 final class TotalStatisticsReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case refresh
         case viewWillAppear
     }
     
@@ -38,6 +39,9 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         case .viewDidLoad:
             return self.fetchStatistics()
             
+        case .refresh:
+            return self.fetchStatistics()
+            
         case .viewWillAppear:
             return .just(.updateTableViewHeight(self.currentState.statistics))
         }
@@ -67,7 +71,7 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         let storeId = self.userDefaults.storeId
         
         return self.feedbackService.fetchTotalStatistics(storeId: storeId)
-            .map { $0.map(Statistic.init(response:)) }
+            .map { $0.map(Statistic.init(response:)).sorted() }
             .flatMap { statistics -> Observable<Mutation> in
                 let reviewTotalCount = statistics.map { $0.count }.reduce(0, +)
                 

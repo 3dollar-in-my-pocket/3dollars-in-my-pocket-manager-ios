@@ -1,6 +1,11 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class MyStoreInfoView: BaseView {
+    fileprivate let refreshControl = UIRefreshControl()
+    
     let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewLayout()
@@ -47,10 +52,14 @@ final class MyStoreInfoView: BaseView {
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .absolute(MyStoreInfoMenuMoreCell.height)
                 ))
+                let emptyItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MyStoreInfoMenuEmptyCell.height)
+                ))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .estimated(MyStoreInfoMenuCell.height)
-                ), subitems: [menuItem, moreItem])
+                ), subitems: [menuItem, moreItem, emptyItem])
                 let section = NSCollectionLayoutSection(group: group)
                 
                 section.boundarySupplementaryItems = [.init(
@@ -104,6 +113,10 @@ final class MyStoreInfoView: BaseView {
             forCellWithReuseIdentifier: MyStoreInfoMenuMoreCell.registerId
         )
         $0.register(
+            MyStoreInfoMenuEmptyCell.self,
+            forCellWithReuseIdentifier: MyStoreInfoMenuEmptyCell.registerId
+        )
+        $0.register(
             MyStoreInfoWorkDayCell.self,
             forCellWithReuseIdentifier: MyStoreInfoWorkDayCell.registerId
         )
@@ -115,6 +128,7 @@ final class MyStoreInfoView: BaseView {
     }
     
     override func setup() {
+        self.collectionView.refreshControl = self.refreshControl
         self.addSubViews([
             self.collectionView
         ])
@@ -126,6 +140,19 @@ final class MyStoreInfoView: BaseView {
             make.top.equalToSuperview()
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
+        }
+    }
+}
+
+extension Reactive where Base: MyStoreInfoView {
+    var pullToRefresh: ControlEvent<Void> {
+        return ControlEvent(events: base.refreshControl.rx.controlEvent(.valueChanged)
+            .map { _ in () })
+    }
+    
+    var endRefreshing: Binder<Void> {
+        return Binder(self.base) { view, _ in
+            view.refreshControl.endRefreshing()
         }
     }
 }

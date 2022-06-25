@@ -12,6 +12,13 @@ struct HTTPUtils {
         return Session(configuration: configuration)
     }()
     
+    static let loginSession: Session = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 6
+        
+        return Session(configuration: configuration)
+    }()
+    
     static let fileUploadSession: Session = {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = 30

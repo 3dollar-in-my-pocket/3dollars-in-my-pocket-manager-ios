@@ -9,7 +9,7 @@ enum SocialType: String, Decodable {
     var iconImage: UIImage? {
         switch self {
         case .apple:
-            return UIImage(named: "ic_kakao_logo")
+            return UIImage(named: "ic_apple_logo")
             
         case .kakao:
             return UIImage(named: "ic_kakao_logo")

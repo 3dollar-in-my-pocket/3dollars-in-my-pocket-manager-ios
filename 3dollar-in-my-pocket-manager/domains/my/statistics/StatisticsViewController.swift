@@ -5,20 +5,17 @@ import ReactorKit
 final class StatisticsViewController: BaseViewController, View {
     private let statisticsView = StatisticsView()
     private let statisticsReactor = StatisticsReactor()
-    
     private let pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,
         options: nil
     )
-    
     private let totalStatisticsViewController
     = TotalStatisticsViewController.instance()
-    
     private let dailyStatisticsViewController
     = DailyStatisticsViewController.instance()
-    
     private var pageViewControllers: [UIViewController] = []
+    private var isRefreshing = false
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -36,7 +33,30 @@ final class StatisticsViewController: BaseViewController, View {
         super.viewDidLoad()
         
         self.setupPageViewController()
+        self.statisticsView.scrollView.delegate = self
         self.reactor = self.statisticsReactor
+    }
+    
+    override func bindEvent() {
+        self.statisticsView.rx.pullToRefresh
+            .bind(onNext: { [weak self] in
+                self?.isRefreshing = true
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.statisticsReactor.refreshPublisher
+            .asDriver(onErrorJustReturn: .total)
+            .drive(onNext: { [weak self] filterType in
+                switch filterType {
+                case .total:
+                    self?.totalStatisticsViewController.refreshData()
+                    
+                case .day:
+                    self?.dailyStatisticsViewController.refreshData()
+                }
+                self?.statisticsView.rx.endRefreshing.onNext(())
+            })
+            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: StatisticsReactor) {
@@ -131,5 +151,14 @@ extension StatisticsViewController: UIPageViewControllerDelegate, UIPageViewCont
 extension StatisticsViewController: TotalStatisticsDelegate {
     func onUpdateTotalReviewCount(count: Int) {
         self.statisticsReactor.action.onNext(.updateTotalReviewCount(count))
+    }
+}
+
+extension StatisticsViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if self.isRefreshing {
+            self.statisticsReactor.action.onNext(.refresh)
+            self.isRefreshing = false
+        }
     }
 }

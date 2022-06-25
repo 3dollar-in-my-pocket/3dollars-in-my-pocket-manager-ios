@@ -6,7 +6,9 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
     private let splashView = SplashView()
     private let splashReactor = SplashReactor(
         authService: AuthService(),
-        userDefaultsUtils: UserDefaultsUtils()
+        feedbackService: FeedbackService(),
+        userDefaultsUtils: UserDefaultsUtils(),
+        context: Context.shared
     )
     private weak var coordinator: SplashCoordinator?
     

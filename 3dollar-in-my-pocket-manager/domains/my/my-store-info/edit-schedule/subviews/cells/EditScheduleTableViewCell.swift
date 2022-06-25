@@ -38,7 +38,7 @@ final class EditScheduleTableViewCell: UITableViewCell {
         $0.text = "edit_schedule_work_time".localized
     }
     
-    let startTimeField = SignupTextField().then {
+    let startTimeField = TextField().then {
         $0.setDatePicker()
     }
     
@@ -49,7 +49,7 @@ final class EditScheduleTableViewCell: UITableViewCell {
         $0.textColor = .black
     }
     
-    let endTimeField = SignupTextField().then {
+    let endTimeField = TextField().then {
         $0.setDatePicker()
     }
     
@@ -67,7 +67,7 @@ final class EditScheduleTableViewCell: UITableViewCell {
         $0.text = "edit_schedule_location".localized
     }
     
-    let locationField = SignupTextField()
+    let locationField = TextField()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -83,6 +83,9 @@ final class EditScheduleTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        self.startTimeField.setText(text: nil)
+        self.endTimeField.setText(text: nil)
+        self.locationField.setText(text: nil)
         self.disposeBag = DisposeBag()
     }
     

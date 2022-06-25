@@ -12,6 +12,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
     private weak var coordinator: MyStoreInfoCoordinator?
     private var myStoreInfoCollectionViewDataSource
     : RxCollectionViewSectionedReloadDataSource<MyStoreInfoSectionModel>!
+    private var isRefreshing = false
     
     static func instance() -> UINavigationController {
         let viewController = MyStoreInfoViewController(nibName: nil, bundle: nil)
@@ -30,11 +31,18 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
         
         self.setupDataSource()
         self.coordinator = self
+        self.myStoreInfoView.collectionView.delegate = self
         self.reactor = self.myStoreInfoReactor
         self.myStoreInfoReactor.action.onNext(.viewDidLoad)
     }
     
     override func bindEvent() {
+        self.myStoreInfoView.rx.pullToRefresh
+            .bind(onNext: { [weak self] _ in
+                self?.isRefreshing = true
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.myStoreInfoReactor.pushEditStoreInfoPublisher
             .asDriver(onErrorJustReturn: Store())
             .drive(onNext: { [weak self] store in
@@ -61,7 +69,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             .drive(onNext: { [weak self] store in
                 self?.coordinator?.pushEditSchedule(store: store)
             })
-            .disposed(by: self.eventDisposeBag)
+            .disposed(by: self.eventDisposeBag)        
     }
     
     func bind(reactor: MyStoreInfoReactor) {
@@ -74,7 +82,11 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 MyStoreInfoSectionModel(appearanceDays: $0.store.appearanceDays)
             ] }
             .distinctUntilChanged()
+            .do(onNext: { [weak self] _ in
+                self?.myStoreInfoView.rx.endRefreshing.onNext(())
+            })
             .asDriver(onErrorJustReturn: [])
+            .delay(.milliseconds(500))
             .drive(self.myStoreInfoView.collectionView.rx.items(
                 dataSource: self.myStoreInfoCollectionViewDataSource
             ))
@@ -124,6 +136,14 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                     ) as? MyStoreInfoMenuMoreCell else { return BaseCollectionViewCell() }
                     
                     cell.bind(menus: menus)
+                    return cell
+                    
+                case .emptyMenu:
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: MyStoreInfoMenuEmptyCell.registerId,
+                        for: indexPath
+                    ) as? MyStoreInfoMenuEmptyCell else { return BaseCollectionViewCell() }
+                    
                     return cell
                     
                 case .appearanceDay(let appearanceDay):
@@ -185,6 +205,15 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             default:
                 return UICollectionReusableView()
             }
+        }
+    }
+}
+
+extension MyStoreInfoViewController: UICollectionViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if self.isRefreshing {
+            self.myStoreInfoReactor.action.onNext(.refresh)
+            self.isRefreshing = false
         }
     }
 }

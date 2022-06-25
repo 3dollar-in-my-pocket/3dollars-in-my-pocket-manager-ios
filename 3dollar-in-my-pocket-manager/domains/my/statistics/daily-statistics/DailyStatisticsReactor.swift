@@ -7,11 +7,13 @@ import RxRelay
 final class DailyStatisticsReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
+        case refresh
         case viewWillAppear
         case willDisplayCell(index: Int)
     }
     
     enum Mutation {
+        case clearStatisticGroups
         case appendStatisticGroups([StatisticGroup])
         case updateTableViewHeight([StatisticGroup])
         case showErrorAlert(Error)
@@ -43,6 +45,13 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         case .viewDidLoad:
             return self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
             
+        case .refresh:
+            self.resetDate()
+            return .concat([
+                .just(.clearStatisticGroups),
+                self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
+            ])
+            
         case .viewWillAppear:
             return .just(.updateTableViewHeight(self.currentState.statisticGroups))
             
@@ -57,6 +66,9 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         var newState = state
         
         switch mutation {
+        case .clearStatisticGroups:
+            newState.statisticGroups = []
+            
         case .appendStatisticGroups(let statisticGroup):
             newState.statisticGroups.append(contentsOf: statisticGroup)
             
@@ -93,7 +105,24 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
                 self.endDate = nil
             }
         })
-        .map { .appendStatisticGroups($0.contents.map(StatisticGroup.init(response:))) }
+        .flatMap { [weak self] response -> Observable<Mutation> in
+            guard let self = self else { return .error(BaseError.unknown) }
+            if response.contents.isEmpty {
+                return self.fetchStatistics(
+                    startDate: self.startDate,
+                    endDate: self.endDate
+                )
+            } else {
+                let statisticGroup = response.contents.map(StatisticGroup.init(response:))
+                
+                return .just(.appendStatisticGroups(statisticGroup))
+            }
+        }
         .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func resetDate() {
+        self.endDate = Date()
+        self.startDate = Date().addWeek(week: -1)
     }
 }

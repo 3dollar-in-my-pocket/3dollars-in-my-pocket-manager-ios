@@ -4,6 +4,8 @@ import RxSwift
 import RxCocoa
 
 final class SalesToggleView: BaseView {
+    private var timerDisposeBag = DisposeBag()
+    
     private let backgroundView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -52,9 +54,6 @@ final class SalesToggleView: BaseView {
         $0.isHidden = true
     }
     
-    private let badgeImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_badge")
-    }
     
     fileprivate let toggleButton = UIButton().then {
         $0.titleLabel?.font = .bold(size: 16)
@@ -70,7 +69,6 @@ final class SalesToggleView: BaseView {
             self.onTitleLabel,
             self.timerView,
             self.onDescriptionLabel,
-            self.badgeImageView,
             self.toggleButton
         ])
     }
@@ -115,12 +113,6 @@ final class SalesToggleView: BaseView {
             make.centerY.equalTo(self.onTitleLabel)
         }
         
-        self.badgeImageView.snp.makeConstraints { make in
-            make.top.equalTo(self.backgroundView).offset(24)
-            make.right.equalTo(self.backgroundView).offset(-24)
-            make.width.height.equalTo(40)
-        }
-        
         self.snp.makeConstraints { make in
             make.edges.equalTo(self.backgroundView).priority(.high)
         }
@@ -145,6 +137,7 @@ final class SalesToggleView: BaseView {
     }
     
     fileprivate func setTimer(startDate: Date) {
+        self.resetTimer()
         Observable<Int>.interval(.seconds(1), scheduler: MainScheduler.instance)
             .bind { [weak self] time in
                 let dateFormatter = DateComponentsFormatter()
@@ -158,7 +151,12 @@ final class SalesToggleView: BaseView {
                 
                 self?.timerView.text = dateFormatter.string(from: timeDiff)
             }
-            .disposed(by: self.disposeBag)
+            .disposed(by: self.timerDisposeBag)
+    }
+    
+    private func resetTimer() {
+        self.timerDisposeBag = DisposeBag()
+        self.timerView.text = nil
     }
 }
 

@@ -3,7 +3,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class SignupPhotoView: BaseView {
+final class PhotoUploadView: BaseView {
+    enum ViewType {
+        case signup
+        case edit
+    }
+    
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 14)
         $0.textColor = .gray100
@@ -42,6 +47,16 @@ final class SignupPhotoView: BaseView {
         $0.layer.shadowColor = UIColor(r: 0, g: 198, b: 103).cgColor
         $0.layer.shadowOffset = CGSize(width: 4, height: 4)
         $0.layer.shadowOpacity = 0.1
+    }
+    
+    init(type: ViewType) {
+        super.init(frame: .zero)
+        
+        self.setType(type: type)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func setup() {
@@ -83,7 +98,7 @@ final class SignupPhotoView: BaseView {
             make.left.equalTo(self.containerView).offset(12)
             make.top.equalTo(self.containerView).offset(14)
             make.right.equalTo(self.containerView).offset(-12)
-            make.height.equalTo(136)
+            make.height.equalTo(self.imageView.snp.width).dividedBy(2.227)
         }
         
         self.uploadButton.snp.makeConstraints { make in
@@ -102,16 +117,35 @@ final class SignupPhotoView: BaseView {
     func setImage(imageUrl: String?) {
         self.imageView.setImage(urlString: imageUrl)
     }
+    
+    private func setType(type: ViewType) {
+        switch type {
+        case .signup:
+            self.titleLabel.text = "signup_photo_title".localized
+            self.descriptionLabel.text = "signup_photo_description".localized
+            self.uploadButton.setTitle("signup_upload_photo".localized, for: .normal)
+            
+        case .edit:
+            self.titleLabel.text = "edit_store_info_photo_title".localized
+            self.descriptionLabel.text = nil
+            self.uploadButton.setTitle("edit_store_info_upload_photo".localized, for: .normal)
+        }
+    }
 }
 
-extension Reactive where Base: SignupPhotoView {
+extension Reactive where Base: PhotoUploadView {
     var tapUploadButton: ControlEvent<Void> {
         return base.uploadButton.rx.tap
     }
     
     var photo: Binder<UIImage?> {
         return Binder(self.base) { view, photo in
-            view.imageView.image = photo
+            if let photo = photo {
+                view.imageView.image = photo
+            } else {
+                view.imageView.image = UIImage(named: "img_store_default")
+            }
+            
         }
     }
 }

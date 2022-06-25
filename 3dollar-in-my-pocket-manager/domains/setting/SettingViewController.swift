@@ -14,7 +14,7 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
         let viewController = SettingViewController(nibName: nil, bundle: nil).then {
             $0.tabBarItem = UITabBarItem(
                 title: nil,
-                image: UIImage(named: "ic_home"),
+                image: UIImage(named: "ic_my"),
                 tag: TabBarTag.setting.rawValue
             )
             $0.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
@@ -42,6 +42,26 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     }
     
     override func bindEvent() {
+        self.settingView.tableView.rx.itemSelected
+            .filter { $0.row == 1 }
+            .map { _ in () }
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.goToKakaoTalkChannel()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.settingView.tableView.rx.itemSelected
+            .filter { $0.row == 2 }
+            .map { _ in () }
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.pushFAQ()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.settingReactor.goToSigninPublisher
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in

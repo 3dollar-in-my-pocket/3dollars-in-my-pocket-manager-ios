@@ -72,7 +72,7 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
     }
     
     func bind(statistics: Statistic, isTopRate: Bool) {
-        self.titleLabel.text = statistics.type.title
+        self.titleLabel.text = "\(statistics.type.emoji) \(statistics.type.description)"
         self.countLabel.text = "\(statistics.count)개"
         self.progressView.progress = Float(statistics.ratio)
         self.setProgressBar(isTopRate: isTopRate)

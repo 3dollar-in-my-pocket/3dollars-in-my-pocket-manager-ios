@@ -21,6 +21,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
         case showDeleteAllAlert
         case setStore(store: Store)
         case setMenus(menus: [Menu])
+        case setInvalidMenuIndex(Int)
         case setPhoto(index: Int, photo: UIImage)
         case setMenuName(index: Int, name: String)
         case setMenuPrice(index: Int, price: Int)
@@ -41,6 +42,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
         var isAddMenuButtonHidden: Bool
         var isEnableSaveButton: Bool
         var isDeleteMode: Bool
+        var invalidIndex: Int?
     }
     
     let initialState: State
@@ -144,13 +146,17 @@ final class EditMenuReactor: BaseReactor, Reactor {
                     return .just(.toggleDeleteMode)
                 }
             } else {
-                let validStore = self.getValidStore(store: self.currentState.store)
-                
-                return .concat([
-                    .just(.showLoading(isShow: true)),
-                    self.updateStore(store: validStore),
-                    .just(.showLoading(isShow: false))
-                ])
+                if let invalidIndex = self.getInvalidStoreIndex(
+                    store: self.currentState.store
+                ) {
+                    return .just(.setInvalidMenuIndex(invalidIndex))
+                } else {
+                    return .concat([
+                        .just(.showLoading(isShow: true)),
+                        self.updateStore(store: self.currentState.store),
+                        .just(.showLoading(isShow: false))
+                    ])
+                }
             }
         }
     }
@@ -170,6 +176,9 @@ final class EditMenuReactor: BaseReactor, Reactor {
             
         case .setMenus(let menus):
             newState.store.menus = menus
+            
+        case .setInvalidMenuIndex(let index):
+            newState.invalidIndex = index
             
         case .setPhoto(let index, let photo):
             newState.store.menus[index].photo = photo
@@ -257,6 +266,10 @@ final class EditMenuReactor: BaseReactor, Reactor {
                     ])
                 }
         }
+    }
+    
+    private func getInvalidStoreIndex(store: Store) -> Int? {
+        return store.menus.map { $0.isValid }.firstIndex(of: false)
     }
     
     private func getValidStore(store: Store) -> Store {

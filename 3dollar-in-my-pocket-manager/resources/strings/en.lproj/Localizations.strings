@@ -37,7 +37,7 @@
 
 // Signup
 "signup_title" = "회원가입";
-"signup_description" = "사장님, 가게 정보를\n입력해 주세요!";
+"signup_description" = "사장님, 가게 정보 등록하시고\n부자 되세요~!";
 "signup_owner_name" = "사장님 성함";
 "signup_owner_name_placeholder" = "사장님 성함을 입력해주세요.";
 "signup_store_name" = "가게이름";
@@ -54,20 +54,22 @@
 "signup_photo_title" = "가게 인증 사진";
 "signup_photo_description" = "사진은 사장님 인증 용도로 사용됩니다.";
 "signup_upload_photo" = "이미지 업로드";
-"signup_button" = "회원 가입";
+"signup_button" = "가입 신청하기";
 
 // Home
-"home_off_title" = "이 위치에서 영업을 시작할까요?";
-"home_off_description" = "영업을 시작하면 손님들에게 노출이 시작됩니다!";
-"home_off_toggle" = "영업 시작하기";
-"home_on_title" = "개시 후";
-"home_on_description" = "동안 영업 중입니다.";
-"home_on_toggle" = "영업 종료하기!";
+"home_off_title" = "지금 계신 위치에서 영업을 시작할까요?";
+"home_off_description" = "영업을 시작하면 위치가 손님들에게 공개됩니다.";
+"home_off_toggle" = "오늘의 영업 시작하기";
+"home_on_title" = "오늘은";
+"home_on_description" = "동안 영업중이시네요! 오늘도 대박나세요!";
+"home_on_toggle" = "셔텨 내리기";
+"home_show_other" = "다른 푸드트럭 보기";
 
 // Waiting
 "waiting_title" = "승인 대기 중입니다.";
 "waiting_description" = "우리는 소규모로 운영되는 팀이라\n시간이 어느정도(3일-5일) 소요된다 어쩐다 하는\n구구절절 먹먹문";
 "waiting_question_button" = "이메일로 문의하기";
+"waiting_logout" = "로그아웃";
 
 // My Page
 "my_page_store_info" = "가게정보";
@@ -78,19 +80,24 @@
 "my_store_info_header_introduction" = "사장님 한마디";
 "my_store_info_header_introduction_button" = "정보 수정";
 "my_store_info_header_menus" = "메뉴 정보";
+"my_store_info_menu_empty" = "가게의 메뉴를 등록해 주세요!";
 "my_store_info_menu_more_format" = "%d개의 메뉴가 더 있습니다.";
 "my_store_info_header_menus_button" = "메뉴 수정";
 "my_store_info_header_appearance_day" = "영업 일정";
+"my_store_info_appearance_closed_day" = "휴무일";
 "my_store_info_header_appearance_day_button" = "일정 관리";
 
 // Edit Introduction
 "edit_introduction_title" = "사장님 한마디 수정";
 "edit_introduction_main_description" = "손님들에게 하고 싶은 말을\n적어주세요!";
 "edit_introduction_sub_description" = "ex) 오전에 오시면 서비스가 있습니다 😋";
+"edit_introduction_sns" = "SNS주소를 적어주세요.";
 "edit_introdution_edit_button" = "저장하기";
 
 // Edit Store Info
 "edit_store_info_title" = "대표 정보 수정";
+"edit_store_info_photo_title" = "대표 사진";
+"edit_store_info_upload_photo" = "이미지 수정";
 "edit_store_info_sns" = "SNS";
 "edit_store_info_save" = "저장하기";
 
@@ -112,6 +119,7 @@
 "edit_menu_add" = "메뉴 추가하기";
 "edit_menu_name_placeholder" = "메뉴를 입력해주세요.";
 "edit_menu_price_placeholder" = "가격을 입력해 주세요.";
+"edit_menu_warning" = "* 메뉴명, 가격, 사진을 모두 등록해주세요.";
 "edit_menu_save_alert_message" = "수정된 내용을 저장하지 않고 나갈까요?";
 "edit_menu_save_alert_ok" = "나가기";
 
@@ -119,12 +127,6 @@
 "statistics_filter_total" = "전체";
 "statistics_filter_day" = "일별";
 "statistics_review_count" = "리뷰가 사장님께 도착했어요 :)";
-"statistics_boss_is_kind" = "🙏 사장님이 친절해요";
-"statistics_easy_to_eat" = "🚀 먹기 간편해요";
-"statistics_food_is_delecious" = "🍕 음식이 맛있어요";
-"statistics_plating_is_beautiful" = "🎀 플레이팅이 예뻐요";
-"statistics_price_is_cheap" = "🌈 가격이 저렴해요";
-"statistics_there_are_places_to_eat_around" = "🛋 주변에 먹을 곳이 있어요";
 
 // Seting
 "setting_title" = "설정";
@@ -134,4 +136,11 @@
 "setting_faq" = "FAQ";
 "setting_privacy" = "개인정보 처리방침";
 "setting_logout" = "로그아웃";
+"setting_logout_message" = "로그아웃하시겠습니까?";
 "setting_signout" = "회원탈퇴";
+"setting_signout_title" = "회원 탈퇴 시, 그동안의 데이터가 모두 삭제됩니다.\n회원탈퇴하시겠습니까?";
+"setting_signout_button" = "탈퇴";
+
+// FAQ
+"faq_title" = "FAQ";
+"faq_description" = "어떤 점이 궁금하셨나요?";

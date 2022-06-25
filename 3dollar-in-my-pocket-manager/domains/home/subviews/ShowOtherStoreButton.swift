@@ -12,14 +12,13 @@ final class ShowOtherButton: BaseView {
     }
     
     private let checkImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_check")
-        $0.isHidden = true
+        $0.image = UIImage(named: "ic_check_off")
     }
     
     private let titleLabel = UILabel().then {
         $0.font = .medium(size: 14)
         $0.textColor = .gray100
-        $0.text = "다른 푸드트럭 보기"
+        $0.text = "home_show_other".localized
         $0.setKern(kern: -0.4)
     }
     
@@ -58,7 +57,9 @@ final class ShowOtherButton: BaseView {
     }
     
     fileprivate func setShowOtherStores(isShow: Bool) {
-        self.checkImageView.isHidden = !isShow
+        self.checkImageView.image = isShow
+        ? UIImage(named: "ic_check")
+        : UIImage(named: "ic_check_off")
     }
 }
 

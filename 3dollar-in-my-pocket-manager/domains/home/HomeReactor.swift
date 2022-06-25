@@ -8,6 +8,7 @@ final class HomeReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
         case tapShowOtherStore
+        case tapCurrentLocation
         case tapSalesToggle
         case moveCamera(CLLocation)
     }
@@ -36,20 +37,17 @@ final class HomeReactor: BaseReactor, Reactor {
     private let mapService: MapServiceProtocol
     private let storeSerivce: StoreServiceType
     private let locationManager: LocationManagerProtocol
-    private let backgroundTaskManager: BackgroundTaskManagerProtocol
     private var userDefaults: UserDefaultsUtils
     
     init(
         mapService: MapServiceProtocol,
         storeService: StoreServiceType,
         locationManager: LocationManagerProtocol,
-        backgroundTaskManager: BackgroundTaskManagerProtocol,
         userDefaults: UserDefaultsUtils
     ) {
         self.mapService = mapService
         self.storeSerivce = storeService
         self.locationManager = locationManager
-        self.backgroundTaskManager = backgroundTaskManager
         self.userDefaults = userDefaults
     }
     
@@ -60,6 +58,9 @@ final class HomeReactor: BaseReactor, Reactor {
                 self.fetchCurrentLocation(),
                 self.fetchMyStoreInfo()
             ])
+            
+        case .tapCurrentLocation:
+            return self.fetchCurrentLocation()
             
         case .tapShowOtherStore:
             if self.currentState.isShowOtherStore {
@@ -80,10 +81,8 @@ final class HomeReactor: BaseReactor, Reactor {
             
         case .tapSalesToggle:
             if self.currentState.store?.isOpen == true {
-                self.backgroundTaskManager.cancelBackgroundTask()
                 return self.closeStore()
             } else {
-                self.backgroundTaskManager.scheduleBackgroundTask()
                 return self.openStore()
             }
             

@@ -12,6 +12,7 @@ extension MyStoreInfoSectionModel: SectionModelType {
         case introduction(String?)
         case menu(Menu)
         case menuMore([Menu])
+        case emptyMenu
         case appearanceDay(AppearanceDay)
     }
     
@@ -29,7 +30,9 @@ extension MyStoreInfoSectionModel: SectionModelType {
     }
     
     init(menus: [Menu]) {
-        if menus.count < 4 {
+        if menus.isEmpty {
+            self.items = [.emptyMenu]
+        } else if menus.count < 4 {
             let menus = menus.map { SectionItemType.menu($0) }
             
             self.items = menus
@@ -43,7 +46,21 @@ extension MyStoreInfoSectionModel: SectionModelType {
     }
     
     init(appearanceDays: [AppearanceDay]) {
-        let appearanceDays = appearanceDays.map { SectionItemType.appearanceDay($0) }
+        var initialAppearanceDays = [
+            AppearanceDay(dayOfTheWeek: .monday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .tuesday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .wednesday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .thursday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .friday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .saturday, isClosed: true),
+            AppearanceDay(dayOfTheWeek: .sunday, isClosed: true)
+        ]
+        
+        for appearanceDay in appearanceDays {
+            initialAppearanceDays[appearanceDay.index] = appearanceDay
+        }
+        
+        let appearanceDays = initialAppearanceDays.map { SectionItemType.appearanceDay($0) }
         
         self.items = appearanceDays
     }
