@@ -10,7 +10,6 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
         mapService: MapService(),
         storeService: StoreService(),
         locationManager: LocationManager.shared,
-        backgroundTaskManager: BackgroundTaskManager.shared,
         userDefaults: UserDefaultsUtils()
     )
     private weak var coordinator: HomeCoordinator?

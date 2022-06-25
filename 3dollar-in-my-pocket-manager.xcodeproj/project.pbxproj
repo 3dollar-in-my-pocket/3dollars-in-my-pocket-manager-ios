@@ -14,7 +14,6 @@
 		6E142D5F27D77EA50084480C /* NetworkActivityLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */; };
 		6E142D6227D785A40084480C /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D6127D785A40084480C /* SignupView.swift */; };
 		6E142D6427D785B50084480C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D6327D785B50084480C /* BaseView.swift */; };
-		6E1605862807039E00F6649C /* BackgroundTaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1605852807039E00F6649C /* BackgroundTaskManager.swift */; };
 		6E1AB79D280D7ECF0059DCF4 /* MyStoreInfoReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoReactor.swift */; };
 		6E1AB7A1280D7F390059DCF4 /* EditIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */; };
 		6E1AB7A3280D84D60059DCF4 /* EditIntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */; };
@@ -256,7 +255,6 @@
 		6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkActivityLogger.swift; sourceTree = "<group>"; };
 		6E142D6127D785A40084480C /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		6E142D6327D785B50084480C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		6E1605852807039E00F6649C /* BackgroundTaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundTaskManager.swift; sourceTree = "<group>"; };
 		6E1AA1B227CB210800C96D92 /* Base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Base.xcodeproj; path = "../3dollars-in-my-pocket-ios-base/Base.xcodeproj"; sourceTree = "<group>"; };
 		6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoReactor.swift; sourceTree = "<group>"; };
 		6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionView.swift; sourceTree = "<group>"; };
@@ -504,14 +502,6 @@
 				6EE2624627DDB9F2008B3531 /* SignupCoordinator.swift */,
 			);
 			path = signup;
-			sourceTree = "<group>";
-		};
-		6E1605832807032100F6649C /* background-task */ = {
-			isa = PBXGroup;
-			children = (
-				6E1605852807039E00F6649C /* BackgroundTaskManager.swift */,
-			);
-			path = "background-task";
 			sourceTree = "<group>";
 		};
 		6E1AA1B327CB210800C96D92 /* Products */ = {
@@ -1059,7 +1049,6 @@
 		6EE0CF9B27CB54A70027A426 /* managers */ = {
 			isa = PBXGroup;
 			children = (
-				6E1605832807032100F6649C /* background-task */,
 				6E25FED427F5362A00BE2941 /* location */,
 				6E37AF7227E7144B004FBE25 /* loading */,
 				6EE0CF9C27CB54AE0027A426 /* social-sign-in */,
@@ -1536,7 +1525,6 @@
 				6EF676B427EECBED00D43E99 /* SplashView.swift in Sources */,
 				6E6B4321285DBB5900AD84A5 /* FAQHeaderView.swift in Sources */,
 				6E91A9912841E09C0090361F /* DailyStatisticsDayView.swift in Sources */,
-				6E1605862807039E00F6649C /* BackgroundTaskManager.swift in Sources */,
 				6E473BA427D874C500232139 /* PhotoUploadView.swift in Sources */,
 				6EC5E430282BD7E200AD571C /* ReviewCountLabel.swift in Sources */,
 				6EE0CFA927CB5B6C0027A426 /* BaseError.swift in Sources */,

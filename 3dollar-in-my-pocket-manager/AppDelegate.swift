@@ -16,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.initializeNetworkLogger()
         self.initializeFirebase()
         self.initializeNotification()
-        BackgroundTaskManager.shared.registerBackgroundTask()
         return true
     }
 
