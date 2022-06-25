@@ -1,8 +1,10 @@
 import UIKit
 import BackgroundTasks
 
+import Base
 import KakaoSDKCommon
 import FirebaseCore
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -13,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.initializeKakaoSDK()
         self.initializeNetworkLogger()
         self.initializeFirebase()
+        self.initializeNotification()
         BackgroundTaskManager.shared.registerBackgroundTask()
         return true
     }
@@ -50,5 +53,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initializeFirebase() {
         FirebaseApp.configure()
     }
+    
+    private func initializeNotification() {
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: { isSuccess, _ in
+                // TODO: 토큰 저장해두기
+            }
+        )
+        
+        Messaging.messaging().delegate = self
+    }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+}
+
+extension AppDelegate: MessagingDelegate {
+    
+}
