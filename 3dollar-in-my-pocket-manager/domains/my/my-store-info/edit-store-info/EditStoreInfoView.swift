@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class EditStoreInfoView: BaseView {
     let tapBackground = UITapGestureRecognizer()
     

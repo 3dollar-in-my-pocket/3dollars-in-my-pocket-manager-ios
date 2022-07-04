@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import NMapsMap
 import RxSwift
 import RxCocoa

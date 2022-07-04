@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class SettingView: BaseView {
     private let titleLabel = UILabel().then {
         $0.font = .semiBold(size: 16)

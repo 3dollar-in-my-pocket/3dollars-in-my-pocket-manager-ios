@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class LoadingView: BaseView {
     let blurEffectView = UIVisualEffectView(
         effect: UIBlurEffect(style: UIBlurEffect.Style.systemUltraThinMaterialLight)

@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class MyPageViewController: BaseViewController {
     private let myPageView = MyPageView()
     

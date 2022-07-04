@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class TotalStatisticsTableViewCell: BaseTableViewCell {
     static let registerId = "\(TotalStatisticsTableViewCell.self)"
     static let height: CGFloat = 74

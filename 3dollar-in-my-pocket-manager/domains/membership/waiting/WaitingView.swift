@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class WaitingView: BaseView {
     private let titleLabel = UILabel().then {
         $0.font = .bold(size: 30)

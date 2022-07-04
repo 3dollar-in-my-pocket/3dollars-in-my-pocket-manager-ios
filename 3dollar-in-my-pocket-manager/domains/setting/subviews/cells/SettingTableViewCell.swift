@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class SettingTableViewCell: BaseTableViewCell {
     static let registerId = "\(SettingTableViewCell.self)"
     static let height: CGFloat = 66

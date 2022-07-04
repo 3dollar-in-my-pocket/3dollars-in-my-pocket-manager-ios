@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class EditScheduleView: BaseView {
     private let tapBackgroundGesture = UITapGestureRecognizer()
     

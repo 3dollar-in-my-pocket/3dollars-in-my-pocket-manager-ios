@@ -5,6 +5,8 @@ import Base
 import KakaoSDKCommon
 import FirebaseCore
 import FirebaseMessaging
+import Then
+import SnapKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

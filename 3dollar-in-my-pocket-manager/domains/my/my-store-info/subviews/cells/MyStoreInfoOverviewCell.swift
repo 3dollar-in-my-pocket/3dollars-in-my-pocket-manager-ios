@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import Kingfisher
 
 final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
