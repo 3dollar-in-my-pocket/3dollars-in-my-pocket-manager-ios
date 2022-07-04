@@ -1,3 +1,6 @@
+// Common
+"common_ok" = "확인";
+
 // Error
 "error_unknown" = "알 수 없는 에러입니다.";
 "error_time_out" = "알 수 없는 에러입니다.\n잠시후 다시 시도해주세요.";
@@ -64,6 +67,7 @@
 "home_on_description" = "동안 영업중이시네요! 오늘도 대박나세요!";
 "home_on_toggle" = "셔텨 내리기";
 "home_show_other" = "다른 푸드트럭 보기";
+"home_invalid_position" = "빨간 원(현재 위치의 반경 100m 이내) 안에서 장사를 시작해주세요.";
 
 // Waiting
 "waiting_title" = "승인 대기 중입니다.";
