@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.initializeNetworkLogger()
         self.initializeFirebase()
         self.initializeNotification()
+        application.registerForRemoteNotifications()
         return true
     }
 
@@ -72,7 +73,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([[.sound, .banner]])
+    }
 }
 
 extension AppDelegate: MessagingDelegate {

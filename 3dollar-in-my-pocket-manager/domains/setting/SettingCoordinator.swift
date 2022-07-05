@@ -7,6 +7,8 @@ protocol SettingCoordinator: BaseCoordinator, AnyObject {
     
     func showSignoutAlert()
     
+    func showCopyTokenSuccessAlert()
+    
     func goToSignin()
     
     func goToKakaoTalkChannel()
@@ -35,6 +37,16 @@ extension SettingCoordinator where Self: SettingViewController {
         ) {
             self.settingReactor.action.onNext(.tapSignout)
         }
+    }
+    
+    func showCopyTokenSuccessAlert() {
+        AlertUtils.showWithAction(
+            viewController: self,
+            title: "setting_copy_token_title".localized,
+            message: "setting_copy_token_description".localized,
+            okbuttonTitle: "common_ok".localized) {
+                
+            }
     }
     
     func goToSignin() {

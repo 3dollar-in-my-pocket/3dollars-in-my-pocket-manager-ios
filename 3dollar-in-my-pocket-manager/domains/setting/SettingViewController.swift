@@ -70,6 +70,13 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
             })
             .disposed(by: self.eventDisposeBag)
         
+        self.settingReactor.showCopyTokenSuccessAlertPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.showCopyTokenSuccessAlert()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.settingReactor.showLoadginPublisher
             .asDriver(onErrorJustReturn: false)
             .drive(onNext: { [weak self] isShow in
@@ -94,6 +101,13 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     }
     
     func bind(reactor: SettingReactor) {
+        // Bind Action
+        self.settingView.fcmTokenButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.tapFCMToken }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
         // Bind State
         reactor.state
             .map { $0.user }
