@@ -35,11 +35,13 @@
 		6E211849285DD76F00220E5A /* FAQResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E211848285DD76F00220E5A /* FAQResponse.swift */; };
 		6E21184B285DD94C00220E5A /* FAQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21184A285DD94C00220E5A /* FAQ.swift */; };
 		6E21184D285DE0A800220E5A /* FAQSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21184C285DE0A800220E5A /* FAQSectionModel.swift */; };
+		6E2410B12875550800BADDD5 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6E2410B02875550800BADDD5 /* ReactorKit */; };
+		6E2410B52875553C00BADDD5 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 6E2410B42875553C00BADDD5 /* RxDataSources */; };
+		6E2410B62875555100BADDD5 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; platformFilter = ios; };
+		6E2410B72875555100BADDD5 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E25FED027F531AB00BE2941 /* TabBarTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FECF27F531AB00BE2941 /* TabBarTag.swift */; };
 		6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED227F535F100BE2941 /* LocationManager.swift */; };
 		6E25FED627F5363600BE2941 /* LocationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED527F5363600BE2941 /* LocationError.swift */; };
-		6E2CD76C284101B9007506FB /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; platformFilter = ios; };
-		6E2CD76D284101B9007506FB /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E37A2E42860AFE4008C046F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6E37A2E32860AFE4008C046F /* FirebaseAnalytics */; };
 		6E37A2E62860AFE4008C046F /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6E37A2E52860AFE4008C046F /* FirebaseCrashlytics */; };
 		6E37A2E82860AFE4008C046F /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 6E37A2E72860AFE4008C046F /* FirebaseMessaging */; };
@@ -86,8 +88,6 @@
 		6E5E14AA28312BBA00B1F450 /* Statistic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5E14A928312BBA00B1F450 /* Statistic.swift */; };
 		6E5E14AC2831322D00B1F450 /* TotalStatisticsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5E14AB2831322D00B1F450 /* TotalStatisticsCoordinator.swift */; };
 		6E5ECC1A282013BB0033BAAA /* EditScheduleReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5ECC19282013BB0033BAAA /* EditScheduleReactor.swift */; };
-		6E5F212D281976B200922A99 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5F212C281976B200922A99 /* Differentiator */; };
-		6E5F212F281976B200922A99 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 6E5F212E281976B200922A99 /* RxDataSources */; };
 		6E5F2132281976CD00922A99 /* MyStoreInfoSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F2131281976CD00922A99 /* MyStoreInfoSectionModel.swift */; };
 		6E5F21342819778E00922A99 /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F21332819778E00922A99 /* Menu.swift */; };
 		6E5F21362819887C00922A99 /* MyStoreInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5F21352819887C00922A99 /* MyStoreInfoCoordinator.swift */; };
@@ -173,9 +173,6 @@
 		6ED370FA280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED370F9280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift */; };
 		6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838927CB395B00278E14 /* SnapKit */; };
 		6ED8838D27CB398300278E14 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838C27CB398300278E14 /* Then */; };
-		6ED8839027CB39E300278E14 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838F27CB39E300278E14 /* RxCocoa */; };
-		6ED8839227CB39E300278E14 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8839127CB39E300278E14 /* RxRelay */; };
-		6ED8839427CB39E300278E14 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8839327CB39E300278E14 /* RxSwift */; };
 		6ED8839927CB3A1700278E14 /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED8839827CB3A1700278E14 /* SigninView.swift */; };
 		6ED8839C27CB3A7A00278E14 /* SocialSigninButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED8839B27CB3A7A00278E14 /* SocialSigninButton.swift */; };
 		6ED883A327CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6ED883A227CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf */; };
@@ -190,7 +187,6 @@
 		6EE0CFAD27CB5BA40027A426 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6EE0CFAF27CB5BA40027A426 /* Localizations.strings */; };
 		6EE0CFB127CB5C390027A426 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0CFB027CB5C390027A426 /* StringExtensions.swift */; };
 		6EE0CFB327CB5D560027A426 /* SigninReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0CFB227CB5D560027A426 /* SigninReactor.swift */; };
-		6EE0CFB627CB5D850027A426 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CFB527CB5D850027A426 /* ReactorKit */; };
 		6EE0CFB927CB5DF90027A426 /* SocialType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0CFB827CB5DF90027A426 /* SocialType.swift */; };
 		6EE0CFBB27CB61CE0027A426 /* AppleSignInManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0CFBA27CB61CE0027A426 /* AppleSignInManager.swift */; };
 		6EE0CFBE27CB64B60027A426 /* HTTPUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0CFBD27CB64B60027A426 /* HTTPUtils.swift */; };
@@ -230,13 +226,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E2CD76E284101B9007506FB /* Embed Frameworks */ = {
+		6E2410B82875555100BADDD5 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E2CD76D284101B9007506FB /* Base.framework in Embed Frameworks */,
+				6E2410B72875555100BADDD5 /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,30 +440,26 @@
 			files = (
 				6EE0CFA127CB567B0027A426 /* KakaoSDKCommon in Frameworks */,
 				6EE0CF9F27CB567B0027A426 /* KakaoSDKAuth in Frameworks */,
+				6E2410B12875550800BADDD5 /* ReactorKit in Frameworks */,
 				6EE2624C27DDBE64008B3531 /* SPPermissionsLocationAlways in Frameworks */,
-				6ED8839427CB39E300278E14 /* RxSwift in Frameworks */,
 				6E6C9C77280BEE26009AFAE8 /* Kingfisher in Frameworks */,
-				6E5F212F281976B200922A99 /* RxDataSources in Frameworks */,
-				6ED8839227CB39E300278E14 /* RxRelay in Frameworks */,
 				6E37A2E82860AFE4008C046F /* FirebaseMessaging in Frameworks */,
-				6E5F212D281976B200922A99 /* Differentiator in Frameworks */,
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
+				6E2410B62875555100BADDD5 /* Base.framework in Frameworks */,
 				6E37A2E42860AFE4008C046F /* FirebaseAnalytics in Frameworks */,
 				6EE2625027DDBE64008B3531 /* SPPermissionsNotification in Frameworks */,
 				6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */,
 				6EE0CFC127CB64E40027A426 /* Alamofire in Frameworks */,
 				6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */,
-				6ED8839027CB39E300278E14 /* RxCocoa in Frameworks */,
 				6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */,
-				6EE0CFB627CB5D850027A426 /* ReactorKit in Frameworks */,
 				6EEBC7BF28731F7700CBA0F0 /* Lottie in Frameworks */,
 				6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */,
 				6EE2624A27DDBE64008B3531 /* SPPermissionsCamera in Frameworks */,
 				6E37A2E62860AFE4008C046F /* FirebaseCrashlytics in Frameworks */,
 				6E37A2EA2860AFE4008C046F /* FirebaseRemoteConfig in Frameworks */,
-				6E2CD76C284101B9007506FB /* Base.framework in Frameworks */,
+				6E2410B52875553C00BADDD5 /* RxDataSources in Frameworks */,
 				CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1188,7 +1180,7 @@
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6E2CD76E284101B9007506FB /* Embed Frameworks */,
+				6E2410B82875555100BADDD5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1198,13 +1190,9 @@
 			packageProductDependencies = (
 				6ED8838927CB395B00278E14 /* SnapKit */,
 				6ED8838C27CB398300278E14 /* Then */,
-				6ED8838F27CB39E300278E14 /* RxCocoa */,
-				6ED8839127CB39E300278E14 /* RxRelay */,
-				6ED8839327CB39E300278E14 /* RxSwift */,
 				6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */,
 				6EE0CFA027CB567B0027A426 /* KakaoSDKCommon */,
 				6EE0CFA227CB567B0027A426 /* KakaoSDKUser */,
-				6EE0CFB527CB5D850027A426 /* ReactorKit */,
 				6EE0CFC027CB64E40027A426 /* Alamofire */,
 				6EE2624927DDBE64008B3531 /* SPPermissionsCamera */,
 				6EE2624B27DDBE64008B3531 /* SPPermissionsLocationAlways */,
@@ -1214,13 +1202,13 @@
 				6E8E7F2E27EEBDB7005345BB /* CropViewController */,
 				6E8E7F3027EEBDB7005345BB /* TOCropViewController */,
 				6E6C9C76280BEE26009AFAE8 /* Kingfisher */,
-				6E5F212C281976B200922A99 /* Differentiator */,
-				6E5F212E281976B200922A99 /* RxDataSources */,
 				6E37A2E32860AFE4008C046F /* FirebaseAnalytics */,
 				6E37A2E52860AFE4008C046F /* FirebaseCrashlytics */,
 				6E37A2E72860AFE4008C046F /* FirebaseMessaging */,
 				6E37A2E92860AFE4008C046F /* FirebaseRemoteConfig */,
 				6EEBC7BE28731F7700CBA0F0 /* Lottie */,
+				6E2410B02875550800BADDD5 /* ReactorKit */,
+				6E2410B42875553C00BADDD5 /* RxDataSources */,
 			);
 			productName = "3dollar-in-my-pocket-manager";
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
@@ -1253,16 +1241,15 @@
 			packageReferences = (
 				6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */,
-				6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
-				6EE0CFB427CB5D850027A426 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				6EE2624827DDBE64008B3531 /* XCRemoteSwiftPackageReference "SPPermissions" */,
 				6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 				6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				6E5F212B281976B200922A99 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -1678,7 +1665,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "3dollar-in-my-pocket-manager/3dollar-in-my-pocket-manager.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = X975A2HM62;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
@@ -1718,7 +1705,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "3dollar-in-my-pocket-manager/3dollar-in-my-pocket-manager.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = X975A2HM62;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
@@ -1773,20 +1760,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
 				branch = master;
 				kind = branch;
-			};
-		};
-		6E5F212B281976B200922A99 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
 			};
 		};
 		6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -1821,28 +1816,12 @@
 				kind = branch;
 			};
 		};
-		6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.0;
-			};
-		};
-		6EE0CFB427CB5D850027A426 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
-			requirement = {
-				branch = master;
-				kind = branch;
 			};
 		};
 		6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
@@ -1872,6 +1851,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6E2410B02875550800BADDD5 /* ReactorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */;
+			productName = ReactorKit;
+		};
+		6E2410B42875553C00BADDD5 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
 		6E37A2E32860AFE4008C046F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -1891,16 +1880,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
-		};
-		6E5F212C281976B200922A99 /* Differentiator */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6E5F212B281976B200922A99 /* XCRemoteSwiftPackageReference "RxDataSources" */;
-			productName = Differentiator;
-		};
-		6E5F212E281976B200922A99 /* RxDataSources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6E5F212B281976B200922A99 /* XCRemoteSwiftPackageReference "RxDataSources" */;
-			productName = RxDataSources;
 		};
 		6E6C9C76280BEE26009AFAE8 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1927,21 +1906,6 @@
 			package = 6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
 		};
-		6ED8838F27CB39E300278E14 /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		6ED8839127CB39E300278E14 /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		6ED8839327CB39E300278E14 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
 		6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
@@ -1956,11 +1920,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
-		};
-		6EE0CFB527CB5D850027A426 /* ReactorKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6EE0CFB427CB5D850027A426 /* XCRemoteSwiftPackageReference "ReactorKit" */;
-			productName = ReactorKit;
 		};
 		6EE0CFC027CB64E40027A426 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
