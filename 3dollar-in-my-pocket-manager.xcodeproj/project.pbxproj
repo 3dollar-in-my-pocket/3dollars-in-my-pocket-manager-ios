@@ -37,8 +37,6 @@
 		6E21184D285DE0A800220E5A /* FAQSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E21184C285DE0A800220E5A /* FAQSectionModel.swift */; };
 		6E2410B12875550800BADDD5 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6E2410B02875550800BADDD5 /* ReactorKit */; };
 		6E2410B52875553C00BADDD5 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 6E2410B42875553C00BADDD5 /* RxDataSources */; };
-		6E2410B62875555100BADDD5 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; platformFilter = ios; };
-		6E2410B72875555100BADDD5 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6E25FED027F531AB00BE2941 /* TabBarTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FECF27F531AB00BE2941 /* TabBarTag.swift */; };
 		6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED227F535F100BE2941 /* LocationManager.swift */; };
 		6E25FED627F5363600BE2941 /* LocationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E25FED527F5363600BE2941 /* LocationError.swift */; };
@@ -160,6 +158,8 @@
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
 		6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */; };
+		6EBD5BEF287564D900B1D0F8 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; platformFilter = ios; };
+		6EBD5BF0287564D900B1D0F8 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6EBF1AE727FE65950011268B /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AE627FE65950011268B /* StoreService.swift */; };
 		6EBF1AE927FE6A980011268B /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AE827FE6A980011268B /* Store.swift */; };
 		6EBF1AEB27FE7A1D0011268B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AEA27FE7A1D0011268B /* HomeCoordinator.swift */; };
@@ -226,13 +226,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		6E2410B82875555100BADDD5 /* Embed Frameworks */ = {
+		6EBD5BF1287564D900B1D0F8 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				6E2410B72875555100BADDD5 /* Base.framework in Embed Frameworks */,
+				6EBD5BF0287564D900B1D0F8 /* Base.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -447,7 +447,7 @@
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
-				6E2410B62875555100BADDD5 /* Base.framework in Frameworks */,
+				6EBD5BEF287564D900B1D0F8 /* Base.framework in Frameworks */,
 				6E37A2E42860AFE4008C046F /* FirebaseAnalytics in Frameworks */,
 				6EE2625027DDBE64008B3531 /* SPPermissionsNotification in Frameworks */,
 				6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */,
@@ -1180,7 +1180,7 @@
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6E2410B82875555100BADDD5 /* Embed Frameworks */,
+				6EBD5BF1287564D900B1D0F8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1667,6 +1667,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = X975A2HM62;
+				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
@@ -1707,6 +1708,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = X975A2HM62;
+				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
