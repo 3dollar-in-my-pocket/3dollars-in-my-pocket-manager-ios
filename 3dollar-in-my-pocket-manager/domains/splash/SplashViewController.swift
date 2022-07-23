@@ -2,6 +2,7 @@ import UIKit
 
 import Base
 import ReactorKit
+import RxRelay
 
 final class SplashViewController: BaseViewController, View, SplashCoordinator {
     private let splashView = SplashView()
@@ -12,6 +13,7 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
         context: Context.shared
     )
     private weak var coordinator: SplashCoordinator?
+    private let finishLottiePublisher = PublishRelay<Void>()
     
     static func instance() -> SplashViewController {
         return SplashViewController(nibName: nil, bundle: nil)
@@ -27,29 +29,41 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
         self.reactor = self.splashReactor
         self.coordinator = self
         self.splashReactor.action.onNext(.viewDidLoad)
+        self.splashView.startLottie { [weak self] in
+            self?.finishLottiePublisher.accept(())
+        }
     }
     
     override func bindEvent() {
-        self.splashReactor.goToSigninPublisher
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.goToSignin()
-            })
-            .disposed(by: self.eventDisposeBag)
+        Observable.zip([
+            self.splashReactor.goToSigninPublisher,
+            self.finishLottiePublisher
+        ])
+        .asDriver(onErrorJustReturn: [])
+        .drive(onNext: { [weak self] _ in
+            self?.coordinator?.goToSignin()
+        })
+        .disposed(by: self.eventDisposeBag)
         
-        self.splashReactor.goToWaitingPublisher
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.goToWaiting()
-            })
-            .disposed(by: self.eventDisposeBag)
+        Observable.zip([
+            self.splashReactor.goToWaitingPublisher,
+            self.finishLottiePublisher
+        ])
+        .asDriver(onErrorJustReturn: [])
+        .drive(onNext: { [weak self] _ in
+            self?.coordinator?.goToWaiting()
+        })
+        .disposed(by: self.eventDisposeBag)
         
-        self.splashReactor.goToMainPublisher
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.goToMain()
-            })
-            .disposed(by: self.eventDisposeBag)
+        Observable.zip([
+            self.splashReactor.goToMainPublisher,
+            self.finishLottiePublisher
+        ])
+        .asDriver(onErrorJustReturn: [])
+        .drive(onNext: { [weak self] _ in
+            self?.coordinator?.goToMain()
+        })
+        .disposed(by: self.eventDisposeBag)
         
         self.splashReactor.showErrorAlert
             .asDriver(onErrorJustReturn: BaseError.unknown)

@@ -63,6 +63,7 @@
 		6E479462280AE42000A3D96C /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E479461280AE42000A3D96C /* PaddingLabel.swift */; };
 		6E4C8BCB2835164D005D9D9B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6E4C8BC92835164D005D9D9B /* GoogleService-Info.plist */; };
 		6E5678C1285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5678C0285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift */; };
+		6E5D8895288B7A2400DE811A /* splash.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E5D8894288B7A2400DE811A /* splash.json */; };
 		6E5DCE5D27FDAE0000CA58EE /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DCE5C27FDAE0000CA58EE /* MapService.swift */; };
 		6E5DCE5F27FDB00200CA58EE /* NaverMapResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DCE5E27FDB00200CA58EE /* NaverMapResponse.swift */; };
 		6E5DCE6127FDB01F00CA58EE /* ReverseGeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DCE6027FDB01F00CA58EE /* ReverseGeoLocation.swift */; };
@@ -179,6 +180,7 @@
 		6ED883A527CB3C7E00278E14 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A427CB3C7E00278E14 /* UIFontExtensions.swift */; };
 		6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A627CB443F00278E14 /* UIColorExtensions.swift */; };
 		6ED883A927CB456F00278E14 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A827CB456F00278E14 /* SigninViewController.swift */; };
+		6EE041D8288ADAD300E17D5B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE041D7288ADAD300E17D5B /* Lottie */; };
 		6EE0CF9F27CB567B0027A426 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */; };
 		6EE0CFA127CB567B0027A426 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CFA027CB567B0027A426 /* KakaoSDKCommon */; };
 		6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CFA227CB567B0027A426 /* KakaoSDKUser */; };
@@ -294,6 +296,7 @@
 		6E479461280AE42000A3D96C /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		6E4C8BC92835164D005D9D9B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6E5678C0285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoMenuEmptyCell.swift; sourceTree = "<group>"; };
+		6E5D8894288B7A2400DE811A /* splash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash.json; sourceTree = "<group>"; };
 		6E5DCE5C27FDAE0000CA58EE /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		6E5DCE5E27FDB00200CA58EE /* NaverMapResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverMapResponse.swift; sourceTree = "<group>"; };
 		6E5DCE6027FDB01F00CA58EE /* ReverseGeoLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseGeoLocation.swift; sourceTree = "<group>"; };
@@ -455,6 +458,8 @@
 				6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */,
 				6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */,
 				6EEBC7BF28731F7700CBA0F0 /* Lottie in Frameworks */,
+				6EE0CFB627CB5D850027A426 /* ReactorKit in Frameworks */,
+				6EE041D8288ADAD300E17D5B /* Lottie in Frameworks */,
 				6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */,
 				6EE2624A27DDBE64008B3531 /* SPPermissionsCamera in Frameworks */,
 				6E37A2E62860AFE4008C046F /* FirebaseCrashlytics in Frameworks */,
@@ -653,6 +658,14 @@
 				6EFB2F0A285A0BFC006E37F9 /* Context.swift */,
 			);
 			path = shared;
+			sourceTree = "<group>";
+		};
+		6E5D8892288B7A1500DE811A /* lottie */ = {
+			isa = PBXGroup;
+			children = (
+				6E5D8894288B7A2400DE811A /* splash.json */,
+			);
+			path = lottie;
 			sourceTree = "<group>";
 		};
 		6E5DCE6A27FDB0E100CA58EE /* map */ = {
@@ -1017,6 +1030,7 @@
 			isa = PBXGroup;
 			children = (
 				6EEBC7BA28731F1C00CBA0F0 /* lottie */,
+				6E5D8892288B7A1500DE811A /* lottie */,
 				6EE0CFAA27CB5B970027A426 /* strings */,
 				6ED883A127CB3C5D00278E14 /* fonts */,
 			);
@@ -1281,6 +1295,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E5D8895288B7A2400DE811A /* splash.json in Resources */,
 				6ED883A327CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf in Resources */,
 				6EE0CFAD27CB5BA40027A426 /* Localizations.strings in Resources */,
 				6EEBC7BC28731F2700CBA0F0 /* loading.json in Resources */,
@@ -1818,6 +1833,22 @@
 				kind = branch;
 			};
 		};
+		6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -1907,6 +1938,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		6ED8838F27CB39E300278E14 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		6ED8839127CB39E300278E14 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		6ED8839327CB39E300278E14 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6ED8838E27CB39E300278E14 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		6EE041D7288ADAD300E17D5B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;

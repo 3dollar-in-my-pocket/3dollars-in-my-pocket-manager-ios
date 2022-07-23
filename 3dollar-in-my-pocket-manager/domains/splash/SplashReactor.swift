@@ -28,7 +28,6 @@ final class SplashReactor: BaseReactor, Reactor {
     private let userDefaultsUtils: UserDefaultsUtils
     private let context: Context
     
-    
     init(
         authService: AuthServiceType,
         feedbackService: FeedbackServiceType,
@@ -49,7 +48,7 @@ final class SplashReactor: BaseReactor, Reactor {
                     self.fetchFeedbackTypes(),
                     .just(.goToSignin)
                 ])
-                    
+                
             } else {
                 return .merge([
                     self.fetchFeedbackTypes(),
