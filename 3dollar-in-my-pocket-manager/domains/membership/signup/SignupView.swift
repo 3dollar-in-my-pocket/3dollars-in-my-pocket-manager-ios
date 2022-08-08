@@ -62,16 +62,6 @@ final class SignupView: BaseView {
         $0.format = "XXX-XX-XXXXX"
     }
     
-    let phoneNumberField = InputField(
-        title: "signup_phone_number_title".localized,
-        isRequired: true,
-        description: "signup_phone_number_description".localized,
-        placeholder: "signup_phone_number_placeholder".localized
-    ).then {
-        $0.keyboardType = .numberPad
-        $0.format = "XXX-XXXX-XXXX"
-    }
-    
     let categoryCollectionView = CategorySelectView()
     
     let photoView = PhotoUploadView(type: .signup)
@@ -107,7 +97,6 @@ final class SignupView: BaseView {
             self.ownerNameField,
             self.storeNameField,
             self.registerationNumberField,
-            self.phoneNumberField,
             self.categoryCollectionView,
             self.photoView
         ])
@@ -176,16 +165,10 @@ final class SignupView: BaseView {
             make.top.equalTo(self.storeNameField.snp.bottom).offset(32)
         }
         
-        self.phoneNumberField.snp.makeConstraints { make in
-            make.left.equalTo(self.ownerNameField)
-            make.right.equalTo(self.ownerNameField)
-            make.top.equalTo(self.registerationNumberField.snp.bottom).offset(32)
-        }
-        
         self.categoryCollectionView.snp.makeConstraints { make in
             make.left.equalTo(self.ownerNameField)
             make.right.equalTo(self.ownerNameField)
-            make.top.equalTo(self.phoneNumberField.snp.bottom).offset(32)
+            make.top.equalTo(self.registerationNumberField.snp.bottom).offset(32)
         }
         
         self.photoView.snp.makeConstraints { make in

@@ -10,7 +10,6 @@ final class SignupReactor: BaseReactor, Reactor {
         case inputOwnerName(String)
         case inputStoreName(String)
         case inputRegisterationNumber(String)
-        case inputPhoneNumber(String)
         case selectCategory(index: Int)
         case selectPhoto(UIImage)
         case tapSignup
@@ -20,7 +19,6 @@ final class SignupReactor: BaseReactor, Reactor {
         case setOwnerName(String)
         case setStoreName(String)
         case setRegisterationNumber(String)
-        case setPhoneNumber(String)
         case selectCategory(StoreCategory)
         case deselectCategory(StoreCategory)
         case setCategories([StoreCategory])
@@ -36,7 +34,6 @@ final class SignupReactor: BaseReactor, Reactor {
         var ownerName = ""
         var storeName = ""
         var registerationNumber = ""
-        var phoneNumber = ""
         var categories: [StoreCategory] = []
         var selectedCategories: [StoreCategory] = []
         var photo: UIImage?
@@ -92,12 +89,6 @@ final class SignupReactor: BaseReactor, Reactor {
                 .just(.setSignupButtonEnable(self.validate(registerationNumber: registerationNumber)))
             ])
             
-        case .inputPhoneNumber(let phoneNumber):
-            return .merge([
-                .just(.setPhoneNumber(phoneNumber)),
-                .just(.setSignupButtonEnable(self.validate(phoneNumber: phoneNumber)))
-            ])
-            
         case .selectCategory(let index):
             let selectedCategory = self.currentState.categories[index]
             
@@ -130,9 +121,6 @@ final class SignupReactor: BaseReactor, Reactor {
             
         case .setRegisterationNumber(let registerationNumber):
             newState.registerationNumber = registerationNumber
-            
-        case .setPhoneNumber(let phoneNumber):
-            newState.phoneNumber = phoneNumber
             
         case .selectCategory(let category):
             newState.selectedCategories.append(category)
@@ -171,19 +159,16 @@ final class SignupReactor: BaseReactor, Reactor {
         ownerName: String? = nil,
         storeName: String? = nil,
         registerationNumber: String? = nil,
-        phoneNumber: String? = nil,
         photo: UIImage? = nil
     ) -> Bool {
         let ownerName = ownerName ?? self.currentState.ownerName
         let storeName = storeName ?? self.currentState.storeName
         let registerationNumber = registerationNumber ?? self.currentState.registerationNumber
-        let phoneNumber = phoneNumber ??  self.currentState.phoneNumber
         let photo = photo ?? self.currentState.photo
         
         return !ownerName.isEmpty
         && !storeName.isEmpty
         && !registerationNumber.isEmpty
-        && !phoneNumber.isEmpty
         && photo != nil
     }
     
@@ -198,7 +183,6 @@ final class SignupReactor: BaseReactor, Reactor {
         let ownerName = self.currentState.ownerName
         let storeName = self.currentState.storeName
         let registerationNumber = self.currentState.registerationNumber
-        let phoneNumber = self.currentState.phoneNumber
         let categories = self.currentState.selectedCategories
         let photo = self.currentState.photo ?? UIImage()
         let socialType = self.socialType
@@ -210,7 +194,6 @@ final class SignupReactor: BaseReactor, Reactor {
                     ownerName: ownerName,
                     storeName: storeName,
                     registerationNumber: registerationNumber,
-                    phoneNumber: phoneNumber,
                     categories: categories,
                     photoUrl: imageResponse.imageUrl,
                     socialType: socialType,

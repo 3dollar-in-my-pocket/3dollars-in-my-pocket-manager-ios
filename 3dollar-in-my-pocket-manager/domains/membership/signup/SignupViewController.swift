@@ -112,11 +112,6 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        self.signupView.phoneNumberField.rx.text
-            .map { Reactor.Action.inputPhoneNumber($0) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
         self.signupView.categoryCollectionView.categoryCollectionView.rx.itemSelected
             .map { Reactor.Action.selectCategory(index: $0.row) }
             .bind(to: reactor.action)
