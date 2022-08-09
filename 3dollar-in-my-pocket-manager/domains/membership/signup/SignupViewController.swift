@@ -23,6 +23,7 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             categoryService: CategoryService(),
             imageService: ImageService(),
             authService: AuthService(),
+            deviceService: DeviceService(),
             userDefaultsUtils: UserDefaultsUtils()
         )
         super.init(nibName: nil, bundle: nil)

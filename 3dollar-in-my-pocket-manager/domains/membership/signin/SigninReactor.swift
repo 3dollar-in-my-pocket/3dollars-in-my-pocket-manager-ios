@@ -26,17 +26,20 @@ final class SigninReactor: BaseReactor, Reactor {
     private let kakaoSignInManager: KakaoSignInManagerProtocol
     private let appleSignInManager: AppleSignInManagerProtocol
     private let authService: AuthServiceType
+    private let deviceService: DeviceServiceType
     private var userDefaultsUtils: UserDefaultsUtils
     
     init(
         kakaoManager: KakaoSignInManagerProtocol,
         appleSignInManager: AppleSignInManagerProtocol,
         authService: AuthServiceType,
+        deviceService: DeviceServiceType,
         userDefaultsUtils: UserDefaultsUtils
     ) {
         self.kakaoSignInManager = kakaoManager
         self.appleSignInManager = appleSignInManager
         self.authService = authService
+        self.deviceService = deviceService
         self.userDefaultsUtils = userDefaultsUtils
     }
     
@@ -100,7 +103,10 @@ final class SigninReactor: BaseReactor, Reactor {
             })
             .flatMap { [weak self] _ -> Observable<Mutation> in
                 guard let self = self else { return .error(BaseError.unknown) }
-                return self.fetchUserInfo()
+                
+                return .zip(self.fetchUserInfo(), self.registerDevice()) { mutation, _ in
+                    return mutation
+                }
             }
             .catch { error -> Observable<Mutation> in
                 if let httpError = error as? HTTPError {
@@ -144,5 +150,9 @@ final class SigninReactor: BaseReactor, Reactor {
                     return .just(.showErrorAlert(error))
                 }
             }
+    }
+    
+    private func registerDevice() -> Observable<Void> {
+        return self.deviceService.registerDevice()
     }
 }

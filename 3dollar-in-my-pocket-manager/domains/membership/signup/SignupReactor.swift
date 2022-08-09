@@ -46,6 +46,7 @@ final class SignupReactor: BaseReactor, Reactor {
     private let socialType: SocialType
     private let token: String
     private let categoryService: CategoryServiceType
+    private let deviceService: DeviceServiceType
     private let imageService: ImageServiceType
     private let authService: AuthServiceType
     private var userDefaultsUtils: UserDefaultsUtils
@@ -56,6 +57,7 @@ final class SignupReactor: BaseReactor, Reactor {
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
         authService: AuthServiceType,
+        deviceService: DeviceServiceType,
         userDefaultsUtils: UserDefaultsUtils
     ) {
         self.socialType = socialType
@@ -63,6 +65,7 @@ final class SignupReactor: BaseReactor, Reactor {
         self.categoryService = categoryService
         self.imageService = imageService
         self.authService = authService
+        self.deviceService = deviceService
         self.userDefaultsUtils = userDefaultsUtils
     }
     
@@ -202,7 +205,12 @@ final class SignupReactor: BaseReactor, Reactor {
                 .do(onNext: { [weak self] response in
                     self?.userDefaultsUtils.userToken = response.token
                 })
-                .map { _ in .pushWaiting }
+                .flatMap { [weak self] _ -> Observable<Mutation> in
+                    guard let self = self else { return .error(BaseError.unknown) }
+                    
+                    return self.registerDevice()
+                        .map { _ in .pushWaiting }
+                }
                 .catch { error in
                     if let httpError = error as? HTTPError {
                         switch httpError {
@@ -234,5 +242,9 @@ final class SignupReactor: BaseReactor, Reactor {
             signupObservable,
             .just(.showLoading(isShow: false))
         ])
+    }
+    
+    private func registerDevice() -> Observable<Void> {
+        return self.deviceService.registerDevice()
     }
 }

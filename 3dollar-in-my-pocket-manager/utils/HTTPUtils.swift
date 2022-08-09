@@ -44,8 +44,8 @@ struct HTTPUtils {
     
     static func jsonWithTokenHeader() -> HTTPHeaders {
         var headers = [
-            "Accept": "application/json",
-            "Authorization": UserDefaultsUtils().userToken
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + UserDefaultsUtils().userToken
         ] as HTTPHeaders
         
         headers.add(self.defaultUserAgent)

@@ -7,9 +7,12 @@ import FirebaseCore
 import FirebaseMessaging
 import Then
 import SnapKit
+import RxSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    private let appDisposeBag = DisposeBag()
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -63,8 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UNUserNotificationCenter.current().requestAuthorization(
             options: authOptions,
-            completionHandler: { isSuccess, _ in
-                // TODO: 토큰 저장해두기
+            completionHandler: { _, _ in
             }
         )
         
@@ -78,7 +80,47 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
+        let userInfo = notification.request.content.userInfo
+        
+        print("🔥 willPresent userInfo: \(userInfo)")
+        
+        if let pushType = userInfo["pushOptions"] as? String,
+           pushType == "BACKGROUND" {
+            self.renewStore()
+        }
+        
         completionHandler([[.sound, .banner]])
+    }
+    
+    func application(
+        _ application: UIApplication,
+        didReceiveRemoteNotification userInfo: [AnyHashable : Any],
+        fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
+    ) {
+        print("🔥 didReceiveRemoteNotification userInfo: \(userInfo)")
+        
+        if let pushType = userInfo["pushOptions"] as? String,
+           pushType == "BACKGROUND" {
+            self.renewStore()
+        }
+        
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
+    
+    private func renewStore() {
+        let storeId = UserDefaultsUtils().storeId
+        guard !storeId.isEmpty else {
+            print("❌ 가게가 영업중인 상태가 아닙니다.")
+            return
+        }
+        LocationManager.shared.getCurrentLocation()
+            .flatMap { location -> Observable<String> in
+                return StoreService().renewStore(storeId: storeId, location: location)
+            }
+            .bind(onNext: { _ in
+                print("🙆🏻‍♂️ 가게 영업정보 갱신 완료")
+            })
+            .disposed(by: self.appDisposeBag)
     }
 }
 
