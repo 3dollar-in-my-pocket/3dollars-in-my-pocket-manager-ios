@@ -7,6 +7,7 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     private let settingView = SettingView()
     let settingReactor = SettingReactor(
         authService: AuthService(),
+        deviceService: DeviceService(),
         userDefaults: UserDefaultsUtils()
     )
     private weak var coordinator: SettingCoordinator?
@@ -125,6 +126,12 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
                     .drive(onNext: { [weak self] in
                         self?.coordinator?.showLogoutAlert()
                     })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.rightSwitch.rx.controlEvent(.valueChanged)
+                    .withLatestFrom(cell.rightSwitch.rx.value)
+                    .map { Reactor.Action.tapNotificationSwitch(isEnable: $0) }
+                    .bind(to: self.settingReactor.action)
                     .disposed(by: cell.disposeBag)
             }
             .disposed(by: self.eventDisposeBag)

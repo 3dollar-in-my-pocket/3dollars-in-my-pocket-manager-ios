@@ -84,12 +84,20 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         print("🔥 willPresent userInfo: \(userInfo)")
         
-        if let pushType = userInfo["pushOptions"] as? String,
-           pushType == "BACKGROUND" {
-            self.renewStore()
+        if let pushTypeString = userInfo["pushOptions"] as? String {
+            switch PushType(rawValue: pushTypeString) {
+            case .background:
+                self.renewStore()
+                
+                completionHandler([])
+                
+            case .push:
+                completionHandler([[.sound, .banner]])
+                
+            case .unknown:
+                completionHandler([])
+            }
         }
-        
-        completionHandler([[.sound, .banner]])
     }
     
     func application(
@@ -99,9 +107,19 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         print("🔥 didReceiveRemoteNotification userInfo: \(userInfo)")
         
-        if let pushType = userInfo["pushOptions"] as? String,
-           pushType == "BACKGROUND" {
-            self.renewStore()
+        if let pushTypeString = userInfo["pushOptions"] as? String {
+            switch PushType(rawValue: pushTypeString) {
+            case .background:
+                self.renewStore()
+                
+                completionHandler(.noData)
+                
+            case .push:
+                completionHandler(UIBackgroundFetchResult.newData)
+                
+            case .unknown:
+                completionHandler(.failed)
+            }
         }
         
         completionHandler(UIBackgroundFetchResult.newData)
@@ -117,8 +135,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             .flatMap { location -> Observable<String> in
                 return StoreService().renewStore(storeId: storeId, location: location)
             }
-            .bind(onNext: { _ in
+            .subscribe(onNext: { _ in
                 print("🙆🏻‍♂️ 가게 영업정보 갱신 완료")
+            }, onError: { error in
+                print("가게 정보 업데이트 에러:\(error)")
             })
             .disposed(by: self.appDisposeBag)
     }

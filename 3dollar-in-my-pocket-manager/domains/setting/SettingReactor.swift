@@ -8,12 +8,14 @@ final class SettingReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
         case tapFCMToken
+        case tapNotificationSwitch(isEnable: Bool)
         case tapLogout
         case tapSignout
     }
     
     enum Mutation {
         case setUser(user: User)
+        case setNotificationEnable(isEnable: Bool)
         case showCopySuccessAlert
         case goToSignin
         case showLoading(isShow: Bool)
@@ -28,14 +30,17 @@ final class SettingReactor: BaseReactor, Reactor {
     let goToSigninPublisher = PublishRelay<Void>()
     let showCopyTokenSuccessAlertPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
+    private let deviceService: DeviceServiceType
     private let userDefaults: UserDefaultsUtils
     
     init(
         authService: AuthServiceType,
+        deviceService: DeviceServiceType,
         userDefaults: UserDefaultsUtils,
         state: State = State(user: User())
     ) {
         self.authService = authService
+        self.deviceService = deviceService
         self.userDefaults = userDefaults
         self.initialState = state
     }
@@ -47,6 +52,17 @@ final class SettingReactor: BaseReactor, Reactor {
             
         case .tapFCMToken:
             return self.fetchFCMToken()
+            
+        case .tapNotificationSwitch(let isEnable):
+            if isEnable {
+                return self.deviceService.registerDevice()
+                    .map { .setNotificationEnable(isEnable: true) }
+                    .catch { .just(.showErrorAlert($0)) }
+            } else {
+                return self.deviceService.unregisterDevice()
+                    .map { .setNotificationEnable(isEnable: false) }
+                    .catch { .just(.showErrorAlert($0)) }
+            }
             
         case .tapLogout:
             return .concat([
@@ -70,6 +86,9 @@ final class SettingReactor: BaseReactor, Reactor {
         switch mutation {
         case .setUser(let user):
             newState.user = user
+            
+        case .setNotificationEnable(let isEnable):
+            newState.user.isNotificationEnable = isEnable
             
         case .showCopySuccessAlert:
             self.showCopyTokenSuccessAlertPublisher.accept(())

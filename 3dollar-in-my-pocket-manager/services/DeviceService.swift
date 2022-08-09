@@ -4,6 +4,8 @@ import FirebaseMessaging
 
 protocol DeviceServiceType {
     func registerDevice() -> Observable<Void>
+    
+    func unregisterDevice() -> Observable<Void>
 }
 
 struct DeviceService: DeviceServiceType {
@@ -34,6 +36,29 @@ struct DeviceService: DeviceServiceType {
                             observer.processAPIError(response: response)
                         }
                     }
+                }
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func unregisterDevice() -> Observable<Void> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/v1/device"
+            let headers = HTTPUtils.defaultHeader()
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .delete,
+                headers: headers
+            )
+            .responseData { response in
+                if response.isSuccess() {
+                    observer.onNext(())
+                    observer.onCompleted()
+                } else {
+                    observer.processAPIError(response: response)
                 }
             }
             
