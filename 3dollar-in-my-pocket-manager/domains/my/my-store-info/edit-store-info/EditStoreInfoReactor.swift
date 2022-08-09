@@ -8,7 +8,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
         case inputStoreName(String)
-        case inputPhoneNumber(String)
         case selectCategory(index: Int)
         case deselectCategory(index: Int)
         case selectPhoto(UIImage)
@@ -18,7 +17,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case setStoreName(String)
-        case setPhoneNumber(String)
         case selectCategory(StoreCategory)
         
         /// 기존에 선택되어있는 카테고리 선택해주기
@@ -78,12 +76,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
                 .just(.setSaveButtonEnable(self.validate(storeName: storeName)))
             ])
             
-        case .inputPhoneNumber(let phoneNumber):
-            return .merge([
-                .just(.setPhoneNumber(phoneNumber)),
-                .just(.setSaveButtonEnable(self.validate(phoneNumber: phoneNumber)))
-            ])
-            
         case .selectCategory(let index):
             let selectedCategory = self.currentState.categories[index]
             
@@ -111,9 +103,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
         switch mutation {
         case .setStoreName(let storeName):
             newState.store.name = storeName
-            
-        case .setPhoneNumber(let phoneNumber):
-            newState.store.phoneNumber = phoneNumber
             
         case .selectCategory(let category):
             newState.store.categories.append(category)
@@ -166,15 +155,10 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
             .catch { .just(.showErrorAlert($0)) }
     }
     
-    private func validate(
-        storeName: String? = nil,
-        phoneNumber: String? = nil
-    ) -> Bool {
+    private func validate(storeName: String? = nil) -> Bool {
         let storeName = storeName ?? self.currentState.store.name
-        let phoneNumber = phoneNumber ??  self.currentState.store.phoneNumber
         
         return !storeName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        && !(phoneNumber ?? "").isEmpty
     }
     
     private func updateStore(store: Store, image: UIImage?) -> Observable<Mutation> {

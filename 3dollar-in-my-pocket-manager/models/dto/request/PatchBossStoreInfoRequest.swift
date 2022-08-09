@@ -3,7 +3,6 @@ import Foundation
 struct PatchBossStoreInfoRequest: Encodable {
     let appearanceDays: [AppearanceDayRequest]?
     let categoriesIds: [String]?
-    let contactsNumber: String?
     let imageUrl: String?
     let introduction: String?
     let menus: [MenuRequest]?
@@ -13,7 +12,6 @@ struct PatchBossStoreInfoRequest: Encodable {
     enum CodingKeys: String, CodingKey {
         case appearanceDays
         case categoriesIds
-        case contactsNumber
         case imageUrl
         case introduction
         case menus
@@ -24,7 +22,6 @@ struct PatchBossStoreInfoRequest: Encodable {
     init(
         appearanceDays: [AppearanceDayRequest]? = nil,
         categoriesIds: [String]? = nil,
-        contactsNumber: String? = nil,
         imageUrl: String? = nil,
         introduction: String? = nil,
         menus: [MenuRequest]? = nil,
@@ -33,7 +30,6 @@ struct PatchBossStoreInfoRequest: Encodable {
     ) {
         self.appearanceDays = appearanceDays
         self.categoriesIds = categoriesIds
-        self.contactsNumber = contactsNumber
         self.imageUrl = imageUrl
         self.introduction = introduction
         self.menus = menus
@@ -44,7 +40,6 @@ struct PatchBossStoreInfoRequest: Encodable {
     init(store: Store) {
         self.appearanceDays = store.appearanceDays.map(AppearanceDayRequest.init)
         self.categoriesIds = store.categories.map { $0.categoryId }
-        self.contactsNumber = store.phoneNumber
         self.imageUrl = store.imageUrl
         self.introduction = store.introduction
         self.menus = store.menus.map(MenuRequest.init(menu:))
@@ -57,7 +52,6 @@ struct PatchBossStoreInfoRequest: Encodable {
         
         try container.encodeIfPresent(self.appearanceDays, forKey: .appearanceDays)
         try container.encodeIfPresent(self.categoriesIds, forKey: .categoriesIds)
-        try container.encodeIfPresent(self.contactsNumber, forKey: .contactsNumber)
         try container.encodeIfPresent(self.imageUrl, forKey: .imageUrl)
         try container.encodeIfPresent(self.introduction, forKey: .introduction)
         try container.encodeIfPresent(self.menus, forKey: .menus)

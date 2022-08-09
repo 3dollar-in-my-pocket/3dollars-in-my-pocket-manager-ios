@@ -101,11 +101,6 @@ final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfo
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        self.editStoreInfoView.phoneNumberField.rx.text
-            .map { Reactor.Action.inputPhoneNumber($0) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
         self.editStoreInfoView.categoryCollectionView.categoryCollectionView.rx.itemSelected
             .map { Reactor.Action.selectCategory(index: $0.row) }
             .bind(to: reactor.action)
