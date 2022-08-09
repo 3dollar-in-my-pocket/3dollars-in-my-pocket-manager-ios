@@ -176,7 +176,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ivanvorobei/SPPermissions",
       "state" : {
-        "revision" : "14299050782ac18a40edac8e7369425c13998b68",
+        "revision" : "ec3fc55e4fbc212cc746a84304f4aece0cb45467",
         "version" : "7.1.5"
       }
     },

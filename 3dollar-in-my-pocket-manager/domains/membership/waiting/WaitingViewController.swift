@@ -12,6 +12,10 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
     )
     private weak var coordinator: WaitingCoordinator?
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     static func instance() -> WaitingViewController {
         return WaitingViewController(nibName: nil, bundle: nil)
     }

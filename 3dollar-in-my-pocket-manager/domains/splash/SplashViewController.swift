@@ -15,6 +15,10 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
     private weak var coordinator: SplashCoordinator?
     private let finishLottiePublisher = PublishRelay<Void>()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     static func instance() -> SplashViewController {
         return SplashViewController(nibName: nil, bundle: nil)
     }
