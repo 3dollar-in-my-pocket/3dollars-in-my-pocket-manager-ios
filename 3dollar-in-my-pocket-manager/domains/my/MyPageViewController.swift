@@ -32,6 +32,7 @@ final class MyPageViewController: BaseViewController {
         
         return UINavigationController(rootViewController: viewController).then {
             $0.isNavigationBarHidden = true
+            $0.interactivePopGestureRecognizer?.delegate = nil
         }
     }
     
