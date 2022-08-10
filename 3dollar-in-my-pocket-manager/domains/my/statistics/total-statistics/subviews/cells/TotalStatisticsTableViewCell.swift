@@ -77,7 +77,7 @@ final class TotalStatisticsTableViewCell: BaseTableViewCell {
         self.titleLabel.text = "\(statistics.type.emoji) \(statistics.type.description)"
         self.countLabel.text = "\(statistics.count)개"
         self.progressView.progress = Float(statistics.ratio)
-        self.setProgressBar(isTopRate: isTopRate)
+        self.setProgressBar(isTopRate: statistics.count == 0 ? false : isTopRate)
     }
     
     private func setProgressBar(isTopRate: Bool) {
