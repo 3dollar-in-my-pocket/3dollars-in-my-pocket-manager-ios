@@ -5,7 +5,9 @@ import Base
 final class WaitingView: BaseView {
     private let gradient = CAGradientLayer()
     
-    private let scrollView = UIScrollView()
+    private let scrollView = UIScrollView().then {
+        $0.contentInset = .init(top: 0, left: 0, bottom: 100, right: 0)
+    }
     
     private let scrollViewContainerView = UIView()
     
