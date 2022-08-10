@@ -28,13 +28,13 @@ struct ImageService: ImageServiceType {
                     mimeType: "image/png"
                 )
             }, to: urlString, headers: headers)
-                .responseDecodable(of: ResponseContainer<ImageUploadResponse>.self) { response in
-                    if response.isSuccess() {
-                        observer.processValue(response: response)
-                    } else {
-                        observer.processHTTPError(response: response)
-                    }
+            .responseData(completionHandler: { response in
+                if response.isSuccess() {
+                    observer.processValue(type: ImageUploadResponse.self, response: response)
+                } else {
+                    observer.processAPIError(response: response)
                 }
+            })
             
             return Disposables.create()
         }
@@ -65,13 +65,13 @@ struct ImageService: ImageServiceType {
                     )
                 }
             }, to: urlString, headers: headers)
-            .responseDecodable(of: ResponseContainer<[ImageUploadResponse]>.self) { response in
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: [ImageUploadResponse].self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
