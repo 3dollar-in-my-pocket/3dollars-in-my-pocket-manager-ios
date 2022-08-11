@@ -14,6 +14,10 @@ struct Menu: Equatable {
         && (price != 0)
     }
     
+    var isPlaceholder: Bool {
+        return self.photo == nil && self.imageUrl == "" && self.name == "" && self.price == 0
+    }
+    
     init(response: BossStoreMenuResponse) {
         self.photo = nil
         self.imageUrl = response.imageUrl
