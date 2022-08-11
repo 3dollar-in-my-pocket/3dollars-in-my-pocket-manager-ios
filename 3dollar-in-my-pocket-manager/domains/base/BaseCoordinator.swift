@@ -24,7 +24,18 @@ extension BaseCoordinator where Self: BaseViewController {
     
     
     func showErrorAlert(error: Error) {
-        if let localizedError = error as? LocalizedError {
+        if let httpError = error as? HTTPError,
+           httpError == .unauthorized {
+            AlertUtils.showWithAction(
+                viewController: self,
+                title: nil,
+                message: httpError.description,
+                okbuttonTitle: "common_ok".localized
+            ) {
+                UserDefaultsUtils().clear()
+                self.goToSignin()
+            }
+        } else if let localizedError = error as? LocalizedError {
             AlertUtils.showWithAction(
                 viewController: self,
                 message: localizedError.errorDescription,
@@ -47,5 +58,16 @@ extension BaseCoordinator where Self: BaseViewController {
     
     func showLoading(isShow: Bool) {
         LoadingManager.shared.showLoading(isShow: isShow)
+    }
+    
+    private func goToSignin() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
+        }
+        
+        sceneDelegate.goToSignin()
     }
 }
