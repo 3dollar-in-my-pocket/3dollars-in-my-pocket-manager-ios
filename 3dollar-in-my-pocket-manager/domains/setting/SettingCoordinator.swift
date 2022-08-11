@@ -14,6 +14,8 @@ protocol SettingCoordinator: BaseCoordinator, AnyObject {
     func goToKakaoTalkChannel()
     
     func pushFAQ()
+    
+    func goToPrivacy()
 }
 
 extension SettingCoordinator where Self: SettingViewController {
@@ -70,5 +72,11 @@ extension SettingCoordinator where Self: SettingViewController {
         let viewController = FAQViewController.instance()
         
         self.presenter.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func goToPrivacy() {
+        guard let url = URL(string: Bundle.privacyUrl) else { return }
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }

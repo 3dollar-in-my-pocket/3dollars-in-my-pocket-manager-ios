@@ -45,7 +45,7 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     
     override func bindEvent() {
         self.settingView.tableView.rx.itemSelected
-            .filter { $0.row == 1 }
+            .filter { $0.row == 2 }
             .map { _ in () }
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: ())
@@ -55,12 +55,22 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
             .disposed(by: self.eventDisposeBag)
         
         self.settingView.tableView.rx.itemSelected
-            .filter { $0.row == 2 }
+            .filter { $0.row == 3 }
             .map { _ in () }
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
                 self?.coordinator?.pushFAQ()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.settingView.tableView.rx.itemSelected
+            .filter { $0.row == 4 }
+            .map { _ in () }
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.goToPrivacy()
             })
             .disposed(by: self.eventDisposeBag)
         

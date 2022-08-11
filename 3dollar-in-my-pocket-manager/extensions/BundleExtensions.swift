@@ -24,4 +24,12 @@ extension Bundle {
         
         return kakaoChannelUrl
     }
+    
+    static var privacyUrl: String {
+        guard let privacyUrl = Bundle.main.infoDictionary?["PRIVACY_URL"] as? String else {
+            fatalError("PRIVACY_URL이 정의되지 않았습니다.")
+        }
+        
+        return privacyUrl
+    }
 }
