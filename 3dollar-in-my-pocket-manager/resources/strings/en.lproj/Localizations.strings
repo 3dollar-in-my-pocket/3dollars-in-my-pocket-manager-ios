@@ -13,6 +13,7 @@
 "http_error_forbidden" = "탈퇴한 사용자입니다.";
 "http_error_not_found" = "없는 데이터입니다.";
 "http_error_conflict" = "이미 존재하는 데이터입니다.";
+"http_error_too_many_requests" = "일시적으로 너무 많은 요청이 발생하였습니다. 잠시 후 다시 이용해주세요";
 "http_error_internal_server_error" = "서버에서 오류가 발생했습니다.\n잠시 후 다시 시도해주세요!";
 "http_error_bad_gateway" = "일시적인 오류가 발생했어요..ㅠㅠ\n잠시 후 다시 시도해주세요!";
 "http_error_maintenance" = "서버 점검중입니다.\n잠시 후 다시 시도해주세요.";

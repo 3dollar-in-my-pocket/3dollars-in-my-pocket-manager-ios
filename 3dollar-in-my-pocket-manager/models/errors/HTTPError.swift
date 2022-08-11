@@ -4,6 +4,7 @@ public enum HTTPError: Int, Error {
     case forbidden = 403
     case notFound = 404
     case conflict = 409
+    case tooManyRequests = 429
     case internalServierError = 500
     case badGateway = 502
     case maintenance = 503
@@ -26,6 +27,9 @@ extension HTTPError {
             
         case .conflict:
             return "http_error_conflict".localized
+            
+        case .tooManyRequests:
+            return "http_error_too_many_requests".localized
             
         case .internalServierError:
             return "http_error_internal_server_error".localized
