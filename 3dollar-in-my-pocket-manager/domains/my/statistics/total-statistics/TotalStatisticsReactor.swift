@@ -24,13 +24,16 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
     let initialState = State()
     let updateTableViewHeightPublisher = PublishRelay<[Statistic]>()
     private let feedbackService: FeedbackServiceType
+    private let globalState: GlobalState
     private var userDefaults: UserDefaultsUtils
     
     init(
         feedbackService: FeedbackServiceType,
+        globalState: GlobalState,
         userDefaults: UserDefaultsUtils
     ) {
         self.feedbackService = feedbackService
+        self.globalState = globalState
         self.userDefaults = userDefaults
     }
     
@@ -47,6 +50,14 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         }
     }
     
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        return .merge([
+            mutation,
+            self.globalState.updateReviewCountPublisher
+                .map { .setReviewTotalCount($0) }
+        ])
+    }
+    
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
@@ -59,6 +70,7 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
             
         case .setReviewTotalCount(let totalCount):
             newState.reviewTotalCount = totalCount
+            self.globalState.updateReviewCountPublisher.onNext(totalCount)
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)

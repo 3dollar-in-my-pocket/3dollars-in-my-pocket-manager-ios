@@ -5,15 +5,11 @@ import RxSwift
 import RxCocoa
 import ReactorKit
 
-protocol TotalStatisticsDelegate: AnyObject {
-    func onUpdateTotalReviewCount(count: Int)
-}
-
 final class TotalStatisticsViewController: BaseViewController, View, TotalStatisticsCoordinator {
-    weak var delegate: TotalStatisticsDelegate?
     private let totalStatisticsView = TotalStatisticsView()
     private let totalStatisticsReactor = TotalStatisticsReactor(
         feedbackService: FeedbackService(),
+        globalState: GlobalState.shared,
         userDefaults: UserDefaultsUtils()
     )
     private weak var coordinator: TotalStatisticsCoordinator?
@@ -84,15 +80,6 @@ final class TotalStatisticsViewController: BaseViewController, View, TotalStatis
             )) { row, statistic, cell in
                 cell.bind(statistics: statistic, isTopRate: row < 3)
             }
-            .disposed(by: self.disposeBag)
-        
-        reactor.state
-            .map { $0.reviewTotalCount }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: 0)
-            .drive(onNext: { [weak self] reviewTotalCount in
-                self?.delegate?.onUpdateTotalReviewCount(count: reviewTotalCount)
-            })
             .disposed(by: self.disposeBag)
     }
     

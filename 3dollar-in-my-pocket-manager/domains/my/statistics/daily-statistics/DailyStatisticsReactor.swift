@@ -16,26 +16,34 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         case clearStatisticGroups
         case appendStatisticGroups([StatisticGroup])
         case updateTableViewHeight([StatisticGroup])
+        case setTotalReviewCount(Int)
         case showErrorAlert(Error)
     }
     
     struct State {
         var statisticGroups: [StatisticGroup]
+        var totalReviewCount: Int
     }
     
     let initialState: State
     let updateTableViewHeightPublisher = PublishRelay<[StatisticGroup]>()
     private let feedbackService: FeedbackServiceType
+    private let globalState: GlobalState
     private let userDefaults: UserDefaultsUtils
     private var endDate: Date? = Date()
     private var startDate = Date().addWeek(week: -1)
     
     init(
         feedbackService: FeedbackServiceType,
+        globalState: GlobalState,
         userDefaults: UserDefaultsUtils,
-        state: State = State(statisticGroups: [])
+        state: State = State(
+            statisticGroups: [],
+            totalReviewCount: 0
+        )
     ) {
         self.feedbackService = feedbackService
+        self.globalState = globalState
         self.userDefaults = userDefaults
         self.initialState = state
     }
@@ -43,7 +51,10 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            return self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
+            return .merge([
+                self.fetchStatistics(startDate: self.startDate, endDate: self.endDate),
+                self.fetchStatistics()
+            ])
             
         case .refresh:
             self.resetDate()
@@ -74,6 +85,10 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
             
         case .updateTableViewHeight(let statisticGroups):
             self.updateTableViewHeightPublisher.accept(statisticGroups)
+            
+        case .setTotalReviewCount(let totalReviewCount):
+            newState.totalReviewCount = totalReviewCount
+            self.globalState.updateReviewCountPublisher.onNext(totalReviewCount)
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
@@ -119,6 +134,19 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
             }
         }
         .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func fetchStatistics() -> Observable<Mutation> {
+        let storeId = self.userDefaults.storeId
+        
+        return self.feedbackService.fetchTotalStatistics(storeId: storeId)
+            .map { $0.map(Statistic.init(response:)).sorted() }
+            .flatMap { statistics -> Observable<Mutation> in
+                let reviewTotalCount = statistics.map { $0.count }.reduce(0, +)
+                
+                return .just(.setTotalReviewCount(reviewTotalCount))
+            }
+            .catch { .just(.showErrorAlert($0)) }
     }
     
     private func resetDate() {
