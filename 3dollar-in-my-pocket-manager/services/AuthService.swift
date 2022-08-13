@@ -56,13 +56,14 @@ struct AuthService: AuthServiceType {
                 urlString,
                 method: .post,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: String.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -118,13 +119,14 @@ struct AuthService: AuthServiceType {
                 urlString,
                 method: .delete,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: String.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -139,13 +141,14 @@ struct AuthService: AuthServiceType {
                 urlString,
                 method: .get,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<BossAccountInfoResponse>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: BossAccountInfoResponse.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
