@@ -50,14 +50,6 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
         }
     }
     
-    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-        return .merge([
-            mutation,
-            self.globalState.updateReviewCountPublisher
-                .map { .setReviewTotalCount($0) }
-        ])
-    }
-    
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
