@@ -10,9 +10,14 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         appleSignInManager: AppleSigninManager.shared,
         authService: AuthService(),
         deviceService: DeviceService(),
-        userDefaultsUtils: UserDefaultsUtils()
+        userDefaultsUtils: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: SigninCoordinator?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     static func instance() -> UINavigationController {
         let viewController = SigninViewController(nibName: nil, bundle: nil)
@@ -31,6 +36,7 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         
         self.reactor = self.signinReactor
         self.coordinator = self
+        AnalyticsManager.shared.sendEvent(event: .viewScreen(.signin))
     }
     
     override func bindEvent() {

@@ -27,7 +27,8 @@ final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfo
             storeService: StoreService(),
             categoryService: CategoryService(),
             imageService: ImageService(),
-            globalState: GlobalState.shared
+            globalState: GlobalState.shared,
+            analyticsManager: AnalyticsManager.shared
         )
         super.init(nibName: nil, bundle: nil)
         

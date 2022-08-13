@@ -32,7 +32,22 @@ final class MainTabController: UITabBarController {
         guard let tabBarTag = TabBarTag(rawValue: item.tag) else { return }
         
         switch tabBarTag {
-        case .home, .myPage:
+        case .home:
+            AnalyticsManager.shared.sendEvent(event: .tapBottomTab(tab: .home))
+            if #available(iOS 15, *) {
+                let appearance = UITabBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .white
+                self.tabBar.standardAppearance = appearance
+                self.tabBar.scrollEdgeAppearance = appearance
+            } else {
+                self.tabBar.barTintColor = .white
+                self.tabBar.backgroundColor = .white
+            }
+            self.borderLayer.backgroundColor = UIColor.gray5.cgColor
+            
+        case .myPage:
+            AnalyticsManager.shared.sendEvent(event: .tapBottomTab(tab: .my))
             if #available(iOS 15, *) {
                 let appearance = UITabBarAppearance()
                 appearance.configureWithOpaqueBackground()
@@ -46,6 +61,7 @@ final class MainTabController: UITabBarController {
             self.borderLayer.backgroundColor = UIColor.gray5.cgColor
             
         case .setting:
+            AnalyticsManager.shared.sendEvent(event: .tapBottomTab(tab: .setting))
             if #available(iOS 15, *) {
                 let appearance = UITabBarAppearance()
                 appearance.configureWithOpaqueBackground()

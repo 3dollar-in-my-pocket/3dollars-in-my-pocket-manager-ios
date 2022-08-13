@@ -33,33 +33,53 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
     let pushEditSchedulePublisher = PublishRelay<Store>()
     private let storeService: StoreServiceType
     private let globalState: GlobalState
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         storeService: StoreServiceType,
-        globalState: GlobalState
+        globalState: GlobalState,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.storeService = storeService
         self.globalState = globalState
+        self.analyticsManager = analyticsManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            self.analyticsManager.sendEvent(event: .viewScreen(.myStoreInfo))
             return self.fetchMyStore()
             
         case .refresh:
             return self.fetchMyStore()
             
         case .tapEditStoreInfo:
+            self.analyticsManager.sendEvent(event: .tapEditStoreInfo(
+                storeId: self.currentState.store.id,
+                screen: .myStoreInfo
+            ))
             return .just(.pushEditStoreInfo(store: self.currentState.store))
             
         case .tapEditIntroduction:
+            self.analyticsManager.sendEvent(event: .tapEditIntroduction(
+                storeId: self.currentState.store.id,
+                screen: .myStoreInfo
+            ))
             return .just(.pushEditIntroduction(store: self.currentState.store))
             
         case .tapEditMenus:
+            self.analyticsManager.sendEvent(event: .tapEditMenu(
+                storeId: self.currentState.store.id,
+                screen: .myStoreInfo
+            ))
             return .just(.pushEditMenus(store: self.currentState.store))
             
         case .tapEditSchedule:
+            self.analyticsManager.sendEvent(event: .tapEditSchedule(
+                storeId: self.currentState.store.id,
+                screen: .myStoreInfo
+            ))
             return .just(.pushEditSchedule(store: self.currentState.store))
         }
     }

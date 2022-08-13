@@ -45,18 +45,21 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     private let categoryService: CategoryServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         store: Store,
         storeService: StoreService,
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
-        globalState: GlobalState
+        globalState: GlobalState,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.storeService = storeService
         self.categoryService = categoryService
         self.imageService = imageService
         self.globalState = globalState
+        self.analyticsManager = analyticsManager
         self.initialState = State(
             store: store,
             categories: [],
@@ -68,6 +71,7 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            self.analyticsManager.sendEvent(event: .viewScreen(.editStoreInfo))
             return self.fetchCategories()
             
         case .inputStoreName(let storeName):
@@ -172,8 +176,14 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
                     newStore.imageUrl = imageResponse.imageUrl
                     
                     return self.storeService.updateStore(store: newStore)
-                        .do(onNext: { _ in
+                        .do(onNext: { [weak self] _ in
+                            guard let self = self else { return }
+                            
                             self.globalState.updateStorePublisher.onNext(newStore)
+                            self.analyticsManager.sendEvent(event: .editStoreInfo(
+                                storeId: self.currentState.store.id,
+                                screen: .editStoreInfo
+                            ))
                         })
                         .map { _ in .pop }
                 }

@@ -27,18 +27,22 @@ final class WaitingReactor: BaseReactor, Reactor {
     let goToSigninPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
     private let userDefaults: UserDefaultsUtils
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         authService: AuthServiceType,
-        userDefaults: UserDefaultsUtils
+        userDefaults: UserDefaultsUtils,
+        analyticsManager: AnalyticsManager
     ) {
         self.authService = authService
         self.userDefaults = userDefaults
+        self.analyticsManager = analyticsManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .tapQuestionButton:
+            self.analyticsManager.sendEvent(event: .tapEmail(screen: .waiting))
             let message = "\n\n\n\n----------\n앱 버전: \(self.getAppVersion())\nOS: ios \(self.getiOSVersion())\n"
             
             return .just(.presentMailComposer(message: message))
@@ -80,7 +84,12 @@ final class WaitingReactor: BaseReactor, Reactor {
     private func logout() -> Observable<Mutation> {
         return self.authService.logout()
             .do(onNext: { [weak self] _ in
-                self?.userDefaults.clear()
+                guard let self = self else { return }
+                let userId = self.userDefaults.userId
+                
+                self.analyticsManager.sendEvent(event: .logout(userId: userId, screen: .waiting))
+                self.userDefaults.clear()
+                
             })
             .map { _ in .goToSignin }
             .catch {

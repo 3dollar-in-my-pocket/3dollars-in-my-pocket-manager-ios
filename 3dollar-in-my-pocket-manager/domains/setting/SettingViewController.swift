@@ -8,7 +8,8 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     let settingReactor = SettingReactor(
         authService: AuthService(),
         deviceService: DeviceService(),
-        userDefaults: UserDefaultsUtils()
+        userDefaults: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: SettingCoordinator?
     

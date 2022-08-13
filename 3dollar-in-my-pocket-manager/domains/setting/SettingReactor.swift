@@ -32,22 +32,26 @@ final class SettingReactor: BaseReactor, Reactor {
     private let authService: AuthServiceType
     private let deviceService: DeviceServiceType
     private let userDefaults: UserDefaultsUtils
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         authService: AuthServiceType,
         deviceService: DeviceServiceType,
         userDefaults: UserDefaultsUtils,
+        analyticsManager: AnalyticsManagerProtocol,
         state: State = State(user: User())
     ) {
         self.authService = authService
         self.deviceService = deviceService
         self.userDefaults = userDefaults
+        self.analyticsManager = analyticsManager
         self.initialState = state
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            self.analyticsManager.sendEvent(event: .viewScreen(.setting))
             return self.fetchMyInfo()
             
         case .tapFCMToken:
@@ -132,7 +136,11 @@ final class SettingReactor: BaseReactor, Reactor {
     private func logout() -> Observable<Mutation> {
         return self.authService.logout()
             .do(onNext: { [weak self] _ in
-                self?.userDefaults.clear()
+                guard let self = self else { return }
+                self.analyticsManager.sendEvent(
+                    event: .logout(userId: self.currentState.user.bossId, screen: .setting)
+                )
+                self.userDefaults.clear()
             })
             .map { _ in .goToSignin }
             .catch {
@@ -147,7 +155,12 @@ final class SettingReactor: BaseReactor, Reactor {
     private func signout() -> Observable<Mutation> {
         return self.authService.signout()
             .do(onNext: { [weak self] _ in
-                self?.userDefaults.clear()
+                guard let self = self else { return }
+                
+                self.analyticsManager.sendEvent(
+                    event: .signout(userId: self.currentState.user.bossId)
+                )
+                self.userDefaults.clear()
             })
             .map { _ in .goToSignin }
             .catch {

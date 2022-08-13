@@ -22,7 +22,8 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
             store: store,
             storeService: StoreService(),
             imageService: ImageService(),
-            globalState: GlobalState.shared
+            globalState: GlobalState.shared,
+            analyticsManager: AnalyticsManager.shared
         )
         
         super.init(nibName: nil, bundle: nil)
@@ -41,6 +42,7 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
         
         self.coordinator = self
         self.reactor = self.editMenuReactor
+        AnalyticsManager.shared.sendEvent(event: .viewScreen(.editMenu))
     }
     
     override func bindEvent() {

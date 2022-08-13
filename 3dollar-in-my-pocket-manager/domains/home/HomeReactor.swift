@@ -42,22 +42,26 @@ final class HomeReactor: BaseReactor, Reactor {
     private let storeSerivce: StoreServiceType
     private let locationManager: LocationManagerProtocol
     private var userDefaults: UserDefaultsUtils
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         mapService: MapServiceProtocol,
         storeService: StoreServiceType,
         locationManager: LocationManagerProtocol,
-        userDefaults: UserDefaultsUtils
+        userDefaults: UserDefaultsUtils,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.mapService = mapService
         self.storeSerivce = storeService
         self.locationManager = locationManager
         self.userDefaults = userDefaults
+        self.analyticsManager = analyticsManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            self.analyticsManager.sendEvent(event: .viewScreen(.home))
             return .merge([
                 self.fetchCurrentLocationForInitilize(),
                 self.fetchMyStoreInfo()
@@ -72,11 +76,13 @@ final class HomeReactor: BaseReactor, Reactor {
             
         case .tapShowOtherStore:
             if self.currentState.isShowOtherStore {
+                self.analyticsManager.sendEvent(event: .showOtherBoss(isOn: false, screen: .home))
                 return .merge([
                     .just(.setAroundStores([])),
                     .just(.setShowOtherStore(false))
                 ])
             } else {
+                self.analyticsManager.sendEvent(event: .showOtherBoss(isOn: true, screen: .home))
                 if let cameraPosition = self.currentState.cameraPosition {
                     return .merge([
                         self.fetchAroundStores(location: cameraPosition),

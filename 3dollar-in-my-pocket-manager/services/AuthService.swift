@@ -142,13 +142,13 @@ struct AuthService: AuthServiceType {
                 method: .get,
                 headers: headers
             )
-            .responseData(completionHandler: { response in
+            .responseDecodable(of: ResponseContainer<BossAccountInfoResponse>.self) { response in
                 if response.isSuccess() {
-                    observer.processValue(type: BossAccountInfoResponse.self, response: response)
+                    observer.processValue(response: response)
                 } else {
-                    observer.processAPIError(response: response)
+                    observer.processHTTPError(response: response)
                 }
-            })
+            }
             
             return Disposables.create()
         }

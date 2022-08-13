@@ -11,7 +11,8 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
         mapService: MapService(),
         storeService: StoreService(),
         locationManager: LocationManager.shared,
-        userDefaults: UserDefaultsUtils()
+        userDefaults: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: HomeCoordinator?
     

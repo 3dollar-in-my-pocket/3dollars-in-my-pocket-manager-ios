@@ -52,16 +52,19 @@ final class EditMenuReactor: BaseReactor, Reactor {
     private let storeService: StoreServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         store: Store,
         storeService: StoreServiceType,
         imageService: ImageServiceType,
-        globalState: GlobalState
+        globalState: GlobalState,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.storeService = storeService
         self.imageService = imageService
         self.globalState = globalState
+        self.analyticsManager = analyticsManager
         
         var newStore = store
         if store.menus.isEmpty {
@@ -150,6 +153,10 @@ final class EditMenuReactor: BaseReactor, Reactor {
                 }
             } else {
                 if let invalidIndex = self.getInvalidStoreIndex(store: self.currentState.store) {
+                    self.analyticsManager.sendEvent(event: .errorInEditingMenu(
+                        storeId: self.currentState.store.id,
+                        screen: .editMenu
+                    ))
                     return .just(.setInvalidMenuIndex(invalidIndex))
                 } else {
                     return .concat([
@@ -260,7 +267,12 @@ final class EditMenuReactor: BaseReactor, Reactor {
                     
                     return self.storeService.updateStore(store: newStore)
                         .do(onNext: { [weak self] _ in
-                            self?.globalState.updateStorePublisher.onNext(newStore)
+                            guard let self = self else { return }
+                            self.globalState.updateStorePublisher.onNext(newStore)
+                            self.analyticsManager.sendEvent(event: .editStoreMenu(
+                                storeId: self.currentState.store.id,
+                                screen: .editMenu
+                            ))
                         })
                         .map { _ in Mutation.pop }
                 }

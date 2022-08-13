@@ -23,7 +23,8 @@ final class EditIntroductionViewController:
         self.editIntroductionReactor = EditIntroductionReactor(
             store: store,
             storeService: StoreService(),
-            globlaState: GlobalState.shared
+            globlaState: GlobalState.shared,
+            analyticsManager: AnalyticsManager.shared
         )
         
         super.init(nibName: nil, bundle: nil)
@@ -43,6 +44,7 @@ final class EditIntroductionViewController:
         
         self.coordinator = self
         self.reactor = self.editIntroductionReactor
+        AnalyticsManager.shared.sendEvent(event: .viewScreen(.editIntroduction))
     }
     
     override func bindEvent() {

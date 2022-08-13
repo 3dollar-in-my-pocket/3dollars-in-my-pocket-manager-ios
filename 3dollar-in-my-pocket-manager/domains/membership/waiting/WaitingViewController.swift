@@ -8,7 +8,8 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
     private let waitingView = WaitingView()
     private let waitingReactor = WaitingReactor(
         authService: AuthService(),
-        userDefaults: UserDefaultsUtils()
+        userDefaults: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: WaitingCoordinator?
     
@@ -29,6 +30,7 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
         
         self.coordinator = self
         self.reactor = self.waitingReactor
+        AnalyticsManager.shared.sendEvent(event: .viewScreen(.waiting))
     }
     
     override func bindEvent() {

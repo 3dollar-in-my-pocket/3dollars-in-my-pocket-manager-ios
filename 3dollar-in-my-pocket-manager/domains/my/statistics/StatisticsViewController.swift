@@ -5,7 +5,10 @@ import ReactorKit
 
 final class StatisticsViewController: BaseViewController, View {
     private let statisticsView = StatisticsView()
-    private let statisticsReactor = StatisticsReactor(globalState: GlobalState.shared)
+    private let statisticsReactor = StatisticsReactor(
+        globalState: GlobalState.shared,
+        analyticsManager: AnalyticsManager.shared
+    )
     private let pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,

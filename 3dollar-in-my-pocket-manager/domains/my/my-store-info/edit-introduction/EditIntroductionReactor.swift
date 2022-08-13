@@ -25,14 +25,17 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
     let popupPublisher = PublishRelay<Void>()
     private let storeService: StoreServiceType
     private let globalState: GlobalState
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         store: Store,
         storeService: StoreServiceType,
-        globlaState: GlobalState
+        globlaState: GlobalState,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.storeService = storeService
         self.globalState = globlaState
+        self.analyticsManager = analyticsManager
         self.initialState = State(
             store: store,
             isEditButtonEnable: !(store.introduction ?? "").isEmpty
@@ -82,7 +85,13 @@ final class EditIntroductionReactor: BaseReactor, Reactor {
     private func updateStore(store: Store) -> Observable<Mutation> {
         return self.storeService.updateStore(store: store)
             .do(onNext: { [weak self] _ in
-                self?.globalState.updateStorePublisher.onNext(store)
+                guard let self = self else { return }
+                
+                self.globalState.updateStorePublisher.onNext(store)
+                self.analyticsManager.sendEvent(event: .editStoreIntroduction(
+                    storeId: self.currentState.store.id,
+                    screen: .editIntroduction
+                ))
             })
             .map { _ in Mutation.pop }
             .catch {
