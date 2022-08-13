@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>PRIVACY_URL</key>
-	<string>$(PRIVACY_URL)</string>
 	<key>API_URL</key>
 	<string>$(API_URL)</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
@@ -32,6 +30,8 @@
 	</array>
 	<key>NMFClientId</key>
 	<string>h14485sw4a</string>
+	<key>PRIVACY_URL</key>
+	<string>$(PRIVACY_URL)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AppleSDGothicNeoEB00.ttf</string>
