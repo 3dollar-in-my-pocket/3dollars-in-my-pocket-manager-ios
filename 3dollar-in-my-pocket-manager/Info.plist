@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>FirebaseAutomaticScreenReportingEnabled</key>
-	<false/>
 	<key>API_URL</key>
 	<string>$(API_URL)</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
@@ -20,7 +18,17 @@
 				<string>kakaob623fd2160694c4c2cb08e64df491d1c</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakaoa009e78756eb528bc0e9897b8409a2e4</string>
+			</array>
+		</dict>
 	</array>
+	<key>FirebaseAutomaticScreenReportingEnabled</key>
+	<false/>
 	<key>KAKAO_APP_KEY</key>
 	<string>$(KAKAO_APP_KEY)</string>
 	<key>KAKAO_CHANNEL_URL</key>
