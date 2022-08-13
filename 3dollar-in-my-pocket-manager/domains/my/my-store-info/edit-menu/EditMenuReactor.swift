@@ -280,7 +280,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
     private func getValidStore(store: Store) -> Store {
         var newStore = store
         
-        newStore.menus = newStore.menus.filter { !$0.isValid }
+        newStore.menus = newStore.menus.filter { $0.isValid }
         return newStore
     }
 }

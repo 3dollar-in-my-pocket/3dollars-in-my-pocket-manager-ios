@@ -9,9 +9,7 @@ struct Menu: Equatable {
     var price: Int
     
     var isValid: Bool {
-        return (self.photo != nil || !self.imageUrl.isEmpty)
-        && (!name.isEmpty)
-        && (price != 0)
+        return (self.photo != nil || !self.imageUrl.isEmpty) && (!name.isEmpty) && (price != 0)
     }
     
     var isPlaceholder: Bool {
