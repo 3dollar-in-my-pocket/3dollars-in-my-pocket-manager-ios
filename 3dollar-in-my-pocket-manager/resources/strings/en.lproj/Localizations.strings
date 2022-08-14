@@ -1,0 +1,152 @@
+// Common
+"common_ok" = "확인";
+
+// Error
+"error_unknown" = "알 수 없는 에러입니다.";
+"error_time_out" = "알 수 없는 에러입니다.\n잠시후 다시 시도해주세요.";
+"error_fail_decode" = "알 수 없는 형태의 데이터입니다.";
+"error_nil_value" = "값이 없습니다.";
+
+// HTTP Error
+"http_error_bad_request" = "요청에 오류가 있습니다.\n다시 확인해주세요.";
+"http_error_unauthorized" = "세션이 만료되었습니다.\n다시 로그인해주세요.";
+"http_error_forbidden" = "권한이 없는 요청입니다.";
+"http_error_not_found" = "없는 데이터입니다.";
+"http_error_conflict" = "이미 존재하는 데이터입니다.";
+"http_error_too_many_requests" = "일시적으로 너무 많은 요청이 발생하였습니다. 잠시 후 다시 이용해주세요";
+"http_error_internal_server_error" = "서버에서 오류가 발생했습니다.\n잠시 후 다시 시도해주세요!";
+"http_error_bad_gateway" = "일시적인 오류가 발생했어요..ㅠㅠ\n잠시 후 다시 시도해주세요!";
+"http_error_maintenance" = "서버 점검중입니다.\n잠시 후 다시 시도해주세요.";
+"http_error_timeout" = "일시적인 오류가 발생했어요..ㅠㅠ\n잠시 후 다시 시도해주세요!";
+
+// Authorization
+"authorization_denied_title" = "권한 거절";
+"authorization_denied_description" = "사진을 첨부하기 위해 권한이 필요합니다.\n설정에서 해당 권한을 허용해주세요.";
+"authorization_setting" = "설정";
+
+// Location
+"location_deny_description" = "현재 내 위치를 찾기 위해 위치 권한이 필요합니다.\n설정에서 위치 권한을 허용시켜주세요.";
+"location_unknown" = "현재 위치가 확인되지 않습니다.\n잠시 후 다시 시도해주세요.";
+"location_disable_service" = "위치 서비스가 비활성화되어있습니다.\n서비스를 활성화시켜주세요.";
+"location_address_unknown" = "주소를 알 수 없는 위치입니다.";
+
+// Day Of The Week
+"monday_full" = "월요일";
+"tuesday_full" = "화요일";
+"wednesday_full" = "수요일";
+"thursday_full" = "목요일";
+"friday_full" = "금요일";
+"saturday_full" = "토요일";
+"sunday_full" = "일요일";
+
+// Signup
+"signup_title" = "회원가입";
+"signup_description" = "사장님, 가게 정보 등록하시고\n부자 되세요~!";
+"signup_owner_name" = "사장님 성함";
+"signup_owner_name_placeholder" = "사장님 성함을 입력해주세요.";
+"signup_store_name" = "가게이름";
+"signup_store_name_description" = "최대 20자";
+"signup_store_name_placeholder" = "가게 이름을 입력해 주세요.";
+"signup_registeration_number_title" = "사업자 등록 번호";
+"signup_registeration_number_description" = "“-”를 제외한 숫자만 입력";
+"signup_registeration_number_placeholder" = "사업자 등록 번호를 입력해 주세요.";
+"signup_category_title" = "카테고리 선택";
+"signup_category_description" = "최대 3개";
+"signup_photo_title" = "가게 인증 사진";
+"signup_photo_description" = "사진은 사장님 인증 용도로 사용됩니다.";
+"signup_upload_photo" = "이미지 업로드";
+"signup_button" = "가입 신청하기";
+
+// Home
+"home_off_title" = "지금 계신 위치에서 영업을 시작할까요?";
+"home_off_description" = "영업을 시작하면 위치가 손님들에게 공개됩니다.";
+"home_off_toggle" = "오늘의 영업 시작하기";
+"home_on_title" = "오늘은";
+"home_on_description" = "동안 영업중이시네요! 오늘도 대박나세요!";
+"home_on_toggle" = "셔텨 내리기";
+"home_show_other" = "다른 푸드트럭 보기";
+"home_invalid_position" = "빨간 원(현재 위치의 반경 100m 이내) 안에서 장사를 시작해주세요.";
+
+// Waiting
+"waiting_title" = "신청 완료!";
+"waiting_description" = "사장님! 소중한 정보를 입력해주셔서 감사합니다.\n심사는 지원한 날로부터 주말을 제외한 평일 기준 약 2-5일 소요될 수 있어요. 최대한 빠르게 처리하여 사장님의 영업을 도와드릴 테니 조금만 기다려주세요 :)";
+"waiting_bottom_description_1" = "사장님이 영업 시작 버튼을 누르면\n근처 고객들에게 홍보 돼요!";
+"waiting_question_button" = "이메일로 문의하기";
+"waiting_logout" = "로그아웃";
+
+// My Page
+"my_page_store_info" = "가게정보";
+"my_pate_statistics" = "통계";
+
+// My Store Info
+"my_store_info_introduction_placeholder" = "손님들에게 하고 싶은 말을 적어주세요!\nex) 오전에 오시면 서비스가 있습니다!";
+"my_store_info_header_introduction" = "사장님 한마디";
+"my_store_info_header_introduction_button" = "정보 수정";
+"my_store_info_header_menus" = "메뉴 정보";
+"my_store_info_menu_empty" = "가게의 메뉴를 등록해 주세요!";
+"my_store_info_menu_more_format" = "%d개의 메뉴가 더 있습니다.";
+"my_store_info_header_menus_button" = "메뉴 수정";
+"my_store_info_header_appearance_day" = "영업 일정";
+"my_store_info_appearance_closed_day" = "휴무일";
+"my_store_info_header_appearance_day_button" = "일정 관리";
+
+// Edit Introduction
+"edit_introduction_title" = "사장님 한마디 수정";
+"edit_introduction_main_description" = "손님들에게 하고 싶은 말을\n적어주세요!";
+"edit_introduction_sub_description" = "ex) 오전에 오시면 서비스가 있습니다 😋";
+"edit_introduction_sns" = "SNS주소를 적어주세요.";
+"edit_introdution_edit_button" = "저장하기";
+
+// Edit Store Info
+"edit_store_info_title" = "대표 정보 수정";
+"edit_store_info_photo_title" = "대표 사진";
+"edit_store_info_upload_photo" = "이미지 수정";
+"edit_store_info_sns" = "SNS";
+"edit_store_info_save" = "저장하기";
+
+// Edit Schedule
+"edit_schedule_title" = "일정 관리";
+"edit_schedule_main_description" = "영업 요일을 선택해주세요!";
+"edit_schedule_sub_description" = "선택하지 않은 요일은 휴무로 표시됩니다.";
+"edit_schedule_work_time" = "영업 시간";
+"edit_schedule_location" = "출몰 지역";
+"edit_schedule_save" = "저장하기";
+
+// Eidt Menu
+"edit_menu_title" = "메뉴 관리";
+"edit_menu_delete" = "삭제";
+"edit_menu_delete_all" = "전체 삭제";
+"edit_menu_save" = "저장하기";
+"edit_menu_finish_delete" = "삭제 완료";
+"edit_menu_delete_all_message" = "전체 메뉴를 삭제하시겠습니까?";
+"edit_menu_add" = "메뉴 추가하기";
+"edit_menu_name_placeholder" = "메뉴를 입력해주세요.";
+"edit_menu_price_placeholder" = "가격을 입력해 주세요.";
+"edit_menu_warning" = "* 메뉴명, 가격, 사진을 모두 등록해주세요.";
+"edit_menu_save_alert_message" = "수정된 내용을 저장하지 않고 나갈까요?";
+"edit_menu_save_alert_ok" = "나가기";
+
+// Statistics
+"statistics_filter_total" = "전체";
+"statistics_filter_day" = "일별";
+"statistics_review_count" = "리뷰가 사장님께 도착했어요 :)";
+
+// Seting
+"setting_title" = "설정";
+"setting_name_description" = "오늘도 적게 일하고 많이 버세요!";
+"setting_registeration_number" = "사업자번호";
+"setting_contact" = "가슴속 삼천원팀에 연락하기";
+"setting_notification" = "푸시알림";
+"setting_faq" = "FAQ";
+"setting_privacy" = "개인정보 처리방침";
+"setting_logout" = "로그아웃";
+"setting_logout_message" = "로그아웃하시겠습니까?";
+"setting_signout" = "회원탈퇴";
+"setting_signout_title" = "회원 탈퇴 시, 그동안의 데이터가 모두 삭제됩니다.\n회원탈퇴하시겠습니까?";
+"setting_signout_button" = "탈퇴";
+"setting_copy_token_title" = "FCM 토큰";
+"setting_copy_token_description" = "토큰을 복사했습니다. 붙여넣기를 통해 사용하세요.";
+
+// FAQ
+"faq_title" = "FAQ";
+"faq_description" = "어떤 점이 궁금하셨나요?";

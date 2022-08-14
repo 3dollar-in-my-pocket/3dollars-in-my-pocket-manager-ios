@@ -1,0 +1,3 @@
+protocol EditScheduleCoordinator: AnyObject, BaseCoordinator {
+    
+}

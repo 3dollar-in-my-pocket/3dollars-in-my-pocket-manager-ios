@@ -1,0 +1,3 @@
+protocol FAQCoordinator: AnyObject, BaseCoordinator {
+    
+}
