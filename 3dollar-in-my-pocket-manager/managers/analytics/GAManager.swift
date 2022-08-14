@@ -139,8 +139,8 @@ final class GAManager: AnalyticsManagerProtocol {
                 ]
             )
             
-        case .tapStatisticTab(let storeId):
-            Analytics.logEvent(event.eventName, parameters: ["storeId": storeId])
+        case .tapStatisticTab(let filterType):
+            Analytics.logEvent(event.eventName, parameters: ["filterType": filterType])
             
         case .signout(let userId):
             Analytics.logEvent(event.eventName, parameters: ["userId": userId])
