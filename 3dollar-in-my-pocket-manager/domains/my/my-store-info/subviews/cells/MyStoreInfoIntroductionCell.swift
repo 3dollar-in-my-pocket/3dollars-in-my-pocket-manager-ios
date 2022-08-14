@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class MyStoreInfoIntroductionCell: BaseCollectionViewCell {
     static let registerId = "\(MyStoreInfoIntroductionCell.self)"
     static let height: CGFloat = 72

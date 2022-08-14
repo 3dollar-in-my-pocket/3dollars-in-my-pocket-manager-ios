@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import RxSwift
 import RxCocoa
 
@@ -86,10 +87,10 @@ final class CategorySelectView: BaseView {
         var currentWidth: CGFloat = 0
         
         for category in categories {
-            let stringWidth = (category.name as NSString).size(withAttributes: [
-                .font: UIFont.regular(size: 14) as Any
-            ]).width
-            let cellWidth = stringWidth + 32
+            let stringWidth = (category.name as NSString)
+                .size(withAttributes: [.font: UIFont.regular(size: 14) as Any])
+                .width
+            let cellWidth = stringWidth + 36
             
             if currentWidth + cellWidth >= maxWidth { // 셀 포함해서 한줄 넘어가는 경우
                 currentWidth = cellWidth + spaceBetweenCells

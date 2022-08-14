@@ -7,11 +7,15 @@ protocol SettingCoordinator: BaseCoordinator, AnyObject {
     
     func showSignoutAlert()
     
+    func showCopyTokenSuccessAlert()
+    
     func goToSignin()
     
     func goToKakaoTalkChannel()
     
     func pushFAQ()
+    
+    func goToPrivacy()
 }
 
 extension SettingCoordinator where Self: SettingViewController {
@@ -37,6 +41,16 @@ extension SettingCoordinator where Self: SettingViewController {
         }
     }
     
+    func showCopyTokenSuccessAlert() {
+        AlertUtils.showWithAction(
+            viewController: self,
+            title: "setting_copy_token_title".localized,
+            message: "setting_copy_token_description".localized,
+            okbuttonTitle: "common_ok".localized) {
+                
+            }
+    }
+    
     func goToSignin() {
         guard let sceneDelegate = UIApplication
             .shared
@@ -58,5 +72,11 @@ extension SettingCoordinator where Self: SettingViewController {
         let viewController = FAQViewController.instance()
         
         self.presenter.navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func goToPrivacy() {
+        guard let url = URL(string: Bundle.privacyUrl) else { return }
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }

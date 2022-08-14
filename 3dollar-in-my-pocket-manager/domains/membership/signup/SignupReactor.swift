@@ -10,7 +10,6 @@ final class SignupReactor: BaseReactor, Reactor {
         case inputOwnerName(String)
         case inputStoreName(String)
         case inputRegisterationNumber(String)
-        case inputPhoneNumber(String)
         case selectCategory(index: Int)
         case selectPhoto(UIImage)
         case tapSignup
@@ -20,7 +19,6 @@ final class SignupReactor: BaseReactor, Reactor {
         case setOwnerName(String)
         case setStoreName(String)
         case setRegisterationNumber(String)
-        case setPhoneNumber(String)
         case selectCategory(StoreCategory)
         case deselectCategory(StoreCategory)
         case setCategories([StoreCategory])
@@ -36,7 +34,6 @@ final class SignupReactor: BaseReactor, Reactor {
         var ownerName = ""
         var storeName = ""
         var registerationNumber = ""
-        var phoneNumber = ""
         var categories: [StoreCategory] = []
         var selectedCategories: [StoreCategory] = []
         var photo: UIImage?
@@ -49,9 +46,11 @@ final class SignupReactor: BaseReactor, Reactor {
     private let socialType: SocialType
     private let token: String
     private let categoryService: CategoryServiceType
+    private let deviceService: DeviceServiceType
     private let imageService: ImageServiceType
     private let authService: AuthServiceType
     private var userDefaultsUtils: UserDefaultsUtils
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         socialType: SocialType,
@@ -59,19 +58,24 @@ final class SignupReactor: BaseReactor, Reactor {
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
         authService: AuthServiceType,
-        userDefaultsUtils: UserDefaultsUtils
+        deviceService: DeviceServiceType,
+        userDefaultsUtils: UserDefaultsUtils,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.socialType = socialType
         self.token = token
         self.categoryService = categoryService
         self.imageService = imageService
         self.authService = authService
+        self.deviceService = deviceService
         self.userDefaultsUtils = userDefaultsUtils
+        self.analyticsManager = analyticsManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            self.analyticsManager.sendEvent(event: .viewScreen(.signup))
             return self.fetchCategories()
             
         case .inputOwnerName(let ownerName):
@@ -90,12 +94,6 @@ final class SignupReactor: BaseReactor, Reactor {
             return .merge([
                 .just(.setRegisterationNumber(registerationNumber)),
                 .just(.setSignupButtonEnable(self.validate(registerationNumber: registerationNumber)))
-            ])
-            
-        case .inputPhoneNumber(let phoneNumber):
-            return .merge([
-                .just(.setPhoneNumber(phoneNumber)),
-                .just(.setSignupButtonEnable(self.validate(phoneNumber: phoneNumber)))
             ])
             
         case .selectCategory(let index):
@@ -130,9 +128,6 @@ final class SignupReactor: BaseReactor, Reactor {
             
         case .setRegisterationNumber(let registerationNumber):
             newState.registerationNumber = registerationNumber
-            
-        case .setPhoneNumber(let phoneNumber):
-            newState.phoneNumber = phoneNumber
             
         case .selectCategory(let category):
             newState.selectedCategories.append(category)
@@ -171,19 +166,16 @@ final class SignupReactor: BaseReactor, Reactor {
         ownerName: String? = nil,
         storeName: String? = nil,
         registerationNumber: String? = nil,
-        phoneNumber: String? = nil,
         photo: UIImage? = nil
     ) -> Bool {
         let ownerName = ownerName ?? self.currentState.ownerName
         let storeName = storeName ?? self.currentState.storeName
         let registerationNumber = registerationNumber ?? self.currentState.registerationNumber
-        let phoneNumber = phoneNumber ??  self.currentState.phoneNumber
         let photo = photo ?? self.currentState.photo
         
         return !ownerName.isEmpty
         && !storeName.isEmpty
         && !registerationNumber.isEmpty
-        && !phoneNumber.isEmpty
         && photo != nil
     }
     
@@ -198,7 +190,6 @@ final class SignupReactor: BaseReactor, Reactor {
         let ownerName = self.currentState.ownerName
         let storeName = self.currentState.storeName
         let registerationNumber = self.currentState.registerationNumber
-        let phoneNumber = self.currentState.phoneNumber
         let categories = self.currentState.selectedCategories
         let photo = self.currentState.photo ?? UIImage()
         let socialType = self.socialType
@@ -210,7 +201,6 @@ final class SignupReactor: BaseReactor, Reactor {
                     ownerName: ownerName,
                     storeName: storeName,
                     registerationNumber: registerationNumber,
-                    phoneNumber: phoneNumber,
                     categories: categories,
                     photoUrl: imageResponse.imageUrl,
                     socialType: socialType,
@@ -218,8 +208,18 @@ final class SignupReactor: BaseReactor, Reactor {
                 )
                 .do(onNext: { [weak self] response in
                     self?.userDefaultsUtils.userToken = response.token
+                    self?.userDefaultsUtils.userId = response.bossId
+                    self?.analyticsManager.sendEvent(event: .setUserId(response.bossId))
+                    self?.analyticsManager.sendEvent(
+                        event: .signup(userId: response.bossId, screen: .signup)
+                    )
                 })
-                .map { _ in .pushWaiting }
+                .flatMap { [weak self] _ -> Observable<Mutation> in
+                    guard let self = self else { return .error(BaseError.unknown) }
+                    
+                    return self.registerDevice()
+                        .map { _ in .pushWaiting }
+                }
                 .catch { error in
                     if let httpError = error as? HTTPError {
                         switch httpError {
@@ -251,5 +251,9 @@ final class SignupReactor: BaseReactor, Reactor {
             signupObservable,
             .just(.showLoading(isShow: false))
         ])
+    }
+    
+    private func registerDevice() -> Observable<Void> {
+        return self.deviceService.registerDevice()
     }
 }

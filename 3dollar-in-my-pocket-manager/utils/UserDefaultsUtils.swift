@@ -25,12 +25,12 @@ struct UserDefaultsUtils {
         }
     }
     
-    var userId: Int {
+    var userId: String {
         set {
             self.instance.set(newValue, forKey: self.KEY_USER_ID)
         }
         get {
-            return self.instance.integer(forKey: self.KEY_USER_ID)
+            return self.instance.string(forKey: self.KEY_USER_ID) ?? ""
         }
     }
     

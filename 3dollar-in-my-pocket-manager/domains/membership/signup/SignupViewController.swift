@@ -23,7 +23,9 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             categoryService: CategoryService(),
             imageService: ImageService(),
             authService: AuthService(),
-            userDefaultsUtils: UserDefaultsUtils()
+            deviceService: DeviceService(),
+            userDefaultsUtils: UserDefaultsUtils(),
+            analyticsManager: AnalyticsManager.shared
         )
         super.init(nibName: nil, bundle: nil)
     }
@@ -109,11 +111,6 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
         
         self.signupView.registerationNumberField.rx.text
             .map { Reactor.Action.inputRegisterationNumber($0) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        self.signupView.phoneNumberField.rx.text
-            .map { Reactor.Action.inputPhoneNumber($0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         

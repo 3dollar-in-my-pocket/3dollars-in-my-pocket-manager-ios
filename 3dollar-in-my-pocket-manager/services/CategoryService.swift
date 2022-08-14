@@ -15,13 +15,14 @@ struct CategoryService: CategoryServiceType {
                 urlString,
                 method: .get,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<[StoreCategoryResponse]>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: [StoreCategoryResponse].self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }

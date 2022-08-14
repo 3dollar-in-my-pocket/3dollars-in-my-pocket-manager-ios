@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class SettingTableViewCell: BaseTableViewCell {
     static let registerId = "\(SettingTableViewCell.self)"
     static let height: CGFloat = 66
@@ -36,6 +38,11 @@ final class SettingTableViewCell: BaseTableViewCell {
         $0.setTitle("setting_logout".localized, for: .normal)
     }
     
+    let rightSwitch = UISwitch().then {
+        $0.onTintColor = .green
+        $0.thumbTintColor = .white
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -51,7 +58,8 @@ final class SettingTableViewCell: BaseTableViewCell {
             self.stackView,
             self.rightLabel,
             self.rightArrowImage,
-            self.rightButton
+            self.rightButton,
+            self.rightSwitch
         ])
     }
     
@@ -89,6 +97,11 @@ final class SettingTableViewCell: BaseTableViewCell {
             make.centerY.equalTo(self.containerView)
             make.right.equalTo(self.containerView).offset(-16)
         }
+        
+        self.rightSwitch.snp.makeConstraints { make in
+            make.centerY.equalTo(self.containerView)
+            make.right.equalTo(self.containerView).offset(-16)
+        }
     }
     
     func bind(cellType: SettingCellType) {
@@ -100,24 +113,36 @@ final class SettingTableViewCell: BaseTableViewCell {
             self.rightLabel.isHidden = false
             self.rightButton.isHidden = true
             self.rightArrowImage.isHidden = true
+            self.rightSwitch.isHidden = true
+            
+        case .notification(let isEnable):
+            self.stackView.addArrangedSubview(self.titleLabel)
+            self.rightLabel.isHidden = true
+            self.rightButton.isHidden = true
+            self.rightArrowImage.isHidden = true
+            self.rightSwitch.isHidden = false
+            self.rightSwitch.isOn = isEnable
             
         case .contact:
             self.stackView.addArrangedSubview(self.titleLabel)
             self.rightLabel.isHidden = true
             self.rightButton.isHidden = true
             self.rightArrowImage.isHidden = false
+            self.rightSwitch.isHidden = true
             
         case .faq:
             self.stackView.addArrangedSubview(self.titleLabel)
             self.rightLabel.isHidden = true
             self.rightButton.isHidden = true
             self.rightArrowImage.isHidden = false
+            self.rightSwitch.isHidden = true
             
         case .privacy:
             self.stackView.addArrangedSubview(self.titleLabel)
             self.rightLabel.isHidden = true
             self.rightButton.isHidden = true
             self.rightArrowImage.isHidden = false
+            self.rightSwitch.isHidden = true
             
         case .signout(let socialType):
             self.stackView.addArrangedSubview(self.socialTypeImage)
@@ -127,6 +152,7 @@ final class SettingTableViewCell: BaseTableViewCell {
             self.rightLabel.isHidden = true
             self.rightButton.isHidden = false
             self.rightArrowImage.isHidden = true
+            self.rightSwitch.isHidden = true
         }
     }
 }

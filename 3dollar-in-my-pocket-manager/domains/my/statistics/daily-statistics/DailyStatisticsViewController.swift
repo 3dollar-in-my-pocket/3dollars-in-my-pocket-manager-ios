@@ -1,11 +1,13 @@
 import UIKit
 
+import Base
 import ReactorKit
 
 final class DailyStatisticsViewController: BaseViewController, View, DailyStatisticCoordinator {
     private let dailyStatisticsView = DailyStatisticsView()
     private let dailyStatisticsReactor = DailyStatisticsReactor(
         feedbackService: FeedbackService(),
+        globalState: GlobalState.shared,
         userDefaults: UserDefaultsUtils()
     )
     private weak var coordinator: DailyStatisticCoordinator?

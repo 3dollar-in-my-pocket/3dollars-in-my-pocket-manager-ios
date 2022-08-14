@@ -1,6 +1,7 @@
 import UIKit
 import CoreLocation
 
+import Base
 import ReactorKit
 import NMapsMap
 
@@ -10,7 +11,8 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
         mapService: MapService(),
         storeService: StoreService(),
         locationManager: LocationManager.shared,
-        userDefaults: UserDefaultsUtils()
+        userDefaults: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: HomeCoordinator?
     
@@ -43,6 +45,13 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
     }
     
     override func bindEvent() {
+        self.homeReactor.showInvalidPositionAlertPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.showInvalidPositionAlert()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.homeReactor.showErrorAlert
             .asDriver(onErrorJustReturn: BaseError.unknown)
             .drive(onNext: { [weak self] error in
@@ -96,6 +105,16 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: false)
             .drive(self.homeView.showOtherButton.rx.isShowOtherStore)
+            .disposed(by: self.disposeBag)
+        
+        reactor.state
+            .compactMap { $0.initialPosition }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: CLLocation(
+                latitude: 127.044155,
+                longitude: 37.547980
+            ))
+            .drive(self.homeView.rx.initialPosition)
             .disposed(by: self.disposeBag)
         
         reactor.state

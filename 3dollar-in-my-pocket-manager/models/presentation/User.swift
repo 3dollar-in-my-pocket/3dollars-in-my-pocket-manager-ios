@@ -5,11 +5,13 @@ struct User: Equatable {
     let businessNumber: String
     let name: String
     let socialType: SocialType
+    var isNotificationEnable: Bool
     
     init(response: BossAccountInfoResponse) {
         self.bossId = response.bossId
         self.businessNumber = response.businessNumber
         self.name = response.name
+        self.isNotificationEnable = response.isSetupNotification
         self.socialType = response.socialType
     }
     
@@ -17,11 +19,13 @@ struct User: Equatable {
         bossId: String = "",
         businessNumber: String = "",
         name: String = "",
-        socialType: SocialType = .kakao
+        socialType: SocialType = .kakao,
+        isNotificationEnable: Bool = true
     ) {
         self.bossId = bossId
         self.businessNumber = businessNumber
         self.name = name
         self.socialType = socialType
+        self.isNotificationEnable = isNotificationEnable
     }
 }

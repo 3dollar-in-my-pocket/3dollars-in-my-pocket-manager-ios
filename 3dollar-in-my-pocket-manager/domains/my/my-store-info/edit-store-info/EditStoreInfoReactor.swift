@@ -8,7 +8,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     enum Action {
         case viewDidLoad
         case inputStoreName(String)
-        case inputPhoneNumber(String)
         case selectCategory(index: Int)
         case deselectCategory(index: Int)
         case selectPhoto(UIImage)
@@ -18,7 +17,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case setStoreName(String)
-        case setPhoneNumber(String)
         case selectCategory(StoreCategory)
         
         /// 기존에 선택되어있는 카테고리 선택해주기
@@ -47,18 +45,21 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     private let categoryService: CategoryServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         store: Store,
         storeService: StoreService,
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
-        globalState: GlobalState
+        globalState: GlobalState,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.storeService = storeService
         self.categoryService = categoryService
         self.imageService = imageService
         self.globalState = globalState
+        self.analyticsManager = analyticsManager
         self.initialState = State(
             store: store,
             categories: [],
@@ -70,18 +71,13 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
+            self.analyticsManager.sendEvent(event: .viewScreen(.editStoreInfo))
             return self.fetchCategories()
             
         case .inputStoreName(let storeName):
             return .merge([
                 .just(.setStoreName(storeName)),
                 .just(.setSaveButtonEnable(self.validate(storeName: storeName)))
-            ])
-            
-        case .inputPhoneNumber(let phoneNumber):
-            return .merge([
-                .just(.setPhoneNumber(phoneNumber)),
-                .just(.setSaveButtonEnable(self.validate(phoneNumber: phoneNumber)))
             ])
             
         case .selectCategory(let index):
@@ -111,9 +107,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
         switch mutation {
         case .setStoreName(let storeName):
             newState.store.name = storeName
-            
-        case .setPhoneNumber(let phoneNumber):
-            newState.store.phoneNumber = phoneNumber
             
         case .selectCategory(let category):
             newState.store.categories.append(category)
@@ -166,15 +159,10 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
             .catch { .just(.showErrorAlert($0)) }
     }
     
-    private func validate(
-        storeName: String? = nil,
-        phoneNumber: String? = nil
-    ) -> Bool {
+    private func validate(storeName: String? = nil) -> Bool {
         let storeName = storeName ?? self.currentState.store.name
-        let phoneNumber = phoneNumber ??  self.currentState.store.phoneNumber
         
         return !storeName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        && !(phoneNumber ?? "").isEmpty
     }
     
     private func updateStore(store: Store, image: UIImage?) -> Observable<Mutation> {
@@ -188,8 +176,14 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
                     newStore.imageUrl = imageResponse.imageUrl
                     
                     return self.storeService.updateStore(store: newStore)
-                        .do(onNext: { _ in
+                        .do(onNext: { [weak self] _ in
+                            guard let self = self else { return }
+                            
                             self.globalState.updateStorePublisher.onNext(newStore)
+                            self.analyticsManager.sendEvent(event: .editStoreInfo(
+                                storeId: self.currentState.store.id,
+                                screen: .editStoreInfo
+                            ))
                         })
                         .map { _ in .pop }
                 }

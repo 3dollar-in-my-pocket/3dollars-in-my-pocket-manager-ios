@@ -52,16 +52,19 @@ final class EditMenuReactor: BaseReactor, Reactor {
     private let storeService: StoreServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         store: Store,
         storeService: StoreServiceType,
         imageService: ImageServiceType,
-        globalState: GlobalState
+        globalState: GlobalState,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.storeService = storeService
         self.imageService = imageService
         self.globalState = globalState
+        self.analyticsManager = analyticsManager
         
         var newStore = store
         if store.menus.isEmpty {
@@ -87,7 +90,10 @@ final class EditMenuReactor: BaseReactor, Reactor {
             }
             
         case .addPhoto(let index, let photo):
-            return .just(.setPhoto(index: index, photo: photo))
+            return .merge([
+                .just(.setPhoto(index: index, photo: photo)),
+                .just(.refreshSaveButtonEnable)
+            ])
             
         case .inputMenuName(let index, let name):
             return .merge([
@@ -146,9 +152,11 @@ final class EditMenuReactor: BaseReactor, Reactor {
                     return .just(.toggleDeleteMode)
                 }
             } else {
-                if let invalidIndex = self.getInvalidStoreIndex(
-                    store: self.currentState.store
-                ) {
+                if let invalidIndex = self.getInvalidStoreIndex(store: self.currentState.store) {
+                    self.analyticsManager.sendEvent(event: .errorInEditingMenu(
+                        storeId: self.currentState.store.id,
+                        screen: .editMenu
+                    ))
                     return .just(.setInvalidMenuIndex(invalidIndex))
                 } else {
                     return .concat([
@@ -224,17 +232,21 @@ final class EditMenuReactor: BaseReactor, Reactor {
     }
     
     private func updateStore(store: Store) -> Observable<Mutation> {
-        let newPhotos = store.menus
+        var validMenuStore = store
+        
+        validMenuStore.menus = store.menus.filter { !$0.isPlaceholder }
+        
+        let newPhotos = validMenuStore.menus
             .filter { $0.photo != nil }
             .compactMap { $0.photo }
-        let newPhotosIndex = store.menus
+        let newPhotosIndex = validMenuStore.menus
             .filter { $0.photo != nil }
-            .compactMap { store.menus.firstIndex(of: $0) }
+            .compactMap { validMenuStore.menus.firstIndex(of: $0) }
         
         if newPhotos.isEmpty {
-            return self.storeService.updateStore(store: store)
+            return self.storeService.updateStore(store: validMenuStore)
                 .do(onNext: { [weak self] _ in
-                    self?.globalState.updateStorePublisher.onNext(store)
+                    self?.globalState.updateStorePublisher.onNext(validMenuStore)
                 })
                 .map { _ in Mutation.pop }
                 .catch {
@@ -246,7 +258,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
         } else {
             return self.imageService.uploadImages(images: newPhotos, fileType: .menu)
                 .flatMap { response -> Observable<Mutation> in
-                    var newStore = store
+                    var newStore = validMenuStore
                     let imageURLs = response.map { $0.imageUrl }
                     
                     for index in imageURLs.indices {
@@ -255,7 +267,12 @@ final class EditMenuReactor: BaseReactor, Reactor {
                     
                     return self.storeService.updateStore(store: newStore)
                         .do(onNext: { [weak self] _ in
-                            self?.globalState.updateStorePublisher.onNext(newStore)
+                            guard let self = self else { return }
+                            self.globalState.updateStorePublisher.onNext(newStore)
+                            self.analyticsManager.sendEvent(event: .editStoreMenu(
+                                storeId: self.currentState.store.id,
+                                screen: .editMenu
+                            ))
                         })
                         .map { _ in Mutation.pop }
                 }
@@ -269,7 +286,7 @@ final class EditMenuReactor: BaseReactor, Reactor {
     }
     
     private func getInvalidStoreIndex(store: Store) -> Int? {
-        return store.menus.map { $0.isValid }.firstIndex(of: false)
+        return store.menus.filter { !$0.isPlaceholder }.map { $0.isValid }.firstIndex(of: false)
     }
     
     private func getValidStore(store: Store) -> Store {

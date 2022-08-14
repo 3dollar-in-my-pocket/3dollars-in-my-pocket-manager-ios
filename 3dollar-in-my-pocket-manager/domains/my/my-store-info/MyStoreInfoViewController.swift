@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import ReactorKit
 import RxDataSources
 
@@ -7,7 +8,8 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
     private let myStoreInfoView = MyStoreInfoView()
     private let myStoreInfoReactor = MyStoreInfoReactor(
         storeService: StoreService(),
-        globalState: GlobalState.shared
+        globalState: GlobalState.shared,
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: MyStoreInfoCoordinator?
     private var myStoreInfoCollectionViewDataSource

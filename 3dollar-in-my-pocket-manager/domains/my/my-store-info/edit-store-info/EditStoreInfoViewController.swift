@@ -27,7 +27,8 @@ final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfo
             storeService: StoreService(),
             categoryService: CategoryService(),
             imageService: ImageService(),
-            globalState: GlobalState.shared
+            globalState: GlobalState.shared,
+            analyticsManager: AnalyticsManager.shared
         )
         super.init(nibName: nil, bundle: nil)
         
@@ -98,11 +99,6 @@ final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfo
         // Bind Action
         self.editStoreInfoView.storeNameField.rx.text
             .map { Reactor.Action.inputStoreName($0) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        self.editStoreInfoView.phoneNumberField.rx.text
-            .map { Reactor.Action.inputPhoneNumber($0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         

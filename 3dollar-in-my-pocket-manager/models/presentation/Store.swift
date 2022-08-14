@@ -8,7 +8,6 @@ struct Store: Equatable {
     var openTime: Date?
     var imageUrl: String?
     var categories: [StoreCategory]
-    var phoneNumber: String?
     var snsUrl: String?
     var introduction: String?
     var menus: [Menu]
@@ -17,7 +16,6 @@ struct Store: Equatable {
     
     var isValid: Bool {
         return !(self.imageUrl ?? "").isEmpty
-        && !(self.phoneNumber ?? "").isEmpty
         && !(self.imageUrl ?? "").isEmpty
         && !self.name.isEmpty
     }
@@ -38,7 +36,6 @@ struct Store: Equatable {
         }
         self.imageUrl = response.imageUrl
         self.categories = response.categories.map(StoreCategory.init)
-        self.phoneNumber = response.contactsNumber
         self.snsUrl = response.snsUrl
         self.introduction = response.introduction
         self.menus = response.menus.map(Menu.init)
@@ -62,7 +59,6 @@ struct Store: Equatable {
         }
         self.imageUrl = nil
         self.categories = response.categories.map(StoreCategory.init)
-        self.phoneNumber = nil
         self.snsUrl = nil
         self.introduction = nil
         self.menus = response.menus.map(Menu.init)
@@ -77,7 +73,6 @@ struct Store: Equatable {
         openTime: Date? = nil,
         imageUrl: String? = nil,
         categories: [StoreCategory] = [],
-        phoneNumber: String? = nil,
         snsUrl: String? = nil,
         introduction: String? = nil,
         menus: [Menu] = [],
@@ -90,7 +85,6 @@ struct Store: Equatable {
         self.openTime = openTime
         self.imageUrl = imageUrl
         self.categories = categories
-        self.phoneNumber = phoneNumber
         self.snsUrl = snsUrl
         self.introduction = introduction
         self.menus = menus

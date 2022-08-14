@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import NMapsMap
 import RxSwift
 import RxCocoa
@@ -110,7 +111,6 @@ final class HomeView: BaseView {
     }
     
     fileprivate func bind(store: Store) {
-        self.rangeOverlayView.mapView = nil
         self.marker.mapView = nil
         self.centerMarker.isHidden = store.isOpen
         if store.isOpen {
@@ -122,12 +122,16 @@ final class HomeView: BaseView {
                 
                 self.marker.position = position
                 self.marker.mapView = self.mapView
-                self.setupRangeOverlayView(
-                    latitude: location.coordinate.latitude,
-                    longitude: location.coordinate.longitude
-                )
             }
         }
+    }
+    
+    fileprivate func bindInitialPosition(location: CLLocation) {
+        self.rangeOverlayView.mapView = nil
+        self.setupRangeOverlayView(
+            latitude: location.coordinate.latitude,
+            longitude: location.coordinate.longitude
+        )
     }
     
     fileprivate func setOtherStores(stores: [Store]) {
@@ -180,6 +184,13 @@ extension Reactive where Base: HomeView {
     var otherStores: Binder<[Store]> {
         return Binder(self.base) { view, stores in
             view.setOtherStores(stores: stores)
+        }
+    }
+    
+    var initialPosition: Binder<CLLocation> {
+        return Binder(self.base) { view, position in
+            view.moveCameraPosition(position: position)
+            view.bindInitialPosition(location: position)
         }
     }
 }

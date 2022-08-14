@@ -24,13 +24,16 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
     let initialState = State()
     let updateTableViewHeightPublisher = PublishRelay<[Statistic]>()
     private let feedbackService: FeedbackServiceType
+    private let globalState: GlobalState
     private var userDefaults: UserDefaultsUtils
     
     init(
         feedbackService: FeedbackServiceType,
+        globalState: GlobalState,
         userDefaults: UserDefaultsUtils
     ) {
         self.feedbackService = feedbackService
+        self.globalState = globalState
         self.userDefaults = userDefaults
     }
     
@@ -59,6 +62,7 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
             
         case .setReviewTotalCount(let totalCount):
             newState.reviewTotalCount = totalCount
+            self.globalState.updateReviewCountPublisher.onNext(totalCount)
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)

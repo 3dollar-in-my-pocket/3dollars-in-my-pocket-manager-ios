@@ -38,11 +38,12 @@ final class SocialSigninButton: BaseView {
             make.width.equalTo(24)
             make.height.equalTo(24)
             make.right.equalTo(self.titleLabel.snp.left).offset(-8)
-            make.centerY.equalTo(self.titleLabel)
+            make.centerY.equalToSuperview()
         }
         
         self.titleLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalTo(self.iconImage).offset(2)
         }
         
         self.snp.makeConstraints { make in

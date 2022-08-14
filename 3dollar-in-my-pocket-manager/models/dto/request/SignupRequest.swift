@@ -4,7 +4,6 @@ struct SignupRequest: Requestable {
     let bossName: String
     let businessNumber: String
     let certificationPhotoUrl: String
-    let contactsNumber: String
     let socialType: SocialType
     let storeCategoriesIds: [String]
     let storeName: String
@@ -15,7 +14,6 @@ struct SignupRequest: Requestable {
             "bossName": bossName,
             "businessNumber": businessNumber,
             "certificationPhotoUrl": certificationPhotoUrl,
-            "contactsNumber": contactsNumber,
             "socialType": socialType.rawValue,
             "storeCategoriesIds": storeCategoriesIds,
             "storeName": storeName,

@@ -45,7 +45,11 @@ extension AnyObserver {
     func processAPIError(response: AFDataResponse<Data>) {
         if let value = response.value,
            let errorContainer: ResponseContainer<String> = JsonUtils.decode(data: value) {
-            self.onError(BaseError.custom(errorContainer.message))
+            if errorContainer.resultCode == "UA000" { // 401에러만 먼저 처리, 나중에 다른 처리가 필요하면 Enum으로 추가 필요
+                self.onError(HTTPError.unauthorized)
+            } else {
+                self.onError(BaseError.custom(errorContainer.message))
+            }
         } else {
             self.processHTTPError(response: response)
         }

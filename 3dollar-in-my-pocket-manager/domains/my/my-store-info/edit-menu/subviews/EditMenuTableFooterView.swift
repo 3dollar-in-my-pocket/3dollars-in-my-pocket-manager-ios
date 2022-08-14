@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class EditMenuTableFooterView: BaseView {
     let addMenuButton = UIButton().then {
         $0.layer.borderColor = UIColor.green.cgColor

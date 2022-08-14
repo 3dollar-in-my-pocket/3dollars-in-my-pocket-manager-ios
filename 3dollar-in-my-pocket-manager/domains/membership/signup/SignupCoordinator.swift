@@ -1,6 +1,7 @@
 import UIKit
 import PhotosUI
 
+import Base
 import SPPermissions
 import SPPermissionsPhotoLibrary
 import SPPermissionsCamera

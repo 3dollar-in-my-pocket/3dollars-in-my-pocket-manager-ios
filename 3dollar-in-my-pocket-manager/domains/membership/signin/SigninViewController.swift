@@ -1,7 +1,7 @@
 import UIKit
 
+import Base
 import ReactorKit
-
 
 final class SigninViewController: BaseViewController, View, SigninCoordinator {
     private let signinView = SigninView()
@@ -9,9 +9,15 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         kakaoManager: KakaoSignInManager.shared,
         appleSignInManager: AppleSigninManager.shared,
         authService: AuthService(),
-        userDefaultsUtils: UserDefaultsUtils()
+        deviceService: DeviceService(),
+        userDefaultsUtils: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: SigninCoordinator?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     static func instance() -> UINavigationController {
         let viewController = SigninViewController(nibName: nil, bundle: nil)
@@ -30,6 +36,7 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         
         self.reactor = self.signinReactor
         self.coordinator = self
+        AnalyticsManager.shared.sendEvent(event: .viewScreen(.signin))
     }
     
     override func bindEvent() {

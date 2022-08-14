@@ -1,19 +1,21 @@
 import UIKit
 
+import Base
 import ReactorKit
 
 final class StatisticsViewController: BaseViewController, View {
     private let statisticsView = StatisticsView()
-    private let statisticsReactor = StatisticsReactor()
+    private let statisticsReactor = StatisticsReactor(
+        globalState: GlobalState.shared,
+        analyticsManager: AnalyticsManager.shared
+    )
     private let pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,
         options: nil
     )
-    private let totalStatisticsViewController
-    = TotalStatisticsViewController.instance()
-    private let dailyStatisticsViewController
-    = DailyStatisticsViewController.instance()
+    private let totalStatisticsViewController = TotalStatisticsViewController.instance()
+    private let dailyStatisticsViewController = DailyStatisticsViewController.instance()
     private var pageViewControllers: [UIViewController] = []
     private var isRefreshing = false
     
@@ -85,7 +87,6 @@ final class StatisticsViewController: BaseViewController, View {
     }
     
     private func setupPageViewController() {
-        self.totalStatisticsViewController.delegate = self
         self.pageViewControllers = [
             self.totalStatisticsViewController,
             self.dailyStatisticsViewController
@@ -145,12 +146,6 @@ extension StatisticsViewController: UIPageViewControllerDelegate, UIPageViewCont
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
         return nil
-    }
-}
-
-extension StatisticsViewController: TotalStatisticsDelegate {
-    func onUpdateTotalReviewCount(count: Int) {
-        self.statisticsReactor.action.onNext(.updateTotalReviewCount(count))
     }
 }
 

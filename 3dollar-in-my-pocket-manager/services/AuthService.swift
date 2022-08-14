@@ -11,7 +11,6 @@ protocol AuthServiceType {
         ownerName: String,
         storeName: String,
         registerationNumber: String,
-        phoneNumber: String,
         categories: [StoreCategory],
         photoUrl: String,
         socialType: SocialType,
@@ -57,13 +56,14 @@ struct AuthService: AuthServiceType {
                 urlString,
                 method: .post,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: String.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -73,7 +73,6 @@ struct AuthService: AuthServiceType {
         ownerName: String,
         storeName: String,
         registerationNumber: String,
-        phoneNumber: String,
         categories: [StoreCategory],
         photoUrl: String,
         socialType: SocialType,
@@ -85,7 +84,6 @@ struct AuthService: AuthServiceType {
                 bossName: ownerName,
                 businessNumber: registerationNumber,
                 certificationPhotoUrl: photoUrl,
-                contactsNumber: phoneNumber,
                 socialType: socialType,
                 storeCategoriesIds: categories.map { $0.categoryId },
                 storeName: storeName,
@@ -121,13 +119,14 @@ struct AuthService: AuthServiceType {
                 urlString,
                 method: .delete,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: String.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -142,7 +141,8 @@ struct AuthService: AuthServiceType {
                 urlString,
                 method: .get,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<BossAccountInfoResponse>.self) { response in
+            )
+            .responseDecodable(of: ResponseContainer<BossAccountInfoResponse>.self) { response in
                 if response.isSuccess() {
                     observer.processValue(response: response)
                 } else {

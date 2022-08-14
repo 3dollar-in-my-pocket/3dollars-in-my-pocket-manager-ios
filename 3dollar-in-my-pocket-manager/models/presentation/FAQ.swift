@@ -6,7 +6,7 @@ struct FAQ {
     
     init(response: FAQResponse) {
         self.answer = response.answer
-        self.category = response.category
+        self.category = response.categoryInfo.description
         self.faqId = response.faqId
         self.question = response.question
     }

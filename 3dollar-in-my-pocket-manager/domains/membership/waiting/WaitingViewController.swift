@@ -1,15 +1,21 @@
 import UIKit
 import MessageUI
 
+import Base
 import ReactorKit
 
 final class WaitingViewController: BaseViewController, View, WaitingCoordinator {
     private let waitingView = WaitingView()
     private let waitingReactor = WaitingReactor(
         authService: AuthService(),
-        userDefaults: UserDefaultsUtils()
+        userDefaults: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: WaitingCoordinator?
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     static func instance() -> WaitingViewController {
         return WaitingViewController(nibName: nil, bundle: nil)
@@ -24,6 +30,7 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
         
         self.coordinator = self
         self.reactor = self.waitingReactor
+        AnalyticsManager.shared.sendEvent(event: .viewScreen(.waiting))
     }
     
     override func bindEvent() {

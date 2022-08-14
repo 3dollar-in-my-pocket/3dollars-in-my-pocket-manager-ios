@@ -23,19 +23,11 @@ final class LoadingManager: LoadingManagerProtocol {
         }
         
         rootView.addSubview(self.loadingView)
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.loadingView.blurEffectView.alpha = 1.0
-        } completion: { [weak self] _ in
-            self?.loadingView.activityIndicator.startAnimating()
-        }
+        self.loadingView.startLoading()
     }
     
     private func hideLoading() {
-        self.loadingView.activityIndicator.stopAnimating()
-        UIView.animate(withDuration: 0.3) { [weak self] in
-            self?.loadingView.blurEffectView.alpha = 0.0
-        } completion: { [weak self] _ in
-            self?.loadingView.removeFromSuperview()
-        }
+        self.loadingView.stopLoading()
+        self.loadingView.removeFromSuperview()
     }
 }

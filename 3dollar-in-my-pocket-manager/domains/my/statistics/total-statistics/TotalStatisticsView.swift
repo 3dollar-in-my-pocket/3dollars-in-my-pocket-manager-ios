@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class TotalStatisticsView: BaseView {
     let tableView = UITableView().then {
         $0.tableFooterView = UIView()

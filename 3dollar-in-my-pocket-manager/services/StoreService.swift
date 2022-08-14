@@ -30,13 +30,14 @@ struct StoreService: StoreServiceType {
                 urlString,
                 method: .get,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<BossStoreInfoResponse>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: BossStoreInfoResponse.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -56,13 +57,14 @@ struct StoreService: StoreServiceType {
                 method: .post,
                 parameters: parameters,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: String.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -77,13 +79,14 @@ struct StoreService: StoreServiceType {
                 urlString,
                 method: .delete,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<String>.self) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: String.self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -134,13 +137,18 @@ struct StoreService: StoreServiceType {
                 method: .get,
                 parameters: parameters,
                 headers: headers
-            ).responseDecodable(of: ResponseContainer<[BossStoreAroundInfoResponse]>.self) { ressponse in
-                if ressponse.isSuccess() {
-                    observer.processValue(response: ressponse)
+            )
+            .responseData(completionHandler: { response in
+                if response.isSuccess() {
+                    observer.processValue(
+                        type: [BossStoreAroundInfoResponse].self,
+                        response: response
+                    )
                 } else {
-                    observer.processHTTPError(response: ressponse)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
+            
             return Disposables.create()
         }
     }

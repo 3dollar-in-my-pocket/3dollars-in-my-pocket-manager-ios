@@ -1,6 +1,7 @@
 enum SettingCellType {
     case registerationNumber(String)
     case contact
+    case notification(isEnable: Bool)
     case faq
     case privacy
     case signout(SocialType)
@@ -12,6 +13,9 @@ enum SettingCellType {
             
         case .contact:
             return "setting_contact".localized
+            
+        case .notification:
+            return "setting_notification".localized
             
         case .faq:
             return "setting_faq".localized
@@ -27,6 +31,7 @@ enum SettingCellType {
     static func toSettingCellTypes(user: User) -> [SettingCellType] {
         return [
             .registerationNumber(user.businessNumber),
+            .notification(isEnable: user.isNotificationEnable),
             .contact,
             .faq,
             .privacy,

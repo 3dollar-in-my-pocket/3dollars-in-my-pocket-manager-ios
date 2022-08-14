@@ -1,12 +1,15 @@
 import UIKit
 
+import Base
 import ReactorKit
 
 final class SettingViewController: BaseViewController, View, SettingCoordinator {
     private let settingView = SettingView()
     let settingReactor = SettingReactor(
         authService: AuthService(),
-        userDefaults: UserDefaultsUtils()
+        deviceService: DeviceService(),
+        userDefaults: UserDefaultsUtils(),
+        analyticsManager: AnalyticsManager.shared
     )
     private weak var coordinator: SettingCoordinator?
     
@@ -43,7 +46,7 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     
     override func bindEvent() {
         self.settingView.tableView.rx.itemSelected
-            .filter { $0.row == 1 }
+            .filter { $0.row == 2 }
             .map { _ in () }
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: ())
@@ -53,7 +56,7 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
             .disposed(by: self.eventDisposeBag)
         
         self.settingView.tableView.rx.itemSelected
-            .filter { $0.row == 2 }
+            .filter { $0.row == 3 }
             .map { _ in () }
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .asDriver(onErrorJustReturn: ())
@@ -62,10 +65,27 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
             })
             .disposed(by: self.eventDisposeBag)
         
+        self.settingView.tableView.rx.itemSelected
+            .filter { $0.row == 4 }
+            .map { _ in () }
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.goToPrivacy()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
         self.settingReactor.goToSigninPublisher
             .asDriver(onErrorJustReturn: ())
             .drive(onNext: { [weak self] in
                 self?.coordinator?.goToSignin()
+            })
+            .disposed(by: self.eventDisposeBag)
+        
+        self.settingReactor.showCopyTokenSuccessAlertPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { [weak self] in
+                self?.coordinator?.showCopyTokenSuccessAlert()
             })
             .disposed(by: self.eventDisposeBag)
         
@@ -93,6 +113,13 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
     }
     
     func bind(reactor: SettingReactor) {
+        // Bind Action
+        self.settingView.fcmTokenButton.rx.tap
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.tapFCMToken }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
         // Bind State
         reactor.state
             .map { $0.user }
@@ -110,6 +137,12 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
                     .drive(onNext: { [weak self] in
                         self?.coordinator?.showLogoutAlert()
                     })
+                    .disposed(by: cell.disposeBag)
+                
+                cell.rightSwitch.rx.controlEvent(.valueChanged)
+                    .withLatestFrom(cell.rightSwitch.rx.value)
+                    .map { Reactor.Action.tapNotificationSwitch(isEnable: $0) }
+                    .bind(to: self.settingReactor.action)
                     .disposed(by: cell.disposeBag)
             }
             .disposed(by: self.eventDisposeBag)

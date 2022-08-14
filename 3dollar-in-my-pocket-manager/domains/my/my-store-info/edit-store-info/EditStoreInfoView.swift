@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class EditStoreInfoView: BaseView {
     let tapBackground = UITapGestureRecognizer()
     
@@ -36,16 +38,6 @@ final class EditStoreInfoView: BaseView {
         $0.maxLength = 20
     }
     
-    let phoneNumberField = InputField(
-        title: "signup_phone_number_title".localized,
-        isRequired: true,
-        description: "signup_phone_number_description".localized,
-        placeholder: "signup_phone_number_placeholder".localized
-    ).then {
-        $0.keyboardType = .numberPad
-        $0.format = "XXX-XXXX-XXXX"
-    }
-    
     let categoryCollectionView = CategorySelectView()
     
     let photoView = PhotoUploadView(type: .edit)
@@ -76,7 +68,6 @@ final class EditStoreInfoView: BaseView {
         self.containerView.addSubViews([
             self.roundedBackgroundView,
             self.storeNameField,
-            self.phoneNumberField,
             self.categoryCollectionView,
             self.photoView,
             self.snsField
@@ -136,16 +127,10 @@ final class EditStoreInfoView: BaseView {
             make.top.equalTo(self.roundedBackgroundView).offset(32)
         }
         
-        self.phoneNumberField.snp.makeConstraints { make in
-            make.left.equalTo(self.storeNameField)
-            make.right.equalTo(self.storeNameField)
-            make.top.equalTo(self.storeNameField.snp.bottom).offset(32)
-        }
-        
         self.categoryCollectionView.snp.makeConstraints { make in
             make.left.equalTo(self.storeNameField)
             make.right.equalTo(self.storeNameField)
-            make.top.equalTo(self.phoneNumberField.snp.bottom).offset(32)
+            make.top.equalTo(self.storeNameField.snp.bottom).offset(32)
         }
         
         self.photoView.snp.makeConstraints { make in
@@ -170,7 +155,6 @@ final class EditStoreInfoView: BaseView {
     
     func bind(store: Store) {
         self.storeNameField.setText(text: store.name)
-        self.phoneNumberField.setText(text: store.phoneNumber)
         self.photoView.setImage(imageUrl: store.imageUrl)
         self.snsField.setText(text: store.snsUrl)
     }

@@ -18,6 +18,7 @@ struct ImageService: ImageServiceType {
         
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/upload/\(fileType.rawValue)"
+            let headers = HTTPUtils.defaultHeader()
             
             HTTPUtils.fileUploadSession.upload(multipartFormData: { multipartFormData in
                 multipartFormData.append(
@@ -26,14 +27,14 @@ struct ImageService: ImageServiceType {
                     fileName: DateUtils.todayString(format: "yyyy-MM-dd'T'HH-mm-ss") + "_image.png",
                     mimeType: "image/png"
                 )
-            }, to: urlString)
-                .responseDecodable(of: ResponseContainer<ImageUploadResponse>.self) { response in
-                    if response.isSuccess() {
-                        observer.processValue(response: response)
-                    } else {
-                        observer.processHTTPError(response: response)
-                    }
+            }, to: urlString, headers: headers)
+            .responseData(completionHandler: { response in
+                if response.isSuccess() {
+                    observer.processValue(type: ImageUploadResponse.self, response: response)
+                } else {
+                    observer.processAPIError(response: response)
                 }
+            })
             
             return Disposables.create()
         }
@@ -41,6 +42,7 @@ struct ImageService: ImageServiceType {
     
     func uploadImages(images: [UIImage], fileType: FileType) -> Observable<[ImageUploadResponse]> {
         var datas: [Data] = []
+        let headers = HTTPUtils.defaultHeader()
         
         for image in images {
             guard let data = image.jpegData(compressionQuality: 0.8) else {
@@ -62,14 +64,14 @@ struct ImageService: ImageServiceType {
                         mimeType: "image/png"
                     )
                 }
-            }, to: urlString)
-            .responseDecodable(of: ResponseContainer<[ImageUploadResponse]>.self) { response in
+            }, to: urlString, headers: headers)
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(type: [ImageUploadResponse].self, response: response)
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }

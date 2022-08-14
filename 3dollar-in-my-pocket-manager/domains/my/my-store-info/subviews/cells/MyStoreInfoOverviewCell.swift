@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import Kingfisher
 
 final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
@@ -22,7 +23,6 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     private let nameLabel = UILabel().then {
         $0.font = .bold(size: 24)
         $0.textColor = .gray100
-        $0.text = "은평구 핫도그 아저씨"
         $0.textAlignment = .center
     }
     
@@ -36,19 +36,6 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     private let contactContainerView = UIView().then {
         $0.backgroundColor = .gray0
         $0.layer.cornerRadius = 12
-    }
-    
-    private let phoneNumberLabel = UILabel().then {
-        $0.font = .bold(size: 12)
-        $0.textColor = .black
-        $0.text = "연락처"
-        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    }
-    
-    private let phoneNumberValueLabel = UILabel().then {
-        $0.font = .regular(size: 12)
-        $0.textColor = .gray50
-        $0.textAlignment = .right
     }
     
     private let snsLabel = UILabel().then {
@@ -89,8 +76,6 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             self.nameLabel,
             self.categoryStackView,
             self.contactContainerView,
-            self.phoneNumberLabel,
-            self.phoneNumberValueLabel,
             self.snsLabel,
             self.snsValueLabel,
             self.editButton
@@ -130,26 +115,15 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             make.height.equalTo(78)
         }
         
-        self.phoneNumberLabel.snp.makeConstraints { make in
+        self.snsLabel.snp.makeConstraints { make in
             make.left.equalTo(self.contactContainerView).offset(12)
             make.top.equalTo(self.contactContainerView).offset(12)
-        }
-        
-        self.phoneNumberValueLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(self.phoneNumberLabel)
-            make.right.equalTo(self.contactContainerView).offset(-12)
-            make.left.equalTo(self.phoneNumberLabel.snp.right).offset(12)
-        }
-        
-        self.snsLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.phoneNumberLabel)
-            make.top.equalTo(self.phoneNumberLabel.snp.bottom).offset(10)
         }
         
         self.snsValueLabel.snp.makeConstraints { make in
             make.top.equalTo(self.snsLabel)
             make.right.equalTo(self.contactContainerView).offset(-12)
-            make.left.equalTo(self.phoneNumberLabel.snp.right).offset(12)
+            make.left.equalTo(self.snsLabel.snp.right).offset(12)
         }
         
         self.editButton.snp.makeConstraints { make in
@@ -182,7 +156,6 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             self.categoryStackView.addArrangedSubview(categoryLagel)
         }
         
-        self.phoneNumberValueLabel.text = store.phoneNumber
         self.snsValueLabel.text = store.snsUrl
     }
 }

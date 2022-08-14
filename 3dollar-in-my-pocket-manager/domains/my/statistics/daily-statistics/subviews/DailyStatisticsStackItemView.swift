@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class DailyStatisticsStackItemView: BaseView {
     static let height: CGFloat = 22
     

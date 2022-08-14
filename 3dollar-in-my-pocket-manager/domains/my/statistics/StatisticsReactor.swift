@@ -3,13 +3,12 @@ import RxRelay
 
 final class StatisticsReactor: Reactor {
     enum Action {
-        case updateTotalReviewCount(Int)
         case refresh
         case tapFilterButton(StatisticsFilterButton.FilterType)
     }
     
     enum Mutation {
-        case setTotalReviewCount(Int)
+        case updateReviewCount(Int)
         case setTab(StatisticsFilterButton.FilterType)
         case refresh(StatisticsFilterButton.FilterType)
     }
@@ -21,20 +20,26 @@ final class StatisticsReactor: Reactor {
     
     let initialState: State
     let refreshPublisher = PublishRelay<StatisticsFilterButton.FilterType>()
+    private let globalState: GlobalState
+    private let analyticsManager: AnalyticsManagerProtocol
     
-    init(state: State = State(
-        totalReviewCount: 0,
-        selectedFilter: .total
-    )) {
+    init(
+        globalState: GlobalState,
+        analyticsManager: AnalyticsManagerProtocol,
+        state: State = State(
+            totalReviewCount: 0,
+            selectedFilter: .total
+        )
+    ) {
+        self.globalState = globalState
+        self.analyticsManager = analyticsManager
         self.initialState = state
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
-        case .updateTotalReviewCount(let totalReviewCount):
-            return .just(.setTotalReviewCount(totalReviewCount))
-            
         case .tapFilterButton(let filterType):
+            self.analyticsManager.sendEvent(event: .tapStatisticTab(filterType: filterType))
             return .just(.setTab(filterType))
             
         case .refresh:
@@ -42,11 +47,19 @@ final class StatisticsReactor: Reactor {
         }
     }
     
+    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
+        return .merge([
+            mutation,
+            self.globalState.updateReviewCountPublisher
+                .map { .updateReviewCount($0) }
+        ])
+    }
+    
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
         
         switch mutation {
-        case .setTotalReviewCount(let totalReviewCount):
+        case .updateReviewCount(let totalReviewCount):
             newState.totalReviewCount = totalReviewCount
             
         case .setTab(let filterType):

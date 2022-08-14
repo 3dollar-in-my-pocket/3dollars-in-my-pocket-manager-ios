@@ -26,15 +26,17 @@ struct FeedbackService: FeedbackServiceType {
                 urlString,
                 method: .get,
                 headers: headers
-            ).responseDecodable(
-                of: ResponseContainer<[BossStoreFeedbackTypeResponse]>.self
-            ) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(
+                        type: [BossStoreFeedbackTypeResponse].self,
+                        response: response
+                    )
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }
@@ -49,15 +51,17 @@ struct FeedbackService: FeedbackServiceType {
                 urlString,
                 method: .get,
                 headers: headers
-            ).responseDecodable(
-                of: ResponseContainer<[BossStoreFeedbackCountResponse]>.self
-            ) { response in
+            )
+            .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(response: response)
+                    observer.processValue(
+                        type: [BossStoreFeedbackCountResponse].self,
+                        response: response
+                    )
                 } else {
-                    observer.processHTTPError(response: response)
+                    observer.processAPIError(response: response)
                 }
-            }
+            })
             
             return Disposables.create()
         }

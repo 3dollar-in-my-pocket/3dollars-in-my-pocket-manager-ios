@@ -2,7 +2,6 @@ struct BossStoreInfoResponse: Decodable {
     let appearanceDays: [BossStoreAppearanceDayResponse]
     let bossStoreId: String
     let categories: [StoreCategoryResponse]
-    let contactsNumber: String?
     let createdAt: String?
     let distance: Int
     let imageUrl: String?
@@ -18,7 +17,6 @@ struct BossStoreInfoResponse: Decodable {
         case appearanceDays
         case bossStoreId
         case categories
-        case contactsNumber
         case createdAt
         case distance
         case imageUrl
@@ -43,10 +41,6 @@ struct BossStoreInfoResponse: Decodable {
             [StoreCategoryResponse].self,
             forKey: .categories
         ) ?? []
-        self.contactsNumber = try values.decodeIfPresent(
-            String.self,
-            forKey: .contactsNumber
-        )
         self.createdAt = try values.decodeIfPresent(String.self, forKey: .createdAt)
         self.distance = try values.decodeIfPresent(Int.self, forKey: .distance) ?? 0
         self.imageUrl = try values.decodeIfPresent(String.self, forKey: .imageUrl)

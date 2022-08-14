@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import RxSwift
 import RxCocoa
 
@@ -9,6 +10,16 @@ final class StatisticsFilterButton: BaseView {
     enum FilterType {
         case total
         case day
+        
+        var name: String {
+            switch self {
+            case .total:
+                return "total"
+                
+            case .day:
+                return "day"
+            }
+        }
     }
     
     private let backgroundView = UIView().then {

@@ -1,5 +1,6 @@
 import UIKit
 
+import Base
 import ReactorKit
 
 final class EditScheduleViewController:
@@ -22,7 +23,8 @@ final class EditScheduleViewController:
         self.editScheduleReactor = EditScheduleReactor(
             store: store,
             storeService: StoreService(),
-            globalState: GlobalState.shared
+            globalState: GlobalState.shared,
+            analyticsManager: AnalyticsManager.shared
         )
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,6 +42,7 @@ final class EditScheduleViewController:
         
         self.coordinator = self
         self.reactor = self.editScheduleReactor
+        AnalyticsManager.shared.sendEvent(event: .viewScreen(.editSchedule))
     }
     
     override func bindEvent() {

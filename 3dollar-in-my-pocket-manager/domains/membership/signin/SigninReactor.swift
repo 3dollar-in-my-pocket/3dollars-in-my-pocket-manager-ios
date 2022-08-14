@@ -26,18 +26,24 @@ final class SigninReactor: BaseReactor, Reactor {
     private let kakaoSignInManager: KakaoSignInManagerProtocol
     private let appleSignInManager: AppleSignInManagerProtocol
     private let authService: AuthServiceType
+    private let deviceService: DeviceServiceType
     private var userDefaultsUtils: UserDefaultsUtils
+    private let analyticsManager: AnalyticsManagerProtocol
     
     init(
         kakaoManager: KakaoSignInManagerProtocol,
         appleSignInManager: AppleSignInManagerProtocol,
         authService: AuthServiceType,
-        userDefaultsUtils: UserDefaultsUtils
+        deviceService: DeviceServiceType,
+        userDefaultsUtils: UserDefaultsUtils,
+        analyticsManager: AnalyticsManagerProtocol
     ) {
         self.kakaoSignInManager = kakaoManager
         self.appleSignInManager = appleSignInManager
         self.authService = authService
+        self.deviceService = deviceService
         self.userDefaultsUtils = userDefaultsUtils
+        self.analyticsManager = analyticsManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -96,11 +102,19 @@ final class SigninReactor: BaseReactor, Reactor {
     private func signin(socialType: SocialType, token: String) -> Observable<Mutation> {
         let signinObservable = self.authService.login(socialType: socialType, token: token)
             .do(onNext: { [weak self] response in
+                self?.userDefaultsUtils.userId = response.bossId
                 self?.userDefaultsUtils.userToken = response.token
+                self?.analyticsManager.sendEvent(event: .setUserId(response.bossId))
+                self?.analyticsManager.sendEvent(
+                    event: .signin(userId: response.bossId, screen: .signin)
+                )
             })
             .flatMap { [weak self] _ -> Observable<Mutation> in
                 guard let self = self else { return .error(BaseError.unknown) }
-                return self.fetchUserInfo()
+                
+                return .zip(self.fetchUserInfo(), self.registerDevice()) { mutation, _ in
+                    return mutation
+                }
             }
             .catch { error -> Observable<Mutation> in
                 if let httpError = error as? HTTPError {
@@ -144,5 +158,9 @@ final class SigninReactor: BaseReactor, Reactor {
                     return .just(.showErrorAlert(error))
                 }
             }
+    }
+    
+    private func registerDevice() -> Observable<Void> {
+        return self.deviceService.registerDevice()
     }
 }

@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class MyPageViewController: BaseViewController {
     private let myPageView = MyPageView()
     
@@ -30,6 +32,7 @@ final class MyPageViewController: BaseViewController {
         
         return UINavigationController(rootViewController: viewController).then {
             $0.isNavigationBarHidden = true
+            $0.interactivePopGestureRecognizer?.delegate = nil
         }
     }
     
@@ -46,6 +49,9 @@ final class MyPageViewController: BaseViewController {
     override func bindEvent() {
         self.myPageView.rx.tapTab
             .asDriver()
+            .do(onNext: { [weak self] index in
+                self?.sendAnalyticsEvent(selectedIndex: index)
+            })
             .drive(onNext: { [weak self] index in
                 guard let self = self else { return }
                 self.pageViewController.setViewControllers(
@@ -77,6 +83,14 @@ final class MyPageViewController: BaseViewController {
             if let scrollView = view as? UIScrollView {
                 scrollView.isScrollEnabled = false
             }
+        }
+    }
+    
+    private func sendAnalyticsEvent(selectedIndex: Int) {
+        if selectedIndex == 0 {
+            AnalyticsManager.shared.sendEvent(event: .tapMyTopTab(tab: .myStoreInfo))
+        } else {
+            AnalyticsManager.shared.sendEvent(event: .tapMyTopTab(tab: .statistics))
         }
     }
 }

@@ -1,5 +1,7 @@
 import UIKit
 
+import Base
+
 final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
     static let registerID = "\(SignupCategoryCollectionViewCell.self)"
     static let estimatedSize = CGSize(width: 56, height: 40)
