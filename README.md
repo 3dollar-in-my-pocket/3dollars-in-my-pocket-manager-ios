@@ -21,3 +21,7 @@
 ### Git-flow 전략 사용
 - https://danielkummer.github.io/git-flow-cheatsheet/index.ko_KR.html
 - 코드 리뷰는 진행하고있지 않습니다. (iOS 개발자가 1명이라 아쉽습니다..)
+
+### Code style guide
+- Frip에서 정의한 [Code style guide](https://github.com/frientrip/swift-style-guide)를 따릅니다.
+- 가이드에 적혀있는대로 가이드에서 정의되지 않은 규칙은 [Swift API design guide](https://swift.org/documentation/api-design-guidelines/)를 따릅니다.
