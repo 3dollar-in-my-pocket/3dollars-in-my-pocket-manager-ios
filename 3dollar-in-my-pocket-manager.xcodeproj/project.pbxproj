@@ -1765,9 +1765,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "3dollar-in-my-pocket-manager/3dollar-in-my-pocket-manager.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = X975A2HM62;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
@@ -1781,8 +1783,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				KAKAO_APP_KEY = b623fd2160694c4c2cb08e64df491d1c;
 				KAKAO_CHANNEL_URL = "http://pf.kakao.com/_RxghUb/chat";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1793,6 +1794,8 @@
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1807,13 +1810,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "3dollar-in-my-pocket-manager/3dollar-in-my-pocket-manager.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = X975A2HM62;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님";
+				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
 				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
@@ -1823,8 +1828,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				KAKAO_APP_KEY = a009e78756eb528bc0e9897b8409a2e4;
 				KAKAO_CHANNEL_URL = "http://pf.kakao.com/_RxghUb/chat";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1835,6 +1839,8 @@
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.macgongmon.-dollar-in-my-pocket-manager";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1933,8 +1939,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				kind = exactVersion;
+				version = 2.11.1;
 			};
 		};
 		6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
