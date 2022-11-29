@@ -1,7 +1,6 @@
 import Foundation
 
 import ReactorKit
-import Base
 import RxRelay
 
 final class DailyStatisticsReactor: BaseReactor, Reactor {

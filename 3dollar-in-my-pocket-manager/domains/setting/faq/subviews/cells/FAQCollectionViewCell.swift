@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class FAQCollectionViewCell: BaseCollectionViewCell {
     static let registerId = "\(FAQCollectionViewCell.self)"
     static let height: CGFloat = 149

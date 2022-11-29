@@ -1,5 +1,3 @@
-import Base
-
 protocol HomeCoordinator: AnyObject, BaseCoordinator {
     func showInvalidPositionAlert()
 }

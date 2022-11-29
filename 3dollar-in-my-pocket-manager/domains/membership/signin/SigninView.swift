@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class SigninView: BaseView {
     private let introImageView = UIImageView().then {
         $0.image = UIImage(named: "img_intro")

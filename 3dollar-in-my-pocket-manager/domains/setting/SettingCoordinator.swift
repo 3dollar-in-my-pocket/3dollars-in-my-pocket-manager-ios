@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 protocol SettingCoordinator: BaseCoordinator, AnyObject {
     func showLogoutAlert()
     
