@@ -1,4 +1,4 @@
-git_url("https://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@github.com/Hyunsik-Yoo/apple-developer-key")
+git_url("https://github.com/Hyunsik-Yoo/apple-developer-key")
 
 storage_mode("git")
 
