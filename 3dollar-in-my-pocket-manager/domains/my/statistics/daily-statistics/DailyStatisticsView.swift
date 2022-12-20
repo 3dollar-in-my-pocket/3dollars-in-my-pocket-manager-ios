@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class DailyStatisticsView: BaseView {
     let tableView = UITableView().then {
         $0.tableFooterView = UIView()

@@ -1,6 +1,7 @@
+import Foundation
+
 import RxSwift
 import Alamofire
-import Base
 
 extension AnyObserver {
     func processHTTPError<T>(response: AFDataResponse<T>) {

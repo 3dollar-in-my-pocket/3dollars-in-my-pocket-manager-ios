@@ -2,7 +2,6 @@ import UIKit
 
 import Alamofire
 import RxSwift
-import Base
 
 protocol ImageServiceType {
     func uploadImage(image: UIImage, fileType: FileType) -> Observable<ImageUploadResponse>

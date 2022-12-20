@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class FAQView: BaseView {
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "ic_back")?.withRenderingMode(.alwaysTemplate), for: .normal)

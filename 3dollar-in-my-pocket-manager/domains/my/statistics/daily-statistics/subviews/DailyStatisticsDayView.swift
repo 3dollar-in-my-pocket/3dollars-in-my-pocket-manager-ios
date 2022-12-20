@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class DailyStatisticsDayView: BaseView {
     private let dayLabel = UILabel().then {
         $0.font = .bold(size: 16)

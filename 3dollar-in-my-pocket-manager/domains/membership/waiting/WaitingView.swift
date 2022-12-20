@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class WaitingView: BaseView {
     private let gradient = CAGradientLayer()
     

@@ -1,5 +1,4 @@
 import UIKit
-import Base
 
 protocol BaseCoordinator {
     var presenter: BaseViewController { get }

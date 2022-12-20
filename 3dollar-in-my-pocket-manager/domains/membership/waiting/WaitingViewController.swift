@@ -1,7 +1,6 @@
 import UIKit
 import MessageUI
 
-import Base
 import ReactorKit
 
 final class WaitingViewController: BaseViewController, View, WaitingCoordinator {

@@ -4,7 +4,6 @@ import PhotosUI
 import ReactorKit
 import RxSwift
 import SPPermissions
-import Base
 import CropViewController
 
 final class SignupViewController: BaseViewController, View, SignupCoordinator {

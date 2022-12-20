@@ -1,6 +1,5 @@
 import UIKit
 
-import Base
 
 final class SettingTableFooterView: BaseView {
     static let height: CGFloat = 40
