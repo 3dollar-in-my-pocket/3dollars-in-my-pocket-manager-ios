@@ -166,13 +166,23 @@
 		6EB56F2C28A229F500834663 /* FAQCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2B28A229F500834663 /* FAQCategoryResponse.swift */; };
 		6EB56F2E28A254D500834663 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2D28A254D500834663 /* DeviceService.swift */; };
 		6EB56F3028A25AF100834663 /* UpsertBossDeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2F28A25AF100834663 /* UpsertBossDeviceRequest.swift */; };
+		6EB5CA882935C93400B6653C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA872935C93400B6653C /* BaseView.swift */; };
+		6EB5CA8A2935CA4200B6653C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA892935CA4200B6653C /* BaseViewController.swift */; };
+		6EB5CA8C2935CA5D00B6653C /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA8B2935CA5D00B6653C /* BaseTableViewCell.swift */; };
+		6EB5CA8E2935CA7B00B6653C /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA8D2935CA7B00B6653C /* BaseCollectionViewCell.swift */; };
+		6EB5CA902935CAC300B6653C /* AlertUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA8F2935CAC300B6653C /* AlertUtils.swift */; };
+		6EB5CA922935CAF300B6653C /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA912935CAF300B6653C /* DateUtils.swift */; };
+		6EB5CA942935CB0500B6653C /* JsonUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA932935CB0500B6653C /* JsonUtils.swift */; };
+		6EB5CA962935CB1D00B6653C /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA952935CB1D00B6653C /* UIViewExtensions.swift */; };
+		6EB5CA982935CB3E00B6653C /* UILabelExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA972935CB3E00B6653C /* UILabelExtensions.swift */; };
+		6EB5CA9A2935CB6100B6653C /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA992935CB6100B6653C /* UITableViewExtensions.swift */; };
+		6EB5CA9C2935CB6D00B6653C /* UICollectionViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA9B2935CB6C00B6653C /* UICollectionViewExtensions.swift */; };
+		6EB5CA9E2935CB7600B6653C /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA9D2935CB7600B6653C /* DateExtensions.swift */; };
 		6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */; };
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
 		6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */; };
-		6EBD5BEF287564D900B1D0F8 /* Base.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; platformFilter = ios; };
-		6EBD5BF0287564D900B1D0F8 /* Base.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6E1AA1B727CB210800C96D92 /* Base.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6EBF1AE727FE65950011268B /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AE627FE65950011268B /* StoreService.swift */; };
 		6EBF1AE927FE6A980011268B /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AE827FE6A980011268B /* Store.swift */; };
 		6EBF1AEB27FE7A1D0011268B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF1AEA27FE7A1D0011268B /* HomeCoordinator.swift */; };
@@ -228,30 +238,6 @@
 		CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		6E1AA1B627CB210800C96D92 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6E1AA1B227CB210800C96D92 /* Base.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6EFDFA4227C657C9007BF8FD;
-			remoteInfo = Base;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		6EBD5BF1287564D900B1D0F8 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				6EBD5BF0287564D900B1D0F8 /* Base.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		2485BFD46CCBCCA4FDB38FB3 /* Pods-3dollar-in-my-pocket-manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3dollar-in-my-pocket-manager.release.xcconfig"; path = "Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager.release.xcconfig"; sourceTree = "<group>"; };
 		2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_3dollar_in_my_pocket_manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -260,7 +246,6 @@
 		6E142D5B27D77CEE0084480C /* SigninCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninCoordinator.swift; sourceTree = "<group>"; };
 		6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkActivityLogger.swift; sourceTree = "<group>"; };
 		6E142D6127D785A40084480C /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
-		6E1AA1B227CB210800C96D92 /* Base.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Base.xcodeproj; path = "../3dollars-in-my-pocket-ios-base/Base.xcodeproj"; sourceTree = "<group>"; };
 		6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoReactor.swift; sourceTree = "<group>"; };
 		6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionView.swift; sourceTree = "<group>"; };
 		6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionViewController.swift; sourceTree = "<group>"; };
@@ -408,6 +393,18 @@
 		6EB56F2B28A229F500834663 /* FAQCategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQCategoryResponse.swift; sourceTree = "<group>"; };
 		6EB56F2D28A254D500834663 /* DeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
 		6EB56F2F28A25AF100834663 /* UpsertBossDeviceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsertBossDeviceRequest.swift; sourceTree = "<group>"; };
+		6EB5CA872935C93400B6653C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		6EB5CA892935CA4200B6653C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		6EB5CA8B2935CA5D00B6653C /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		6EB5CA8D2935CA7B00B6653C /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		6EB5CA8F2935CAC300B6653C /* AlertUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtils.swift; sourceTree = "<group>"; };
+		6EB5CA912935CAF300B6653C /* DateUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtils.swift; sourceTree = "<group>"; };
+		6EB5CA932935CB0500B6653C /* JsonUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonUtils.swift; sourceTree = "<group>"; };
+		6EB5CA952935CB1D00B6653C /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
+		6EB5CA972935CB3E00B6653C /* UILabelExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILabelExtensions.swift; sourceTree = "<group>"; };
+		6EB5CA992935CB6100B6653C /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
+		6EB5CA9B2935CB6C00B6653C /* UICollectionViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtensions.swift; sourceTree = "<group>"; };
+		6EB5CA9D2935CB7600B6653C /* DateExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionCoordinator.swift; sourceTree = "<group>"; };
 		6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "3dollar-in-my-pocket-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EB94EA327CB208F00609E77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -472,7 +469,6 @@
 				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
-				6EBD5BEF287564D900B1D0F8 /* Base.framework in Frameworks */,
 				6E37A2E42860AFE4008C046F /* FirebaseAnalytics in Frameworks */,
 				6EE2625027DDBE64008B3531 /* SPPermissionsNotification in Frameworks */,
 				6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */,
@@ -498,6 +494,10 @@
 			children = (
 				6E142D5727D77AF50084480C /* BaseReactor.swift */,
 				6E473B9727D8624300232139 /* BaseCoordinator.swift */,
+				6EB5CA872935C93400B6653C /* BaseView.swift */,
+				6EB5CA892935CA4200B6653C /* BaseViewController.swift */,
+				6EB5CA8B2935CA5D00B6653C /* BaseTableViewCell.swift */,
+				6EB5CA8D2935CA7B00B6653C /* BaseCollectionViewCell.swift */,
 			);
 			path = base;
 			sourceTree = "<group>";
@@ -512,14 +512,6 @@
 				6EE2624627DDB9F2008B3531 /* SignupCoordinator.swift */,
 			);
 			path = signup;
-			sourceTree = "<group>";
-		};
-		6E1AA1B327CB210800C96D92 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				6E1AA1B727CB210800C96D92 /* Base.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		6E1AA1B827CB215700C96D92 /* Frameworks */ = {
@@ -948,7 +940,6 @@
 		6EB94E9727CB208E00609E77 = {
 			isa = PBXGroup;
 			children = (
-				6E1AA1B227CB210800C96D92 /* Base.xcodeproj */,
 				6EB94EA227CB208F00609E77 /* 3dollar-in-my-pocket-manager */,
 				6EB94EA127CB208F00609E77 /* Products */,
 				6E1AA1B827CB215700C96D92 /* Frameworks */,
@@ -1074,6 +1065,11 @@
 				6E37AF7727E715C1004FBE25 /* UIViewControllerExtensions.swift */,
 				6E6C9C78280BEF7D009AFAE8 /* UIImageViewExtensions.swift */,
 				6EB56F2828A223DF00834663 /* UIApplicationExtensions.swift */,
+				6EB5CA952935CB1D00B6653C /* UIViewExtensions.swift */,
+				6EB5CA972935CB3E00B6653C /* UILabelExtensions.swift */,
+				6EB5CA992935CB6100B6653C /* UITableViewExtensions.swift */,
+				6EB5CA9B2935CB6C00B6653C /* UICollectionViewExtensions.swift */,
+				6EB5CA9D2935CB7600B6653C /* DateExtensions.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -1174,6 +1170,9 @@
 				6EE0CFBD27CB64B60027A426 /* HTTPUtils.swift */,
 				6EE0CFC427CB65C80027A426 /* UserDefaultsUtils.swift */,
 				6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */,
+				6EB5CA8F2935CAC300B6653C /* AlertUtils.swift */,
+				6EB5CA912935CAF300B6653C /* DateUtils.swift */,
+				6EB5CA932935CB0500B6653C /* JsonUtils.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -1250,7 +1249,6 @@
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6EBD5BF1287564D900B1D0F8 /* Embed Frameworks */,
 				6EA3D2B328A748E600E4C389 /* Setup Firebase */,
 			);
 			buildRules = (
@@ -1324,28 +1322,12 @@
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 6E1AA1B327CB210800C96D92 /* Products */;
-					ProjectRef = 6E1AA1B227CB210800C96D92 /* Base.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				6EB94E9F27CB208F00609E77 /* 3dollar-in-my-pocket-manager */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		6E1AA1B727CB210800C96D92 /* Base.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Base.framework;
-			remoteRef = 6E1AA1B627CB210800C96D92 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		6EB94E9E27CB208F00609E77 /* Resources */ = {
@@ -1434,6 +1416,8 @@
 				6E5DCE7027FDC97200CA58EE /* DayOfTheWeek.swift in Sources */,
 				6E95E85B282FD3E40004C08D /* TotalStatisticsTableViewCell.swift in Sources */,
 				6E211847285DD6F600220E5A /* FAQService.swift in Sources */,
+				6EB5CA8A2935CA4200B6653C /* BaseViewController.swift in Sources */,
+				6EB5CA8E2935CA7B00B6653C /* BaseCollectionViewCell.swift in Sources */,
 				6E5ECC1A282013BB0033BAAA /* EditScheduleReactor.swift in Sources */,
 				6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */,
 				6E8D013A2843396800FAB49E /* EditMenuTableViewCell.swift in Sources */,
@@ -1443,6 +1427,7 @@
 				6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */,
 				6ED370F7280C33A300C445E5 /* MyStoreInfoHeaderView.swift in Sources */,
 				6EA53B9C284DD18A007A3839 /* SettingTableFooterView.swift in Sources */,
+				6EB5CA962935CB1D00B6653C /* UIViewExtensions.swift in Sources */,
 				6E6B4319285DB66800AD84A5 /* FAQViewController.swift in Sources */,
 				6E1AB7A7280D918F0059DCF4 /* PatchBossStoreInfoRequest.swift in Sources */,
 				6ED883A527CB3C7E00278E14 /* UIFontExtensions.swift in Sources */,
@@ -1465,6 +1450,7 @@
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
 				6E91A9952841EE620090361F /* CursorResponse.swift in Sources */,
 				6E6B431B285DB6B900AD84A5 /* FAQCoordinator.swift in Sources */,
+				6EB5CA9A2935CB6100B6653C /* UITableViewExtensions.swift in Sources */,
 				6EF8D108280AA993004D27C9 /* BossStoreAroundInfoResponse.swift in Sources */,
 				6E91A9892841DC110090361F /* DailyStatisticsView.swift in Sources */,
 				6E6B4317285DB49C00AD84A5 /* FAQView.swift in Sources */,
@@ -1495,6 +1481,7 @@
 				6E6C9C7B280BF1EF009AFAE8 /* MyStoreInfoIntroductionCell.swift in Sources */,
 				6E473B9D27D870B900232139 /* SignupCategoryCollectionViewCell.swift in Sources */,
 				6EA53B9E284DD299007A3839 /* SettingTableHeaderView.swift in Sources */,
+				6EB5CA9E2935CB7600B6653C /* DateExtensions.swift in Sources */,
 				6E5DCE7627FDCCED00CA58EE /* LocationResponse.swift in Sources */,
 				6E1F54B027CB97FC0050BBBA /* ObserverExtensions.swift in Sources */,
 				6E91A9932841ED370090361F /* BossStoreFeedbackGroupingDateResponse.swift in Sources */,
@@ -1514,6 +1501,7 @@
 				6EE0CFC527CB65C80027A426 /* UserDefaultsUtils.swift in Sources */,
 				6E5F3DDC281D61AA002282B6 /* EditScheduleCoordinator.swift in Sources */,
 				6E91A98F2841DD9C0090361F /* DailyStatisticsTableViewCell.swift in Sources */,
+				6EB5CA982935CB3E00B6653C /* UILabelExtensions.swift in Sources */,
 				6E5DCE7427FDCA4A00CA58EE /* LocalTimeRes.swift in Sources */,
 				6E8D01362843365E00FAB49E /* EditMenuCoordinator.swift in Sources */,
 				6EF1D499282D366400DA9D35 /* TotalStatisticsView.swift in Sources */,
@@ -1526,6 +1514,7 @@
 				6E5DCE5F27FDB00200CA58EE /* NaverMapResponse.swift in Sources */,
 				6E1AB79D280D7ECF0059DCF4 /* MyStoreInfoReactor.swift in Sources */,
 				6E6EDF2928A7EB0F00D1A6ED /* AnalyticsManager.swift in Sources */,
+				6EB5CA8C2935CA5D00B6653C /* BaseTableViewCell.swift in Sources */,
 				6EE0CFB127CB5C390027A426 /* StringExtensions.swift in Sources */,
 				6E6EDF1E28A7B37A00D1A6ED /* AnalyticsEvent.swift in Sources */,
 				6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */,
@@ -1542,6 +1531,7 @@
 				6EFB2F08285A098D006E37F9 /* BossStoreFeedbackTypeResponse.swift in Sources */,
 				6E1F54AC27CB94EB0050BBBA /* Requestable.swift in Sources */,
 				6E5E14A62830F89D00B1F450 /* BossStoreFeedbackCountResponse.swift in Sources */,
+				6EB5CA902935CAC300B6653C /* AlertUtils.swift in Sources */,
 				6E5DCE6C27FDC91100CA58EE /* BossStoreInfoResponse.swift in Sources */,
 				6E8D013E284341CB00FAB49E /* EditMenuTableFooterView.swift in Sources */,
 				6E5678C1285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift in Sources */,
@@ -1564,6 +1554,7 @@
 				6E5DCE6727FDB09400CA58EE /* Land.swift in Sources */,
 				6E6B431F285DB9B300AD84A5 /* FAQCollectionViewCell.swift in Sources */,
 				6E6C9C69280BD513009AFAE8 /* MyPageViewController.swift in Sources */,
+				6EB5CA922935CAF300B6653C /* DateUtils.swift in Sources */,
 				6E1F54B427CB99100050BBBA /* ResponseContainer.swift in Sources */,
 				6E6EDF2528A7E84200D1A6ED /* MyTopTabType.swift in Sources */,
 				6E4455B727F3E69E00A8DECF /* ShowOtherStoreButton.swift in Sources */,
@@ -1587,6 +1578,7 @@
 				6EB56F2E28A254D500834663 /* DeviceService.swift in Sources */,
 				6E473B9427D85D1C00232139 /* InputField.swift in Sources */,
 				6E7A49D827D8CDE300E6653C /* ImageUploadResponse.swift in Sources */,
+				6EB5CA9C2935CB6D00B6653C /* UICollectionViewExtensions.swift in Sources */,
 				6EB56F2C28A229F500834663 /* FAQCategoryResponse.swift in Sources */,
 				6E6C9C72280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift in Sources */,
 				6E6EDF2728A7EB0300D1A6ED /* GAManager.swift in Sources */,
@@ -1603,6 +1595,7 @@
 				6E5DCE6927FDB0B900CA58EE /* Addition.swift in Sources */,
 				6E37AF7827E715C1004FBE25 /* UIViewControllerExtensions.swift in Sources */,
 				6EC51D0827EEEF86009B5527 /* SalesToggleView.swift in Sources */,
+				6EB5CA942935CB0500B6653C /* JsonUtils.swift in Sources */,
 				6E64B28427D836920055354B /* TextField.swift in Sources */,
 				6EA53BA4284DE8B9007A3839 /* SettingCoordinator.swift in Sources */,
 				6E69DD7728A29A7300C1D37A /* PushType.swift in Sources */,
@@ -1616,6 +1609,7 @@
 				6E473BA427D874C500232139 /* PhotoUploadView.swift in Sources */,
 				6EC5E430282BD7E200AD571C /* ReviewCountLabel.swift in Sources */,
 				6EE0CFA927CB5B6C0027A426 /* BaseError.swift in Sources */,
+				6EB5CA882935C93400B6653C /* BaseView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1765,9 +1759,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "3dollar-in-my-pocket-manager/3dollar-in-my-pocket-manager.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = X975A2HM62;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
@@ -1781,8 +1777,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				KAKAO_APP_KEY = b623fd2160694c4c2cb08e64df491d1c;
 				KAKAO_CHANNEL_URL = "http://pf.kakao.com/_RxghUb/chat";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1793,6 +1788,8 @@
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1807,13 +1804,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "3dollar-in-my-pocket-manager/3dollar-in-my-pocket-manager.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = X975A2HM62;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님";
+				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
 				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
@@ -1823,8 +1822,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				KAKAO_APP_KEY = a009e78756eb528bc0e9897b8409a2e4;
 				KAKAO_CHANNEL_URL = "http://pf.kakao.com/_RxghUb/chat";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1835,6 +1833,8 @@
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.macgongmon.-dollar-in-my-pocket-manager";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1933,8 +1933,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				kind = exactVersion;
+				version = 2.11.1;
 			};
 		};
 		6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */ = {

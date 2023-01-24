@@ -1,7 +1,6 @@
 import UIKit
 import BackgroundTasks
 
-import Base
 import KakaoSDKCommon
 import FirebaseCore
 import FirebaseMessaging

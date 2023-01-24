@@ -1,6 +1,5 @@
 import UIKit
 
-import Base
 import Lottie
 
 final class SplashView: BaseView {

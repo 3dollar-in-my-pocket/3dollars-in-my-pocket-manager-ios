@@ -1,7 +1,6 @@
 import UIKit
 import CoreLocation
 
-import Base
 import ReactorKit
 import NMapsMap
 
@@ -69,6 +68,7 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
             .disposed(by: self.disposeBag)
         
         self.homeView.salesToggleView.rx.tapButton
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .map { Reactor.Action.tapSalesToggle }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)

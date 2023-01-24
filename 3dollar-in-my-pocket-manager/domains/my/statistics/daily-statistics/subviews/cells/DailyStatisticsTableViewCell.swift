@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class DailyStatisticsTableViewCell: BaseTableViewCell {
     static let registerId = "\(DailyStatisticsTableViewCell.self)"
     

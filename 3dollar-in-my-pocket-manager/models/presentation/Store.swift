@@ -1,5 +1,4 @@
 import CoreLocation
-import Base
 
 struct Store: Equatable {
     let id: String

@@ -1,7 +1,6 @@
 import UIKit
 
 import RxSwift
-import Base
 
 final class EditScheduleTableViewCell: UITableViewCell {
     static let registerId = "\(EditScheduleTableViewCell.self)"

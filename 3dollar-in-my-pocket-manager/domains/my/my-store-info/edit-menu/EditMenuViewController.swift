@@ -2,7 +2,6 @@ import UIKit
 import PhotosUI
 
 import ReactorKit
-import Base
 import SPPermissions
 
 final class EditMenuViewController: BaseViewController, View, EditMenuCoordinator {

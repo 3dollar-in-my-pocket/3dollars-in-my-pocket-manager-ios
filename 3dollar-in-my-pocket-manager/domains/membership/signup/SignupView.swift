@@ -1,7 +1,5 @@
 import UIKit
 
-import Base
-
 final class SignupView: BaseView {
     let tapBackground = UITapGestureRecognizer()
     

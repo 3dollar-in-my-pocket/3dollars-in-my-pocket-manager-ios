@@ -1,4 +1,4 @@
-import Base
+import Foundation
 
 struct TimeInterval: Decodable {
     var endTime: String

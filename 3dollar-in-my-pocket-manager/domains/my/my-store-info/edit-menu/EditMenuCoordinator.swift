@@ -4,7 +4,6 @@ import PhotosUI
 import SPPermissions
 import SPPermissionsPhotoLibrary
 import SPPermissionsCamera
-import Base
 
 protocol EditMenuCoordinator: BaseCoordinator, AnyObject {
     func showSaveAlert()

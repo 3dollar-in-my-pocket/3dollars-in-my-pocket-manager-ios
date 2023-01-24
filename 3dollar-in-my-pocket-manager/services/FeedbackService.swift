@@ -2,7 +2,6 @@ import Foundation
 
 import RxSwift
 import Alamofire
-import Base
 
 protocol FeedbackServiceType {
     func fetchFeedbackTypes() -> Observable<[BossStoreFeedbackTypeResponse]>
