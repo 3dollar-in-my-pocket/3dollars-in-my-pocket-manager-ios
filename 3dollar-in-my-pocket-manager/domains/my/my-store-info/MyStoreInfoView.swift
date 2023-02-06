@@ -14,7 +14,7 @@ final class MyStoreInfoView: BaseView {
             if sectionIndex == 0 {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(MyStoreInfoOverviewCell.height)
+                    heightDimension: .absolute(MyStoreInfoOverviewCell.height)
                 ))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
