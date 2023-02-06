@@ -142,13 +142,6 @@ final class MyStoreInfoView: BaseView {
             make.bottom.equalToSuperview()
         }
     }
-    
-    func bindrefreshControlConstraintAgain() {
-        self.collectionView.refreshControl?.snp.remakeConstraints { make in
-            make.top.equalTo(self.collectionView).offset(50)
-            make.centerX.equalTo(self.collectionView)
-        }
-    }
 }
 
 extension Reactive where Base: MyStoreInfoView {
