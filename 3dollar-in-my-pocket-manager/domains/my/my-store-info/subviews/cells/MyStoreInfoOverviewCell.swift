@@ -6,7 +6,6 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     static let registerId = "\(MyStoreInfoOverviewCell.self)"
     static let height: CGFloat = 477
     
-    //MARK: - 가은 변경해야 하는 image
     private let photoView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.backgroundColor = .gray5
@@ -85,8 +84,8 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     override func bindConstraints() {
         self.photoView.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalToSuperview()
             make.right.equalToSuperview()
+            make.top.equalToSuperview()
             make.height.equalTo(240)
         }
         
@@ -134,19 +133,16 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         }
     }
     
-    // MARK: 가은 이미지 크기 변경시키는 함수
     func bindPhotoConstraintAgain(height: CGFloat) {
-        self.photoView.snp.removeConstraints()
-        self.photoView.snp.makeConstraints { make in
+        self.photoView.snp.remakeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.top.equalToSuperview()
-            if height == 0 {
+            if height >= 0 {
                 make.height.equalTo(240)
-            } else if height <= -100 {
-                make.height.equalTo(340)
+                make.top.equalToSuperview()
             } else {
                 make.height.equalTo(240-height)
+                make.top.equalToSuperview().offset(height)
             }
         }
     }

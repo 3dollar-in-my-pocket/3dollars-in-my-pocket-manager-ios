@@ -14,7 +14,6 @@ final class MyStoreInfoView: BaseView {
             if sectionIndex == 0 {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    // TODO: 가은 MyStoreInfoOverviewCell.height 수정하기
                     heightDimension: .estimated(MyStoreInfoOverviewCell.height)
                 ))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
@@ -144,13 +143,11 @@ final class MyStoreInfoView: BaseView {
         }
     }
     
-    // MARK: 가은 로딩 인디케이터 Constraint 변경 시키는 함수
     func bindrefreshControlConstraintAgain() {
-                self.collectionView.refreshControl?.snp.removeConstraints()
-                self.collectionView.refreshControl?.snp.makeConstraints { make in
-                    make.top.equalTo(self.collectionView).offset(50)
-                    make.centerX.equalTo(self.collectionView)
-                }
+        self.collectionView.refreshControl?.snp.remakeConstraints { make in
+            make.top.equalTo(self.collectionView).offset(50)
+            make.centerX.equalTo(self.collectionView)
+        }
     }
 }
 
