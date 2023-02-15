@@ -84,8 +84,8 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     override func bindConstraints() {
         self.photoView.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalToSuperview()
             make.right.equalToSuperview()
+            make.top.equalToSuperview()
             make.height.equalTo(240)
         }
         
@@ -130,6 +130,20 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             make.right.equalTo(self.containerView).offset(-16)
             make.top.equalTo(self.contactContainerView.snp.bottom).offset(16)
             make.height.equalTo(48)
+        }
+    }
+    
+    func bindPhotoConstraintAgain(height: CGFloat) {
+        self.photoView.snp.remakeConstraints { make in
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
+            if height >= 0 {
+                make.height.equalTo(240)
+                make.top.equalToSuperview()
+            } else {
+                make.height.equalTo(240-height)
+                make.top.equalToSuperview().offset(height)
+            }
         }
     }
     
