@@ -70,7 +70,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             .drive(onNext: { [weak self] store in
                 self?.coordinator?.pushEditSchedule(store: store)
             })
-            .disposed(by: self.eventDisposeBag)        
+            .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: MyStoreInfoReactor) {
@@ -109,6 +109,13 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                     cell.editButton.rx.tap
                         .map { Reactor.Action.tapEditStoreInfo }
                         .bind(to: self.myStoreInfoReactor.action)
+                        .disposed(by: cell.disposeBag)
+                    collectionView
+                        .rx.contentOffset
+                        .map { $0.y }
+                        .bind(onNext: {
+                            cell.bindPhotoConstraintAgain(height: $0)
+                        })
                         .disposed(by: cell.disposeBag)
                     return cell
                     
