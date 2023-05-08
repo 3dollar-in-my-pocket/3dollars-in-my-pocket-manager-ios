@@ -1761,7 +1761,7 @@
 				CODE_SIGN_ENTITLEMENTS = "3dollar-in-my-pocket-manager/3dollar-in-my-pocket-manager.entitlements";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
@@ -1784,7 +1784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1812,7 +1812,7 @@
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
+				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님";
 				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
@@ -1829,7 +1829,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
