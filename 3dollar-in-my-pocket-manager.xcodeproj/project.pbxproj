@@ -1765,6 +1765,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
@@ -1810,6 +1811,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님";
