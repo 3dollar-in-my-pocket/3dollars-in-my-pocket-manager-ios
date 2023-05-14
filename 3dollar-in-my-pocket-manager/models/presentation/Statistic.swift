@@ -1,6 +1,4 @@
 struct Statistic: Equatable, Comparable {
-    
-    
     let type: FeedbackType
     let count: Int
     let ratio: Double

@@ -13,19 +13,19 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
     
     enum Mutation {
         case clearStatisticGroups
-        case appendStatisticGroups([StatisticGroup])
-        case updateTableViewHeight([StatisticGroup])
+        case appendStatisticGroups([StatisticGroup?])
+        case updateTableViewHeight([StatisticGroup?])
         case setTotalReviewCount(Int)
         case showErrorAlert(Error)
     }
     
     struct State {
-        var statisticGroups: [StatisticGroup]
+        var statisticGroups: [StatisticGroup?]
         var totalReviewCount: Int
     }
     
     let initialState: State
-    let updateTableViewHeightPublisher = PublishRelay<[StatisticGroup]>()
+    let updateTableViewHeightPublisher = PublishRelay<[StatisticGroup?]>()
     private let feedbackService: FeedbackServiceType
     private let globalState: GlobalState
     private let userDefaults: UserDefaultsUtils
