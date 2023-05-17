@@ -45,7 +45,7 @@ final class DailyStatisticsViewController: BaseViewController, View, DailyStatis
             .asDriver(onErrorJustReturn: [])
             .drive(onNext: { [weak self] statisticGroups in
                 if let statisticsView = self?.parent?.parent?.view as? StatisticsView,
-                let dailyStatisticsViewHeight = self?.dailyStatisticsView
+                   let dailyStatisticsViewHeight = self?.dailyStatisticsView
                     .calculatorTableViewHeight(statisticGroups: statisticGroups) {
                     statisticsView.updateContainerViewHeight(
                         tableViewHeight: dailyStatisticsViewHeight
@@ -77,12 +77,18 @@ final class DailyStatisticsViewController: BaseViewController, View, DailyStatis
                 }
             })
             .delay(.milliseconds(500))
-            .drive(self.dailyStatisticsView.tableView.rx.items(
-                cellIdentifier: DailyStatisticsTableViewCell.registerId,
-                cellType: DailyStatisticsTableViewCell.self
-            )) { row, statisticGroup, cell in
-                cell.bind(statisticGroup: statisticGroup)
-            }
+                .drive(self.dailyStatisticsView.tableView.rx.items) { tableView, row, item in
+                    if let statisticGroup = item {
+                        guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyStatisticsTableViewCell.registerId) as? DailyStatisticsTableViewCell else { return UITableViewCell() }
+                        
+                        cell.bind(statisticGroup: statisticGroup)
+                        return cell
+                    } else {
+                        guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyStatisticsEmptyTableViewCell.registerId) as? DailyStatisticsEmptyTableViewCell else { return UITableViewCell() }
+                        
+                        return cell
+                    }
+                }
             .disposed(by: self.disposeBag)
     }
     

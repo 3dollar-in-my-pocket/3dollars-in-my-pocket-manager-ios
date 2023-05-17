@@ -9,6 +9,7 @@ final class DailyStatisticsView: BaseView {
             DailyStatisticsTableViewCell.self,
             forCellReuseIdentifier: DailyStatisticsTableViewCell.registerId
         )
+        $0.register(DailyStatisticsEmptyTableViewCell.self, forCellReuseIdentifier: DailyStatisticsEmptyTableViewCell.registerId)
         $0.rowHeight = UITableView.automaticDimension
         $0.isScrollEnabled = false
     }
@@ -28,22 +29,26 @@ final class DailyStatisticsView: BaseView {
         }
     }
     
-    func calculatorTableViewHeight(statisticGroups: [StatisticGroup]) -> CGFloat {
+    func calculatorTableViewHeight(statisticGroups: [StatisticGroup?]) -> CGFloat {
         var height: CGFloat = 0
         
         for statistic in statisticGroups {
-            var stackViewHeight
-            = CGFloat(statistic.feedbacks.count) * DailyStatisticsStackItemView.height
-            stackViewHeight += CGFloat(statistic.feedbacks.count - 1) * 16 // space
-            stackViewHeight += 42 // contentInset
-            let dayViewHeight: CGFloat = 64
-            
-            if dayViewHeight >= stackViewHeight {
-                height += dayViewHeight
+            if let statistic = statistic {
+                var stackViewHeight
+                = CGFloat(statistic.feedbacks.count) * DailyStatisticsStackItemView.height
+                stackViewHeight += CGFloat(statistic.feedbacks.count - 1) * 16 // space
+                stackViewHeight += 42 // contentInset
+                let dayViewHeight: CGFloat = 64
+                
+                if dayViewHeight >= stackViewHeight {
+                    height += dayViewHeight
+                } else {
+                    height += stackViewHeight
+                }
+                height += 20
             } else {
-                height += stackViewHeight
+                height += DailyStatisticsEmptyTableViewCell.height
             }
-            height += 20
         }
         self.tableView.snp.updateConstraints { make in
             make.height.equalTo(height)

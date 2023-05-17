@@ -15,6 +15,7 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         case clearStatisticGroups
         case appendStatisticGroups([StatisticGroup?])
         case updateTableViewHeight([StatisticGroup?])
+        case setEmpty
         case setTotalReviewCount(Int)
         case showErrorAlert(Error)
     }
@@ -85,6 +86,11 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         case .updateTableViewHeight(let statisticGroups):
             self.updateTableViewHeightPublisher.accept(statisticGroups)
             
+        case .setEmpty:
+            if newState.statisticGroups.isEmpty {
+                newState.statisticGroups = [nil]
+            }
+            
         case .setTotalReviewCount(let totalReviewCount):
             newState.totalReviewCount = totalReviewCount
             self.globalState.updateReviewCountPublisher.onNext(totalReviewCount)
@@ -122,10 +128,11 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
         .flatMap { [weak self] response -> Observable<Mutation> in
             guard let self = self else { return .error(BaseError.unknown) }
             if response.contents.isEmpty {
-                return self.fetchStatistics(
-                    startDate: self.startDate,
-                    endDate: self.endDate
-                )
+                if self.endDate == nil {
+                    return .just(.setEmpty)
+                } else {
+                    return self.fetchStatistics(startDate: self.startDate, endDate: self.endDate)
+                }
             } else {
                 let statisticGroup = response.contents.map(StatisticGroup.init(response:))
                 

@@ -2,6 +2,7 @@ import UIKit
 
 final class DailyStatisticsEmptyTableViewCell: BaseTableViewCell {
     static let registerId = "\(DailyStatisticsEmptyTableViewCell.self)"
+    static let height: CGFloat = 68
     
     private let containerView = UIView().then {
         $0.backgroundColor = .white
@@ -35,6 +36,8 @@ final class DailyStatisticsEmptyTableViewCell: BaseTableViewCell {
     }
     
     override func setup() {
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
         self.addSubViews([
             self.containerView,
             self.emojiLabel,
@@ -45,9 +48,9 @@ final class DailyStatisticsEmptyTableViewCell: BaseTableViewCell {
     
     override func bindConstraints() {
         self.containerView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+            make.left.equalToSuperview().offset(24)
             make.top.equalToSuperview()
-            make.right.equalToSuperview()
+            make.right.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview()
         }
         
