@@ -1,0 +1,78 @@
+import UIKit
+
+import RxSwift
+import ReactorKit
+
+final class EditAccountViewController: BaseViewController, View {
+    private let editAccountView = EditAccountView()
+    
+    init(reactor: EditAccountReactor) {
+        super.init(nibName: nil, bundle: nil)
+        self.reactor = reactor
+        hidesBottomBarWhenPushed = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        view = editAccountView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func bindEvent() {
+        editAccountView.backButton.rx.tap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .bind(onNext: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: eventDisposeBag)
+    }
+    
+    func bind(reactor: EditAccountReactor) {
+        // Bind Action
+        editAccountView.accountInputField.rx.text
+            .map { Reactor.Action.inputAccountNumber($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        // TODO: inputBank, didTapSave 바텀시트 연결 후 필요
+        
+        editAccountView.saveButton.rx.tap
+            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
+            .map { Reactor.Action.didTapSave }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        // Bind State
+        reactor.state
+            .map(\.bank)
+            .bind(to: editAccountView.bankInputField.rx.value)
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map(\.accountNumber)
+            .bind(to: editAccountView.accountInputField.rx.value)
+            .disposed(by: disposeBag)
+        
+        reactor.state
+            .map(\.isEnableSaveButton)
+            .bind(to: editAccountView.saveButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$route)
+            .compactMap { $0 }
+            .bind(onNext: { [weak self] route in
+                self?.handleRoute(route)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func handleRoute(_ route: EditAccountReactor.Route) {
+        // TODO: Route 처리
+    }
+}

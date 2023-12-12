@@ -9,6 +9,7 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case tapEditStoreInfo
         case tapEditIntroduction
         case tapEditMenus
+        case tapEditAccount
         case tapEditSchedule
     }
     
@@ -18,12 +19,18 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case pushEditStoreInfo(store: Store)
         case pushEditIntroduction(store: Store)
         case pushEditMenus(store: Store)
+        case pushEditAccount(store: Store)
         case pushEditSchedule(store: Store)
         case showErrorAlert(Error)
     }
     
     struct State {
         var store = Store()
+        @Pulse var route: Route?
+    }
+    
+    enum Route {
+        case pushEditAccount(EditAccountReactor)
     }
     
     let initialState = State()
@@ -75,6 +82,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             ))
             return .just(.pushEditMenus(store: self.currentState.store))
             
+        case .tapEditAccount:
+            return .just(.pushEditAccount(store: currentState.store))
+            
         case .tapEditSchedule:
             self.analyticsManager.sendEvent(event: .tapEditSchedule(
                 storeId: self.currentState.store.id,
@@ -110,6 +120,10 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             
         case .pushEditMenus(let store):
             self.pushEditMenuPublisher.accept(store)
+            
+        case .pushEditAccount(let store):
+            let reactor = EditAccountReactor(store: store)
+            newState.route = .pushEditAccount(reactor)
             
         case .pushEditSchedule(let store):
             self.pushEditSchedulePublisher.accept(store)

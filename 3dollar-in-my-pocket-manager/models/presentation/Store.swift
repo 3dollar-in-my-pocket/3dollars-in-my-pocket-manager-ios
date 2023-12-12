@@ -12,6 +12,7 @@ struct Store: Equatable {
     var menus: [Menu]
     var name: String
     var appearanceDays: [AppearanceDay]
+    var accountInfo: AccountInfo?
     
     var isValid: Bool {
         return !(self.imageUrl ?? "").isEmpty
@@ -40,6 +41,7 @@ struct Store: Equatable {
         self.menus = response.menus.map(Menu.init)
         self.name = response.name
         self.appearanceDays = response.appearanceDays.map(AppearanceDay.init)
+        self.accountInfo = AccountInfo(response: response.accountNumbers)
     }
     
     init(response: BossStoreAroundInfoResponse) {
@@ -63,6 +65,7 @@ struct Store: Equatable {
         self.menus = response.menus.map(Menu.init)
         self.name = response.name
         self.appearanceDays = []
+        self.accountInfo = nil
     }
     
     init(

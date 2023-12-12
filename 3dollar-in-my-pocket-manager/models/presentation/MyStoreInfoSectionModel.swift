@@ -14,38 +14,39 @@ extension MyStoreInfoSectionModel: SectionModelType {
         case menuMore([Menu])
         case emptyMenu
         case appearanceDay(AppearanceDay)
+        case account(AccountInfo?)
     }
     
-    init(original: MyStoreInfoSectionModel, items: [Item]) {
-        self = original
-        self.items = items
+    static func overview(_ store: Store) -> MyStoreInfoSectionModel {
+        return .init(items: [.overview(store)])
     }
     
-    init(store: Store) {
-        self.items = [.overview(store)]
+    static func introduction(_ introduction: String?) -> MyStoreInfoSectionModel {
+        return .init(items: [.introduction(introduction)])
     }
     
-    init(introduction: String?) {
-        self.items = [.introduction(introduction)]
+    static func account(_ accountInfo: AccountInfo?) -> MyStoreInfoSectionModel {
+        return .init(items: [.account(accountInfo)])
     }
     
-    init(menus: [Menu]) {
+    static func menus(_ menus: [Menu]) -> MyStoreInfoSectionModel {
         if menus.isEmpty {
-            self.items = [.emptyMenu]
+            return .init(items: [.emptyMenu])
         } else if menus.count < 4 {
             let menus = menus.map { SectionItemType.menu($0) }
             
-            self.items = menus
+            return .init(items: menus)
         } else {
             var sectionItemTypes = menus[..<3].map { SectionItemType.menu($0) }
             let moreItemType = SectionItemType.menuMore(Array(menus[3...]))
             
             sectionItemTypes.append(moreItemType)
-            self.items = sectionItemTypes
+            
+            return .init(items: sectionItemTypes)
         }
     }
     
-    init(appearanceDays: [AppearanceDay]) {
+    static func appearanceDays(_ appearanceDays: [AppearanceDay]) -> MyStoreInfoSectionModel {
         var initialAppearanceDays = [
             AppearanceDay(dayOfTheWeek: .monday, isClosed: true),
             AppearanceDay(dayOfTheWeek: .tuesday, isClosed: true),
@@ -60,8 +61,13 @@ extension MyStoreInfoSectionModel: SectionModelType {
             initialAppearanceDays[appearanceDay.index] = appearanceDay
         }
         
-        let appearanceDays = initialAppearanceDays.map { SectionItemType.appearanceDay($0) }
+        let items = initialAppearanceDays.map { SectionItemType.appearanceDay($0) }
         
-        self.items = appearanceDays
+        return .init(items: items)
+    }
+    
+    init(original: MyStoreInfoSectionModel, items: [Item]) {
+        self = original
+        self.items = items
     }
 }
