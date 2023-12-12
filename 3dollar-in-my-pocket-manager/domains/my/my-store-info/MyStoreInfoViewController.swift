@@ -80,7 +80,7 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 .overview($0.store),
                 .introduction($0.store.introduction),
                 .menus($0.store.menus),
-                .account($0.store.accountInfo),
+                .account($0.store.accountInfos),
                 .appearanceDays($0.store.appearanceDays)
             ] }
             .distinctUntilChanged()

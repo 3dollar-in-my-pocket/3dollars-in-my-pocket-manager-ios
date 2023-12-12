@@ -12,5 +12,5 @@ struct BossStoreInfoResponse: Decodable {
     let openStatus: BossStoreOpenStatusResponse
     let snsUrl: String?
     let updatedAt: String?
-    let accountNumbers: StoreAccountNumberResponse
+    let accountNumbers: [StoreAccountNumberResponse]
 }

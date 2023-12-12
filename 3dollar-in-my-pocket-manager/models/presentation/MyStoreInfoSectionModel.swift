@@ -25,8 +25,8 @@ extension MyStoreInfoSectionModel: SectionModelType {
         return .init(items: [.introduction(introduction)])
     }
     
-    static func account(_ accountInfo: AccountInfo?) -> MyStoreInfoSectionModel {
-        return .init(items: [.account(accountInfo)])
+    static func account(_ accountInfos: [AccountInfo]) -> MyStoreInfoSectionModel {
+        return .init(items: [.account(accountInfos.first)])
     }
     
     static func menus(_ menus: [Menu]) -> MyStoreInfoSectionModel {

@@ -108,7 +108,7 @@ final class EditAccountReactor: BaseReactor, Reactor {
         
         let accountInfo = AccountInfo(bank: bank, number: number)
         var store = currentState.store
-        store.accountInfo = accountInfo
+        store.accountInfos = [accountInfo]
         
         return storeService.updateStore(store: store)
             .do(onNext: { [weak self] _ in
