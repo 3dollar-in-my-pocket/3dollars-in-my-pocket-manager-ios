@@ -32,19 +32,22 @@ final class EditAccountReactor: BaseReactor, Reactor {
     
     enum Route {
         case pop
-        case presentBankBottomSheet
+        case presentBankBottomSheet([Bank])
     }
     
     let initialState: State
     let relay = Relay()
     private let storeService: StoreServiceType
+    private let bankService: BankServiceType
     
     init(
         store: Store,
-        storeService: StoreServiceType = StoreService()
+        storeService: StoreServiceType = StoreService(),
+        bankService: BankServiceType = BankService()
     ) {
         self.initialState = State(store: store)
         self.storeService = storeService
+        self.bankService = bankService
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -66,7 +69,11 @@ final class EditAccountReactor: BaseReactor, Reactor {
             ])
             
         case .didTapBank:
-            return .just(.route(.presentBankBottomSheet))
+            return fetchBankList()
+                .map { Mutation.route(.presentBankBottomSheet($0)) }
+                .catch {
+                    return .just(.showErrorAlert($0))
+                }
             
         case .didTapSave:
             return updateStore(store: currentState.store)
@@ -118,5 +125,10 @@ final class EditAccountReactor: BaseReactor, Reactor {
             .catch { error in
                 return .just(Mutation.showErrorAlert(error))
             }
+    }
+    
+    private func fetchBankList() -> Observable<[Bank]> {
+        return bankService.fetchBankList()
+            .map { $0.map { Bank(response: $0) } }
     }
 }

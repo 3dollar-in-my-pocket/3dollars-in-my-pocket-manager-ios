@@ -20,12 +20,12 @@ final class EditAccountInputField: BaseView {
         $0.layer.cornerRadius = 8
     }
     
-    fileprivate let textField = UITextField().then {
+    let textField = UITextField().then {
         $0.textColor = .gray100
         $0.font = .medium(size: 14)
     }
     
-    private let arrowDownButton = UIButton().then {
+    fileprivate let arrowDownButton = UIButton().then {
         let icon = UIImage(named: "ic_arrow_down")?
             .withRenderingMode(.alwaysTemplate)
         
@@ -128,5 +128,9 @@ extension Reactive where Base: EditAccountInputField {
         return Binder(base) { view, text in
             view.textField.text = text
         }
+    }
+    
+    var tap: ControlEvent<Void> {
+        return base.arrowDownButton.rx.tap
     }
 }

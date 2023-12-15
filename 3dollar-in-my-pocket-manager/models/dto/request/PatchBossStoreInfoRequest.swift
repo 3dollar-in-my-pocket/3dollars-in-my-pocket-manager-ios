@@ -49,7 +49,7 @@ struct PatchBossStoreInfoRequest: Encodable {
         self.menus = store.menus.map(MenuRequest.init(menu:))
         self.name = store.name
         self.snsUrl = store.snsUrl
-        self.accountNumbers = BossStoreAccountNumberApiRequest(store.accountInfo)
+        self.accountNumbers = BossStoreAccountNumberApiRequest(store.accountInfos.first)
     }
     
     func encode(to encoder: Encoder) throws {

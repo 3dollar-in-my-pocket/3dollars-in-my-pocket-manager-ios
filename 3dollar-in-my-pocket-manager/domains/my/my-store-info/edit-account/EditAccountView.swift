@@ -24,7 +24,7 @@ final class EditAccountView: BaseView {
         isRightButtonHidden: false,
         placeholder: String(localized: "edit_account.bank_placeholder")
     ).then {
-        $0.isUserInteractionEnabled = false
+        $0.textField.isUserInteractionEnabled = false
     }
     
     let saveButton = UIButton().then {

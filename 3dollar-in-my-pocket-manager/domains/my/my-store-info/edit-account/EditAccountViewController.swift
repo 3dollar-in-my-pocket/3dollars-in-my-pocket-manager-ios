@@ -3,8 +3,9 @@ import UIKit
 import RxSwift
 import ReactorKit
 
-final class EditAccountViewController: BaseViewController, View {
+final class EditAccountViewController: BaseViewController, View, EditAccountCoordinator {
     private let editAccountView = EditAccountView()
+    private weak var coordinator: EditAccountCoordinator?
     
     init(reactor: EditAccountReactor) {
         super.init(nibName: nil, bundle: nil)
@@ -22,6 +23,8 @@ final class EditAccountViewController: BaseViewController, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.coordinator = self
     }
     
     override func bindEvent() {
@@ -29,6 +32,12 @@ final class EditAccountViewController: BaseViewController, View {
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
             .bind(onNext: { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: eventDisposeBag)
+        
+        reactor?.showErrorAlert
+            .bind(onNext: { [weak self] error in
+                self?.coordinator?.showErrorAlert(error: error)
             })
             .disposed(by: eventDisposeBag)
     }
@@ -40,7 +49,12 @@ final class EditAccountViewController: BaseViewController, View {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        // TODO: inputBank, didTapSave 바텀시트 연결 후 필요
+        editAccountView.bankInputField.rx.tap
+            .map { Reactor.Action.didTapBank }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        // TODO: didTapSave 바텀시트 연결 후 필요
         
         editAccountView.saveButton.rx.tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
@@ -74,5 +88,12 @@ final class EditAccountViewController: BaseViewController, View {
     
     private func handleRoute(_ route: EditAccountReactor.Route) {
         // TODO: Route 처리
+        switch route {
+        case .pop:
+            navigationController?.popViewController(animated: true)
+            
+        case .presentBankBottomSheet(let bankList):
+            print(bankList)
+        }
     }
 }
