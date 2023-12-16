@@ -9,21 +9,31 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case tapEditStoreInfo
         case tapEditIntroduction
         case tapEditMenus
+        case tapEditAccount
         case tapEditSchedule
+        case inputAccountInfo(AccountInfo)
     }
     
     enum Mutation {
         case setStore(Store)
         case updateIntorudction(String)
+        case updateAccountInfo(AccountInfo)
         case pushEditStoreInfo(store: Store)
         case pushEditIntroduction(store: Store)
         case pushEditMenus(store: Store)
+        case pushEditAccount(store: Store)
         case pushEditSchedule(store: Store)
         case showErrorAlert(Error)
+        case route(Route)
     }
     
     struct State {
         var store = Store()
+        @Pulse var route: Route?
+    }
+    
+    enum Route {
+        case pushEditAccount(EditAccountReactor)
     }
     
     let initialState = State()
@@ -75,12 +85,18 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             ))
             return .just(.pushEditMenus(store: self.currentState.store))
             
+        case .tapEditAccount:
+            return .just(routeEditAccount())
+            
         case .tapEditSchedule:
             self.analyticsManager.sendEvent(event: .tapEditSchedule(
                 storeId: self.currentState.store.id,
                 screen: .myStoreInfo
             ))
             return .just(.pushEditSchedule(store: self.currentState.store))
+            
+        case .inputAccountInfo(let accountInfo):
+            return .just(.updateAccountInfo(accountInfo))
         }
     }
     
@@ -102,6 +118,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case .updateIntorudction(let introduction):
             newState.store.introduction = introduction
             
+        case .updateAccountInfo(let accountInfo):
+            newState.store.accountInfos = [accountInfo]
+            
         case .pushEditStoreInfo(let store):
             self.pushEditStoreInfoPublisher.accept(store)
             
@@ -111,11 +130,18 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case .pushEditMenus(let store):
             self.pushEditMenuPublisher.accept(store)
             
+        case .pushEditAccount(let store):
+            let reactor = EditAccountReactor(store: store)
+            newState.route = .pushEditAccount(reactor)
+            
         case .pushEditSchedule(let store):
             self.pushEditSchedulePublisher.accept(store)
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
+            
+        case .route(let route):
+            newState.route = route
         }
         
         return newState
@@ -125,5 +151,15 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         return self.storeService.fetchMyStore()
             .map { .setStore(Store(response: $0)) }
             .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func routeEditAccount() -> Mutation {
+        let reactor = EditAccountReactor(store: currentState.store)
+        reactor.relay.onSuccessUpdateAccountInfo
+            .map { Action.inputAccountInfo($0) }
+            .bind(to: action)
+            .disposed(by: reactor.relayDisposeBag)
+        
+        return .route(.pushEditAccount(reactor))
     }
 }
