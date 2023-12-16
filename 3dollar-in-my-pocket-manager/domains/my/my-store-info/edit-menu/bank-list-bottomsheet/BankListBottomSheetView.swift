@@ -33,7 +33,7 @@ final class BankListBottomSheetView: BaseView {
     override func bindConstraints() {
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(24)
+            $0.top.equalToSuperview().offset(24).priority(.high)
         }
         
         closeButton.snp.makeConstraints {
