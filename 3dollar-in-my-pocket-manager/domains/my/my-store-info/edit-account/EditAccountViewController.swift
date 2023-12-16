@@ -45,11 +45,13 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
     func bind(reactor: EditAccountReactor) {
         // Bind Action
         editAccountView.nameInputField.rx.text
+            .skip(1)
             .map { Reactor.Action.inputName($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         editAccountView.accountInputField.rx.text
+            .skip(1)
             .map { Reactor.Action.inputAccountNumber($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -59,8 +61,6 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        // TODO: didTapSave 바텀시트 연결 후 필요
-        
         editAccountView.saveButton.rx.tap
             .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
             .map { Reactor.Action.didTapSave }
@@ -68,6 +68,11 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
             .disposed(by: disposeBag)
         
         // Bind State
+        reactor.state
+            .map(\.name)
+            .bind(to: editAccountView.nameInputField.rx.value)
+            .disposed(by: disposeBag)
+        
         reactor.state
             .map(\.bank?.description)
             .bind(to: editAccountView.bankInputField.rx.value)

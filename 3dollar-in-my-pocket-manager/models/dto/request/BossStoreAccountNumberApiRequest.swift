@@ -8,7 +8,7 @@ struct BossStoreAccountNumberApiRequest: Encodable {
     
     init?(_ accountInfo: AccountInfo?) {
         guard let accountInfo else { return nil }
-        self.bank = accountInfo.bank
+        self.bank = accountInfo.bank.key
         self.accountHolder = accountInfo.holder
         self.accountNumber = accountInfo.number
         self.description = accountInfo.description

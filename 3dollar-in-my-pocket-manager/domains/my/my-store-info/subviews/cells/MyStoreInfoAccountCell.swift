@@ -44,7 +44,7 @@ final class MyStoreInfoAccountCell: BaseCollectionViewCell {
     
     func bind(accountInfo: AccountInfo?) {
         if let accountInfo {
-            textLabel.text = "\(accountInfo.bank) \(accountInfo.number)"
+            textLabel.text = "\(accountInfo.bank.description) \(accountInfo.number)"
             textLabel.textColor = .gray95
         } else {
             textLabel.text = "my_store_info_account_empty_placeholder".localized

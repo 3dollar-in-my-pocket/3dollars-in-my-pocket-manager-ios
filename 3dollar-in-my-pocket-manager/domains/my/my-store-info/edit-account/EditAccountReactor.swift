@@ -38,6 +38,10 @@ final class EditAccountReactor: BaseReactor, Reactor {
         case presentBankBottomSheet(BankListBottomSheetReactor)
     }
     
+    struct Config {
+        let store: Store
+    }
+    
     let initialState: State
     let relay = Relay()
     private let storeService: StoreServiceType
@@ -48,7 +52,22 @@ final class EditAccountReactor: BaseReactor, Reactor {
         storeService: StoreServiceType = StoreService(),
         bankService: BankServiceType = BankService()
     ) {
-        self.initialState = State(store: store)
+        var isEnableSaveButton: Bool
+        if let name = store.accountInfos.first?.holder,
+           let accountNumber = store.accountInfos.first?.number,
+           let bank = store.accountInfos.first?.bank {
+            isEnableSaveButton = !name.isEmpty && !accountNumber.isEmpty && !bank.description.isEmpty
+        } else {
+            isEnableSaveButton = false
+        }
+        
+        self.initialState = State(
+            name: store.accountInfos.first?.holder,
+            bank: store.accountInfos.first?.bank,
+            accountNumber: store.accountInfos.first?.number,
+            isEnableSaveButton: isEnableSaveButton,
+            store: store
+        )
         self.storeService = storeService
         self.bankService = bankService
     }
@@ -148,11 +167,7 @@ final class EditAccountReactor: BaseReactor, Reactor {
               let bank = currentState.bank,
               let number = currentState.accountNumber else { return .empty() }
         
-        let accountInfo = AccountInfo(
-            bank: bank.key,
-            number: number,
-            holder: name
-        )
+        let accountInfo = AccountInfo(bank: bank, number: number, holder: name)
         var store = currentState.store
         store.accountInfos = [accountInfo]
         
