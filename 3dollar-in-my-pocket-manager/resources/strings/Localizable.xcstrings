@@ -69,6 +69,17 @@
         }
       }
     },
+    "edit_account.name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "예금주"
+          }
+        }
+      }
+    },
     "edit_account.save" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -93,6 +104,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "계좌번호 등록"
+          }
+        }
+      }
+    },
+    "edit_account.title_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "예금주를 입력해주세요."
           }
         }
       }

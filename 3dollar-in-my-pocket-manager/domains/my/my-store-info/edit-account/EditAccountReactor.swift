@@ -4,22 +4,25 @@ import ReactorKit
 
 final class EditAccountReactor: BaseReactor, Reactor {
     enum Action {
+        case inputName(String)
         case inputAccountNumber(String)
-        case inputBank(String)
+        case inputBank(Bank)
         case didTapBank
         case didTapSave
     }
     
     enum Mutation {
+        case setName(String)
         case setAccountNumber(String)
-        case setBank(String)
+        case setBank(Bank)
         case enableSaveButton(Bool)
         case route(Route)
         case showErrorAlert(Error)
     }
     
     struct State {
-        var bank: String?
+        var name: String?
+        var bank: Bank?
         var accountNumber: String?
         var isEnableSaveButton = false
         var store: Store
@@ -32,7 +35,7 @@ final class EditAccountReactor: BaseReactor, Reactor {
     
     enum Route {
         case pop
-        case presentBankBottomSheet([Bank])
+        case presentBankBottomSheet(BankListBottomSheetReactor)
     }
     
     let initialState: State
@@ -52,8 +55,24 @@ final class EditAccountReactor: BaseReactor, Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .inputName(let name):
+            let isEnableSaveButton = isEnableSaveButton(
+                name: name,
+                accountNumber: currentState.accountNumber,
+                bank: currentState.bank
+            )
+            
+            return .merge([
+                .just(.setName(name)),
+                .just(.enableSaveButton(isEnableSaveButton))
+            ])
+            
         case .inputAccountNumber(let accountNumber):
-            let isEnableSaveButton = isEnableSaveButton(accountNumber: currentState.accountNumber, bank: accountNumber)
+            let isEnableSaveButton = isEnableSaveButton(
+                name: currentState.name,
+                accountNumber: accountNumber,
+                bank: currentState.bank
+            )
             
             return .merge([
                 .just(.enableSaveButton(isEnableSaveButton)),
@@ -61,7 +80,11 @@ final class EditAccountReactor: BaseReactor, Reactor {
             ])
             
         case .inputBank(let bank):
-            let isEnableSaveButton = isEnableSaveButton(accountNumber: currentState.accountNumber, bank: bank)
+            let isEnableSaveButton = isEnableSaveButton(
+                name: currentState.name,
+                accountNumber: currentState.accountNumber,
+                bank: bank
+            )
             
             return .merge([
                 .just(.enableSaveButton(isEnableSaveButton)),
@@ -70,7 +93,11 @@ final class EditAccountReactor: BaseReactor, Reactor {
             
         case .didTapBank:
             return fetchBankList()
-                .map { Mutation.route(.presentBankBottomSheet($0)) }
+                .compactMap({ [weak self] bankList -> Mutation? in
+                    guard let self else { return nil }
+                    
+                    return routeBankListBottomSheet(bankList: bankList, selectedBank: currentState.bank)
+                })
                 .catch {
                     return .just(.showErrorAlert($0))
                 }
@@ -84,6 +111,9 @@ final class EditAccountReactor: BaseReactor, Reactor {
         var newState = state
         
         switch mutation {
+        case .setName(let name):
+            newState.name = name
+            
         case .setAccountNumber(let accountNumber):
             newState.accountNumber = accountNumber
             
@@ -103,17 +133,26 @@ final class EditAccountReactor: BaseReactor, Reactor {
         return newState
     }
     
-    private func isEnableSaveButton(accountNumber: String?, bank: String?) -> Bool {
-        guard let accountNumber, let bank else { return false }
+    private func isEnableSaveButton(
+        name: String?,
+        accountNumber: String?,
+        bank: Bank?
+    ) -> Bool {
+        guard let name, let accountNumber, let bank else { return false }
         
-        return !accountNumber.isEmpty && !bank.isEmpty
+        return !name.isEmpty && !accountNumber.isEmpty && !bank.description.isEmpty
     }
     
     private func updateStore(store: Store) -> Observable<Mutation> {
-        guard let bank = currentState.bank,
+        guard let name = currentState.name,
+              let bank = currentState.bank,
               let number = currentState.accountNumber else { return .empty() }
         
-        let accountInfo = AccountInfo(bank: bank, number: number)
+        let accountInfo = AccountInfo(
+            bank: bank.key,
+            number: number,
+            holder: name
+        )
         var store = currentState.store
         store.accountInfos = [accountInfo]
         
@@ -130,5 +169,17 @@ final class EditAccountReactor: BaseReactor, Reactor {
     private func fetchBankList() -> Observable<[Bank]> {
         return bankService.fetchBankList()
             .map { $0.map { Bank(response: $0) } }
+    }
+    
+    private func routeBankListBottomSheet(bankList: [Bank], selectedBank: Bank?) -> Mutation {
+        let config = BankListBottomSheetReactor.Config(selectedBank: selectedBank, bankList: bankList)
+        let reactor = BankListBottomSheetReactor(config: config)
+        
+        reactor.relay.selectBank
+            .map { Action.inputBank($0) }
+            .bind(to: action)
+            .disposed(by: reactor.relayDisposeBag)
+        
+        return .route(.presentBankBottomSheet(reactor))
     }
 }

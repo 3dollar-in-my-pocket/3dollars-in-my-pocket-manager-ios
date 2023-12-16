@@ -11,17 +11,20 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case tapEditMenus
         case tapEditAccount
         case tapEditSchedule
+        case inputAccountInfo(AccountInfo)
     }
     
     enum Mutation {
         case setStore(Store)
         case updateIntorudction(String)
+        case updateAccountInfo(AccountInfo)
         case pushEditStoreInfo(store: Store)
         case pushEditIntroduction(store: Store)
         case pushEditMenus(store: Store)
         case pushEditAccount(store: Store)
         case pushEditSchedule(store: Store)
         case showErrorAlert(Error)
+        case route(Route)
     }
     
     struct State {
@@ -83,7 +86,7 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             return .just(.pushEditMenus(store: self.currentState.store))
             
         case .tapEditAccount:
-            return .just(.pushEditAccount(store: currentState.store))
+            return .just(routeEditAccount())
             
         case .tapEditSchedule:
             self.analyticsManager.sendEvent(event: .tapEditSchedule(
@@ -91,6 +94,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
                 screen: .myStoreInfo
             ))
             return .just(.pushEditSchedule(store: self.currentState.store))
+            
+        case .inputAccountInfo(let accountInfo):
+            return .just(.updateAccountInfo(accountInfo))
         }
     }
     
@@ -112,6 +118,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         case .updateIntorudction(let introduction):
             newState.store.introduction = introduction
             
+        case .updateAccountInfo(let accountInfo):
+            newState.store.accountInfos = [accountInfo]
+            
         case .pushEditStoreInfo(let store):
             self.pushEditStoreInfoPublisher.accept(store)
             
@@ -130,6 +139,9 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
+            
+        case .route(let route):
+            newState.route = route
         }
         
         return newState
@@ -139,5 +151,15 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
         return self.storeService.fetchMyStore()
             .map { .setStore(Store(response: $0)) }
             .catch { .just(.showErrorAlert($0)) }
+    }
+    
+    private func routeEditAccount() -> Mutation {
+        let reactor = EditAccountReactor(store: currentState.store)
+        reactor.relay.onSuccessUpdateAccountInfo
+            .map { Action.inputAccountInfo($0) }
+            .bind(to: action)
+            .disposed(by: reactor.relayDisposeBag)
+        
+        return .route(.pushEditAccount(reactor))
     }
 }

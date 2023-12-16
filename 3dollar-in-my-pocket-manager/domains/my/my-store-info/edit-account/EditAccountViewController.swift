@@ -44,6 +44,11 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
     
     func bind(reactor: EditAccountReactor) {
         // Bind Action
+        editAccountView.nameInputField.rx.text
+            .map { Reactor.Action.inputName($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         editAccountView.accountInputField.rx.text
             .map { Reactor.Action.inputAccountNumber($0) }
             .bind(to: reactor.action)
@@ -64,7 +69,7 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
         
         // Bind State
         reactor.state
-            .map(\.bank)
+            .map(\.bank?.description)
             .bind(to: editAccountView.bankInputField.rx.value)
             .disposed(by: disposeBag)
         
@@ -75,7 +80,7 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
         
         reactor.state
             .map(\.isEnableSaveButton)
-            .bind(to: editAccountView.saveButton.rx.isEnabled)
+            .bind(to: editAccountView.rx.isEnableSaveButton)
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$route)
@@ -87,13 +92,12 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
     }
     
     private func handleRoute(_ route: EditAccountReactor.Route) {
-        // TODO: Route 처리
         switch route {
         case .pop:
             navigationController?.popViewController(animated: true)
             
-        case .presentBankBottomSheet(let bankList):
-            print(bankList)
+        case .presentBankBottomSheet(let reactor):
+            coordinator?.presentBankListBottomSheet(reactor: reactor)
         }
     }
 }

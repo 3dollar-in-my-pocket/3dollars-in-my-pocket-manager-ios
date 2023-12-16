@@ -1,6 +1,6 @@
 import Foundation
 
-struct Bank {
+struct Bank: Equatable {
     let key: String
     let description: String
     

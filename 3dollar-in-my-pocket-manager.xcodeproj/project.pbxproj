@@ -206,6 +206,13 @@
 		6EC5E430282BD7E200AD571C /* ReviewCountLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5E42F282BD7E200AD571C /* ReviewCountLabel.swift */; };
 		6EC5E432282BDB3000AD571C /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5E431282BDB3000AD571C /* StatisticsViewController.swift */; };
 		6EC5E434282BDDDA00AD571C /* StatisticsFilterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC5E433282BDDDA00AD571C /* StatisticsFilterButton.swift */; };
+		6EC8031E2B2C891A00DA4F5E /* PanModal in Frameworks */ = {isa = PBXBuildFile; productRef = 6EC8031D2B2C891A00DA4F5E /* PanModal */; };
+		6EC803212B2C894B00DA4F5E /* BankListBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC803202B2C894B00DA4F5E /* BankListBottomSheetView.swift */; };
+		6EC803232B2C8B3800DA4F5E /* BankListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC803222B2C8B3800DA4F5E /* BankListCell.swift */; };
+		6EC803252B2C8C2800DA4F5E /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC803242B2C8C2800DA4F5E /* UIUtils.swift */; };
+		6EC803272B2C8FB900DA4F5E /* BankListBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC803262B2C8FB900DA4F5E /* BankListBottomSheetViewController.swift */; };
+		6EC803292B2C902E00DA4F5E /* BankListBottomSheetReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC803282B2C902E00DA4F5E /* BankListBottomSheetReactor.swift */; };
+		6EC8032B2B2C91B600DA4F5E /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EC8032A2B2C91B600DA4F5E /* ArrayExtension.swift */; };
 		6ED370F7280C33A300C445E5 /* MyStoreInfoHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED370F6280C33A300C445E5 /* MyStoreInfoHeaderView.swift */; };
 		6ED370FA280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED370F9280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift */; };
 		6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838927CB395B00278E14 /* SnapKit */; };
@@ -451,6 +458,12 @@
 		6EC5E42F282BD7E200AD571C /* ReviewCountLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCountLabel.swift; sourceTree = "<group>"; };
 		6EC5E431282BDB3000AD571C /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		6EC5E433282BDDDA00AD571C /* StatisticsFilterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFilterButton.swift; sourceTree = "<group>"; };
+		6EC803202B2C894B00DA4F5E /* BankListBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankListBottomSheetView.swift; sourceTree = "<group>"; };
+		6EC803222B2C8B3800DA4F5E /* BankListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankListCell.swift; sourceTree = "<group>"; };
+		6EC803242B2C8C2800DA4F5E /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
+		6EC803262B2C8FB900DA4F5E /* BankListBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankListBottomSheetViewController.swift; sourceTree = "<group>"; };
+		6EC803282B2C902E00DA4F5E /* BankListBottomSheetReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankListBottomSheetReactor.swift; sourceTree = "<group>"; };
+		6EC8032A2B2C91B600DA4F5E /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		6ED370F6280C33A300C445E5 /* MyStoreInfoHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoHeaderView.swift; sourceTree = "<group>"; };
 		6ED370F9280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoWorkDayCell.swift; sourceTree = "<group>"; };
 		6ED8839827CB3A1700278E14 /* SigninView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninView.swift; sourceTree = "<group>"; };
@@ -512,6 +525,7 @@
 				6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */,
 				6EE2624A27DDBE64008B3531 /* SPPermissionsCamera in Frameworks */,
 				6E37A2E62860AFE4008C046F /* FirebaseCrashlytics in Frameworks */,
+				6EC8031E2B2C891A00DA4F5E /* PanModal in Frameworks */,
 				6E37A2EA2860AFE4008C046F /* FirebaseRemoteConfig in Frameworks */,
 				6E2410B52875553C00BADDD5 /* RxDataSources in Frameworks */,
 				CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */,
@@ -894,6 +908,7 @@
 		6E8D012F2843331C00FAB49E /* edit-menu */ = {
 			isa = PBXGroup;
 			children = (
+				6EC8031F2B2C893100DA4F5E /* bank-list-bottomsheet */,
 				6E8D01372843395C00FAB49E /* subviews */,
 				6E8D01312843333300FAB49E /* EditMenuView.swift */,
 				6E8D01332843361700FAB49E /* EditMenuViewController.swift */,
@@ -1060,6 +1075,17 @@
 			path = subviews;
 			sourceTree = "<group>";
 		};
+		6EC8031F2B2C893100DA4F5E /* bank-list-bottomsheet */ = {
+			isa = PBXGroup;
+			children = (
+				6EC803202B2C894B00DA4F5E /* BankListBottomSheetView.swift */,
+				6EC803222B2C8B3800DA4F5E /* BankListCell.swift */,
+				6EC803262B2C8FB900DA4F5E /* BankListBottomSheetViewController.swift */,
+				6EC803282B2C902E00DA4F5E /* BankListBottomSheetReactor.swift */,
+			);
+			path = "bank-list-bottomsheet";
+			sourceTree = "<group>";
+		};
 		6ED8839527CB39EE00278E14 /* domains */ = {
 			isa = PBXGroup;
 			children = (
@@ -1123,6 +1149,7 @@
 				6EB5CA992935CB6100B6653C /* UITableViewExtensions.swift */,
 				6EB5CA9B2935CB6C00B6653C /* UICollectionViewExtensions.swift */,
 				6EB5CA9D2935CB7600B6653C /* DateExtensions.swift */,
+				6EC8032A2B2C91B600DA4F5E /* ArrayExtension.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -1229,6 +1256,7 @@
 				6EB5CA8F2935CAC300B6653C /* AlertUtils.swift */,
 				6EB5CA912935CAF300B6653C /* DateUtils.swift */,
 				6EB5CA932935CB0500B6653C /* JsonUtils.swift */,
+				6EC803242B2C8C2800DA4F5E /* UIUtils.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -1334,6 +1362,7 @@
 				6EEBC7BE28731F7700CBA0F0 /* Lottie */,
 				6E2410B02875550800BADDD5 /* ReactorKit */,
 				6E2410B42875553C00BADDD5 /* RxDataSources */,
+				6EC8031D2B2C891A00DA4F5E /* PanModal */,
 			);
 			productName = "3dollar-in-my-pocket-manager";
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
@@ -1376,6 +1405,7 @@
 				6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -1511,6 +1541,7 @@
 				6E473BA627D87A3D00232139 /* UIButtonExtensions.swift in Sources */,
 				6E7DFAF7284C2ECE006F0078 /* MyStoreInfoMenuCell.swift in Sources */,
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
+				6EC803292B2C902E00DA4F5E /* BankListBottomSheetReactor.swift in Sources */,
 				6E91A9952841EE620090361F /* CursorResponse.swift in Sources */,
 				6E6B431B285DB6B900AD84A5 /* FAQCoordinator.swift in Sources */,
 				6EB5CA9A2935CB6100B6653C /* UITableViewExtensions.swift in Sources */,
@@ -1520,6 +1551,7 @@
 				6EC5E432282BDB3000AD571C /* StatisticsViewController.swift in Sources */,
 				6E5F3DDE281D6435002282B6 /* AppearanceDay.swift in Sources */,
 				6EA53BA2284DD8DB007A3839 /* User.swift in Sources */,
+				6EC803272B2C8FB900DA4F5E /* BankListBottomSheetViewController.swift in Sources */,
 				6E5DCE6127FDB01F00CA58EE /* ReverseGeoLocation.swift in Sources */,
 				6EC51D0627EEEC11009B5527 /* AddressView.swift in Sources */,
 				6EE0CFBB27CB61CE0027A426 /* AppleSignInManager.swift in Sources */,
@@ -1556,6 +1588,7 @@
 				6ED8839927CB3A1700278E14 /* SigninView.swift in Sources */,
 				6E6EDF2328A7E76100D1A6ED /* BottomTabType.swift in Sources */,
 				6E5DCE7A27FDCEF400CA58EE /* BossStoreOpenStatusResponse.swift in Sources */,
+				6EC803252B2C8C2800DA4F5E /* UIUtils.swift in Sources */,
 				6E1E5BA82827EB33003A1B51 /* SettingView.swift in Sources */,
 				6E7964B228423909005EA0E2 /* DailyStatisticsStackItemView.swift in Sources */,
 				6E95E856282FD2140004C08D /* TotalStatisticsViewController.swift in Sources */,
@@ -1634,11 +1667,14 @@
 				6E5F3DDA281D6150002282B6 /* EditScheduleViewController.swift in Sources */,
 				6E37AF7127E707FC004FBE25 /* WaitingCoordinator.swift in Sources */,
 				6E142D6227D785A40084480C /* SignupView.swift in Sources */,
+				6EC803232B2C8B3800DA4F5E /* BankListCell.swift in Sources */,
 				6E1AB7A5280D8B040059DCF4 /* EditIntroductionReactor.swift in Sources */,
 				6E5DCE6E27FDC93000CA58EE /* BossStoreAppearanceDayResponse.swift in Sources */,
 				6E91A9852841D4B30090361F /* StatisticsReactor.swift in Sources */,
+				6EC803212B2C894B00DA4F5E /* BankListBottomSheetView.swift in Sources */,
 				6EEA3D6B27F1E74C00BC5F31 /* MainTabController.swift in Sources */,
 				6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */,
+				6EC8032B2B2C91B600DA4F5E /* ArrayExtension.swift in Sources */,
 				6E5F21342819778E00922A99 /* Menu.swift in Sources */,
 				6E63FF6E281C1FEA00EC49DE /* EditStoreInfoViewController.swift in Sources */,
 				6E6C9C6E280BD943009AFAE8 /* MyStoreInfoView.swift in Sources */,
@@ -1982,6 +2018,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/slackhq/PanModal.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.2.6;
+			};
+		};
 		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -2085,6 +2129,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = TOCropViewController;
+		};
+		6EC8031D2B2C891A00DA4F5E /* PanModal */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */;
+			productName = PanModal;
 		};
 		6ED8838927CB395B00278E14 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

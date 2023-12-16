@@ -8,7 +8,7 @@ struct PatchBossStoreInfoRequest: Encodable {
     let menus: [MenuRequest]?
     let name: String?
     let snsUrl: String?
-    let accountNumbers: BossStoreAccountNumberApiRequest?
+    let accountNumbers: [BossStoreAccountNumberApiRequest]
     
     enum CodingKeys: String, CodingKey {
         case appearanceDays
@@ -38,7 +38,11 @@ struct PatchBossStoreInfoRequest: Encodable {
         self.menus = menus
         self.name = name
         self.snsUrl = snsUrl
-        self.accountNumbers = accountNumbers
+        if let accountNumbers {
+            self.accountNumbers = [accountNumbers]
+        } else {
+            self.accountNumbers = []
+        }
     }
     
     init(store: Store) {
@@ -49,7 +53,12 @@ struct PatchBossStoreInfoRequest: Encodable {
         self.menus = store.menus.map(MenuRequest.init(menu:))
         self.name = store.name
         self.snsUrl = store.snsUrl
-        self.accountNumbers = BossStoreAccountNumberApiRequest(store.accountInfos.first)
+        if let accountInfoRequest = BossStoreAccountNumberApiRequest(store.accountInfos.first) {
+            self.accountNumbers = [accountInfoRequest]
+        } else {
+            self.accountNumbers = []
+        }
+        
     }
     
     func encode(to encoder: Encoder) throws {

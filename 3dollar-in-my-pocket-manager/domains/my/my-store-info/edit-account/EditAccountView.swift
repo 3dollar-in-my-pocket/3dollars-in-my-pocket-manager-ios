@@ -1,5 +1,8 @@
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class EditAccountView: BaseView {
     let backButton = UIButton().then {
         $0.setImage(UIImage(named: "ic_back"), for: .normal)
@@ -10,6 +13,13 @@ final class EditAccountView: BaseView {
         $0.textColor = .gray100
         $0.text = String(localized: "edit_account.account_numbuer")
     }
+    
+    let nameInputField = EditAccountInputField(
+        title: String(localized: "edit_account.name"),
+        isRedDotHidden: false,
+        isRightButtonHidden: true,
+        placeholder: String(localized: "edit_account.title_placeholder")
+    )
     
     let accountInputField = EditAccountInputField(
         title: String(localized: "edit_account.account_numbuer"),
@@ -31,12 +41,9 @@ final class EditAccountView: BaseView {
         $0.setTitle(String(localized: "edit_account.save"), for: .normal)
         $0.titleLabel?.font = .medium(size: 16)
         $0.setTitleColor(.white, for: .normal)
-        $0.backgroundColor = .gray30
     }
     
-    private let buttonBackgroundView = UIView().then {
-        $0.backgroundColor = .gray30
-    }
+    fileprivate let buttonBackgroundView = UIView()
     
     override func setup() {
         backgroundColor = .white
@@ -44,6 +51,7 @@ final class EditAccountView: BaseView {
         addSubViews([
             backButton,
             titleLabel,
+            nameInputField,
             accountInputField,
             bankInputField,
             saveButton,
@@ -63,11 +71,18 @@ final class EditAccountView: BaseView {
             $0.centerY.equalTo(backButton)
         }
         
-        accountInputField.snp.makeConstraints {
+        nameInputField.snp.makeConstraints {
             $0.top.equalTo(backButton.snp.bottom).offset(53)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
         }
+        
+        accountInputField.snp.makeConstraints {
+            $0.top.equalTo(nameInputField.snp.bottom).offset(32)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
+        
         
         bankInputField.snp.makeConstraints {
             $0.top.equalTo(accountInputField.snp.bottom).offset(32)
@@ -91,4 +106,17 @@ final class EditAccountView: BaseView {
     }
 }
 
+extension Reactive where Base: EditAccountView {
+    var isEnableSaveButton: Binder<Bool> {
+        return Binder(base) { view, isEnable in
+            if isEnable {
+                view.saveButton.backgroundColor = .green
+                view.buttonBackgroundView.backgroundColor = .green
+            } else {
+                view.saveButton.backgroundColor = .gray30
+                view.buttonBackgroundView.backgroundColor = .gray30
+            }
+        }
+    }
+}
 
