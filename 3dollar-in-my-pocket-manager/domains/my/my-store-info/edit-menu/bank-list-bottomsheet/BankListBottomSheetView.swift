@@ -22,6 +22,7 @@ final class BankListBottomSheetView: BaseView {
         backgroundColor = .white
         collectionView.register([BankListCell.self])
         collectionView.contentInset = .init(top: 0, left: 20, bottom: 20, right: 20)
+        collectionView.backgroundColor = .white
         
         addSubViews([
             titleLabel,
