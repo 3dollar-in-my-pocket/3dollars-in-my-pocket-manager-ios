@@ -1875,9 +1875,9 @@
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
 				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "가게 인증 사진을 가져오기 위해 앨범권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1920,11 +1920,11 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님";
+				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
 				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
-				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사장님의 현재 위치를 찾기 위해 위치 권한이 사용됩니다😄";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "가게 인증 사진을 가져오기 위해 앨범권한을 허용해주세요.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
