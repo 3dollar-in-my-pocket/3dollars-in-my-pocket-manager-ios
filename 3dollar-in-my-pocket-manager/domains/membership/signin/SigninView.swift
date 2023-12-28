@@ -1,9 +1,10 @@
 import UIKit
 
 final class SigninView: BaseView {
-    private let introImageView = UIImageView().then {
-        $0.image = UIImage(named: "img_intro")
+    let introImageButton = UIButton().then {
+        $0.setImage(UIImage(named: "img_intro"), for: .normal)
         $0.contentMode = .scaleAspectFill
+        $0.adjustsImageWhenHighlighted = false
     }
     
     let appleButton = SocialSigninButton(socialType: .apple)
@@ -13,18 +14,18 @@ final class SigninView: BaseView {
     override func setup() {
         self.backgroundColor = .gray100
         self.addSubViews([
-            self.introImageView,
+            self.introImageButton,
             self.appleButton,
             self.kakaoButton
         ])
     }
     
     override func bindConstraints() {
-        self.introImageView.snp.makeConstraints { make in
+        self.introImageButton.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(106)
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.height.equalTo(self.introImageView.snp.height)
+            make.height.equalTo(self.introImageButton.snp.height)
         }
         
         self.kakaoButton.snp.makeConstraints { make in
