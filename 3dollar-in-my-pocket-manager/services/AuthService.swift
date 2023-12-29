@@ -20,6 +20,8 @@ protocol AuthServiceType {
     func signout() -> Observable<String>
     
     func fetchMyInfo() -> Observable<BossAccountInfoResponse>
+    
+    func signinDemo(code: String) -> Observable<LoginResponse>
 }
 
 struct AuthService: AuthServiceType {
@@ -149,6 +151,29 @@ struct AuthService: AuthServiceType {
                     observer.processHTTPError(response: response)
                 }
             }
+            
+            return Disposables.create()
+        }
+    }
+    
+    func signinDemo(code: String) -> Observable<LoginResponse> {
+        return .create { observer in
+            let urlString = HTTPUtils.url + "/boss/login/demo"
+            let headers = HTTPUtils.jsonHeader()
+            
+            HTTPUtils.defaultSession.request(
+                urlString,
+                method: .post,
+                parameters: ["code": code],
+                headers: headers
+            )
+            .responseData(completionHandler: { response in
+                if response.isSuccess() {
+                    observer.processValue(type: LoginResponse.self, response: response)
+                } else {
+                    observer.processAPIError(response: response)
+                }
+            })
             
             return Disposables.create()
         }

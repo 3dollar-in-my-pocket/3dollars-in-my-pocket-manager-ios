@@ -14,13 +14,6 @@ final class EditAccountView: BaseView {
         $0.text = String(localized: "edit_account.account_numbuer")
     }
     
-    let nameInputField = EditAccountInputField(
-        title: String(localized: "edit_account.name"),
-        isRedDotHidden: false,
-        isRightButtonHidden: true,
-        placeholder: String(localized: "edit_account.title_placeholder")
-    )
-    
     let accountInputField = EditAccountInputField(
         title: String(localized: "edit_account.account_numbuer"),
         isRedDotHidden: false,
@@ -37,6 +30,13 @@ final class EditAccountView: BaseView {
         $0.textField.isUserInteractionEnabled = false
     }
     
+    let nameInputField = EditAccountInputField(
+        title: String(localized: "edit_account.name"),
+        isRedDotHidden: false,
+        isRightButtonHidden: true,
+        placeholder: String(localized: "edit_account.title_placeholder")
+    )
+    
     let saveButton = UIButton().then {
         $0.setTitle(String(localized: "edit_account.save"), for: .normal)
         $0.titleLabel?.font = .medium(size: 16)
@@ -51,9 +51,9 @@ final class EditAccountView: BaseView {
         addSubViews([
             backButton,
             titleLabel,
-            nameInputField,
             accountInputField,
             bankInputField,
+            nameInputField,
             saveButton,
             buttonBackgroundView
         ])
@@ -71,14 +71,8 @@ final class EditAccountView: BaseView {
             $0.centerY.equalTo(backButton)
         }
         
-        nameInputField.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(53)
-            $0.leading.equalToSuperview().offset(24)
-            $0.trailing.equalToSuperview().offset(-24)
-        }
-        
         accountInputField.snp.makeConstraints {
-            $0.top.equalTo(nameInputField.snp.bottom).offset(32)
+            $0.top.equalTo(backButton.snp.bottom).offset(53)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
         }
@@ -86,6 +80,12 @@ final class EditAccountView: BaseView {
         
         bankInputField.snp.makeConstraints {
             $0.top.equalTo(accountInputField.snp.bottom).offset(32)
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
+        
+        nameInputField.snp.makeConstraints {
+            $0.top.equalTo(bankInputField.snp.bottom).offset(32)
             $0.leading.equalToSuperview().offset(24)
             $0.trailing.equalToSuperview().offset(-24)
         }
