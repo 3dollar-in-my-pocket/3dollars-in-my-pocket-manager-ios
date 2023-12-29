@@ -1,6 +1,6 @@
 import Foundation
 
-struct TimeInterval: Decodable {
+struct TimeInterval: Decodable, Equatable {
     var endTime: String
     var startTime: String
     

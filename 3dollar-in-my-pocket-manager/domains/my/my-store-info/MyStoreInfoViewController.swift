@@ -77,10 +77,11 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
         // Bind state
         reactor.state
             .map { [
-                MyStoreInfoSectionModel(store: $0.store),
-                MyStoreInfoSectionModel(introduction: $0.store.introduction),
-                MyStoreInfoSectionModel(menus: $0.store.menus),
-                MyStoreInfoSectionModel(appearanceDays: $0.store.appearanceDays)
+                .overview($0.store),
+                .introduction($0.store.introduction),
+                .menus($0.store.menus),
+                .account($0.store.accountInfos),
+                .appearanceDays($0.store.appearanceDays)
             ] }
             .distinctUntilChanged()
             .do(onNext: { [weak self] _ in
@@ -92,6 +93,13 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                 dataSource: self.myStoreInfoCollectionViewDataSource
             ))
             .disposed(by: self.disposeBag)
+        
+        reactor.pulse(\.$route)
+            .compactMap { $0 }
+            .bind { [weak self] route in
+                self?.handleRoute(route)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupDataSource() {
@@ -162,6 +170,12 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                     
                     cell.bind(appearanceDay: appearanceDay)
                     return cell
+                    
+                case .account(let accountInfo):
+                    let cell: MyStoreInfoAccountCell = collectionView.dequeueReuseableCell(indexPath: indexPath)
+                    
+                    cell.bind(accountInfo: accountInfo)
+                    return cell
                 }
         })
         
@@ -196,6 +210,17 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
                         .map { Reactor.Action.tapEditMenus }
                         .bind(to: self.myStoreInfoReactor.action)
                         .disposed(by: headerView.disposeBag)
+                } else if indexPath.section == 3 {
+                    headerView.titleLabel.text = "my_store_info_header_account".localized
+                    headerView.rightButton.setTitle(
+                        "my_store_info_header_account_button".localized,
+                        for: .normal
+                    )
+                    
+                    headerView.rx.tapRightButton
+                        .map { Reactor.Action.tapEditAccount }
+                        .bind(to: self.myStoreInfoReactor.action)
+                        .disposed(by: headerView.disposeBag)
                 } else {
                     headerView.titleLabel.text = "my_store_info_header_appearance_day".localized
                     headerView.rightButton.setTitle(
@@ -213,6 +238,13 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
             default:
                 return UICollectionReusableView()
             }
+        }
+    }
+    
+    private func handleRoute(_ route: MyStoreInfoReactor.Route) {
+        switch route {
+        case .pushEditAccount(let reactor):
+            coordinator?.pushEditAccount(reactor: reactor)
         }
     }
 }

@@ -3,20 +3,34 @@ import RxSwift
 import RxCocoa
 
 final class SigninReactor: BaseReactor, Reactor {
+    enum Constant {
+        static let maxTapCountOfLogo = 5
+    }
+    
     enum Action {
+        case tapLogo
         case tapSignInButton(socialType: SocialType)
+        case signinDemo(code: String)
     }
     
     enum Mutation {
+        case increaseTapLogoCount
+        case clearTapLogoCount
         case pushSignUp(socialType: SocialType, token: String)
         case goToWaiting
         case goToMain
         case showLoading(isShow: Bool)
         case showErrorAlert(Error)
+        case route(Route)
     }
     
     struct State {
-        
+        var logoClickCount = 0
+        @Pulse var route: Route?
+    }
+    
+    enum Route {
+        case presentCodeAlert
     }
     
     var initialState = State()
@@ -48,15 +62,34 @@ final class SigninReactor: BaseReactor, Reactor {
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
+        case .tapLogo:
+            if currentState.logoClickCount >= Constant.maxTapCountOfLogo - 1 {
+                return .merge([
+                    .just(.route(.presentCodeAlert)),
+                    .just(.clearTapLogoCount)
+                ])
+            } else {
+                return .just(.increaseTapLogoCount)
+            }
+            
         case .tapSignInButton(let socialType):
             return self.signinWithSocial(socialType: socialType)
+            
+        case .signinDemo(let code):
+            return signinDemo(code: code)
         }
     }
 
     func reduce(state: State, mutation: Mutation) -> State {
-        let newState = state
+        var newState = state
         
         switch mutation {
+        case .increaseTapLogoCount:
+            newState.logoClickCount += 1
+            
+        case .clearTapLogoCount:
+            newState.logoClickCount = 0
+            
         case .pushSignUp(let socialType, let token):
             self.pushSignUpPublisher.accept((socialType, token))
             
@@ -71,6 +104,9 @@ final class SigninReactor: BaseReactor, Reactor {
             
         case .showErrorAlert(let error):
             self.showErrorAlert.accept(error)
+            
+        case .route(let route):
+            newState.route = route
         }
         
         return newState
@@ -162,5 +198,30 @@ final class SigninReactor: BaseReactor, Reactor {
     
     private func registerDevice() -> Observable<Void> {
         return self.deviceService.registerDevice()
+    }
+    
+    private func signinDemo(code: String) -> Observable<Mutation> {
+        return authService.signinDemo(code: code)
+            .do(onNext: { [weak self] response in
+                self?.userDefaultsUtils.userId = response.bossId
+                self?.userDefaultsUtils.userToken = response.token
+                self?.analyticsManager.sendEvent(event: .setUserId(response.bossId))
+                self?.analyticsManager.sendEvent(
+                    event: .signin(userId: response.bossId, screen: .signin)
+                )
+            })
+            .flatMap { [weak self] _ -> Observable<Mutation> in
+                guard let self = self else { return .error(BaseError.unknown) }
+                
+                return .zip(self.fetchUserInfo(), self.registerDevice()) { mutation, _ in
+                    return mutation
+                }
+            }
+            .catch { error -> Observable<Mutation> in
+                return .merge([
+                    .just(.showErrorAlert(error)),
+                    .just(.showLoading(isShow: false))
+                ])
+            }
     }
 }

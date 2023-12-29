@@ -8,6 +8,7 @@ struct PatchBossStoreInfoRequest: Encodable {
     let menus: [MenuRequest]?
     let name: String?
     let snsUrl: String?
+    let accountNumbers: [BossStoreAccountNumberApiRequest]
     
     enum CodingKeys: String, CodingKey {
         case appearanceDays
@@ -17,6 +18,7 @@ struct PatchBossStoreInfoRequest: Encodable {
         case menus
         case name
         case snsUrl
+        case accountNumbers
     }
     
     init(
@@ -26,7 +28,8 @@ struct PatchBossStoreInfoRequest: Encodable {
         introduction: String? = nil,
         menus: [MenuRequest]? = nil,
         name: String? = nil,
-        snsUrl: String? = nil
+        snsUrl: String? = nil,
+        accountNumbers: BossStoreAccountNumberApiRequest? = nil
     ) {
         self.appearanceDays = appearanceDays
         self.categoriesIds = categoriesIds
@@ -35,6 +38,11 @@ struct PatchBossStoreInfoRequest: Encodable {
         self.menus = menus
         self.name = name
         self.snsUrl = snsUrl
+        if let accountNumbers {
+            self.accountNumbers = [accountNumbers]
+        } else {
+            self.accountNumbers = []
+        }
     }
     
     init(store: Store) {
@@ -45,6 +53,12 @@ struct PatchBossStoreInfoRequest: Encodable {
         self.menus = store.menus.map(MenuRequest.init(menu:))
         self.name = store.name
         self.snsUrl = store.snsUrl
+        if let accountInfoRequest = BossStoreAccountNumberApiRequest(store.accountInfos.first) {
+            self.accountNumbers = [accountInfoRequest]
+        } else {
+            self.accountNumbers = []
+        }
+        
     }
     
     func encode(to encoder: Encoder) throws {
@@ -57,5 +71,6 @@ struct PatchBossStoreInfoRequest: Encodable {
         try container.encodeIfPresent(self.menus, forKey: .menus)
         try container.encodeIfPresent(self.name, forKey: .name)
         try container.encodeIfPresent(self.snsUrl, forKey: .snsUrl)
+        try container.encodeIfPresent(self.accountNumbers, forKey: .accountNumbers)
     }
 }

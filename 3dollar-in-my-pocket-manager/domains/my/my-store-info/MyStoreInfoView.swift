@@ -71,6 +71,25 @@ final class MyStoreInfoView: BaseView {
                     alignment: .topLeading
                 )]
                 return section
+            } else if sectionIndex == 3 {
+                let accountItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoAccountCell.Layout.estimatedHeight)
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .estimated(MyStoreInfoAccountCell.Layout.estimatedHeight)
+                ), subitems: [accountItem])
+                let section = NSCollectionLayoutSection(group: group)
+                section.boundarySupplementaryItems = [.init(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .topLeading
+                )]
+                return section
             } else {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -96,30 +115,16 @@ final class MyStoreInfoView: BaseView {
         
         $0.collectionViewLayout = layout
         $0.backgroundColor = .gray0
-        $0.register(
+        $0.register([
             MyStoreInfoOverviewCell.self,
-            forCellWithReuseIdentifier: MyStoreInfoOverviewCell.registerId
-        )
-        $0.register(
             MyStoreInfoIntroductionCell.self,
-            forCellWithReuseIdentifier: MyStoreInfoIntroductionCell.registerId
-        )
-        $0.register(
             MyStoreInfoMenuCell.self,
-            forCellWithReuseIdentifier: MyStoreInfoMenuCell.registerId
-        )
-        $0.register(
             MyStoreInfoMenuMoreCell.self,
-            forCellWithReuseIdentifier: MyStoreInfoMenuMoreCell.registerId
-        )
-        $0.register(
             MyStoreInfoMenuEmptyCell.self,
-            forCellWithReuseIdentifier: MyStoreInfoMenuEmptyCell.registerId
-        )
-        $0.register(
             MyStoreInfoWorkDayCell.self,
-            forCellWithReuseIdentifier: MyStoreInfoWorkDayCell.registerId
-        )
+            MyStoreInfoAccountCell.self,
+        ])
+        
         $0.register(
             MyStoreInfoHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
