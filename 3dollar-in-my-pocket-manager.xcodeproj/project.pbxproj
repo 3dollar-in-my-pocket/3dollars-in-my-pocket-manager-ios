@@ -1920,7 +1920,7 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
+				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님";
 				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
