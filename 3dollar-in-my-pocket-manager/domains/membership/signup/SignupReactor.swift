@@ -31,7 +31,7 @@ final class SignupReactor: BaseReactor, Reactor {
     }
     
     struct State {
-        var ownerName = ""
+        var ownerName: String
         var storeName = ""
         var registerationNumber = ""
         var categories: [StoreCategory] = []
@@ -40,7 +40,7 @@ final class SignupReactor: BaseReactor, Reactor {
         var isEnableSignupButton = false
     }
     
-    let initialState = State()
+    let initialState: State
     let pushWaitingPublisher = PublishRelay<Void>()
     let goToSigninPublisher = PublishRelay<Void>()
     private let socialType: SocialType
@@ -55,6 +55,7 @@ final class SignupReactor: BaseReactor, Reactor {
     init(
         socialType: SocialType,
         token: String,
+        name: String?,
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
         authService: AuthServiceType,
@@ -62,6 +63,7 @@ final class SignupReactor: BaseReactor, Reactor {
         userDefaultsUtils: UserDefaultsUtils,
         analyticsManager: AnalyticsManagerProtocol
     ) {
+        self.initialState = State(ownerName: name ?? "")
         self.socialType = socialType
         self.token = token
         self.categoryService = categoryService

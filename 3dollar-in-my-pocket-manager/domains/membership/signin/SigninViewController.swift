@@ -40,9 +40,9 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
     
     override func bindEvent() {
         self.signinReactor.pushSignUpPublisher
-            .asDriver(onErrorJustReturn: (.apple, ""))
-            .drive { [weak self] (socialType, token) in
-                self?.coordinator?.pushSignup(socialType: socialType, token: token)
+            .asDriver(onErrorJustReturn: (.apple, "", nil))
+            .drive { [weak self] (socialType, token, name) in
+                self?.coordinator?.pushSignup(socialType: socialType, token: token, name: name)
             }
             .disposed(by: self.eventDisposeBag)
         

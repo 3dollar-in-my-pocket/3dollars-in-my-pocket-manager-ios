@@ -1,7 +1,7 @@
 import UIKit
 
 protocol SigninCoordinator: AnyObject, BaseCoordinator {
-    func pushSignup(socialType: SocialType, token: String)
+    func pushSignup(socialType: SocialType, token: String, name: String?)
     
     func goToWaiting()
     
@@ -9,8 +9,8 @@ protocol SigninCoordinator: AnyObject, BaseCoordinator {
 }
 
 extension SigninCoordinator {
-    func pushSignup(socialType: SocialType, token: String) {
-        let viewControler = SignupViewController.instance(socialType: socialType, token: token)
+    func pushSignup(socialType: SocialType, token: String, name: String?) {
+        let viewControler = SignupViewController.instance(socialType: socialType, token: token, name: name)
         
         self.presenter.navigationController?.pushViewController(viewControler, animated: true)
     }
