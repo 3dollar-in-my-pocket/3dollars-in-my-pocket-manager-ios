@@ -15,10 +15,11 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
         return .darkContent
     }
     
-    init(socialType: SocialType, token: String) {
+    init(socialType: SocialType, token: String, name: String?) {
         self.signupReactor = SignupReactor(
             socialType: socialType,
             token: token,
+            name: name,
             categoryService: CategoryService(),
             imageService: ImageService(),
             authService: AuthService(),
@@ -33,8 +34,8 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
         fatalError("init(coder:) has not been implemented")
     }
     
-    static func instance(socialType: SocialType, token: String) -> SignupViewController {
-        return SignupViewController(socialType: socialType, token: token)
+    static func instance(socialType: SocialType, token: String, name: String?) -> SignupViewController {
+        return SignupViewController(socialType: socialType, token: token, name: name)
     }
     
     override func loadView() {
@@ -98,7 +99,7 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
     
     func bind(reactor: SignupReactor) {
         // Bind Action
-        self.signupView.ownerNameField.rx.text
+        self.signupView.ownerNameField.rx.text.skip(1)
             .map { Reactor.Action.inputOwnerName($0) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
@@ -124,6 +125,14 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .disposed(by: self.disposeBag)
         
         // Bind state
+        reactor.state
+            .map { $0.ownerName }
+            .asDriver(onErrorJustReturn: nil)
+            .drive(onNext: { [weak self] name in
+                self?.signupView.ownerNameField.setText(text: name)
+            })
+            .disposed(by: disposeBag)
+        
         reactor.state
             .map { $0.categories }
             .distinctUntilChanged()

@@ -16,7 +16,7 @@ final class SigninReactor: BaseReactor, Reactor {
     enum Mutation {
         case increaseTapLogoCount
         case clearTapLogoCount
-        case pushSignUp(socialType: SocialType, token: String)
+        case pushSignUp(socialType: SocialType, token: String, name: String?)
         case goToWaiting
         case goToMain
         case showLoading(isShow: Bool)
@@ -26,6 +26,7 @@ final class SigninReactor: BaseReactor, Reactor {
     
     struct State {
         var logoClickCount = 0
+        var name: String?
         @Pulse var route: Route?
     }
     
@@ -34,7 +35,7 @@ final class SigninReactor: BaseReactor, Reactor {
     }
     
     var initialState = State()
-    let pushSignUpPublisher = PublishRelay<(SocialType, String)>()
+    let pushSignUpPublisher = PublishRelay<(SocialType, String, String?)>()
     let goToWaitingPublisher = PublishRelay<Void>()
     let goToMainPublisher = PublishRelay<Void>()
     private let kakaoSignInManager: KakaoSignInManagerProtocol
@@ -90,8 +91,8 @@ final class SigninReactor: BaseReactor, Reactor {
         case .clearTapLogoCount:
             newState.logoClickCount = 0
             
-        case .pushSignUp(let socialType, let token):
-            self.pushSignUpPublisher.accept((socialType, token))
+        case .pushSignUp(let socialType, let token, let name):
+            self.pushSignUpPublisher.accept((socialType, token, name))
             
         case .goToWaiting:
             self.goToWaitingPublisher.accept(())
@@ -116,10 +117,10 @@ final class SigninReactor: BaseReactor, Reactor {
         switch socialType {
         case .apple:
             return self.appleSignInManager.signIn()
-                .flatMap { [weak self] token -> Observable<Mutation> in
+                .flatMap { [weak self] signInResult -> Observable<Mutation> in
                     guard let self = self else { return .error(BaseError.unknown) }
                     
-                    return self.signin(socialType: socialType, token: token)
+                    return self.signin(socialType: socialType, token: signInResult.token, name: signInResult.name)
                 }
             
         case .kakao:
@@ -135,7 +136,7 @@ final class SigninReactor: BaseReactor, Reactor {
         }
     }
     
-    private func signin(socialType: SocialType, token: String) -> Observable<Mutation> {
+    private func signin(socialType: SocialType, token: String, name: String? = nil) -> Observable<Mutation> {
         let signinObservable = self.authService.login(socialType: socialType, token: token)
             .do(onNext: { [weak self] response in
                 self?.userDefaultsUtils.userId = response.bossId
@@ -156,7 +157,7 @@ final class SigninReactor: BaseReactor, Reactor {
                 if let httpError = error as? HTTPError {
                     switch httpError {
                     case .notFound:
-                        return .just(.pushSignUp(socialType: socialType, token: token))
+                        return .just(.pushSignUp(socialType: socialType, token: token, name: name))
                         
                     case .forbidden:
                         return .just(.goToWaiting)

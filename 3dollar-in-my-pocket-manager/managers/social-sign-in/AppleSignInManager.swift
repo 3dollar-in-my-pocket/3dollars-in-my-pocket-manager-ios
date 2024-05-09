@@ -3,22 +3,20 @@ import AuthenticationServices
 import RxSwift
 
 protocol AppleSignInManagerProtocol {
-    func signIn() -> Observable<String>
+    func signIn() -> Observable<SignInResult>
 }
 
 final class AppleSigninManager: NSObject, AppleSignInManagerProtocol {
     static let shared = AppleSigninManager()
     
-    private var publisher = PublishSubject<String>()
+    private var publisher = PublishSubject<SignInResult>()
     
-    func signIn() -> Observable<String> {
-        self.publisher = PublishSubject<String>()
+    func signIn() -> Observable<SignInResult> {
+        self.publisher = PublishSubject<SignInResult>()
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-        
-        request.requestedScopes = [.fullName, .email]
-        
+        request.requestedScopes = [.fullName]
         let authController = ASAuthorizationController(authorizationRequests: [request])
         
         authController.delegate = self
@@ -60,12 +58,23 @@ extension AppleSigninManager: ASAuthorizationControllerDelegate {
     ) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
            let accessToken = String(data: appleIDCredential.identityToken!, encoding: .utf8) {
-            self.publisher.onNext(accessToken)
+            let name = appleIDCredential.fullName?.name
+            let signInResult = SignInResult(token: accessToken, name: name)
+            
+            self.publisher.onNext(signInResult)
             self.publisher.onCompleted()
         } else {
             let signInError = BaseError.custom("credential is not ASAuthorizationAppleIDCredential")
             
             self.publisher.onError(signInError)
         }
+    }
+}
+
+private extension PersonNameComponents {
+    var name: String {
+        let firstName = "\(givenName ?? "") "
+        let lastName = familyName ?? ""
+        return "\(firstName)\(lastName)"
     }
 }
