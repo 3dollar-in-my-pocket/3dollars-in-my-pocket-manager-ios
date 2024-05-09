@@ -16,9 +16,7 @@ final class AppleSigninManager: NSObject, AppleSignInManagerProtocol {
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-        
-        request.requestedScopes = [.fullName, .email]
-        
+        request.requestedScopes = [.fullName]
         let authController = ASAuthorizationController(authorizationRequests: [request])
         
         authController.delegate = self
