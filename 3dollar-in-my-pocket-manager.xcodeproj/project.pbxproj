@@ -1329,11 +1329,11 @@
 			buildConfigurationList = 6EB94EB427CB209000609E77 /* Build configuration list for PBXNativeTarget "3dollar-in-my-pocket-manager" */;
 			buildPhases = (
 				326682B484AEB07117F894B2 /* [CP] Check Pods Manifest.lock */,
+				6EA3D2B328A748E600E4C389 /* Setup Firebase */,
 				6EB94E9C27CB208F00609E77 /* Sources */,
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
 				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
-				6EA3D2B328A748E600E4C389 /* Setup Firebase */,
 			);
 			buildRules = (
 			);
