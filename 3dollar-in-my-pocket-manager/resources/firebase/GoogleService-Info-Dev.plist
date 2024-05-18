@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>203450930638-vbkv0dosatfehq7ci95rrgh59agaej5l.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.203450930638-vbkv0dosatfehq7ci95rrgh59agaej5l</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>203450930638-g19op59heflko3va5je3snrs1rpurfr6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBtY-FC0ar0VUogKVTzDlDx0PCiocpHauI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>203450930638</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.macgongmon.-dollar-in-my-pocket-manager-dev</string>
+	<key>PROJECT_ID</key>
+	<string>dollars-manager-dev</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dollars-manager-dev.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:203450930638:ios:a2dbc0db78d718f165479f</string>
+</dict>
+</plist>
