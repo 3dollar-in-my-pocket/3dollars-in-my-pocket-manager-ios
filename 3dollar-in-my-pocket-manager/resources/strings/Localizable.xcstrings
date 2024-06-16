@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "3시간 전" : {
+
+    },
     "code_alert.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -187,6 +190,9 @@
           }
         }
       }
+    },
+    "소식 올리기" : {
+
     }
   },
   "version" : "1.0"

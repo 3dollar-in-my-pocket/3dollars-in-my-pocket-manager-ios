@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_write_solid.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
