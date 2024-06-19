@@ -46,7 +46,7 @@ extension StorePostCell {
                         .foregroundColor(.gray100)
                         .frame(height: 20)
                     
-                    Text("3시간 전")
+                    Text(post.createdAt.createdAtFormatted)
                         .font(.regular(size: 14))
                         .foregroundColor(.gray40)
                         .frame(height: 18)
