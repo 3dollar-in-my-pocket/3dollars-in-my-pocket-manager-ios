@@ -7,18 +7,25 @@ struct StorePostView: View {
     var body: some View {
         ZStack(content: {
             VStack(alignment: .leading, content: {
-                ScrollView(.vertical) {
-                    LazyVGrid(columns: [GridItem(.flexible())], content: {
-                        ForEach(0..<viewModel.postList.count, id: \.self) { index in
-                            StorePostCell(post: $viewModel.postList[index])
+                if viewModel.postList.count == 0 {
+                    StorePostEmptyView()
+                } else {
+                    ScrollView(.vertical) {
+                        LazyVGrid(columns: [GridItem(.flexible())], content: {
+                            ForEach(0..<viewModel.postList.count, id: \.self) { index in
+                                StorePostCell(post: $viewModel.postList[index], didTapEdit: {
+                                    viewModel.didTapEdit.send(index)
+                                }, didTapDelete: {
+                                    viewModel.didTapDelete.send(index)
+                                })
                                 .onAppear(perform: {
                                     viewModel.cellWillDisplay.send(index)
                                 })
-                        }
-                    })
+                            }
+                        })
+                    }
                 }
             })
-            .background(Color(red: 251/255, green: 251/255, blue: 251/255))
             .onAppear(perform: {
                 if hasAppeared.isNot {
                     viewModel.onAppear.send(())
@@ -39,6 +46,15 @@ struct StorePostView: View {
                 .padding(.bottom, 12)
             }
         })
+        .background(Color(red: 251/255, green: 251/255, blue: 251/255))
+    }
+    
+    func fetchBackgroundColor() -> Color {
+        if viewModel.postList.isEmpty {
+            return .clear
+        } else {
+            return Color(red: 251/255, green: 251/255, blue: 251/255)
+        }
     }
 }
 
@@ -52,7 +68,7 @@ extension StorePostView {
         
         var body: some View {
             Button(action: {
-                
+                viewModel.didTapWrite.send(())
             }) {
                 HStack(spacing: 4) {
                     Image("ic_write_solid")
@@ -67,8 +83,8 @@ extension StorePostView {
                 .background(Color.dollorGreen)
                 .cornerRadius(22)
                 .shadow(color: Color.dollorGreen.opacity(0.4), radius: 12, x: 0, y: 4)
-                
             }
+            .buttonStyle(.plain)
         }
     }
 }

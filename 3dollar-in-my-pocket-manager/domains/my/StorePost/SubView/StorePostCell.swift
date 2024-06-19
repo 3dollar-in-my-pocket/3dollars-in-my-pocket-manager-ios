@@ -1,11 +1,14 @@
 import SwiftUI
+import Combine
 
 struct StorePostCell: View {
     @Binding var post: StorePostApiResponse
+    var didTapEdit: (() -> Void)?
+    var didTapDelete: (() -> Void)?
     
     var body: some View {
         VStack {
-            HeaderView(post: $post)
+            HeaderView(post: $post, didTapEdit: didTapEdit, didTapDelete: didTapDelete)
             ImageGroupView(postSectionList: $post.sections)
             ContentView(description: $post.body)
         }
@@ -21,6 +24,8 @@ struct StorePostCell: View {
 extension StorePostCell {
     struct HeaderView: View {
         @Binding var post: StorePostApiResponse
+        var didTapEdit: (() -> Void)?
+        var didTapDelete: (() -> Void)?
         
         var body: some View {
             HStack(content: {
@@ -54,11 +59,7 @@ extension StorePostCell {
                 
                 Spacer()
                 
-                Image("ic_more")
-                    .resizable()
-                    .renderingMode(.template)
-                    .foregroundColor(.gray40)
-                    .frame(width: 24, height: 24)
+                StorePostMenu(didTapEdit: didTapEdit, didTapDelete: didTapDelete)
             })
             .padding(EdgeInsets(top: 16, leading: 24, bottom: 12, trailing: 24))
         }

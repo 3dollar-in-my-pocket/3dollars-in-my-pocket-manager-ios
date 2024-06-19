@@ -26,6 +26,9 @@ final class StorePostViewModel: ObservableObject {
     // MARK: Input
     let onAppear = PassthroughSubject<Void, Never>()
     let cellWillDisplay = PassthroughSubject<Int, Never>()
+    let didTapEdit = PassthroughSubject<Int, Never>()
+    let didTapDelete = PassthroughSubject<Int, Never>()
+    let didTapWrite = PassthroughSubject<Void, Never>()
     
     // MARK: Output
     @Published var postList: [StorePostApiResponse] = []

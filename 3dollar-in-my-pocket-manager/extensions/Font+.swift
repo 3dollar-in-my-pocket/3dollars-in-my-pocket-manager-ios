@@ -18,7 +18,7 @@ extension Font {
     }
     
     static func medium(size: CGFloat) -> Font {
-        return .custom("AppleSDGothicNeo-Regular", size: size)
+        return .custom("AppleSDGothicNeo-Medium", size: size)
     }
     
     static func extraBold(size: CGFloat) -> Font {
