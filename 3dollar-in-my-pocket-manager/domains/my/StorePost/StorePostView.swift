@@ -74,7 +74,7 @@ extension StorePostView {
                     Image("ic_write_solid")
                         .frame(width: 20, height: 20)
                     
-                    Text("소식 올리기")
+                    Text("store_post.upload")
                         .font(.medium(size: 16))
                 }
                 .padding(.init(top: 12, leading: 16, bottom: 12, trailing: 16))

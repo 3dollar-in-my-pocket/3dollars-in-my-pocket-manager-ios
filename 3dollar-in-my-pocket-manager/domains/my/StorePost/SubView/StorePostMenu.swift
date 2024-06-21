@@ -11,7 +11,7 @@ struct StorePostMenu: View {
                 didTapEdit?()
             }, label: {
                 HStack {
-                    Text("수정하기")
+                    Text("store_post_menu.edit")
                         .font(.regular(size: 12))
                         .foregroundColor(.gray80)
                     
@@ -26,7 +26,7 @@ struct StorePostMenu: View {
                 isShowDeleteAlert = true
             }, label: {
                 HStack {
-                    Text("삭제하기")
+                    Text("store_post_menu.delete")
                         .font(.regular(size: 12))
                         .foregroundColor(.gray80)
                     
@@ -45,12 +45,12 @@ struct StorePostMenu: View {
         }
         .alert(isPresented: $isShowDeleteAlert) {
             Alert(
-                title: Text("게시글을 삭제하시겠습니까?"),
+                title: Text("store_post_menu.delete_alert.title"),
                 message: nil,
-                primaryButton: .destructive(Text("삭제"), action: {
+                primaryButton: .destructive(Text("common.delete"), action: {
                     didTapDelete?()
                 }),
-                secondaryButton: .cancel(Text("취소"))
+                secondaryButton: .cancel(Text("common.cancel"))
             )
         }
     }
