@@ -26,13 +26,13 @@ final class SplashReactor: BaseReactor, Reactor {
     private let authService: AuthServiceType
     private let feedbackService: FeedbackServiceType
     private let userDefaultsUtils: UserDefaultsUtils
-    private let context: Context
+    private let context: SharedContext
     
     init(
         authService: AuthServiceType,
         feedbackService: FeedbackServiceType,
         userDefaultsUtils: UserDefaultsUtils,
-        context: Context
+        context: SharedContext
     ) {
         self.authService = authService
         self.feedbackService = feedbackService

@@ -1,10 +1,12 @@
 import UIKit
+import Combine
 
 import RxSwift
 
 class BaseViewController: UIViewController {
     var disposeBag = DisposeBag()
     var eventDisposeBag = DisposeBag()
+    var cancellables = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()

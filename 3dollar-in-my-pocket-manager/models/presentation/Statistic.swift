@@ -4,7 +4,7 @@ struct Statistic: Equatable, Comparable {
     let ratio: Double
     
     init(response: BossStoreFeedbackCountResponse) {
-        self.type = Context.shared.getFeedbackType(by: response.feedbackType)
+        self.type = SharedContext.shared.getFeedbackType(by: response.feedbackType)
         self.count = response.count
         self.ratio = response.ratio
     }

@@ -20,6 +20,7 @@ extension ApiRequest {
             baseUrl + path,
             method: method,
             parameters: parameters,
+            encoding: method == .post ? JSONEncoding.default : URLEncoding.default,
             headers: HTTPUtils.defaultHeader()
         )
     }

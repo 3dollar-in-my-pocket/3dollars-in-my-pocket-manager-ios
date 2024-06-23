@@ -19,6 +19,10 @@ extension StorePostViewModel {
         var hasMore = true
         var nextCursor: String? = nil
     }
+    
+    enum Route {
+        case pushUpload
+    }
 }
 
 @MainActor
@@ -32,6 +36,8 @@ final class StorePostViewModel: ObservableObject {
     
     // MARK: Output
     @Published var postList: [StorePostApiResponse] = []
+    let route = PassthroughSubject<Route, Never>()
+    
     
     private var state = State()
     private let dependency: Dependency
@@ -55,6 +61,12 @@ final class StorePostViewModel: ObservableObject {
                 guard let self, canLoadMore(index: index) else { return }
                 
                 fetchPostList(cursor: state.nextCursor)
+            }
+            .store(in: &cancellables)
+        
+        didTapWrite
+            .sink { [weak self] _ in
+                self?.route.send(.pushUpload)
             }
             .store(in: &cancellables)
     }

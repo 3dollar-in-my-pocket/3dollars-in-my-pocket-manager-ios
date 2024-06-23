@@ -5,6 +5,10 @@ extension String {
       return NSLocalizedString(self, tableName: "Localizations", value: self, comment: "")
     }
     
+    var localizable: String {
+        return NSLocalizedString(self, tableName: "Localizable", comment: "")
+    }
+    
     /**
      - 1분 미만인 경우 -> 방금 전
      - 60분 미만인 경우 -> n분 전
@@ -41,5 +45,9 @@ extension String {
             return formattedDate
             
         }
+    }
+    
+    var isNotEmpty: Bool {
+        return !isEmpty
     }
 }

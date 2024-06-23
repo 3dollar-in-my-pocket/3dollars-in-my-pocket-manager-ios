@@ -2,6 +2,7 @@ import Alamofire
 
 enum StorePostApi {
     case fetchPostList(storeId: String, size: Int, cursor: String?)
+    case uploadPost(storeId: String, input: PostCreateApiRequest)
 }
 
 extension StorePostApi: ApiRequest {
@@ -9,6 +10,8 @@ extension StorePostApi: ApiRequest {
         switch self {
         case .fetchPostList(let storeId, _, _):
             return "/v1/store/\(storeId)/news-posts"
+        case .uploadPost(let storeId, _):
+            return "/v1/store/\(storeId)/news-post"
         }
     }
     
@@ -16,6 +19,8 @@ extension StorePostApi: ApiRequest {
         switch self {
         case .fetchPostList:
             return .get
+        case .uploadPost:
+            return .post
         }
     }
     
@@ -29,6 +34,8 @@ extension StorePostApi: ApiRequest {
             }
             
             return parameters
+        case .uploadPost(_, let input):
+            return input.toDictionary
         }
     }
 }

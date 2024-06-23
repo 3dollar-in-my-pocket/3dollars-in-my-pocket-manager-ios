@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct StorePostView: View {
-    @StateObject private var viewModel = StorePostViewModel()
+    @StateObject var viewModel: StorePostViewModel
     @State var hasAppeared = false
     
     var body: some View {
@@ -59,7 +59,7 @@ struct StorePostView: View {
 }
 
 #Preview {
-    StorePostView()
+    StorePostView(viewModel: StorePostViewModel())
 }
 
 extension StorePostView {
