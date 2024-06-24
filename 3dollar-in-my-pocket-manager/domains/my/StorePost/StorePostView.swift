@@ -7,7 +7,9 @@ struct StorePostView: View {
     var body: some View {
         ZStack(content: {
             VStack(alignment: .leading, content: {
-                if viewModel.postList.count == 0 {
+                if viewModel.isLoading {
+                    EmptyView()
+                } else if viewModel.postList.count == 0 {
                     StorePostEmptyView()
                 } else {
                     ScrollView(.vertical) {

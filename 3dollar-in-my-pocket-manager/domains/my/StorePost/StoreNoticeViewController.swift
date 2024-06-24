@@ -31,6 +31,8 @@ final class StoreNoticeViewController: UIHostingController<StorePostView> {
                 switch route {
                 case .pushUpload:
                     self?.pushUploadPost()
+                case .pushEdit(let viewModel):
+                    self?.pushEditPost(viewModel: viewModel)
                 }
             }
             .store(in: &cancellables)
@@ -42,6 +44,13 @@ final class StoreNoticeViewController: UIHostingController<StorePostView> {
         
         let parentViewController = parent
         let navigationController = parentViewController?.navigationController
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func pushEditPost(viewModel: UploadPostViewModel) {
+        let viewController = UploadPostViewController(viewModel: viewModel)
+        viewController.hidesBottomBarWhenPushed = true
         
         navigationController?.pushViewController(viewController, animated: true)
     }

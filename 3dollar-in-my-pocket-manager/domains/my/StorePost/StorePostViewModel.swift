@@ -22,6 +22,7 @@ extension StorePostViewModel {
     
     enum Route {
         case pushUpload
+        case pushEdit(viewModel: UploadPostViewModel)
     }
 }
 
@@ -36,6 +37,7 @@ final class StorePostViewModel: ObservableObject {
     
     // MARK: Output
     @Published var postList: [StorePostApiResponse] = []
+    @Published var isLoading = false
     let route = PassthroughSubject<Route, Never>()
     
     
@@ -69,11 +71,28 @@ final class StorePostViewModel: ObservableObject {
                 self?.route.send(.pushUpload)
             }
             .store(in: &cancellables)
+        
+        didTapEdit
+            .sink { [weak self] index in
+                guard let self, let post = postList[safe: index] else { return }
+                let config = UploadPostViewModel.Config(storePostApiResponse: post)
+                let viewModel = UploadPostViewModel(config: config)
+                
+                route.send(.pushEdit(viewModel: viewModel))
+            }
+            .store(in: &cancellables)
+        
+        didTapDelete
+            .sink { [weak self] index in
+                self?.deletePost(index: index)
+            }
+            .store(in: &cancellables)
     }
     
     private func fetchPostList(cursor: String?) {
         Task { [weak self] in
             guard let self else { return }
+            isLoading = true
             let storeId = dependency.userDefaults.storeId
             let result = await dependency.storePostRepository.fetchPostList(storeId: storeId, cursor: cursor)
             
@@ -85,10 +104,27 @@ final class StorePostViewModel: ObservableObject {
             case .failure(let error):
                 print("🟢error: \(error)")
             }
+            isLoading = false
         }
     }
     
     private func canLoadMore(index: Int) -> Bool {
         return state.hasMore && state.nextCursor.isNotNil && index >= postList.count - 1
+    }
+    
+    private func deletePost(index: Int) {
+        guard let post = postList[safe: index] else { return }
+        
+        Task {
+            let storeId = dependency.userDefaults.storeId
+            let result = await dependency.storePostRepository.deletePost(storeId: storeId, postId: post.postId)
+            
+            switch result {
+            case .success:
+                postList.remove(at: index)
+            case .failure(let error):
+                print("🟢error: \(error)")
+            }
+        }
     }
 }

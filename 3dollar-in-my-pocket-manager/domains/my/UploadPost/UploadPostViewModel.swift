@@ -26,14 +26,19 @@ extension UploadPostViewModel {
     struct Config {
         let storePostApiResponse: StorePostApiResponse?
         
-        init(StorePostApiResponse: StorePostApiResponse? = nil) {
-            self.storePostApiResponse = StorePostApiResponse
+        init(storePostApiResponse: StorePostApiResponse? = nil) {
+            self.storePostApiResponse = storePostApiResponse
         }
     }
     
     enum Route {
         case presentPhotoPicker(count: Int)
         case pop
+    }
+    
+    enum UploadType {
+        case edit
+        case create
     }
 }
 
@@ -57,6 +62,8 @@ final class UploadPostViewModel {
     
     let input = Input()
     let output: Output
+    let uploadType: UploadType
+    let postId: String?
     private let dependency: Dependency
     private var cancellables = Set<AnyCancellable>()
     
@@ -69,12 +76,16 @@ final class UploadPostViewModel {
                 message: .init(post.body),
                 isEnableSaveButton: .init(post.body.isNotEmpty)
             )
+            self.uploadType = .edit
+            self.postId = post.postId
         } else {
             output = Output(
                 photos: .init([]),
                 message: .init(""),
                 isEnableSaveButton: .init(false)
             )
+            self.uploadType = .create
+            self.postId = nil
         }
         bind()
     }
@@ -117,7 +128,13 @@ final class UploadPostViewModel {
         
         input.didTapUpload
             .sink { [weak self] _ in
-                self?.uploadPost()
+                guard let self else { return }
+                switch uploadType {
+                case .edit:
+                    editPost()
+                case .create:
+                    uploadPost()
+                }
             }
             .store(in: &cancellables)
     }
@@ -143,8 +160,34 @@ final class UploadPostViewModel {
         }
     }
     
+    private func editPost() {
+        guard let postId else { return }
+        Task {
+            let imageContents = await getImageContents()
+            let body = output.message.value
+            let sections = imageContents.compactMap { imageContent -> PostSectionCreateApiRequest? in
+                guard let url = imageContent.url else { return nil }
+                
+                return PostSectionCreateApiRequest(sectionType: .image, url: url, ratio: imageContent.ratio)
+            }
+            let input = PostCreateApiRequest(body: body, sections: sections)
+            let result = await dependency.storePostRepository.editPost(
+                storeId: dependency.userDefaults.storeId,
+                postId: postId,
+                input: input
+            )
+            
+            switch result {
+            case .success(_):
+                output.route.send(.pop)
+            case .failure(let error):
+                output.showErrorAlert.send(error)
+            }
+        }
+    }
+    
     private func getImageContents() async -> [ImageContent] {
-        var urlImageContents = output.photos.value.filter { $0.url.isNotNil }
+        let urlImageContents = output.photos.value.filter { $0.url.isNotNil }
         var uploadedImageContents = output.photos.value.filter { $0.image.isNotNil }
         let images = uploadedImageContents.compactMap { $0.image }
         
