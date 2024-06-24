@@ -58,16 +58,25 @@ final class UploadPostViewModel {
         let isEnableSaveButton: CurrentValueSubject<Bool, Never>
         let showErrorAlert = PassthroughSubject<Error, Never>()
         let route = PassthroughSubject<Route, Never>()
+        let onEditedPost = PassthroughSubject<StorePostApiResponse, Never>()
+        let onCreatedPost = PassthroughSubject<Void, Never>()
     }
     
     let input = Input()
     let output: Output
-    let uploadType: UploadType
-    let postId: String?
+    let config: Config
+    var cancellables = Set<AnyCancellable>()
     private let dependency: Dependency
-    private var cancellables = Set<AnyCancellable>()
+    var uploadType: UploadType {
+        return config.storePostApiResponse?.postId == nil ? .create : .edit
+    }
+    var postId: String? {
+        return config.storePostApiResponse?.postId
+    }
+    
     
     init(config: Config = Config(), dependency: Dependency = Dependency()) {
+        self.config = config
         self.dependency = dependency
         
         if let post = config.storePostApiResponse {
@@ -76,16 +85,12 @@ final class UploadPostViewModel {
                 message: .init(post.body),
                 isEnableSaveButton: .init(post.body.isNotEmpty)
             )
-            self.uploadType = .edit
-            self.postId = post.postId
         } else {
             output = Output(
                 photos: .init([]),
                 message: .init(""),
                 isEnableSaveButton: .init(false)
             )
-            self.uploadType = .create
-            self.postId = nil
         }
         bind()
     }
@@ -153,6 +158,7 @@ final class UploadPostViewModel {
             
             switch result {
             case .success(_):
+                output.onCreatedPost.send(())
                 output.route.send(.pop)
             case .failure(let error):
                 output.showErrorAlert.send(error)

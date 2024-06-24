@@ -21,7 +21,7 @@ extension StorePostViewModel {
     }
     
     enum Route {
-        case pushUpload
+        case pushUpload(viewModel: UploadPostViewModel)
         case pushEdit(viewModel: UploadPostViewModel)
     }
 }
@@ -53,7 +53,8 @@ final class StorePostViewModel: ObservableObject {
     private func bind() {
         onAppear.sink { [weak self] _ in
             guard let self else { return }
-            
+            state.nextCursor = nil
+            state.hasMore = true
             fetchPostList(cursor: state.nextCursor)
         }
         .store(in: &cancellables)
@@ -68,7 +69,13 @@ final class StorePostViewModel: ObservableObject {
         
         didTapWrite
             .sink { [weak self] _ in
-                self?.route.send(.pushUpload)
+                let viewModel = UploadPostViewModel()
+                viewModel.output.onCreatedPost
+                    .sink { [weak self] _ in
+                        self?.onAppear.send(())
+                    }
+                    .store(in: &viewModel.cancellables)
+                self?.route.send(.pushUpload(viewModel: viewModel))
             }
             .store(in: &cancellables)
         

@@ -29,8 +29,8 @@ final class StoreNoticeViewController: UIHostingController<StorePostView> {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] route in
                 switch route {
-                case .pushUpload:
-                    self?.pushUploadPost()
+                case .pushUpload(let viewModel):
+                    self?.pushUploadPost(viewModel: viewModel)
                 case .pushEdit(let viewModel):
                     self?.pushEditPost(viewModel: viewModel)
                 }
@@ -38,12 +38,9 @@ final class StoreNoticeViewController: UIHostingController<StorePostView> {
             .store(in: &cancellables)
     }
     
-    private func pushUploadPost() {
-        let viewController = UploadPostViewController()
+    private func pushUploadPost(viewModel: UploadPostViewModel) {
+        let viewController = UploadPostViewController(viewModel: viewModel)
         viewController.hidesBottomBarWhenPushed = true
-        
-        let parentViewController = parent
-        let navigationController = parentViewController?.navigationController
         
         navigationController?.pushViewController(viewController, animated: true)
     }
