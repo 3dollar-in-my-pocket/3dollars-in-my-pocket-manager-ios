@@ -184,7 +184,8 @@ final class UploadPostViewModel {
             )
             
             switch result {
-            case .success(_):
+            case .success(let response):
+                output.onEditedPost.send(response)
                 output.route.send(.pop)
             case .failure(let error):
                 output.showErrorAlert.send(error)

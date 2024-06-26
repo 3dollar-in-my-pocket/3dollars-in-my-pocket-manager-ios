@@ -69,21 +69,16 @@ final class StorePostViewModel: ObservableObject {
         
         didTapWrite
             .sink { [weak self] _ in
-                let viewModel = UploadPostViewModel()
-                viewModel.output.onCreatedPost
-                    .sink { [weak self] _ in
-                        self?.onAppear.send(())
-                    }
-                    .store(in: &viewModel.cancellables)
-                self?.route.send(.pushUpload(viewModel: viewModel))
+                guard let self else { return }
+                let viewModel = createUploadPostViewModel()
+                route.send(.pushUpload(viewModel: viewModel))
             }
             .store(in: &cancellables)
         
         didTapEdit
             .sink { [weak self] index in
                 guard let self, let post = postList[safe: index] else { return }
-                let config = UploadPostViewModel.Config(storePostApiResponse: post)
-                let viewModel = UploadPostViewModel(config: config)
+                let viewModel = createUploadPostViewModel(post: post)
                 
                 route.send(.pushEdit(viewModel: viewModel))
             }
@@ -133,5 +128,26 @@ final class StorePostViewModel: ObservableObject {
                 print("🟢error: \(error)")
             }
         }
+    }
+    
+    private func createUploadPostViewModel(post: StorePostApiResponse? = nil) -> UploadPostViewModel {
+        let config = UploadPostViewModel.Config(storePostApiResponse: post)
+        let viewModel = UploadPostViewModel(config: config)
+        viewModel.output.onCreatedPost
+            .sink { [weak self] _ in
+                self?.onAppear.send(())
+            }
+            .store(in: &viewModel.cancellables)
+        viewModel.output.onEditedPost
+            .main
+            .sink { [weak self] post in
+                guard let self else { return }
+                
+                if let targetIndex = postList.firstIndex(where: { $0.postId == post.postId }) {
+                    postList[targetIndex] = post
+                }
+            }
+            .store(in: &viewModel.cancellables)
+        return viewModel
     }
 }

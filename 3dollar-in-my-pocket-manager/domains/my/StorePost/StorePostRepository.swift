@@ -8,7 +8,7 @@ protocol StorePostRepository {
     
     func deletePost(storeId: String, postId: String) async -> ApiResult<String>
     
-    func editPost(storeId: String, postId: String, input: PostCreateApiRequest) async -> ApiResult<String>
+    func editPost(storeId: String, postId: String, input: PostCreateApiRequest) async -> ApiResult<StorePostApiResponse>
 }
 
 
@@ -25,7 +25,7 @@ final class StorePostRepositoryImpl: StorePostRepository {
         return await StorePostApi.deletePost(storeId: storeId, postId: postId).asyncRequest()
     }
     
-    func editPost(storeId: String, postId: String, input: PostCreateApiRequest) async -> ApiResult<String> {
+    func editPost(storeId: String, postId: String, input: PostCreateApiRequest) async -> ApiResult<StorePostApiResponse> {
         return await StorePostApi.editPost(storeId: storeId, postId: postId, input: input).asyncRequest()
     }
 }
