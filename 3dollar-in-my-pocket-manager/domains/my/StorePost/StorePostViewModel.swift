@@ -38,6 +38,8 @@ final class StorePostViewModel: ObservableObject {
     // MARK: Output
     @Published var postList: [StorePostApiResponse] = []
     @Published var isLoading = false
+    @Published var isShowErrorAlert = false
+    @Published var error: Error?
     let route = PassthroughSubject<Route, Never>()
     
     
@@ -104,7 +106,8 @@ final class StorePostViewModel: ObservableObject {
                 state.hasMore = response.cursor.hasMore
                 postList.append(contentsOf: response.contents)
             case .failure(let error):
-                print("🟢error: \(error)")
+                self.error = error
+                isShowErrorAlert = true
             }
             isLoading = false
         }
@@ -125,7 +128,8 @@ final class StorePostViewModel: ObservableObject {
             case .success:
                 postList.remove(at: index)
             case .failure(let error):
-                print("🟢error: \(error)")
+                self.error = error
+                isShowErrorAlert = true
             }
         }
     }

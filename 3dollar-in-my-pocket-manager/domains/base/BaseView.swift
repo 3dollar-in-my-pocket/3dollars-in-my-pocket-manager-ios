@@ -1,9 +1,11 @@
 import UIKit
+import Combine
 
 import RxSwift
 
 class BaseView: UIView {
     var disposeBag = DisposeBag()
+    var cancellables = Set<AnyCancellable>()
     
     override public init(frame: CGRect) {
         super.init(frame: frame)

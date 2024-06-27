@@ -24,9 +24,9 @@ struct StorePostEmptyView: View {
     }
     
     func makeAttributedString() -> AttributedString {
-        var attributedString = AttributedString("store_post.empty.title".localized)
+        var attributedString = AttributedString("store_post.empty.title".localizable)
         // 특정 부분의 색상 변경
-        if let range = attributedString.range(of: "store_post.empty.title.bold".localized) {
+        if let range = attributedString.range(of: "store_post.empty.title.bold".localizable) {
             attributedString[range].foregroundColor = .dollorGreen
         }
 

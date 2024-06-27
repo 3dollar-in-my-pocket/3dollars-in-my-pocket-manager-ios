@@ -49,6 +49,25 @@ struct StorePostView: View {
             }
         })
         .background(Color(red: 251/255, green: 251/255, blue: 251/255))
+        .alert(isPresented: $viewModel.isShowErrorAlert, content: {
+            guard let error = viewModel.error else { return Alert(title: Text("error.unknown".localizable)) }
+            
+            if let httpError = error as? HTTPError,
+               httpError == .unauthorized {
+                
+                return Alert(
+                    title: Text(httpError.description), dismissButton: .cancel(Text("common_ok".localized), action: {
+                        UserDefaultsUtils().clear()
+                        goToSignIn()
+                    }))
+            } else if let localizedError = error as? LocalizedError {
+                guard let title = localizedError.errorDescription else { return Alert(title: Text("error.unknown")) }
+                
+                return Alert(title: Text(title), message: nil, dismissButton: .cancel(Text("common_ok".localized)))
+            } else {
+                return Alert(title: Text(error.localizedDescription), message: nil, dismissButton: .cancel(Text("common_ok".localized)))
+            }
+        })
     }
     
     func fetchBackgroundColor() -> Color {
@@ -57,6 +76,17 @@ struct StorePostView: View {
         } else {
             return Color(red: 251/255, green: 251/255, blue: 251/255)
         }
+    }
+    
+    private func goToSignIn() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
+        }
+        
+        sceneDelegate.goToSignin()
     }
 }
 

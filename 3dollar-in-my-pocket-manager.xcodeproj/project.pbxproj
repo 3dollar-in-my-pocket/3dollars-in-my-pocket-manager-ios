@@ -258,6 +258,7 @@
 		6ED883A527CB3C7E00278E14 /* UIFontExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A427CB3C7E00278E14 /* UIFontExtensions.swift */; };
 		6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A627CB443F00278E14 /* UIColorExtensions.swift */; };
 		6ED883A927CB456F00278E14 /* SigninViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED883A827CB456F00278E14 /* SigninViewController.swift */; };
+		6EDA7D0F2C2CEAC100457D63 /* MyPageSubTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA7D0E2C2CEAC100457D63 /* MyPageSubTab.swift */; };
 		6EE041D8288ADAD300E17D5B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE041D7288ADAD300E17D5B /* Lottie */; };
 		6EE0CF9F27CB567B0027A426 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */; };
 		6EE0CFA127CB567B0027A426 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CFA027CB567B0027A426 /* KakaoSDKCommon */; };
@@ -542,6 +543,7 @@
 		6ED883A427CB3C7E00278E14 /* UIFontExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtensions.swift; sourceTree = "<group>"; };
 		6ED883A627CB443F00278E14 /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		6ED883A827CB456F00278E14 /* SigninViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninViewController.swift; sourceTree = "<group>"; };
+		6EDA7D0E2C2CEAC100457D63 /* MyPageSubTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSubTab.swift; sourceTree = "<group>"; };
 		6EE0CFA427CB573E0027A426 /* KakaoSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoSignInManager.swift; sourceTree = "<group>"; };
 		6EE0CFA827CB5B6C0027A426 /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
 		6EE0CFAE27CB5BA40027A426 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
@@ -908,6 +910,7 @@
 		6E6C9C66280BD467009AFAE8 /* my */ = {
 			isa = PBXGroup;
 			children = (
+				6EDA7D0D2C2CEAB100457D63 /* Subview */,
 				6ED290772C25CCF200C47892 /* UploadPost */,
 				6E8A80852C186D0700A3C55C /* StorePost */,
 				6EC5E42A282BD73900AD571C /* statistics */,
@@ -1325,6 +1328,14 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		6EDA7D0D2C2CEAB100457D63 /* Subview */ = {
+			isa = PBXGroup;
+			children = (
+				6EDA7D0E2C2CEAC100457D63 /* MyPageSubTab.swift */,
+			);
+			path = Subview;
+			sourceTree = "<group>";
+		};
 		6EE0CF9B27CB54A70027A426 /* managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1658,6 +1669,7 @@
 				6E5DCE7027FDC97200CA58EE /* DayOfTheWeek.swift in Sources */,
 				6E95E85B282FD3E40004C08D /* TotalStatisticsTableViewCell.swift in Sources */,
 				6E211847285DD6F600220E5A /* FAQService.swift in Sources */,
+				6EDA7D0F2C2CEAC100457D63 /* MyPageSubTab.swift in Sources */,
 				6E8A808C2C18723100A3C55C /* Color+.swift in Sources */,
 				6E80AC922B26FC9300FC886B /* EditAccountInputField.swift in Sources */,
 				6E80AC982B2733C900FC886B /* EditAccountReactor.swift in Sources */,

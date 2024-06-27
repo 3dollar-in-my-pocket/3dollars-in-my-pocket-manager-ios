@@ -23,17 +23,7 @@ final class MyPageView: BaseView {
         $0.isSelected = false
     }
     
-    private let storeNoticeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("가게 소식", for: .normal)
-        button.setTitleColor(.gray95, for: .normal)
-        button.setTitleColor(.gray30, for: .normal)
-        button.setTitleColor(.gray95, for: .selected)
-        button.titleLabel?.font = .extraBold(size: 18)
-        button.isSelected = false
-        
-        return button
-    }()
+    let storeNoticeButton = MyPageSubTab(title: "my_page.sub_tab.store_post".localizable, isSelected: false)
     
     let containerView = UIView()
     

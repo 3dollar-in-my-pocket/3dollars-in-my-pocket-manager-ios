@@ -204,6 +204,39 @@
         }
       }
     },
+    "error.unknown" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알 수 없는 에러가 발생했습니다.\\n 다시 시도해주세요."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "알 수 없는 에러가 발생했습니다.\\n 다시 시도해주세요."
+          }
+        }
+      }
+    },
+    "my_page.sub_tab.store_post" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가게 소식"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가게 소식"
+          }
+        }
+      }
+    },
     "store_post_menu.delete" : {
       "localizations" : {
         "en" : {

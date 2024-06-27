@@ -43,6 +43,7 @@ final class MyPageViewController: BaseViewController {
         super.viewDidLoad()
         
         self.setupPageViewController()
+        setNoticeNewBadgeIfNeeded()
     }
     
     override func bindEvent() {
@@ -90,6 +91,16 @@ final class MyPageViewController: BaseViewController {
             AnalyticsManager.shared.sendEvent(event: .tapMyTopTab(tab: .myStoreInfo))
         } else {
             AnalyticsManager.shared.sendEvent(event: .tapMyTopTab(tab: .statistics))
+        }
+    }
+    
+    private func setNoticeNewBadgeIfNeeded() {
+        var userDefaults = UserDefaultsUtils()
+        let isShownStoreNoticeNewBadge = userDefaults.shownStoreNoticeNewBadge
+        
+        myPageView.storeNoticeButton.isNew = isShownStoreNoticeNewBadge.isNot
+        if isShownStoreNoticeNewBadge.isNot {
+            userDefaults.shownStoreNoticeNewBadge = true
         }
     }
 }
