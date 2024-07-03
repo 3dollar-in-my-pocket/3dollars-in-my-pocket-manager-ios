@@ -60,6 +60,7 @@ final class UploadPostViewModel {
         let route = PassthroughSubject<Route, Never>()
         let onEditedPost = PassthroughSubject<StorePostApiResponse, Never>()
         let onCreatedPost = PassthroughSubject<Void, Never>()
+        let showLoading = PassthroughSubject<Bool, Never>()
     }
     
     let input = Input()
@@ -146,6 +147,7 @@ final class UploadPostViewModel {
     
     private func uploadPost() {
         Task {
+            output.showLoading.send(true)
             let imageContents = await getImageContents()
             let body = output.message.value
             let sections = imageContents.compactMap { imageContent -> PostSectionCreateApiRequest? in
@@ -163,12 +165,14 @@ final class UploadPostViewModel {
             case .failure(let error):
                 output.showErrorAlert.send(error)
             }
+            output.showLoading.send(false)
         }
     }
     
     private func editPost() {
         guard let postId else { return }
         Task {
+            output.showLoading.send(true)
             let imageContents = await getImageContents()
             let body = output.message.value
             let sections = imageContents.compactMap { imageContent -> PostSectionCreateApiRequest? in
@@ -190,6 +194,7 @@ final class UploadPostViewModel {
             case .failure(let error):
                 output.showErrorAlert.send(error)
             }
+            output.showLoading.send(false)
         }
     }
     

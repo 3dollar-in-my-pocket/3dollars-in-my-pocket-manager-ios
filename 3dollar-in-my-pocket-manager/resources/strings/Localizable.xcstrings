@@ -285,23 +285,6 @@
         }
       }
     },
-    "store_post.empty.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "다양한 우리 가게의\\n새로운 소식을 알려보세요!"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "다양한 우리 가게의\\n새로운 소식을 알려보세요!"
-          }
-        }
-      }
-    },
     "store_post.empty.title.bold" : {
       "extractionState" : "manual",
       "localizations" : {

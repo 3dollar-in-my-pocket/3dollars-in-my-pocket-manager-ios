@@ -7,7 +7,7 @@ struct StorePostCell: View {
     var didTapDelete: (() -> Void)?
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HeaderView(post: $post, didTapEdit: didTapEdit, didTapDelete: didTapDelete)
             ImageGroupView(postSectionList: $post.sections)
             ContentView(description: $post.body)
@@ -69,34 +69,38 @@ extension StorePostCell {
         @Binding var postSectionList: [PostSectionApiResponse]
         
         var body: some View {
-            ScrollView(.horizontal) {
-                LazyHGrid(rows: [GridItem(.flexible(minimum: 208))], spacing: 12, content: {
-                    ForEach(postSectionList, id: \.self) { postSection in
-                        AsyncImage(url: URL(string: postSection.url)) { phase in
-                            
-                            switch phase {
-                            case .empty:
-                                ProgressView()
-                                    .frame(width: 200, height: 200)
-                            case .success(let image):
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .cornerRadius(8)
-                                    .frame(height: 208)
-                                    .clipped()
-                            default:
-                                Color.gray10
-                                    .frame(minWidth: 208, minHeight: 208)
-                                    .cornerRadius(8)
+            if postSectionList.isNotEmpty {
+                ScrollView(.horizontal) {
+                    LazyHGrid(rows: [GridItem(.flexible(minimum: 208))], spacing: 12, content: {
+                        ForEach(postSectionList, id: \.self) { postSection in
+                            AsyncImage(url: URL(string: postSection.url)) { phase in
+                                
+                                switch phase {
+                                case .empty:
+                                    ProgressView()
+                                        .frame(width: 200, height: 200)
+                                case .success(let image):
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .cornerRadius(8)
+                                        .frame(height: 208)
+                                        .clipped()
+                                default:
+                                    Color.gray10
+                                        .frame(minWidth: 208, minHeight: 208)
+                                        .cornerRadius(8)
+                                }
                             }
                         }
-                    }
-                })
-                .frame(height: 208)
-                .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+                    })
+                    .frame(height: 208)
+                    .padding(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 24))
+                }
+                .scrollIndicators(.hidden)
+            } else {
+                EmptyView()
             }
-            .scrollIndicators(.hidden)
         }
     }
     
@@ -108,6 +112,8 @@ extension StorePostCell {
                 .font(.regular(size: 14))
                 .foregroundColor(.gray95)
                 .lineSpacing(3)
+                .padding(.leading, 24)
+                .padding(.trailing, 24)
         }
     }
 }

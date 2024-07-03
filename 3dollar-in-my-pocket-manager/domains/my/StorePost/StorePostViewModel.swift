@@ -102,9 +102,13 @@ final class StorePostViewModel: ObservableObject {
             
             switch result {
             case .success(let response):
+                if cursor.isNil {
+                    postList = response.contents
+                } else {
+                    postList.append(contentsOf: response.contents)
+                }
                 state.nextCursor = response.cursor.nextCursor
                 state.hasMore = response.cursor.hasMore
-                postList.append(contentsOf: response.contents)
             case .failure(let error):
                 self.error = error
                 isShowErrorAlert = true

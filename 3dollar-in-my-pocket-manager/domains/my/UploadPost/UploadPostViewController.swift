@@ -2,11 +2,10 @@ import UIKit
 import Combine
 import PhotosUI
 
-final class UploadPostViewController: UIViewController {
+final class UploadPostViewController: BaseViewController {
     private let uploadPostView = UploadPostView()
     private let viewModel: UploadPostViewModel
     private var photoDataSource: [ImageContent] = []
-    private var cancellables = Set<AnyCancellable>()
     
     init(viewModel: UploadPostViewModel = UploadPostViewModel()) {
         self.viewModel = viewModel
@@ -75,6 +74,20 @@ final class UploadPostViewController: UIViewController {
                 case .pop:
                     self?.navigationController?.popViewController(animated: true)
                 }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.showErrorAlert
+            .main
+            .sink { [weak self] error in
+                self?.showErrorAlert(error: error)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.showLoading
+            .main
+            .sink { isShow in
+                LoadingManager.shared.showLoading(isShow: isShow)
             }
             .store(in: &cancellables)
     }
