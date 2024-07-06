@@ -15,6 +15,7 @@ struct StorePostEmptyView: View {
                 .padding(.top, 60)
             
             Text(makeAttributedString())
+                .foregroundColor(.gray95)
                 .font(.extraBold(size: 18))
                 .multilineTextAlignment(.center)
                 .padding(.top, 36)

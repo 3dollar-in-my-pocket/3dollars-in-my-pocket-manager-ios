@@ -3,7 +3,6 @@ import SwiftUI
 struct StorePostMenu: View {
     var didTapEdit: (() -> Void)?
     var didTapDelete: (() -> Void)?
-    @State var isShowDeleteAlert = false
     
     var body: some View {
         SwiftUI.Menu {
@@ -23,7 +22,7 @@ struct StorePostMenu: View {
             })
             
             Button(action: {
-                isShowDeleteAlert = true
+                didTapDelete?()
             }, label: {
                 HStack {
                     Text("store_post_menu.delete")
@@ -42,16 +41,6 @@ struct StorePostMenu: View {
                 .renderingMode(.template)
                 .foregroundColor(.gray40)
                 .frame(width: 24, height: 24)
-        }
-        .alert(isPresented: $isShowDeleteAlert) {
-            Alert(
-                title: Text("store_post_menu.delete_alert.title"),
-                message: nil,
-                primaryButton: .destructive(Text("common.delete"), action: {
-                    didTapDelete?()
-                }),
-                secondaryButton: .cancel(Text("common.cancel"))
-            )
         }
     }
 }

@@ -78,6 +78,7 @@ final class UploadPostView: BaseView {
             $0.centerX.equalToSuperview()
         }
         
+        imageCollectionView.backgroundColor = .clear
         addSubview(imageCollectionView)
         imageCollectionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)

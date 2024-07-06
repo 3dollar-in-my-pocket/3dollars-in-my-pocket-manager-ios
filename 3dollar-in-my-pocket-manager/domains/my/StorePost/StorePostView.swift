@@ -3,6 +3,8 @@ import SwiftUI
 struct StorePostView: View {
     @StateObject var viewModel: StorePostViewModel
     @State var hasAppeared = false
+    @State var isShowDeleteAlert = false
+    @State var deleteIndex: Int? = nil
     
     var body: some View {
         ZStack(content: {
@@ -18,7 +20,8 @@ struct StorePostView: View {
                                 StorePostCell(post: $viewModel.postList[index], didTapEdit: {
                                     viewModel.didTapEdit.send(index)
                                 }, didTapDelete: {
-                                    viewModel.didTapDelete.send(index)
+                                    deleteIndex = index
+                                    isShowDeleteAlert = true
                                 })
                                 .onAppear(perform: {
                                     viewModel.cellWillDisplay.send(index)
@@ -68,6 +71,18 @@ struct StorePostView: View {
                 return Alert(title: Text(error.localizedDescription), message: nil, dismissButton: .cancel(Text("common_ok".localized)))
             }
         })
+        .alert(isPresented: $isShowDeleteAlert) {
+            Alert(
+                title: Text("store_post_menu.delete_alert.title"),
+                message: nil,
+                primaryButton: .destructive(Text("common.delete"), action: {
+                    if let deleteIndex {
+                        viewModel.didTapDelete.send(deleteIndex)
+                    }
+                }),
+                secondaryButton: .cancel(Text("common.cancel"))
+            )
+        }
     }
     
     func fetchBackgroundColor() -> Color {
