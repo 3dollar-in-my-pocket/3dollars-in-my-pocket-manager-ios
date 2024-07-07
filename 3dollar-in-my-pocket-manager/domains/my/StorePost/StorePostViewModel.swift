@@ -61,13 +61,14 @@ final class StorePostViewModel: ObservableObject {
         }
         .store(in: &cancellables)
         
-        cellWillDisplay
-            .sink { [weak self] index in
-                guard let self, canLoadMore(index: index) else { return }
-                
-                fetchPostList(cursor: state.nextCursor)
-            }
-            .store(in: &cancellables)
+        // UIKit으로 다시 변경하기 전까지 페이징 막음 (대신 페이지 50으로 처리)
+//        cellWillDisplay
+//            .sink { [weak self] index in
+//                guard let self, canLoadMore(index: index) else { return }
+//                
+//                fetchPostList(cursor: state.nextCursor)
+//            }
+//            .store(in: &cancellables)
         
         didTapWrite
             .sink { [weak self] _ in
