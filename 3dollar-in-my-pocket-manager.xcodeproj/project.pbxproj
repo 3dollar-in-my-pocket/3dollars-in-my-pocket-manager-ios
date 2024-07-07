@@ -154,6 +154,7 @@
 		6E80AC982B2733C900FC886B /* EditAccountReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80AC972B2733C900FC886B /* EditAccountReactor.swift */; };
 		6E80AC9A2B273B8600FC886B /* BossStoreAccountNumberApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80AC992B273B8600FC886B /* BossStoreAccountNumberApiRequest.swift */; };
 		6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E81503527EEEA110032C518 /* HomeViewController.swift */; };
+		6E893CBA2C3A65F100357F66 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 6E893CB92C3A65F100357F66 /* netfox */; };
 		6E89A865281E5A3300B795EF /* EditScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */; };
 		6E8A80882C186E8F00A3C55C /* StorePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A80872C186E8F00A3C55C /* StorePostCell.swift */; };
 		6E8A808A2C18711F00A3C55C /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A80892C18711F00A3C55C /* Font+.swift */; };
@@ -587,6 +588,7 @@
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
 				6E37A2E42860AFE4008C046F /* FirebaseAnalytics in Frameworks */,
+				6E893CBA2C3A65F100357F66 /* netfox in Frameworks */,
 				6EE2625027DDBE64008B3531 /* SPPermissionsNotification in Frameworks */,
 				6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */,
 				6EE0CFC127CB64E40027A426 /* Alamofire in Frameworks */,
@@ -1527,6 +1529,7 @@
 				6E2410B02875550800BADDD5 /* ReactorKit */,
 				6E2410B42875553C00BADDD5 /* RxDataSources */,
 				6EC8031D2B2C891A00DA4F5E /* PanModal */,
+				6E893CB92C3A65F100357F66 /* netfox */,
 			);
 			productName = "3dollar-in-my-pocket-manager";
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
@@ -1570,6 +1573,7 @@
 				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */,
+				6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -2210,6 +2214,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kasketis/netfox";
+			requirement = {
+				kind = exactVersion;
+				version = 1.21.0;
+			};
+		};
 		6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
@@ -2319,6 +2331,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		6E893CB92C3A65F100357F66 /* netfox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */;
+			productName = netfox;
 		};
 		6E8E7F2E27EEBDB7005345BB /* CropViewController */ = {
 			isa = XCSwiftPackageProductDependency;
