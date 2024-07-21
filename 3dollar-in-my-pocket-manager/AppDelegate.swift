@@ -7,6 +7,7 @@ import FirebaseMessaging
 import Then
 import SnapKit
 import RxSwift
+import netfox
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         self.initializeKakaoSDK()
-        self.initializeNetworkLogger()
+        self.initializeLogger()
         self.initializeFirebase()
         self.initializeNotification()
         application.registerForRemoteNotifications()
@@ -49,9 +50,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         KakaoSDK.initSDK(appKey: Bundle.kakaoAppKey)
     }
     
-    private func initializeNetworkLogger() {
+    private func initializeLogger() {
         NetworkActivityLogger.shared.startLogging()
         NetworkActivityLogger.shared.level = .debug
+        
+        #if DEBUG
+        // netfox
+        NFX.sharedInstance().setGesture(.custom)
+        NFX.sharedInstance().start()
+        #endif
     }
     
     private func initializeFirebase() {

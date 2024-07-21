@@ -9,7 +9,7 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
         authService: AuthService(),
         feedbackService: FeedbackService(),
         userDefaultsUtils: UserDefaultsUtils(),
-        context: Context.shared
+        context: SharedContext.shared
     )
     private weak var coordinator: SplashCoordinator?
     private let finishLottiePublisher = PublishRelay<Void>()

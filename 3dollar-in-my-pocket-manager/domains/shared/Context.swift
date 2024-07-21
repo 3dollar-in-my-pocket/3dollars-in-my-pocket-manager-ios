@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class Context {
-    static let shared = Context()
+final class SharedContext {
+    static let shared = SharedContext()
     
     var feedbackTypes: [FeedbackType] = []
     

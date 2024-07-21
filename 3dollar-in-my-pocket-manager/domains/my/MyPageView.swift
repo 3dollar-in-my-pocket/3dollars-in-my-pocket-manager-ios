@@ -23,6 +23,8 @@ final class MyPageView: BaseView {
         $0.isSelected = false
     }
     
+    let storeNoticeButton = MyPageSubTab(title: "my_page.sub_tab.store_post".localizable, isSelected: false)
+    
     let containerView = UIView()
     
     override func setup() {
@@ -30,12 +32,14 @@ final class MyPageView: BaseView {
         self.addSubViews([
             self.myStoreInfoButton,
             self.statisticsButton,
+            self.storeNoticeButton,
             self.containerView
         ])
         self.myStoreInfoButton.rx.tap
             .do(onNext: { [weak self] in
                 self?.myStoreInfoButton.isSelected = true
                 self?.statisticsButton.isSelected = false
+                self?.storeNoticeButton.isSelected = false
             })
             .map { _ in 0 }
             .bind(to: self.tapTabPublisher)
@@ -45,8 +49,19 @@ final class MyPageView: BaseView {
             .do(onNext: { [weak self] in
                 self?.myStoreInfoButton.isSelected = false
                 self?.statisticsButton.isSelected = true
+                self?.storeNoticeButton.isSelected = false
             })
             .map { _ in 1 }
+            .bind(to: self.tapTabPublisher)
+            .disposed(by: self.disposeBag)
+        
+        storeNoticeButton.rx.tap
+            .do(onNext: { [weak self] in
+                self?.myStoreInfoButton.isSelected = false
+                self?.statisticsButton.isSelected = false
+                self?.storeNoticeButton.isSelected = true
+            })
+            .map { _ in 2 }
             .bind(to: self.tapTabPublisher)
             .disposed(by: self.disposeBag)
     }
@@ -60,6 +75,11 @@ final class MyPageView: BaseView {
         self.statisticsButton.snp.makeConstraints { make in
             make.centerY.equalTo(self.myStoreInfoButton)
             make.left.equalTo(self.myStoreInfoButton.snp.right).offset(22)
+        }
+        
+        self.storeNoticeButton.snp.makeConstraints { make in
+            make.centerY.equalTo(self.myStoreInfoButton)
+            make.left.equalTo(self.statisticsButton.snp.right).offset(22)
         }
         
         self.containerView.snp.makeConstraints { make in

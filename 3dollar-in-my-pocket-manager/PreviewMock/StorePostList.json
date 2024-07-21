@@ -1,0 +1,118 @@
+{
+  "contents": [
+    {
+      "postId": "news-post-1",
+      "body": "✨🎉 [은평구 핫도그 아저씨] 새로운 신메뉴 출시! 🎉✨\n우리의 새로운 신메뉴들과 함께 특별한 맛의 여정을 떠나보세요!\n와우! 부드러운 크림치즈와 바삭한 핫도그의 환상적인 조합!\n\n📅 출시일: 이번 주 금요일! 🚀\n📅 출시일: 이번 주 금요일! 🚀\n📅 출시일: 이번 주 금요일! 🚀",
+      "sections": [
+        {
+          "sectionType": "IMAGE",
+          "url": "https://storage.threedollars.co.kr/menu/v1_bungeoppang.png?version=1",
+          "ratio": 1
+        },
+        {
+          "sectionType": "IMAGE",
+          "url": "https://storage.threedollars.co.kr/menu/v1_eomug.png?version=1",
+          "ratio": 1
+        }
+      ],
+      "isOwner": true,
+      "store": {
+        "storeType": "BOSS_STORE",
+        "storeId": "100244",
+        "isOwner": true,
+        "account": {
+          "accountType": "BOSS_ACCOUNT",
+          "accountId": "656b23a8d37f23444b07f525"
+        },
+        "storeName": "Hyunsik-test",
+        "address": {
+          "fullAddress": "경기도 용인시 수지구 성복동 570-16"
+        },
+        "location": {
+          "latitude": 37.3244572,
+          "longitude": 127.0592139
+        },
+        "categories": [
+          {
+            "category": "BUNGEOPPANG",
+            "categoryId": "BUNGEOPPANG",
+            "name": "붕어빵",
+            "imageUrl": "https://storage.threedollars.co.kr/menu/v1_bungeoppang.png?version=1",
+            "disableImageUrl": "https://storage.threedollars.co.kr/menu/v4/disable_bungeoppang_3x.png?version=1",
+            "description": "붕어빵 만나기 30초 전",
+            "classification": {
+              "type": "SNACKS",
+              "description": "간식류"
+            },
+            "isNew": false
+          }
+        ],
+        "isDeleted": false,
+        "activitiesStatus": "NO_RECENT_ACTIVITY",
+        "createdAt": "2023-12-02T21:32:20",
+        "updatedAt": "2023-12-27T20:54:47"
+      },
+      "createdAt": "2024-06-14T23:14:31",
+      "updatedAt": "2024-06-14T23:14:31"
+    },
+    {
+      "postId": "news-post-1",
+      "body": "✨🎉 [은평구 핫도그 아저씨] 새로운 신메뉴 출시! 🎉✨\n우리의 새로운 신메뉴들과 함께 특별한 맛의 여정을 떠나보세요!\n와우! 부드러운 크림치즈와 바삭한 핫도그의 환상적인 조합!\n\n📅 출시일: 이번 주 금요일! 🚀\n📅 출시일: 이번 주 금요일! 🚀\n📅 출시일: 이번 주 금요일! 🚀",
+      "sections": [
+        {
+          "sectionType": "IMAGE",
+          "url": "https://storage.threedollars.co.kr/menu/v1_bungeoppang.png?version=1",
+          "ratio": 1
+        },
+        {
+          "sectionType": "IMAGE",
+          "url": "https://storage.threedollars.co.kr/menu/v1_eomug.png?version=1",
+          "ratio": 1
+        }
+      ],
+      "isOwner": true,
+      "store": {
+        "storeType": "BOSS_STORE",
+        "storeId": "100244",
+        "isOwner": true,
+        "account": {
+          "accountType": "BOSS_ACCOUNT",
+          "accountId": "656b23a8d37f23444b07f525"
+        },
+        "storeName": "Hyunsik-test",
+        "address": {
+          "fullAddress": "경기도 용인시 수지구 성복동 570-16"
+        },
+        "location": {
+          "latitude": 37.3244572,
+          "longitude": 127.0592139
+        },
+        "categories": [
+          {
+            "category": "BUNGEOPPANG",
+            "categoryId": "BUNGEOPPANG",
+            "name": "붕어빵",
+            "imageUrl": "https://storage.threedollars.co.kr/menu/v1_bungeoppang.png?version=1",
+            "disableImageUrl": "https://storage.threedollars.co.kr/menu/v4/disable_bungeoppang_3x.png?version=1",
+            "description": "붕어빵 만나기 30초 전",
+            "classification": {
+              "type": "SNACKS",
+              "description": "간식류"
+            },
+            "isNew": false
+          }
+        ],
+        "isDeleted": false,
+        "activitiesStatus": "NO_RECENT_ACTIVITY",
+        "createdAt": "2023-12-02T21:32:20",
+        "updatedAt": "2023-12-27T20:54:47"
+      },
+      "createdAt": "2024-06-14T23:14:31",
+      "updatedAt": "2024-06-14T23:14:31"
+    }
+  ],
+  "cursor": {
+    "nextCursor": null,
+    "hasMore": false
+  }
+}
