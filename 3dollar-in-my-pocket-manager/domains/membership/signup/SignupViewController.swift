@@ -119,6 +119,11 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
+        signupView.categoryCollectionView.categoryCollectionView.rx.itemDeselected
+            .map { Reactor.Action.selectCategory(index: $0.row) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
         self.signupView.signupButton.rx.tap
             .map { Reactor.Action.tapSignup }
             .bind(to: reactor.action)
