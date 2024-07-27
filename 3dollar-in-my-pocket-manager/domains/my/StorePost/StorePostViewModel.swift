@@ -10,6 +10,7 @@ extension StorePostViewModel {
     }
     
     struct Output {
+        let screenName: ScreenName = .storePost
         let postCellViewModelList = CurrentValueSubject<[StorePostCellViewModel], Never>([])
         let route = PassthroughSubject<Route, Never>()
     }
@@ -17,13 +18,16 @@ extension StorePostViewModel {
     struct Dependency {
         let storePostRepository: StorePostRepository
         var userDefaults: UserDefaultsUtils
+        let logManager: LogManagerProtocol
         
         init(
             storePostRepository: StorePostRepository = StorePostRepositoryImpl(),
-            userDefaults: UserDefaultsUtils = UserDefaultsUtils()
+            userDefaults: UserDefaultsUtils = UserDefaultsUtils(),
+            logManager: LogManagerProtocol = LogManager.shared
         ) {
             self.storePostRepository = storePostRepository
             self.userDefaults = userDefaults
+            self.logManager = logManager
         }
     }
     
@@ -74,6 +78,10 @@ final class StorePostViewModel {
         input.didTapWrite
             .withUnretained(self)
             .sink(receiveValue: { (owner: StorePostViewModel, _) in
+                owner.dependency.logManager.sendEvent(.init(
+                    screen: owner.output.screenName,
+                    eventName: .clickUploadPost
+                ))
                 let viewModel = owner.createUploadPostViewModel()
                 
                 owner.output.route.send(.pushUpload(viewModel: viewModel))

@@ -3,8 +3,11 @@ import Combine
 
 import CombineCocoa
 
-final class StoreNoticeViewController: BaseViewController {
+final class StorePostViewController: BaseViewController {
     private var viewModel: StorePostViewModel
+    override var screenName: ScreenName {
+        return viewModel.output.screenName
+    }
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
@@ -104,7 +107,7 @@ final class StoreNoticeViewController: BaseViewController {
         viewModel.output.postCellViewModelList
             .main
             .withUnretained(self)
-            .sink { (owner: StoreNoticeViewController, dataSource: [StorePostCellViewModel]) in
+            .sink { (owner: StorePostViewController, dataSource: [StorePostCellViewModel]) in
                 owner.emptyView.isHidden = dataSource.isNotEmpty
                 owner.dataSource = dataSource
                 owner.collectionView.reloadData()
@@ -114,7 +117,7 @@ final class StoreNoticeViewController: BaseViewController {
         viewModel.output.route
             .main
             .withUnretained(self)
-            .sink(receiveValue: { (owner: StoreNoticeViewController, route: StorePostViewModel.Route) in
+            .sink(receiveValue: { (owner: StorePostViewController, route: StorePostViewModel.Route) in
                 switch route {
                 case .pushUpload(let viewModel):
                     owner.pushUploadPost(viewModel: viewModel)
@@ -151,7 +154,7 @@ final class StoreNoticeViewController: BaseViewController {
     }
 }
 
-extension StoreNoticeViewController: UICollectionViewDataSource {
+extension StorePostViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSource.count
     }
@@ -165,7 +168,7 @@ extension StoreNoticeViewController: UICollectionViewDataSource {
     }
 }
 
-extension StoreNoticeViewController: UICollectionViewDelegateFlowLayout {
+extension StorePostViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let storePost = dataSource[safe: indexPath.item]?.output.storePost else { return .zero }
         let height = StorePostCell.Layout.calculateHeight(storePost: storePost)

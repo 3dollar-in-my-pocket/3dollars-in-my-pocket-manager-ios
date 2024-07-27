@@ -216,7 +216,7 @@
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
 		6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */; };
-		6EBC20E92C1C1CCD00C08EE0 /* StoreNoticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20E82C1C1CCD00C08EE0 /* StoreNoticeViewController.swift */; };
+		6EBC20E92C1C1CCD00C08EE0 /* StorePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20E82C1C1CCD00C08EE0 /* StorePostViewController.swift */; };
 		6EBC20EB2C1C1EC500C08EE0 /* StorePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20EA2C1C1EC400C08EE0 /* StorePostViewModel.swift */; };
 		6EBC20ED2C1C404900C08EE0 /* AccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20EC2C1C404900C08EE0 /* AccountResponse.swift */; };
 		6EBC20EF2C1C417900C08EE0 /* AccountType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20EE2C1C417900C08EE0 /* AccountType.swift */; };
@@ -506,7 +506,7 @@
 		6EB94EAC27CB209000609E77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EB94EAF27CB209000609E77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6EB94EB127CB209000609E77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6EBC20E82C1C1CCD00C08EE0 /* StoreNoticeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreNoticeViewController.swift; sourceTree = "<group>"; };
+		6EBC20E82C1C1CCD00C08EE0 /* StorePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePostViewController.swift; sourceTree = "<group>"; };
 		6EBC20EA2C1C1EC400C08EE0 /* StorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePostViewModel.swift; sourceTree = "<group>"; };
 		6EBC20EC2C1C404900C08EE0 /* AccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponse.swift; sourceTree = "<group>"; };
 		6EBC20EE2C1C417900C08EE0 /* AccountType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountType.swift; sourceTree = "<group>"; };
@@ -1010,7 +1010,7 @@
 			isa = PBXGroup;
 			children = (
 				6E8A80862C186E4B00A3C55C /* Subview */,
-				6EBC20E82C1C1CCD00C08EE0 /* StoreNoticeViewController.swift */,
+				6EBC20E82C1C1CCD00C08EE0 /* StorePostViewController.swift */,
 				6EBC20EA2C1C1EC400C08EE0 /* StorePostViewModel.swift */,
 				6EBC21042C1C610400C08EE0 /* StorePostRepository.swift */,
 				6EBC21092C1C6B7600C08EE0 /* StorePostApi.swift */,
@@ -1899,7 +1899,7 @@
 				6E6C9C72280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift in Sources */,
 				6E15C0F82C548A6100888984 /* StorePostCell+PhotoCell.swift in Sources */,
 				6EBC20EB2C1C1EC500C08EE0 /* StorePostViewModel.swift in Sources */,
-				6EBC20E92C1C1CCD00C08EE0 /* StoreNoticeViewController.swift in Sources */,
+				6EBC20E92C1C1CCD00C08EE0 /* StorePostViewController.swift in Sources */,
 				6EBF1AE927FE6A980011268B /* Store.swift in Sources */,
 				6EC5E434282BDDDA00AD571C /* StatisticsFilterButton.swift in Sources */,
 				6E37AF6F27E7069C004FBE25 /* WaitingReactor.swift in Sources */,

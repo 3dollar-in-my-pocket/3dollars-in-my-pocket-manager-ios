@@ -12,7 +12,7 @@ final class MyPageViewController: BaseViewController {
     private let pageViewControllers: [UIViewController] = [
         MyStoreInfoViewController.instance(),
         StatisticsViewController.instance(),
-        StoreNoticeViewController()
+        StorePostViewController()
     ]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -93,11 +93,17 @@ final class MyPageViewController: BaseViewController {
                 eventName: .tapMyTopTab,
                 extraParameters: [.tab: "myStoreInfo"]
             ))
-        } else {
+        } else if selectedIndex == 1 {
             LogManager.shared.sendEvent(.init(
                 screen: .myStoreInfo,
                 eventName: .tapMyTopTab,
                 extraParameters: [.tab: "statistics"]
+            ))
+        } else {
+            LogManager.shared.sendEvent(.init(
+                screen: .myStoreInfo,
+                eventName: .tapMyTopTab,
+                extraParameters: [.tab: "storePost"]
             ))
         }
     }

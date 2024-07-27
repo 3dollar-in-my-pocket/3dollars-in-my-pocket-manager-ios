@@ -13,4 +13,6 @@ enum ScreenName: String {
     case setting
     case faq
     case mainTab
+    case storePost
+    case uploadPost
 }
