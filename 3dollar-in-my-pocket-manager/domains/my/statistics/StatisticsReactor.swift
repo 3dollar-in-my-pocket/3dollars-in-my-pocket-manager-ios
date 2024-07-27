@@ -21,25 +21,29 @@ final class StatisticsReactor: Reactor {
     let initialState: State
     let refreshPublisher = PublishRelay<StatisticsFilterButton.FilterType>()
     private let globalState: GlobalState
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManagerProtocol
     
     init(
         globalState: GlobalState,
-        analyticsManager: AnalyticsManagerProtocol,
+        logManager: LogManagerProtocol,
         state: State = State(
             totalReviewCount: 0,
             selectedFilter: .total
         )
     ) {
         self.globalState = globalState
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
         self.initialState = state
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .tapFilterButton(let filterType):
-            self.analyticsManager.sendEvent(event: .tapStatisticTab(filterType: filterType))
+            logManager.sendEvent(.init(
+                screen: .statistics,
+                eventName: .tapStatisticTab,
+                extraParameters: [.filterType: filterType.name]
+            ))
             return .just(.setTab(filterType))
             
         case .refresh:

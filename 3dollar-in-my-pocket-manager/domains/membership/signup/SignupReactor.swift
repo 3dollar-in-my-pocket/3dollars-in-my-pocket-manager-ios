@@ -50,7 +50,7 @@ final class SignupReactor: BaseReactor, Reactor {
     private let imageService: ImageServiceType
     private let authService: AuthServiceType
     private var userDefaultsUtils: UserDefaultsUtils
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManagerProtocol
     
     init(
         socialType: SocialType,
@@ -61,7 +61,7 @@ final class SignupReactor: BaseReactor, Reactor {
         authService: AuthServiceType,
         deviceService: DeviceServiceType,
         userDefaultsUtils: UserDefaultsUtils,
-        analyticsManager: AnalyticsManagerProtocol
+        logManager: LogManagerProtocol
     ) {
         self.initialState = State(ownerName: name ?? "")
         self.socialType = socialType
@@ -71,13 +71,12 @@ final class SignupReactor: BaseReactor, Reactor {
         self.authService = authService
         self.deviceService = deviceService
         self.userDefaultsUtils = userDefaultsUtils
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            self.analyticsManager.sendEvent(event: .viewScreen(.signup))
             return self.fetchCategories()
             
         case .inputOwnerName(let ownerName):
@@ -211,10 +210,12 @@ final class SignupReactor: BaseReactor, Reactor {
                 .do(onNext: { [weak self] response in
                     self?.userDefaultsUtils.userToken = response.token
                     self?.userDefaultsUtils.userId = response.bossId
-                    self?.analyticsManager.sendEvent(event: .setUserId(response.bossId))
-                    self?.analyticsManager.sendEvent(
-                        event: .signup(userId: response.bossId, screen: .signup)
-                    )
+                    self?.logManager.setUserId(response.bossId)
+                    self?.logManager.sendEvent(.init(
+                        screen: .signup,
+                        eventName: .signup, 
+                        extraParameters: [.userId: response.bossId]
+                    ))
                 })
                 .flatMap { [weak self] _ -> Observable<Mutation> in
                     guard let self = self else { return .error(BaseError.unknown) }

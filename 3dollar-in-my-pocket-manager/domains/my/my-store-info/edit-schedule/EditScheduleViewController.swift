@@ -7,6 +7,9 @@ final class EditScheduleViewController:
     private let editScheduleView = EditScheduleView()
     private let editScheduleReactor: EditScheduleReactor
     private weak var coordinator: EditScheduleCoordinator?
+    override var screenName: ScreenName {
+        return .editSchedule
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -23,7 +26,7 @@ final class EditScheduleViewController:
             store: store,
             storeService: StoreService(),
             globalState: GlobalState.shared,
-            analyticsManager: AnalyticsManager.shared
+            logManager: .shared
         )
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,7 +44,6 @@ final class EditScheduleViewController:
         
         self.coordinator = self
         self.reactor = self.editScheduleReactor
-        AnalyticsManager.shared.sendEvent(event: .viewScreen(.editSchedule))
     }
     
     override func bindEvent() {

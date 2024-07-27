@@ -10,9 +10,12 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         authService: AuthService(),
         deviceService: DeviceService(),
         userDefaultsUtils: UserDefaultsUtils(),
-        analyticsManager: AnalyticsManager.shared
+        logManager: .shared
     )
     private weak var coordinator: SigninCoordinator?
+    override var screenName: ScreenName {
+        return .signin
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -35,7 +38,6 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         
         self.reactor = self.signinReactor
         self.coordinator = self
-        AnalyticsManager.shared.sendEvent(event: .viewScreen(.signin))
     }
     
     override func bindEvent() {

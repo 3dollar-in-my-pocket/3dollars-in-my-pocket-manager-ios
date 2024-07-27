@@ -33,7 +33,11 @@ final class MainTabController: UITabBarController {
         
         switch tabBarTag {
         case .home:
-            AnalyticsManager.shared.sendEvent(event: .tapBottomTab(tab: .home))
+            LogManager.shared.sendEvent(.init(
+                screen: .mainTab,
+                eventName: .tapBottomTab,
+                extraParameters: [.tab: "home"]
+            ))
             if #available(iOS 15, *) {
                 let appearance = UITabBarAppearance()
                 appearance.configureWithOpaqueBackground()
@@ -47,7 +51,11 @@ final class MainTabController: UITabBarController {
             self.borderLayer.backgroundColor = UIColor.gray5.cgColor
             
         case .myPage:
-            AnalyticsManager.shared.sendEvent(event: .tapBottomTab(tab: .my))
+            LogManager.shared.sendEvent(.init(
+                screen: .mainTab,
+                eventName: .tapBottomTab,
+                extraParameters: [.tab: "my"]
+            ))
             if #available(iOS 15, *) {
                 let appearance = UITabBarAppearance()
                 appearance.configureWithOpaqueBackground()
@@ -61,7 +69,11 @@ final class MainTabController: UITabBarController {
             self.borderLayer.backgroundColor = UIColor.gray5.cgColor
             
         case .setting:
-            AnalyticsManager.shared.sendEvent(event: .tapBottomTab(tab: .setting))
+            LogManager.shared.sendEvent(.init(
+                screen: .mainTab,
+                eventName: .tapBottomTab,
+                extraParameters: [.tab: "setting"]
+            ))
             if #available(iOS 15, *) {
                 let appearance = UITabBarAppearance()
                 appearance.configureWithOpaqueBackground()

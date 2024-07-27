@@ -8,9 +8,12 @@ final class SettingViewController: BaseViewController, View, SettingCoordinator 
         authService: AuthService(),
         deviceService: DeviceService(),
         userDefaults: UserDefaultsUtils(),
-        analyticsManager: AnalyticsManager.shared
+        logManager: .shared
     )
     private weak var coordinator: SettingCoordinator?
+    override var screenName: ScreenName {
+        return .setting
+    }
     
     static func instance() -> UINavigationController {
         let viewController = SettingViewController(nibName: nil, bundle: nil).then {

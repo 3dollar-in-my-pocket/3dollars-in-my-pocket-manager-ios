@@ -11,9 +11,12 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
         storeService: StoreService(),
         locationManager: LocationManager.shared,
         userDefaults: UserDefaultsUtils(),
-        analyticsManager: AnalyticsManager.shared
+        logManager: .shared
     )
     private weak var coordinator: HomeCoordinator?
+    override var screenName: ScreenName {
+        return .home
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent

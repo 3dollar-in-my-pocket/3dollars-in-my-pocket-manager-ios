@@ -88,9 +88,17 @@ final class MyPageViewController: BaseViewController {
     
     private func sendAnalyticsEvent(selectedIndex: Int) {
         if selectedIndex == 0 {
-            AnalyticsManager.shared.sendEvent(event: .tapMyTopTab(tab: .myStoreInfo))
+            LogManager.shared.sendEvent(.init(
+                screen: .myStoreInfo,
+                eventName: .tapMyTopTab,
+                extraParameters: [.tab: "myStoreInfo"]
+            ))
         } else {
-            AnalyticsManager.shared.sendEvent(event: .tapMyTopTab(tab: .statistics))
+            LogManager.shared.sendEvent(.init(
+                screen: .myStoreInfo,
+                eventName: .tapMyTopTab,
+                extraParameters: [.tab: "statistics"]
+            ))
         }
     }
     

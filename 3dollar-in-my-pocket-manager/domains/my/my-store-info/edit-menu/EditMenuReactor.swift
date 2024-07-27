@@ -52,19 +52,19 @@ final class EditMenuReactor: BaseReactor, Reactor {
     private let storeService: StoreServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManager
     
     init(
         store: Store,
         storeService: StoreServiceType,
         imageService: ImageServiceType,
         globalState: GlobalState,
-        analyticsManager: AnalyticsManagerProtocol
+        logManager: LogManager
     ) {
         self.storeService = storeService
         self.imageService = imageService
         self.globalState = globalState
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
         
         var newStore = store
         if store.menus.isEmpty {
@@ -153,9 +153,10 @@ final class EditMenuReactor: BaseReactor, Reactor {
                 }
             } else {
                 if let invalidIndex = self.getInvalidStoreIndex(store: self.currentState.store) {
-                    self.analyticsManager.sendEvent(event: .errorInEditingMenu(
-                        storeId: self.currentState.store.id,
-                        screen: .editMenu
+                    logManager.sendEvent(.init(
+                        screen: .editMenu,
+                        eventName: .errorInEditingMenu,
+                        extraParameters: [.storeId: currentState.store.id]
                     ))
                     return .just(.setInvalidMenuIndex(invalidIndex))
                 } else {
@@ -269,9 +270,10 @@ final class EditMenuReactor: BaseReactor, Reactor {
                         .do(onNext: { [weak self] _ in
                             guard let self = self else { return }
                             self.globalState.updateStorePublisher.onNext(newStore)
-                            self.analyticsManager.sendEvent(event: .editStoreMenu(
-                                storeId: self.currentState.store.id,
-                                screen: .editMenu
+                            logManager.sendEvent(.init(
+                                screen: .editMenu,
+                                eventName: .editStoreMenu,
+                                extraParameters: [.storeId: currentState.store.id]
                             ))
                         })
                         .map { _ in Mutation.pop }

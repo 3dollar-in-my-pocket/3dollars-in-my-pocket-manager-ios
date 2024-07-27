@@ -8,9 +8,12 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
     private let waitingReactor = WaitingReactor(
         authService: AuthService(),
         userDefaults: UserDefaultsUtils(),
-        analyticsManager: AnalyticsManager.shared
+        logManager: LogManager.shared
     )
     private weak var coordinator: WaitingCoordinator?
+    override var screenName: ScreenName {
+        return .waiting
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -29,7 +32,6 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
         
         self.coordinator = self
         self.reactor = self.waitingReactor
-        AnalyticsManager.shared.sendEvent(event: .viewScreen(.waiting))
     }
     
     override func bindEvent() {
