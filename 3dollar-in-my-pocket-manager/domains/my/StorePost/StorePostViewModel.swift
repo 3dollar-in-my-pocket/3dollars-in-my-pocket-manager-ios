@@ -1,17 +1,33 @@
 import Combine
-import SwiftUI
 
 extension StorePostViewModel {
+    struct Input {
+        let firstLoad = PassthroughSubject<Void, Never>()
+        let cellWillDisplay = PassthroughSubject<Int, Never>()
+        let didTapEdit = PassthroughSubject<String, Never>()
+        let didTapDelete = PassthroughSubject<String, Never>()
+        let didTapWrite = PassthroughSubject<Void, Never>()
+    }
+    
+    struct Output {
+        let screenName: ScreenName = .storePost
+        let postCellViewModelList = CurrentValueSubject<[StorePostCellViewModel], Never>([])
+        let route = PassthroughSubject<Route, Never>()
+    }
+    
     struct Dependency {
         let storePostRepository: StorePostRepository
         var userDefaults: UserDefaultsUtils
+        let logManager: LogManagerProtocol
         
         init(
             storePostRepository: StorePostRepository = StorePostRepositoryImpl(),
-            userDefaults: UserDefaultsUtils = UserDefaultsUtils()
+            userDefaults: UserDefaultsUtils = UserDefaultsUtils(),
+            logManager: LogManagerProtocol = LogManager.shared
         ) {
             self.storePostRepository = storePostRepository
             self.userDefaults = userDefaults
+            self.logManager = logManager
         }
     }
     
@@ -23,107 +39,128 @@ extension StorePostViewModel {
     enum Route {
         case pushUpload(viewModel: UploadPostViewModel)
         case pushEdit(viewModel: UploadPostViewModel)
+        case showErrorAlert(error: Error)
     }
 }
 
-@MainActor
-final class StorePostViewModel: ObservableObject {
-    // MARK: Input
-    let onAppear = PassthroughSubject<Void, Never>()
-    let cellWillDisplay = PassthroughSubject<Int, Never>()
-    let didTapEdit = PassthroughSubject<Int, Never>()
-    let didTapDelete = PassthroughSubject<Int, Never>()
-    let didTapWrite = PassthroughSubject<Void, Never>()
-    
-    // MARK: Output
-    @Published var postList: [StorePostApiResponse] = []
-    @Published var isLoading = false
-    @Published var isShowErrorAlert = false
-    @Published var error: Error?
-    let route = PassthroughSubject<Route, Never>()
-    
-    
+final class StorePostViewModel {
+    let input = Input()
+    let output = Output()
     private var state = State()
     private let dependency: Dependency
     private var cancellables = Set<AnyCancellable>()
     
     init(dependency: Dependency = Dependency()) {
         self.dependency = dependency
+        
         bind()
     }
     
     private func bind() {
-        onAppear.sink { [weak self] _ in
-            guard let self else { return }
-            state.nextCursor = nil
-            state.hasMore = true
-            fetchPostList(cursor: state.nextCursor)
-        }
-        .store(in: &cancellables)
-        
-        // UIKit으로 다시 변경하기 전까지 페이징 막음 (대신 페이지 50으로 처리)
-//        cellWillDisplay
-//            .sink { [weak self] index in
-//                guard let self, canLoadMore(index: index) else { return }
-//                
-//                fetchPostList(cursor: state.nextCursor)
-//            }
-//            .store(in: &cancellables)
-        
-        didTapWrite
-            .sink { [weak self] _ in
-                guard let self else { return }
-                let viewModel = createUploadPostViewModel()
-                route.send(.pushUpload(viewModel: viewModel))
+        input.firstLoad
+            .withUnretained(self)
+            .sink { (owner: StorePostViewModel, _) in
+                owner.state.nextCursor = nil
+                owner.state.hasMore = true
+                owner.fetchPostList(cursor: owner.state.nextCursor)
             }
             .store(in: &cancellables)
         
-        didTapEdit
-            .sink { [weak self] index in
-                guard let self, let post = postList[safe: index] else { return }
-                let viewModel = createUploadPostViewModel(post: post)
+        input.cellWillDisplay
+            .withUnretained(self)
+            .sink(receiveValue: { (owner: StorePostViewModel, index: Int) in
+                guard owner.canLoadMore(index: index) else { return }
                 
-                route.send(.pushEdit(viewModel: viewModel))
-            }
+                owner.fetchPostList(cursor: owner.state.nextCursor)
+            })
             .store(in: &cancellables)
         
-        didTapDelete
-            .sink { [weak self] index in
-                self?.deletePost(index: index)
-            }
+        input.didTapWrite
+            .withUnretained(self)
+            .sink(receiveValue: { (owner: StorePostViewModel, _) in
+                owner.dependency.logManager.sendEvent(.init(
+                    screen: owner.output.screenName,
+                    eventName: .clickUploadPost
+                ))
+                let viewModel = owner.createUploadPostViewModel()
+                
+                owner.output.route.send(.pushUpload(viewModel: viewModel))
+            })
+            .store(in: &cancellables)
+        
+        input.didTapEdit
+            .withUnretained(self)
+            .sink(receiveValue: { (owner: StorePostViewModel, postId: String) in
+                guard let cellViewModel = owner.output.postCellViewModelList.value.first(where: {
+                    $0.output.storePost.postId == postId
+                }) else { return }
+                
+                let viewModel = owner.createUploadPostViewModel(post: cellViewModel.output.storePost)
+                
+                owner.output.route.send(.pushEdit(viewModel: viewModel))
+            })
+            .store(in: &cancellables)
+        
+        input.didTapDelete
+            .withUnretained(self)
+            .sink(receiveValue: { (owner: StorePostViewModel, postId: String) in
+                guard let index = owner.output.postCellViewModelList.value.firstIndex(where: {
+                    $0.output.storePost.postId == postId
+                }) else { return }
+                
+                owner.deletePost(index: index)
+            })
             .store(in: &cancellables)
     }
     
     private func fetchPostList(cursor: String?) {
         Task { [weak self] in
             guard let self else { return }
-            isLoading = true
             let storeId = dependency.userDefaults.storeId
             let result = await dependency.storePostRepository.fetchPostList(storeId: storeId, cursor: cursor)
             
             switch result {
             case .success(let response):
                 if cursor.isNil {
-                    postList = response.contents
+                    let cellViewModelList = response.contents.compactMap { [weak self] in
+                        return self?.createPostCellViewModel(from: $0)
+                    }
+                    output.postCellViewModelList.send(cellViewModelList)
+                    
                 } else {
-                    postList.append(contentsOf: response.contents)
+                    let newCellViewModelList = response.contents.compactMap { [weak self] in
+                        return self?.createPostCellViewModel(from: $0)
+                    }
+                    let cellViewModelList = output.postCellViewModelList.value + newCellViewModelList
+                    output.postCellViewModelList.send(cellViewModelList)
                 }
                 state.nextCursor = response.cursor.nextCursor
                 state.hasMore = response.cursor.hasMore
             case .failure(let error):
-                self.error = error
-                isShowErrorAlert = true
+                output.route.send(.showErrorAlert(error: error))
             }
-            isLoading = false
         }
     }
     
+    private func createPostCellViewModel(from storePost: StorePostApiResponse) -> StorePostCellViewModel {
+        let viewModel = StorePostCellViewModel(storePost: storePost)
+        
+        viewModel.output.didTapEdit
+            .subscribe(input.didTapEdit)
+            .store(in: &viewModel.cancellables)
+        
+        viewModel.output.didTapDelete
+            .subscribe(input.didTapDelete)
+            .store(in: &viewModel.cancellables)
+        return viewModel
+    }
+    
     private func canLoadMore(index: Int) -> Bool {
-        return state.hasMore && state.nextCursor.isNotNil && index >= postList.count - 1
+        return state.hasMore && state.nextCursor.isNotNil && index >= output.postCellViewModelList.value.count - 1
     }
     
     private func deletePost(index: Int) {
-        guard let post = postList[safe: index] else { return }
+        guard let post = output.postCellViewModelList.value[safe: index]?.output.storePost else { return }
         
         Task {
             let storeId = dependency.userDefaults.storeId
@@ -131,10 +168,11 @@ final class StorePostViewModel: ObservableObject {
             
             switch result {
             case .success:
+                var postList = output.postCellViewModelList.value
                 postList.remove(at: index)
+                output.postCellViewModelList.send(postList)
             case .failure(let error):
-                self.error = error
-                isShowErrorAlert = true
+                output.route.send(.showErrorAlert(error: error))
             }
         }
     }
@@ -143,19 +181,18 @@ final class StorePostViewModel: ObservableObject {
         let config = UploadPostViewModel.Config(storePostApiResponse: post)
         let viewModel = UploadPostViewModel(config: config)
         viewModel.output.onCreatedPost
-            .sink { [weak self] _ in
-                self?.onAppear.send(())
-            }
+            .subscribe(input.firstLoad)
             .store(in: &viewModel.cancellables)
+        
         viewModel.output.onEditedPost
-            .main
-            .sink { [weak self] post in
-                guard let self else { return }
-                
-                if let targetIndex = postList.firstIndex(where: { $0.postId == post.postId }) {
-                    postList[targetIndex] = post
+            .withUnretained(self)
+            .sink(receiveValue: { (owner: StorePostViewModel, post: StorePostApiResponse) in
+                if let targetIndex = owner.output.postCellViewModelList.value.firstIndex(where: { $0.output.storePost.postId == post.postId }) {
+                    let postList = owner.output.postCellViewModelList.value
+                    postList[targetIndex].output.storePost = post
+                    owner.output.postCellViewModelList.send(postList)
                 }
-            }
+            })
             .store(in: &viewModel.cancellables)
         return viewModel
     }

@@ -45,7 +45,7 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     private let categoryService: CategoryServiceType
     private let imageService: ImageServiceType
     private let globalState: GlobalState
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManager
     
     init(
         store: Store,
@@ -53,13 +53,13 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
         globalState: GlobalState,
-        analyticsManager: AnalyticsManagerProtocol
+        logManager: LogManager
     ) {
         self.storeService = storeService
         self.categoryService = categoryService
         self.imageService = imageService
         self.globalState = globalState
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
         self.initialState = State(
             store: store,
             categories: [],
@@ -71,7 +71,6 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            self.analyticsManager.sendEvent(event: .viewScreen(.editStoreInfo))
             return self.fetchCategories()
             
         case .inputStoreName(let storeName):
@@ -180,9 +179,10 @@ final class EditStoreInfoReactor: BaseReactor, Reactor {
                             guard let self = self else { return }
                             
                             self.globalState.updateStorePublisher.onNext(newStore)
-                            self.analyticsManager.sendEvent(event: .editStoreInfo(
-                                storeId: self.currentState.store.id,
-                                screen: .editStoreInfo
+                            logManager.sendEvent(.init(
+                                screen: .editStoreInfo,
+                                eventName: .editStoreInfo,
+                                extraParameters: [.storeId: currentState.store.id]
                             ))
                         })
                         .map { _ in .pop }

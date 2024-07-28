@@ -8,12 +8,15 @@ final class MyStoreInfoViewController: BaseViewController, View, MyStoreInfoCoor
     private let myStoreInfoReactor = MyStoreInfoReactor(
         storeService: StoreService(),
         globalState: GlobalState.shared,
-        analyticsManager: AnalyticsManager.shared
+        logManager: .shared
     )
     private weak var coordinator: MyStoreInfoCoordinator?
     private var myStoreInfoCollectionViewDataSource
     : RxCollectionViewSectionedReloadDataSource<MyStoreInfoSectionModel>!
     private var isRefreshing = false
+    override var screenName: ScreenName {
+        return .myStoreInfo
+    }
     
     static func instance() -> UINavigationController {
         let viewController = MyStoreInfoViewController(nibName: nil, bundle: nil)

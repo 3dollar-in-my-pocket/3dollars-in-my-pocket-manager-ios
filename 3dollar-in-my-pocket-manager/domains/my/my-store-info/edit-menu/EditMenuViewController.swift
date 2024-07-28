@@ -9,6 +9,9 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
     let editMenuReactor: EditMenuReactor
     private weak var coordinator: EditMenuCoordinator?
     private var selectedCellIndex = 0 // 사진 추가시, 셀 인덱스 확인을 위해 사용
+    override var screenName: ScreenName {
+        return .editMenu
+    }
     
     static func instance(store: Store) -> EditMenuViewController {
         return EditMenuViewController(store: store).then {
@@ -22,7 +25,7 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
             storeService: StoreService(),
             imageService: ImageService(),
             globalState: GlobalState.shared,
-            analyticsManager: AnalyticsManager.shared
+            logManager: LogManager.shared
         )
         
         super.init(nibName: nil, bundle: nil)
@@ -41,7 +44,6 @@ final class EditMenuViewController: BaseViewController, View, EditMenuCoordinato
         
         self.coordinator = self
         self.reactor = self.editMenuReactor
-        AnalyticsManager.shared.sendEvent(event: .viewScreen(.editMenu))
     }
     
     override func bindEvent() {

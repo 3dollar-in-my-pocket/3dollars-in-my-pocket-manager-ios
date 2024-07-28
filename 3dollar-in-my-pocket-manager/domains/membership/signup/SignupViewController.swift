@@ -10,6 +10,9 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
     private let signupView = SignupView()
     private let signupReactor: SignupReactor
     private weak var coordinator: SignupCoordinator?
+    override var screenName: ScreenName {
+        return .signup
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -25,7 +28,7 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             authService: AuthService(),
             deviceService: DeviceService(),
             userDefaultsUtils: UserDefaultsUtils(),
-            analyticsManager: AnalyticsManager.shared
+            logManager: LogManager.shared
         )
         super.init(nibName: nil, bundle: nil)
     }

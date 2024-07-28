@@ -61,6 +61,7 @@ final class UploadPostViewModel {
         let onEditedPost = PassthroughSubject<StorePostApiResponse, Never>()
         let onCreatedPost = PassthroughSubject<Void, Never>()
         let showLoading = PassthroughSubject<Bool, Never>()
+        let screenName: ScreenName = .uploadPost
     }
     
     let input = Input()
