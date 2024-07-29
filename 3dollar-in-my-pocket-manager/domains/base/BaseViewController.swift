@@ -7,11 +7,20 @@ class BaseViewController: UIViewController {
     var disposeBag = DisposeBag()
     var eventDisposeBag = DisposeBag()
     var cancellables = Set<AnyCancellable>()
+    var screenName: ScreenName {
+        return .empty
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.bindEvent()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        sendPageView()
     }
     
     /// Reactor를 거치지 않고 바로 바인딩 되는 단순 이벤트를 정의합니다.
@@ -72,6 +81,12 @@ class BaseViewController: UIViewController {
             message: message,
             onTapOk: nil
         )
+    }
+    
+    private func sendPageView() {
+        if screenName != .empty {
+            LogManager.shared.sendPageView(screen: screenName, type: Self.self)
+        }
     }
 }
 

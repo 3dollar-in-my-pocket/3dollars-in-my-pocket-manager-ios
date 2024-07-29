@@ -43,45 +43,47 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
     let pushEditSchedulePublisher = PublishRelay<Store>()
     private let storeService: StoreServiceType
     private let globalState: GlobalState
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManager
     
     init(
         storeService: StoreServiceType,
         globalState: GlobalState,
-        analyticsManager: AnalyticsManagerProtocol
+        logManager: LogManager
     ) {
         self.storeService = storeService
         self.globalState = globalState
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            self.analyticsManager.sendEvent(event: .viewScreen(.myStoreInfo))
             return self.fetchMyStore()
             
         case .refresh:
             return self.fetchMyStore()
             
         case .tapEditStoreInfo:
-            self.analyticsManager.sendEvent(event: .tapEditStoreInfo(
-                storeId: self.currentState.store.id,
-                screen: .myStoreInfo
+            logManager.sendEvent(.init(
+                screen: .myStoreInfo,
+                eventName: .tapEditStoreInfo,
+                extraParameters: [.storeId: currentState.store.id]
             ))
             return .just(.pushEditStoreInfo(store: self.currentState.store))
             
         case .tapEditIntroduction:
-            self.analyticsManager.sendEvent(event: .tapEditIntroduction(
-                storeId: self.currentState.store.id,
-                screen: .myStoreInfo
+            logManager.sendEvent(.init(
+                screen: .myStoreInfo,
+                eventName: .tapEditIntroduction,
+                extraParameters: [.storeId: currentState.store.id]
             ))
             return .just(.pushEditIntroduction(store: self.currentState.store))
             
         case .tapEditMenus:
-            self.analyticsManager.sendEvent(event: .tapEditMenu(
-                storeId: self.currentState.store.id,
-                screen: .myStoreInfo
+            logManager.sendEvent(.init(
+                screen: .myStoreInfo,
+                eventName: .tapEditMenu,
+                extraParameters: [.storeId: currentState.store.id]
             ))
             return .just(.pushEditMenus(store: self.currentState.store))
             
@@ -89,9 +91,10 @@ final class MyStoreInfoReactor: BaseReactor, Reactor {
             return .just(routeEditAccount())
             
         case .tapEditSchedule:
-            self.analyticsManager.sendEvent(event: .tapEditSchedule(
-                storeId: self.currentState.store.id,
-                screen: .myStoreInfo
+            logManager.sendEvent(.init(
+                screen: .myStoreInfo,
+                eventName: .tapEditSchedule,
+                extraParameters: [.storeId: currentState.store.id]
             ))
             return .just(.pushEditSchedule(store: self.currentState.store))
             

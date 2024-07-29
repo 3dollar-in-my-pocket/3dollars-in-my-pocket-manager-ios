@@ -9,6 +9,9 @@ final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfo
     private let editStoreInfoView = EditStoreInfoView()
     private let editStoreInfoReactor: EditStoreInfoReactor
     private weak var coordinator: EditStoreInfoCoordinator?
+    override var screenName: ScreenName {
+        return .editStoreInfo
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -27,7 +30,7 @@ final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfo
             categoryService: CategoryService(),
             imageService: ImageService(),
             globalState: GlobalState.shared,
-            analyticsManager: AnalyticsManager.shared
+            logManager: .shared
         )
         super.init(nibName: nil, bundle: nil)
         

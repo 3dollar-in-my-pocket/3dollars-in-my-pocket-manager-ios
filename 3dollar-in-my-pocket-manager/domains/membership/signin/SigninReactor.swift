@@ -43,7 +43,7 @@ final class SigninReactor: BaseReactor, Reactor {
     private let authService: AuthServiceType
     private let deviceService: DeviceServiceType
     private var userDefaultsUtils: UserDefaultsUtils
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManager
     
     init(
         kakaoManager: KakaoSignInManagerProtocol,
@@ -51,14 +51,14 @@ final class SigninReactor: BaseReactor, Reactor {
         authService: AuthServiceType,
         deviceService: DeviceServiceType,
         userDefaultsUtils: UserDefaultsUtils,
-        analyticsManager: AnalyticsManagerProtocol
+        logManager: LogManager
     ) {
         self.kakaoSignInManager = kakaoManager
         self.appleSignInManager = appleSignInManager
         self.authService = authService
         self.deviceService = deviceService
         self.userDefaultsUtils = userDefaultsUtils
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -141,10 +141,12 @@ final class SigninReactor: BaseReactor, Reactor {
             .do(onNext: { [weak self] response in
                 self?.userDefaultsUtils.userId = response.bossId
                 self?.userDefaultsUtils.userToken = response.token
-                self?.analyticsManager.sendEvent(event: .setUserId(response.bossId))
-                self?.analyticsManager.sendEvent(
-                    event: .signin(userId: response.bossId, screen: .signin)
-                )
+                self?.logManager.setUserId(response.bossId)
+                self?.logManager.sendEvent(.init(
+                    screen: .signin,
+                    eventName: .signin, 
+                    extraParameters: [.userId: response.bossId]
+                ))
             })
             .flatMap { [weak self] _ -> Observable<Mutation> in
                 guard let self = self else { return .error(BaseError.unknown) }
@@ -206,10 +208,12 @@ final class SigninReactor: BaseReactor, Reactor {
             .do(onNext: { [weak self] response in
                 self?.userDefaultsUtils.userId = response.bossId
                 self?.userDefaultsUtils.userToken = response.token
-                self?.analyticsManager.sendEvent(event: .setUserId(response.bossId))
-                self?.analyticsManager.sendEvent(
-                    event: .signin(userId: response.bossId, screen: .signin)
-                )
+                self?.logManager.setUserId(response.bossId)
+                self?.logManager.sendEvent(.init(
+                    screen: .signin,
+                    eventName: .signin,
+                    extraParameters: [.userId: response.bossId]
+                ))
             })
             .flatMap { [weak self] _ -> Observable<Mutation> in
                 guard let self = self else { return .error(BaseError.unknown) }

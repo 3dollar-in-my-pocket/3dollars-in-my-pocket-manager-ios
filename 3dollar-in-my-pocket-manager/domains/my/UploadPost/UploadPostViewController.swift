@@ -6,6 +6,9 @@ final class UploadPostViewController: BaseViewController {
     private let uploadPostView = UploadPostView()
     private let viewModel: UploadPostViewModel
     private var photoDataSource: [ImageContent] = []
+    override var screenName: ScreenName {
+        return viewModel.output.screenName
+    }
     
     init(viewModel: UploadPostViewModel = UploadPostViewModel()) {
         self.viewModel = viewModel

@@ -32,26 +32,25 @@ final class SettingReactor: BaseReactor, Reactor {
     private let authService: AuthServiceType
     private let deviceService: DeviceServiceType
     private let userDefaults: UserDefaultsUtils
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManager
     
     init(
         authService: AuthServiceType,
         deviceService: DeviceServiceType,
         userDefaults: UserDefaultsUtils,
-        analyticsManager: AnalyticsManagerProtocol,
+        logManager: LogManager,
         state: State = State(user: User())
     ) {
         self.authService = authService
         self.deviceService = deviceService
         self.userDefaults = userDefaults
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
         self.initialState = state
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .viewDidLoad:
-            self.analyticsManager.sendEvent(event: .viewScreen(.setting))
             return self.fetchMyInfo()
             
         case .tapFCMToken:
@@ -137,9 +136,11 @@ final class SettingReactor: BaseReactor, Reactor {
         return self.authService.logout()
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.analyticsManager.sendEvent(
-                    event: .logout(userId: self.currentState.user.bossId, screen: .setting)
-                )
+                logManager.sendEvent(.init(
+                    screen: .setting,
+                    eventName: .logout, 
+                    extraParameters: [.userId: currentState.user.bossId]
+                ))
                 self.userDefaults.clear()
             })
             .map { _ in .goToSignin }
@@ -157,9 +158,11 @@ final class SettingReactor: BaseReactor, Reactor {
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 
-                self.analyticsManager.sendEvent(
-                    event: .signout(userId: self.currentState.user.bossId)
-                )
+                logManager.sendEvent(.init(
+                    screen: .setting,
+                    eventName: .signout,
+                    extraParameters: [.userId: currentState.user.bossId]
+                ))
                 self.userDefaults.clear()
             })
             .map { _ in .goToSignin }

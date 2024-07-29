@@ -6,7 +6,7 @@ final class StatisticsViewController: BaseViewController, View {
     private let statisticsView = StatisticsView()
     private let statisticsReactor = StatisticsReactor(
         globalState: GlobalState.shared,
-        analyticsManager: AnalyticsManager.shared
+        logManager: LogManager.shared
     )
     private let pageViewController = UIPageViewController(
         transitionStyle: .scroll,
@@ -17,6 +17,9 @@ final class StatisticsViewController: BaseViewController, View {
     private let dailyStatisticsViewController = DailyStatisticsViewController.instance()
     private var pageViewControllers: [UIViewController] = []
     private var isRefreshing = false
+    override var screenName: ScreenName {
+        return .statistics
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent

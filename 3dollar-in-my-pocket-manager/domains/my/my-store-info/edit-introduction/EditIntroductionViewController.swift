@@ -7,6 +7,9 @@ final class EditIntroductionViewController:
     private let editIntroductionView = EditIntroductionView()
     private let editIntroductionReactor: EditIntroductionReactor
     private weak var coordinator: EditIntroductionCoordinator?
+    override var screenName: ScreenName {
+        return .editIntroduction
+    }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
@@ -23,7 +26,7 @@ final class EditIntroductionViewController:
             store: store,
             storeService: StoreService(),
             globlaState: GlobalState.shared,
-            analyticsManager: AnalyticsManager.shared
+            logManager: LogManager.shared
         )
         
         super.init(nibName: nil, bundle: nil)
@@ -43,7 +46,6 @@ final class EditIntroductionViewController:
         
         self.coordinator = self
         self.reactor = self.editIntroductionReactor
-        AnalyticsManager.shared.sendEvent(event: .viewScreen(.editIntroduction))
     }
     
     override func bindEvent() {

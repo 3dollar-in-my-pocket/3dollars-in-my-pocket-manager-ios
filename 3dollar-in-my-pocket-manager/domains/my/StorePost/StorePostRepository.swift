@@ -14,7 +14,7 @@ protocol StorePostRepository {
 
 final class StorePostRepositoryImpl: StorePostRepository {
     func fetchPostList(storeId: String, cursor: String?) async -> ApiResult<StorePostListApiResponse> {
-        return await StorePostApi.fetchPostList(storeId: storeId, size: 50, cursor: cursor).asyncRequest()
+        return await StorePostApi.fetchPostList(storeId: storeId, size: 20, cursor: cursor).asyncRequest()
     }
     
     func uploadPost(storeId: String, input: PostCreateApiRequest) async -> ApiResult<PostCreateApiResponse> {

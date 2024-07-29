@@ -32,18 +32,18 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
     let popPublisher = PublishRelay<Void>()
     private let storeService: StoreServiceType
     private let globalState: GlobalState
-    private let analyticsManager: AnalyticsManagerProtocol
+    private let logManager: LogManager
     
     init(
         store: Store,
         storeService: StoreServiceType,
         globalState: GlobalState,
-        analyticsManager: AnalyticsManagerProtocol
+        logManager: LogManager
     ) {
         self.initialState = State(store: store)
         self.storeService = storeService
         self.globalState = globalState
-        self.analyticsManager = analyticsManager
+        self.logManager = logManager
     }
     
     func mutate(action: Action) -> Observable<Mutation> {
@@ -137,9 +137,10 @@ final class EditScheduleReactor:  BaseReactor, Reactor {
                 guard let self = self else { return }
                 
                 self.globalState.updateStorePublisher.onNext(store)
-                self.analyticsManager.sendEvent(event: .editSchedule(
-                    storeId: self.currentState.store.id,
-                    screen: .editSchedule
+                logManager.sendEvent(.init(
+                    screen: .editSchedule,
+                    eventName: .editSchedule,
+                    extraParameters: [.storeId: currentState.store.id]
                 ))
             })
             .map { _ in Mutation.pop }

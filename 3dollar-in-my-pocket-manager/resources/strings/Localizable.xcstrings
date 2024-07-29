@@ -36,6 +36,7 @@
       }
     },
     "common.delete" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -205,6 +206,7 @@
       }
     },
     "error.unknown" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -238,6 +240,7 @@
       }
     },
     "store_post_menu.delete" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -254,6 +257,7 @@
       }
     },
     "store_post_menu.delete_alert.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -270,6 +274,7 @@
       }
     },
     "store_post_menu.edit" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -303,6 +308,7 @@
       }
     },
     "store_post.upload" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
