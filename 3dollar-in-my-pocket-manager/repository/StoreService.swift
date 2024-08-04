@@ -15,7 +15,7 @@ protocol StoreServiceType {
     func fetchAroundStores(
         location: CLLocation,
         distance: Int
-    ) -> Observable<[BossStoreAroundInfoResponse]>
+    ) -> Observable<[BossStoreSimpleResponse]>
     
     func updateStore(store: Store) -> Observable<String>
 }
@@ -122,7 +122,7 @@ struct StoreService: StoreServiceType {
     func fetchAroundStores(
         location: CLLocation,
         distance: Int
-    ) -> Observable<[BossStoreAroundInfoResponse]> {
+    ) -> Observable<[BossStoreSimpleResponse]> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/stores/around"
             let headers = HTTPUtils.jsonHeader()
@@ -141,7 +141,7 @@ struct StoreService: StoreServiceType {
             .responseData(completionHandler: { response in
                 if response.isSuccess() {
                     observer.processValue(
-                        type: [BossStoreAroundInfoResponse].self,
+                        type: [BossStoreSimpleResponse].self,
                         response: response
                     )
                 } else {

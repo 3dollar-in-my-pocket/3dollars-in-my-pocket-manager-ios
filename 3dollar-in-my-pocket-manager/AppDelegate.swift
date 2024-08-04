@@ -132,7 +132,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     }
     
     private func renewStore() {
-        let storeId = UserDefaultsUtils().storeId
+        let storeId = Preference.shared.storeId
         guard !storeId.isEmpty else {
             print("❌ 가게가 영업중인 상태가 아닙니다.")
             return

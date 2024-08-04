@@ -8,11 +8,16 @@ protocol ApiRequest {
     var path: String { get }
     var method: HTTPMethod { get }
     var parameters: Parameters? { get }
+    var headers: HTTPHeaders { get }
 }
 
 extension ApiRequest {
     var baseUrl: String {
         Bundle.apiURL + "/boss"
+    }
+    
+    var headers: HTTPHeaders {
+        return HTTPUtils.defaultHeader()
     }
     
     var dataRequest: DataRequest {
@@ -21,7 +26,7 @@ extension ApiRequest {
             method: method,
             parameters: parameters,
             encoding: (method == .post) || (method == .patch) ? JSONEncoding.default : URLEncoding.default,
-            headers: HTTPUtils.defaultHeader()
+            headers: headers
         )
     }
     
@@ -34,7 +39,7 @@ extension ApiRequest {
                 let decoder = JSONDecoder()
                 let apiResponse = try decoder.decode(ApiResponse<T>.self, from: data)
                 
-                if let errorMessage = apiResponse.error {
+                if let errorMessage = apiResponse.message {
                     return .failure(ApiError.serverError(errorMessage))
                 }
                 
@@ -47,6 +52,7 @@ extension ApiRequest {
                 return .failure(error)
             }
         case .failure(let error):
+            print("[Error] [\(#function)]: \(error)")
             return .failure(error)
         }
     }

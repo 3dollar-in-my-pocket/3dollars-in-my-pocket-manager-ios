@@ -25,12 +25,12 @@ final class TotalStatisticsReactor: BaseReactor, Reactor {
     let updateTableViewHeightPublisher = PublishRelay<[Statistic]>()
     private let feedbackService: FeedbackServiceType
     private let globalState: GlobalState
-    private var userDefaults: UserDefaultsUtils
+    private var userDefaults: Preference
     
     init(
         feedbackService: FeedbackServiceType,
         globalState: GlobalState,
-        userDefaults: UserDefaultsUtils
+        userDefaults: Preference
     ) {
         self.feedbackService = feedbackService
         self.globalState = globalState

@@ -90,7 +90,7 @@ final class MainTabController: UITabBarController {
     
     private func setupTabBarController() {
         self.setViewControllers([
-            HomeViewController.instance(),
+            HomeViewController(),
             MyPageViewController.instance(),
             SettingViewController.instance()
         ], animated: true)

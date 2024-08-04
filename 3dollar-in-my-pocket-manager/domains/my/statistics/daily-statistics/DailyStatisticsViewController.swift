@@ -7,7 +7,7 @@ final class DailyStatisticsViewController: BaseViewController, View, DailyStatis
     private let dailyStatisticsReactor = DailyStatisticsReactor(
         feedbackService: FeedbackService(),
         globalState: GlobalState.shared,
-        userDefaults: UserDefaultsUtils()
+        userDefaults: Preference.shared
     )
     private weak var coordinator: DailyStatisticCoordinator?
     

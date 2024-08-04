@@ -1,54 +1,50 @@
 import UIKit
 
-import RxSwift
-import RxCocoa
-
 final class AddressView: BaseView {
-    private let height:CGFloat = 56
-    
-    private let containerView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 16
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-        $0.layer.shadowOpacity = 0.08
+    enum Layout {
+        static let height:CGFloat = 56
     }
     
-    fileprivate let addressLabel = UILabel().then {
-        $0.textColor = .black
-        $0.font = .semiBold(size: 16)
-        $0.textAlignment = .center
-    }
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 16
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 4)
+        view.layer.shadowOpacity = 0.08
+        return view
+    }()
+    
+    private let addressLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .semiBold(size: 16)
+        label.textAlignment = .center
+        return label
+    }()
     
     override func setup() {
-        self.addSubViews([
-            self.containerView,
-            self.addressLabel
-        ])
+        super.setup()
+        
+        addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.height.equalTo(Layout.height)
+        }
+        
+        addSubview(addressLabel)
+        addressLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(containerView)
+            make.left.equalTo(containerView).offset(24)
+            make.right.equalTo(containerView).offset(-24)
+        }
+        
+        snp.makeConstraints { make in
+            make.edges.equalTo(containerView).priority(.high)
+        }
     }
     
-    override func bindConstraints() {
-        self.containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.height.equalTo(self.height)
-        }
-        
-        self.addressLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(self.containerView)
-            make.left.equalTo(self.containerView).offset(24)
-            make.right.equalTo(self.containerView).offset(-24)
-        }
-        
-        self.snp.makeConstraints { make in
-            make.edges.equalTo(self.containerView).priority(.high)
-        }
-    }
-}
-
-extension Reactive where Base: AddressView {
-    var address: Binder<String> {
-        return Binder(self.base) { view, address in
-            view.addressLabel.text = address
-        }
+    func bind(_ address: String) {
+        addressLabel.text = address
     }
 }

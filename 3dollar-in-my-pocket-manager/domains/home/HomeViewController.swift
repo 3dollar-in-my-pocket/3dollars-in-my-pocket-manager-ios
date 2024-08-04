@@ -1,36 +1,38 @@
 import UIKit
 import CoreLocation
 
+import CombineCocoa
+
 import ReactorKit
 import NMapsMap
 
-final class HomeViewController: BaseViewController, View, HomeCoordinator {
+final class HomeViewController: BaseViewController {
     private let homeView = HomeView()
-    private let homeReactor = HomeReactor(
-        mapService: MapService(),
-        storeService: StoreService(),
-        locationManager: LocationManager.shared,
-        userDefaults: UserDefaultsUtils(),
-        logManager: .shared
-    )
-    private weak var coordinator: HomeCoordinator?
+    private let viewModel: HomeViewModel
+    
     override var screenName: ScreenName {
-        return .home
+        return viewModel.output.screen
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
     }
     
-    static func instance() -> HomeViewController {
-        return HomeViewController(nibName: nil, bundle: nil).then {
-            $0.tabBarItem = UITabBarItem(
-                title: nil,
-                image: UIImage(named: "ic_home"),
-                tag: TabBarTag.home.rawValue
-            )
-            $0.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
-        }
+    init(viewModel: HomeViewModel = HomeViewModel()) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        tabBarItem = UITabBarItem(
+            title: nil,
+            image: UIImage(named: "ic_home"),
+            tag: TabBarTag.home.rawValue
+        )
+        tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
@@ -40,125 +42,153 @@ final class HomeViewController: BaseViewController, View, HomeCoordinator {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.coordinator = self
-        self.reactor = self.homeReactor
-        self.homeReactor.action.onNext(.viewDidLoad)
-        self.homeView.mapView.addCameraDelegate(delegate: self)
+        bind()
+        homeView.mapView.addCameraDelegate(delegate: self)
+        viewModel.input.firstLoad.send(())
     }
     
-    override func bindEvent() {
-        self.homeReactor.showInvalidPositionAlertPublisher
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.showInvalidPositionAlert()
-            })
-            .disposed(by: self.eventDisposeBag)
-        
-        self.homeReactor.showErrorAlert
-            .asDriver(onErrorJustReturn: BaseError.unknown)
-            .drive(onNext: { [weak self] error in
-                self?.coordinator?.showErrorAlert(error: error)
-            })
-            .disposed(by: self.eventDisposeBag)
+    private func bind() {
+        bindInput()
+        bindOutput()
     }
     
-    func bind(reactor: HomeReactor) {
-        // Bind action
-        self.homeView.currentLocationButton.rx.tap
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .map { Reactor.Action.tapCurrentLocation }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+    private func bindInput() {
+        homeView.showOtherButton.tapGesture.tapPublisher
+            .throttleClick()
+            .mapVoid
+            .subscribe(viewModel.input.didTapShowOtherStore)
+            .store(in: &cancellables)
         
-        self.homeView.salesToggleView.rx.tapButton
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .map { Reactor.Action.tapSalesToggle }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+        homeView.currentLocationButton.tapPublisher
+            .throttleClick()
+            .subscribe(viewModel.input.didTapCurrentLocation)
+            .store(in: &cancellables)
         
-        self.homeView.showOtherButton.rx.tap
-            .map { Reactor.Action.tapShowOtherStore }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+        homeView.salesToggleView.toggleButton.tapPublisher
+            .throttleClick()
+            .subscribe(viewModel.input.didTapSalesToggle)
+            .store(in: &cancellables)
         
-        // Bind state
-        reactor.state
-            .map { $0.address }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: "")
-            .drive(self.homeView.addressView.rx.address)
-            .disposed(by: self.disposeBag)
+        homeView.operationSettingButton.tapPublisher
+            .throttleClick()
+            .subscribe(viewModel.input.didTapOperationSetting)
+            .store(in: &cancellables)
+    }
+    
+    private func bindOutput() {
+        viewModel.output.address
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, address: String) in
+                owner.homeView.bindAddress(address)
+            }
+            .store(in: &cancellables)
         
-        reactor.state
-            .compactMap { $0.store?.isOpen }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: false)
-            .drive(self.homeView.salesToggleView.rx.isOn)
-            .disposed(by: self.disposeBag)
+        viewModel.output.isShowOtherStore
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, showOtherStore: Bool) in
+                owner.homeView.bindShowOtherStores(showOtherStore)
+            }
+            .store(in: &cancellables)
         
-        reactor.state
-            .compactMap { $0.store?.openTime }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: Date())
-            .drive(self.homeView.salesToggleView.rx.openTime)
-            .disposed(by: self.disposeBag)
+        viewModel.output.myLocation
+            .compactMap { $0 }
+            .removeDuplicates()
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, location: CLLocation) in
+                owner.homeView.moveCameraPosition(location: location)
+                owner.homeView.setupAvailableArea(location: location)
+            }
+            .store(in: &cancellables)
         
-        reactor.state
-            .map { $0.isShowOtherStore }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: false)
-            .drive(self.homeView.showOtherButton.rx.isShowOtherStore)
-            .disposed(by: self.disposeBag)
+        viewModel.output.cameraLocation
+            .compactMap { $0 }
+            .removeDuplicates()
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, location: CLLocation) in
+                owner.homeView.moveCameraPosition(location: location)
+            }
+            .store(in: &cancellables)
         
-        reactor.state
-            .compactMap { $0.initialPosition }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: CLLocation(
-                latitude: 127.044155,
-                longitude: 37.547980
-            ))
-            .drive(self.homeView.rx.initialPosition)
-            .disposed(by: self.disposeBag)
+        viewModel.output.store
+            .compactMap { $0 }
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, store: BossStoreInfoResponse) in
+                owner.homeView.bindStore(store)
+            }
+            .store(in: &cancellables)
         
-        reactor.state
-            .compactMap { $0.cameraPosition }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: CLLocation(
-                latitude: 127.044155,
-                longitude: 37.547980
-            ))
-            .drive(self.homeView.rx.cameraPosition)
-            .disposed(by: self.disposeBag)
+        viewModel.output.aroundStores
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, stores: [BossStoreSimpleResponse]) in
+                owner.homeView.bindOtherStores(stores)
+            }
+            .store(in: &cancellables)
         
-        reactor.state
-            .compactMap { $0.store }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: Store())
-            .drive(self.homeView.rx.myStore)
-            .disposed(by: self.disposeBag)
+        viewModel.output.store
+            .compactMap { $0?.openStatus.status == .open }
+            .removeDuplicates()
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, isOpen: Bool) in
+                owner.homeView.salesToggleView.bindStatus(isOn: isOpen)
+            }
+            .store(in: &cancellables)
         
-        reactor.state
-            .map { $0.aroundStores }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: [])
-            .drive(self.homeView.rx.otherStores)
-            .disposed(by: self.disposeBag)
+        viewModel.output.store
+            .compactMap { $0?.openStatus.openStartDateTime }
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, openStartTime: String) in
+                let startDate = DateUtils.toDate(dateString: openStartTime)
+                owner.homeView.salesToggleView.bindTimer(startDate: startDate)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: HomeViewController, route: HomeViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func handleRoute(_ route: HomeViewModel.Route) {
+        switch route {
+        case .showInvalidPositionAlert:
+            showInvalidPositionAlert()
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        case .pushOperationSetting:
+            print("🟢TODO: pushOperationSetting")
+        }
+    }
+    
+    private func showInvalidPositionAlert() {
+        AlertUtils.showWithAction(
+            viewController: self,
+            title: nil,
+            message: "home_invalid_position".localized,
+            okbuttonTitle: "common_ok".localized,
+            onTapOk: nil
+        )
     }
 }
 
 extension HomeViewController: NMFMapViewCameraDelegate {
-    func mapView(
-        _ mapView: NMFMapView,
-        cameraDidChangeByReason reason: Int,
-        animated: Bool
-    ) {
-        if reason == NMFMapChangedByGesture && animated {
-            let mapLocation = CLLocation(
-                latitude: mapView.cameraPosition.target.lat,
-                longitude: mapView.cameraPosition.target.lng
-            )
-            
-            self.homeReactor.action.onNext(.moveCamera(mapLocation))
-        }
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        guard reason == NMFMapChangedByGesture && animated  else { return }
+        let mapLocation = CLLocation(
+            latitude: mapView.cameraPosition.target.lat,
+            longitude: mapView.cameraPosition.target.lng
+        )
+        
+        viewModel.input.moveCamera.send(mapLocation)
     }
 }

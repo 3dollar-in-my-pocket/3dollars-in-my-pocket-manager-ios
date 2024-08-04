@@ -6,10 +6,10 @@ struct BossStoreInfoResponse: Decodable {
     let distance: Int
     let imageUrl: String?
     let introduction: String?
-    let location: LocationResponse?
+    var location: LocationResponse?
     let menus: [BossStoreMenuResponse]
     let name: String
-    let openStatus: BossStoreOpenStatusResponse
+    var openStatus: BossStoreOpenStatusResponse
     let snsUrl: String?
     let updatedAt: String?
     let accountNumbers: [StoreAccountNumberResponse]

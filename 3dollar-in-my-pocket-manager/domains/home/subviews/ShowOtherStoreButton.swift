@@ -1,76 +1,66 @@
 import UIKit
 
-import RxSwift
-import RxCocoa
-
 final class ShowOtherButton: BaseView {
-    fileprivate let tapGesture = UITapGestureRecognizer()
+    let tapGesture = UITapGestureRecognizer()
     
-    private let backgroundView = UIView().then {
-        $0.layer.cornerRadius = 8
-        $0.backgroundColor = .white
-    }
+    private let backgroundView: UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 8
+        view.backgroundColor = .white
+        return view
+    }()
     
-    private let checkImageView = UIImageView().then {
-        $0.image = UIImage(named: "ic_check_off")
-    }
+    private let checkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "ic_check_off")
+        return imageView
+    }()
     
-    private let titleLabel = UILabel().then {
-        $0.font = .medium(size: 14)
-        $0.textColor = .gray100
-        $0.text = "home_show_other".localized
-        $0.setKern(kern: -0.4)
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .medium(size: 14)
+        label.textColor = .gray100
+        label.text = "home_show_other".localized
+        label.setKern(kern: -0.4)
+        return label
+    }()
     
     override func setup() {
-        self.addGestureRecognizer(self.tapGesture)
-        self.addSubViews([
-            self.backgroundView,
-            self.checkImageView,
-            self.titleLabel
+        super.setup()
+        
+        addGestureRecognizer(tapGesture)
+        
+        addSubViews([
+            backgroundView,
+            checkImageView,
+            titleLabel
         ])
-    }
-    
-    override func bindConstraints() {
-        self.backgroundView.snp.makeConstraints { make in
+        
+        backgroundView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.top.equalToSuperview()
-            make.right.equalTo(self.titleLabel).offset(11)
+            make.right.equalTo(titleLabel).offset(11)
             make.bottom.equalToSuperview()
             make.height.equalTo(40)
         }
         
-        self.checkImageView.snp.makeConstraints { make in
+        checkImageView.snp.makeConstraints { make in
             make.width.height.equalTo(16)
-            make.left.equalTo(self.backgroundView).offset(12)
-            make.centerY.equalTo(self.backgroundView)
+            make.left.equalTo(backgroundView).offset(12)
+            make.centerY.equalTo(backgroundView)
         }
         
-        self.titleLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.checkImageView.snp.right).offset(8)
-            make.centerY.equalTo(self.backgroundView)
+        titleLabel.snp.makeConstraints { make in
+            make.left.equalTo(checkImageView.snp.right).offset(8)
+            make.centerY.equalTo(backgroundView)
         }
         
-        self.snp.makeConstraints { make in
-            make.edges.equalTo(self.backgroundView).priority(.high)
+        snp.makeConstraints { make in
+            make.edges.equalTo(backgroundView).priority(.high)
         }
     }
     
-    fileprivate func setShowOtherStores(isShow: Bool) {
-        self.checkImageView.image = isShow
-        ? UIImage(named: "ic_check")
-        : UIImage(named: "ic_check_off")
-    }
-}
-
-extension Reactive where Base: ShowOtherButton {
-    var tap: ControlEvent<Void> {
-        return ControlEvent(events: base.tapGesture.rx.event.map { _ in Void() })
-    }
-    
-    var isShowOtherStore: Binder<Bool> {
-        return Binder(self.base) { view, isShowOtherStore in
-            view.setShowOtherStores(isShow: isShowOtherStore)
-        }
+    func bind(_ showOtherStore: Bool) {
+        checkImageView.image = showOtherStore ? UIImage(named: "ic_check") : UIImage(named: "ic_check_off")
     }
 }

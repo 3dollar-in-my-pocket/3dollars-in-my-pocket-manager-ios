@@ -17,16 +17,16 @@ extension StorePostViewModel {
     
     struct Dependency {
         let storePostRepository: StorePostRepository
-        var userDefaults: UserDefaultsUtils
+        var preference: Preference
         let logManager: LogManagerProtocol
         
         init(
             storePostRepository: StorePostRepository = StorePostRepositoryImpl(),
-            userDefaults: UserDefaultsUtils = UserDefaultsUtils(),
+            preference: Preference = Preference.shared,
             logManager: LogManagerProtocol = LogManager.shared
         ) {
             self.storePostRepository = storePostRepository
-            self.userDefaults = userDefaults
+            self.preference = preference
             self.logManager = logManager
         }
     }
@@ -116,7 +116,7 @@ final class StorePostViewModel {
     private func fetchPostList(cursor: String?) {
         Task { [weak self] in
             guard let self else { return }
-            let storeId = dependency.userDefaults.storeId
+            let storeId = dependency.preference.storeId
             let result = await dependency.storePostRepository.fetchPostList(storeId: storeId, cursor: cursor)
             
             switch result {
@@ -163,7 +163,7 @@ final class StorePostViewModel {
         guard let post = output.postCellViewModelList.value[safe: index]?.output.storePost else { return }
         
         Task {
-            let storeId = dependency.userDefaults.storeId
+            let storeId = dependency.preference.storeId
             let result = await dependency.storePostRepository.deletePost(storeId: storeId, postId: post.postId)
             
             switch result {

@@ -109,7 +109,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     private func setNoticeNewBadgeIfNeeded() {
-        var userDefaults = UserDefaultsUtils()
+        var userDefaults = Preference.shared
         let isShownStoreNoticeNewBadge = userDefaults.shownStoreNoticeNewBadge
         
         myPageView.storeNoticeButton.isNew = isShownStoreNoticeNewBadge.isNot

@@ -29,14 +29,14 @@ final class DailyStatisticsReactor: BaseReactor, Reactor {
     let updateTableViewHeightPublisher = PublishRelay<[StatisticGroup?]>()
     private let feedbackService: FeedbackServiceType
     private let globalState: GlobalState
-    private let userDefaults: UserDefaultsUtils
+    private let userDefaults: Preference
     private var endDate: Date? = Date()
     private var startDate = Date().addWeek(week: -1)
     
     init(
         feedbackService: FeedbackServiceType,
         globalState: GlobalState,
-        userDefaults: UserDefaultsUtils,
+        userDefaults: Preference,
         state: State = State(
             statisticGroups: [],
             totalReviewCount: 0

@@ -9,7 +9,7 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         appleSignInManager: AppleSigninManager.shared,
         authService: AuthService(),
         deviceService: DeviceService(),
-        userDefaultsUtils: UserDefaultsUtils(),
+        userDefaultsUtils: Preference.shared,
         logManager: .shared
     )
     private weak var coordinator: SigninCoordinator?

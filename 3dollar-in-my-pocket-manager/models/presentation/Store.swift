@@ -44,7 +44,7 @@ struct Store: Equatable {
         self.accountInfos = response.accountNumbers.map({ AccountInfo(response: $0) })
     }
     
-    init(response: BossStoreAroundInfoResponse) {
+    init(response: BossStoreSimpleResponse) {
         self.id = response.bossStoreId
         if let location = response.location {
             self.location = CLLocation(latitude: location.latitude, longitude: location.longitude)

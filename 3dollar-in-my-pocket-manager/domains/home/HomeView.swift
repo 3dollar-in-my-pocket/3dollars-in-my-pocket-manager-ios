@@ -1,117 +1,155 @@
 import UIKit
 
 import NMapsMap
-import RxSwift
-import RxCocoa
 
 final class HomeView: BaseView {
-    let mapView = NMFMapView().then {
-        $0.positionMode = .direction
-        $0.zoomLevel = 17
+    enum Constant {
+        /// 강남역 좌표
+        static let defaultLocation = CLLocation(latitude: 127.027681, longitude: 37.497970)
     }
     
-    let centerMarker = UIImageView().then {
-        $0.image = UIImage(named: "ic_marker_active")
-    }
+    let mapView: NMFMapView = {
+        let mapView = NMFMapView()
+        mapView.positionMode = .direction
+        mapView.zoomLevel = 17
+        return mapView
+    }()
+    
+    let centerMarker: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "ic_marker_active")
+        return imageView
+    }()
     
     let addressView = AddressView()
+    
+    let operationSettingButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(named: "ic_setting")?
+            .resizeImage(scaledTo: 30)
+            .withRenderingMode(.alwaysTemplate)
+        config.contentInsets = .init(top: 13, leading: 13, bottom: 13, trailing: 13)
+        let button = UIButton(configuration: config)
+        button.tintColor = .gray90
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 13
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.08
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        return button
+    }()
     
     let showOtherButton = ShowOtherButton()
     
     let salesToggleView = SalesToggleView()
     
-    let currentLocationButton = UIButton().then {
-        $0.setImage(UIImage(named: "ic_location"), for: .normal)
-        $0.contentEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 20
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray20.cgColor
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowOffset = CGSize(width: 0, height: 4)
-        $0.layer.shadowOpacity = 0.15
-    }
+    let currentLocationButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.image = UIImage(named: "ic_location")
+        config.contentInsets = .init(top: 8, leading: 8, bottom: 8, trailing: 8)
+        
+        let button = UIButton(configuration: config)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 20
+        button.layer.borderWidth = 1
+        button.layer.borderColor = UIColor.gray20.cgColor
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
+        button.layer.shadowOpacity = 0.15
+        return button
+    }()
     
-    private let rangeOverlayView = NMFCircleOverlay().then {
-        $0.radius = 100
-        $0.fillColor = .pink.withAlphaComponent(0.2)
-    }
+    private let rangeOverlayView: NMFCircleOverlay = {
+        let overlayView = NMFCircleOverlay()
+        overlayView.radius = 100
+        overlayView.fillColor = .pink.withAlphaComponent(0.2)
+        return overlayView
+    }()
     
-    private let marker = NMFMarker().then {
-        $0.iconImage = NMFOverlayImage(name: "ic_marker_active")
-        $0.width = 30
-        $0.height = 40
-    }
+    private let marker: NMFMarker = {
+        let marker = NMFMarker()
+        marker.iconImage = NMFOverlayImage(name: "ic_marker_active")
+        marker.width = 30
+        marker.height = 40
+        return marker
+    }()
     
     private var otherStoreMarkers: [NMFMarker] = []
     
     override func setup() {
-        self.addSubViews([
-            self.mapView,
-            self.centerMarker,
-            self.addressView,
-            self.showOtherButton,
-            self.salesToggleView,
-            self.currentLocationButton
+        addSubViews([
+            mapView,
+            centerMarker,
+            addressView,
+            operationSettingButton,
+            showOtherButton,
+            salesToggleView,
+            currentLocationButton
         ])
     }
     
     override func bindConstraints() {
-        self.mapView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+        mapView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
             make.top.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalTo(self.salesToggleView.snp.top).offset(20)
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(salesToggleView.snp.top).offset(20)
         }
         
-        self.centerMarker.snp.makeConstraints { make in
+        centerMarker.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalTo(self.mapView.snp.centerY)
+            make.bottom.equalTo(mapView.snp.centerY)
             make.width.equalTo(30)
             make.height.equalTo(40)
         }
         
-        self.addressView.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
-            make.top.equalTo(self.safeAreaLayoutGuide)
+        addressView.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(24)
+            make.trailing.equalTo(operationSettingButton.snp.leading).offset(-8)
+            make.top.equalTo(safeAreaLayoutGuide)
         }
         
-        self.showOtherButton.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.bottom.equalTo(self.salesToggleView.snp.top).offset(-32)
+        operationSettingButton.snp.makeConstraints { make in
+            make.centerY.equalTo(addressView)
+            make.trailing.equalToSuperview().offset(-24)
+            make.size.equalTo(56)
         }
         
-        self.currentLocationButton.snp.makeConstraints { make in
+        showOtherButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(24)
+            make.bottom.equalTo(salesToggleView.snp.top).offset(-32)
+        }
+        
+        currentLocationButton.snp.makeConstraints { make in
             make.width.height.equalTo(40)
-            make.right.equalToSuperview().offset(-32)
-            make.centerY.equalTo(self.showOtherButton)
+            make.trailing.equalToSuperview().offset(-32)
+            make.centerY.equalTo(showOtherButton)
         }
         
-        self.salesToggleView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalTo(self.safeAreaLayoutGuide)
+        salesToggleView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
     
-    fileprivate func moveCameraPosition(position: CLLocation) {
+    func moveCameraPosition(location: CLLocation) {
         let cameraPosition = NMFCameraPosition(
             NMGLatLng(
-                lat: position.coordinate.latitude,
-                lng: position.coordinate.longitude
+                lat: location.coordinate.latitude,
+                lng: location.coordinate.longitude
             ),
-            zoom: self.mapView.zoomLevel
+            zoom: mapView.zoomLevel
         )
         let cameraUpdate = NMFCameraUpdate(position: cameraPosition)
         
         cameraUpdate.animation = .easeIn
-        self.mapView.moveCamera(cameraUpdate)
+        mapView.moveCamera(cameraUpdate)
     }
     
-    fileprivate func bind(store: Store) {
-        self.marker.mapView = nil
-        self.centerMarker.isHidden = store.isOpen
+    func bind(store: Store) {
+        marker.mapView = nil
+        centerMarker.isHidden = store.isOpen
         if store.isOpen {
             if let location = store.location {
                 let position = NMGLatLng(
@@ -119,77 +157,70 @@ final class HomeView: BaseView {
                     lng: location.coordinate.longitude
                 )
                 
-                self.marker.position = position
-                self.marker.mapView = self.mapView
+                marker.position = position
+                marker.mapView = mapView
             }
         }
     }
     
-    fileprivate func bindInitialPosition(location: CLLocation) {
-        self.rangeOverlayView.mapView = nil
-        self.setupRangeOverlayView(
+    func bindStore(_ store: BossStoreInfoResponse) {
+        marker.mapView = nil
+        let isOpen = store.openStatus.status == .open
+        centerMarker.isHidden = isOpen
+        
+        guard isOpen else { return }
+        if let location = store.location {
+            let position = NMGLatLng(
+                lat: store.location?.latitude ?? Constant.defaultLocation.coordinate.latitude,
+                lng: store.location?.longitude ?? Constant.defaultLocation.coordinate.longitude
+            )
+            
+            marker.position = position
+            marker.mapView = mapView
+        }
+    }
+    
+    func setupAvailableArea(location: CLLocation) {
+        rangeOverlayView.mapView = nil
+        setupRangeOverlayView(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
         )
     }
     
-    fileprivate func setOtherStores(stores: [Store]) {
+    func bindAddress(_ address: String) {
+        addressView.bind(address)
+    }
+    
+    func bindShowOtherStores(_ showOtherStores: Bool) {
+        showOtherButton.bind(showOtherStores)
+    }
+    
+    func bindOtherStores(_ stores: [BossStoreSimpleResponse]) {
         // 지도에 마커 추가
-        self.clearOtherStoreMarkers()
+        clearOtherStoreMarkers()
         for store in stores {
             if let location = store.location {
-                let marker = NMFMarker().then {
-                    $0.iconImage = NMFOverlayImage(name: "ic_store")
-                    $0.width = 24
-                    $0.height = 24
-                }
-                let position = NMGLatLng(
-                    lat: location.coordinate.latitude,
-                    lng: location.coordinate.longitude
-                )
-                marker.position = position
-                marker.mapView = self.mapView
-                self.otherStoreMarkers.append(marker)
+                let marker = NMFMarker()
+                marker.iconImage = NMFOverlayImage(name: "ic_store")
+                marker.width = 24
+                marker.height = 24
+                marker.position = NMGLatLng(lat: location.latitude, lng: location.longitude)
+                marker.mapView = mapView
+                otherStoreMarkers.append(marker)
             }
         }
     }
     
     private func clearOtherStoreMarkers() {
-        for marker in self.otherStoreMarkers {
+        for marker in otherStoreMarkers {
             marker.mapView = nil
         }
         otherStoreMarkers.removeAll()
     }
     
     private func setupRangeOverlayView(latitude: Double, longitude: Double) {
-        self.rangeOverlayView.center = NMGLatLng(lat: latitude, lng: longitude)
-        self.rangeOverlayView.mapView = self.mapView
-    }
-}
-
-extension Reactive where Base: HomeView {
-    var cameraPosition: Binder<CLLocation> {
-        return Binder(self.base) { view, position in
-            view.moveCameraPosition(position: position)
-        }
-    }
-    
-    var myStore: Binder<Store> {
-        return Binder(self.base) { view, store in
-            view.bind(store: store)
-        }
-    }
-    
-    var otherStores: Binder<[Store]> {
-        return Binder(self.base) { view, stores in
-            view.setOtherStores(stores: stores)
-        }
-    }
-    
-    var initialPosition: Binder<CLLocation> {
-        return Binder(self.base) { view, position in
-            view.moveCameraPosition(position: position)
-            view.bindInitialPosition(location: position)
-        }
+        rangeOverlayView.center = NMGLatLng(lat: latitude, lng: longitude)
+        rangeOverlayView.mapView = mapView
     }
 }

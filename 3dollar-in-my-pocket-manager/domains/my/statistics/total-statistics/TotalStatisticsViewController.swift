@@ -9,7 +9,7 @@ final class TotalStatisticsViewController: BaseViewController, View, TotalStatis
     private let totalStatisticsReactor = TotalStatisticsReactor(
         feedbackService: FeedbackService(),
         globalState: GlobalState.shared,
-        userDefaults: UserDefaultsUtils()
+        userDefaults: Preference.shared
     )
     private weak var coordinator: TotalStatisticsCoordinator?
     

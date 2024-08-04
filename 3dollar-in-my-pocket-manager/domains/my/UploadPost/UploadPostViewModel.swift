@@ -10,16 +10,16 @@ extension UploadPostViewModel {
     struct Dependency {
         let imageService: ImageServiceType
         let storePostRepository: StorePostRepository
-        var userDefaults: UserDefaultsUtils
+        var preference: Preference
         
         init(
             imageService: ImageServiceType = ImageService(),
             storePostRepository: StorePostRepository = StorePostRepositoryImpl(),
-            userDefaults: UserDefaultsUtils = UserDefaultsUtils()
+            preference: Preference = Preference.shared
         ) {
             self.imageService = imageService
             self.storePostRepository = storePostRepository
-            self.userDefaults = userDefaults
+            self.preference = preference
         }
     }
     
@@ -157,7 +157,7 @@ final class UploadPostViewModel {
                 return PostSectionCreateApiRequest(sectionType: .image, url: url, ratio: imageContent.ratio)
             }
             let input = PostCreateApiRequest(body: body, sections: sections)
-            let result = await dependency.storePostRepository.uploadPost(storeId: dependency.userDefaults.storeId, input: input)
+            let result = await dependency.storePostRepository.uploadPost(storeId: dependency.preference.storeId, input: input)
             
             switch result {
             case .success(_):
@@ -183,7 +183,7 @@ final class UploadPostViewModel {
             }
             let input = PostCreateApiRequest(body: body, sections: sections)
             let result = await dependency.storePostRepository.editPost(
-                storeId: dependency.userDefaults.storeId,
+                storeId: dependency.preference.storeId,
                 postId: postId,
                 input: input
             )
