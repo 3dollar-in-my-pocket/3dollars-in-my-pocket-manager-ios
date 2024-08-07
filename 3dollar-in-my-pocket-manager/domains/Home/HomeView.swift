@@ -197,7 +197,6 @@ final class HomeView: BaseView {
     }
     
     func bindOtherStores(_ stores: [BossStoreSimpleResponse]) {
-        // 지도에 마커 추가
         clearOtherStoreMarkers()
         for store in stores {
             if let location = store.location {

@@ -157,3 +157,10 @@
 // FAQ
 "faq_title" = "FAQ";
 "faq_description" = "어떤 점이 궁금하셨나요?";
+
+// MARK: Preference
+"preference.title" = "영업 설정";
+"preference.remove_location_on_close.title" = "영업 종료 시 위치 노출";
+"preference.remove_location_on_close.description" = "엽업 종료 시에도 위치가 손님들에게 공개됩니다.";
+"preference.auto_open_close_control.title" = "영업 상태 자동 변경";
+"preference.auto_open_close_control.description" = "설정한 영업 일정에 따라 자동으로 영업 상태가 변경됩니다.";

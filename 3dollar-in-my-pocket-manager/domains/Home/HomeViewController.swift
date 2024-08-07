@@ -166,7 +166,7 @@ final class HomeViewController: BaseViewController {
         case .showErrorAlert(let error):
             showErrorAlert(error: error)
         case .pushOperationSetting:
-            print("🟢TODO: pushOperationSetting")
+            pushPreference()
         }
     }
     
@@ -178,6 +178,12 @@ final class HomeViewController: BaseViewController {
             okbuttonTitle: "common_ok".localized,
             onTapOk: nil
         )
+    }
+    
+    private func pushPreference() {
+        let viewController = PreferenceViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
