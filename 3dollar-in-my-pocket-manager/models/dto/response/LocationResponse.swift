@@ -1,4 +1,4 @@
-struct LocationResponse: Decodable {
+struct LocationResponse: Decodable, Hashable {
     let latitude: Double
     let longitude: Double
     

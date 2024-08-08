@@ -1,8 +1,6 @@
 import UIKit
 
 final class MyStoreInfoAccountCell: BaseCollectionViewCell {
-    static let registerId = "\(MyStoreInfoAccountCell.self)"
-    
     enum Layout {
         static let estimatedHeight: CGFloat = 72
     }
@@ -42,9 +40,9 @@ final class MyStoreInfoAccountCell: BaseCollectionViewCell {
         }
     }
     
-    func bind(accountInfo: AccountInfo?) {
-        if let accountInfo {
-            textLabel.text = "\(accountInfo.bank.description) \(accountInfo.number)"
+    func bind(accountInfos: [StoreAccountNumberResponse]) {
+        if let accountInfo = accountInfos.first {
+            textLabel.text = "\(accountInfo.bank.description) \(accountInfo.accountNumber)"
             textLabel.textColor = .gray95
         } else {
             textLabel.text = "my_store_info_account_empty_placeholder".localized

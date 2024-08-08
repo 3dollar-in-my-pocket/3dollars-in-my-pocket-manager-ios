@@ -234,7 +234,7 @@ extension StorePostCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let section = dataSource[safe: indexPath.item] else { return BaseCollectionViewCell() }
         
-        let cell: PhotoCell = collectionView.dequeueReuseableCell(indexPath: indexPath)
+        let cell: PhotoCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         cell.bind(section.url)
         return cell
     }

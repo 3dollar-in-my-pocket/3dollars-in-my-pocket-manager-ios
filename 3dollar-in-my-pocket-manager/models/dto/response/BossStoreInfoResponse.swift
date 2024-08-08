@@ -1,4 +1,4 @@
-struct BossStoreInfoResponse: Decodable {
+struct BossStoreInfoResponse: Decodable, Hashable {
     let appearanceDays: [BossStoreAppearanceDayResponse]
     let bossStoreId: String
     let categories: [StoreCategoryResponse]

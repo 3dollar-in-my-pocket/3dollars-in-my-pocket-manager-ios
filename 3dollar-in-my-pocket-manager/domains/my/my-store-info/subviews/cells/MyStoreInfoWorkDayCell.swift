@@ -1,80 +1,87 @@
 import UIKit
 
 final class MyStoreInfoWorkDayCell: BaseCollectionViewCell {
-    static let registerId = "\(MyStoreInfoWorkDayCell.self)"
-    static let height: CGFloat = 86
-    
-    private let containerView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
+    enum Layout {
+        static let height: CGFloat = 86
     }
     
-    private let weekDayLabel = UILabel().then {
-        $0.font = .medium(size: 14)
-        $0.textColor = .gray95
-    }
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 12
+        return view
+    }()
     
-    private let timeLabel = UILabel().then {
-        $0.font = .bold(size: 14)
-        $0.textColor = .gray70
-        $0.textAlignment = .right
-    }
+    private let weekDayLabel: UILabel = {
+        let label = UILabel()
+        label.font = .medium(size: 14)
+        label.textColor = .gray95
+        return label
+    }()
     
-    private let locationLabel = UILabel().then {
-        $0.font = .regular(size: 14)
-        $0.textColor = .gray70
-        $0.textAlignment = .right
-    }
+    private let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 14)
+        label.textColor = .gray70
+        label.textAlignment = .right
+        return label
+    }()
+    
+    private let locationLabel: UILabel = {
+        let label = UILabel()
+        label.font = .regular(size: 14)
+        label.textColor = .gray70
+        label.textAlignment = .right
+        return label
+    }()
     
     override func setup() {
-        self.addSubViews([
-            self.containerView,
-            self.weekDayLabel,
-            self.timeLabel,
-            self.locationLabel
+        addSubViews([
+            containerView,
+            weekDayLabel,
+            timeLabel,
+            locationLabel
         ])
-    }
-    
-    override func bindConstraints() {
-        self.containerView.snp.makeConstraints { make in
+        
+        containerView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.top.equalToSuperview().offset(4)
             make.right.equalToSuperview().offset(-24)
             make.bottom.equalToSuperview().offset(-8)
         }
         
-        self.weekDayLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.containerView).offset(16)
-            make.top.equalTo(self.containerView).offset(16)
+        weekDayLabel.snp.makeConstraints { make in
+            make.left.equalTo(containerView).offset(16)
+            make.top.equalTo(containerView).offset(16)
         }
         
-        self.timeLabel.snp.makeConstraints { make in
-            make.right.equalTo(self.containerView).offset(-16)
-            make.top.equalTo(self.weekDayLabel)
+        timeLabel.snp.makeConstraints { make in
+            make.right.equalTo(containerView).offset(-16)
+            make.top.equalTo(weekDayLabel)
         }
         
-        self.locationLabel.snp.makeConstraints { make in
-            make.right.equalTo(self.containerView).offset(-16)
-            make.top.equalTo(self.timeLabel.snp.bottom).offset(2)
+        locationLabel.snp.makeConstraints { make in
+            make.right.equalTo(containerView).offset(-16)
+            make.top.equalTo(timeLabel.snp.bottom).offset(2)
         }
     }
     
-    func bind(appearanceDay: AppearanceDay) {
-        self.weekDayLabel.text = appearanceDay.dayOfTheWeek.fullText
+    func bind(appearanceDay: BossStoreAppearanceDayResponse) {
+        weekDayLabel.text = appearanceDay.dayOfTheWeek.fullText
         if appearanceDay.dayOfTheWeek == .saturday || appearanceDay.dayOfTheWeek == .sunday {
-            self.weekDayLabel.textColor = .red
+            weekDayLabel.textColor = .red
         } else {
-            self.weekDayLabel.textColor = .gray95
+            weekDayLabel.textColor = .gray95
         }
         if appearanceDay.isClosedDay {
-            self.timeLabel.text = "my_store_info_appearance_closed_day".localized
-            self.timeLabel.textColor = .red
-            self.locationLabel.text = "-"
+            timeLabel.text = "my_store_info_appearance_closed_day".localized
+            timeLabel.textColor = .red
+            locationLabel.text = "-"
         } else {
-            self.timeLabel.text
+            timeLabel.text
             = "\(appearanceDay.openingHours.startTime) - \(appearanceDay.openingHours.endTime)"
-            self.timeLabel.textColor = .gray70
-            self.locationLabel.text = appearanceDay.locationDescription
+            timeLabel.textColor = .gray70
+            locationLabel.text = appearanceDay.locationDescription
         }
     }
 }

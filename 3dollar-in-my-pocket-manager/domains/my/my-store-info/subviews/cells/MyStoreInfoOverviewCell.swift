@@ -3,138 +3,154 @@ import UIKit
 import Kingfisher
 
 final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
-    static let registerId = "\(MyStoreInfoOverviewCell.self)"
-    static let height: CGFloat = 477
-    
-    private let photoView = UIImageView().then {
-        $0.contentMode = .scaleAspectFill
-        $0.backgroundColor = .gray5
+    enum Layout {
+        static let height: CGFloat = 477
     }
     
-    private let containerView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
-        $0.layer.shadowColor = UIColor.black.cgColor
-        $0.layer.shadowOffset = CGSize(width: 8, height: 8)
-        $0.layer.shadowOpacity = 0.04
-    }
+    private let photoView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = .gray5
+        return imageView
+    }()
     
-    private let nameLabel = UILabel().then {
-        $0.font = .bold(size: 24)
-        $0.textColor = .gray100
-        $0.textAlignment = .center
-    }
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 12
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 8, height: 8)
+        view.layer.shadowOpacity = 0.04
+        return view
+    }()
     
-    private let categoryStackView = UIStackView().then {
-        $0.axis = .horizontal
-        $0.spacing = 4
-        $0.distribution = .equalSpacing
-        $0.alignment = .fill
-    }
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 24)
+        label.textColor = .gray100
+        label.textAlignment = .center
+        return label
+    }()
     
-    private let contactContainerView = UIView().then {
-        $0.backgroundColor = .gray0
-        $0.layer.cornerRadius = 12
-    }
+    private let categoryStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .fill
+        return stackView
+    }()
     
-    private let snsLabel = UILabel().then {
-        $0.font = .bold(size: 12)
-        $0.textColor = .black
-        $0.text = "SNS"
-        $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-    }
+    private let contactContainerView: UIView =  {
+        let view = UIView()
+        view.backgroundColor = .gray0
+        view.layer.cornerRadius = 12
+        return view
+    }()
     
-    private let snsValueLabel = UILabel().then {
-        $0.font = .regular(size: 12)
-        $0.textColor = .gray50
-        $0.textAlignment = .right
-        $0.numberOfLines = 2
-    }
+    private let snsLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 12)
+        label.textColor = .black
+        label.text = "SNS"
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        return label
+    }()
     
-    let editButton = UIButton().then {
-        $0.layer.cornerRadius = 8
-        $0.layer.masksToBounds = true
-        $0.setBackgroundColor(color: .green, forState: .normal)
-        $0.setTitle("대표 정보 수정", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.titleLabel?.font = .bold(size: 14)
-    }
+    private let snsValueLabel: UILabel = {
+        let label = UILabel()
+        label.font = .regular(size: 12)
+        label.textColor = .gray50
+        label.textAlignment = .right
+        label.numberOfLines = 2
+        return label
+    }()
+    
+    let editButton: UIButton = {
+        let button = UIButton()
+        button.layer.cornerRadius = 8
+        button.layer.masksToBounds = true
+        button.setBackgroundColor(color: .green, forState: .normal)
+        button.setTitle("대표 정보 수정", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .bold(size: 14)
+        return button
+    }()
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        self.categoryStackView.arrangedSubviews.forEach {
+        categoryStackView.arrangedSubviews.forEach {
             $0.removeFromSuperview()
         }
+        photoView.clear()
     }
     
     override func setup() {
-        self.addSubViews([
-            self.photoView,
-            self.containerView,
-            self.nameLabel,
-            self.categoryStackView,
-            self.contactContainerView,
-            self.snsLabel,
-            self.snsValueLabel,
-            self.editButton
+        addSubViews([
+            photoView,
+            containerView,
+            nameLabel,
+            categoryStackView,
+            contactContainerView,
+            snsLabel,
+            snsValueLabel,
+            editButton
         ])
-    }
-    
-    override func bindConstraints() {
-        self.photoView.snp.makeConstraints { make in
+        
+        photoView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             make.top.equalToSuperview()
             make.height.equalTo(240)
         }
         
-        self.containerView.snp.makeConstraints { make in
+        containerView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
-            make.top.equalTo(self.photoView.snp.bottom).offset(-30)
+            make.top.equalTo(photoView.snp.bottom).offset(-30)
             make.bottom.equalToSuperview().offset(-7)
         }
         
-        self.nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.containerView).offset(16)
-            make.right.equalTo(self.containerView).offset(-16)
-            make.top.equalTo(self.containerView).offset(20)
+        nameLabel.snp.makeConstraints { make in
+            make.left.equalTo(containerView).offset(16)
+            make.right.equalTo(containerView).offset(-16)
+            make.top.equalTo(containerView).offset(20)
         }
         
-        self.categoryStackView.snp.makeConstraints { make in
-            make.centerX.equalTo(self.containerView)
-            make.top.equalTo(self.nameLabel.snp.bottom).offset(8)
+        categoryStackView.snp.makeConstraints { make in
+            make.centerX.equalTo(containerView)
+            make.top.equalTo(nameLabel.snp.bottom).offset(8)
         }
         
-        self.contactContainerView.snp.makeConstraints { make in
-            make.left.equalTo(self.containerView).offset(16)
-            make.right.equalTo(self.containerView).offset(-16)
-            make.top.equalTo(self.categoryStackView.snp.bottom).offset(16)
+        contactContainerView.snp.makeConstraints { make in
+            make.left.equalTo(containerView).offset(16)
+            make.right.equalTo(containerView).offset(-16)
+            make.top.equalTo(categoryStackView.snp.bottom).offset(16)
             make.height.equalTo(78)
         }
         
-        self.snsLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.contactContainerView).offset(12)
-            make.top.equalTo(self.contactContainerView).offset(12)
+        snsLabel.snp.makeConstraints { make in
+            make.left.equalTo(contactContainerView).offset(12)
+            make.top.equalTo(contactContainerView).offset(12)
         }
         
-        self.snsValueLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.snsLabel)
-            make.right.equalTo(self.contactContainerView).offset(-12)
-            make.left.equalTo(self.snsLabel.snp.right).offset(12)
+        snsValueLabel.snp.makeConstraints { make in
+            make.top.equalTo(snsLabel)
+            make.right.equalTo(contactContainerView).offset(-12)
+            make.left.equalTo(snsLabel.snp.right).offset(12)
         }
         
-        self.editButton.snp.makeConstraints { make in
-            make.left.equalTo(self.containerView).offset(16)
-            make.right.equalTo(self.containerView).offset(-16)
-            make.top.equalTo(self.contactContainerView.snp.bottom).offset(16)
+        editButton.snp.makeConstraints { make in
+            make.left.equalTo(containerView).offset(16)
+            make.right.equalTo(containerView).offset(-16)
+            make.top.equalTo(contactContainerView.snp.bottom).offset(16)
             make.height.equalTo(48)
         }
     }
     
     func bindPhotoConstraintAgain(height: CGFloat) {
-        self.photoView.snp.remakeConstraints { make in
+        photoView.snp.remakeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
             if height >= 0 {
@@ -147,9 +163,9 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         }
     }
     
-    func bind(store: Store) {
-        self.nameLabel.text = store.name
-        self.photoView.setImage(urlString: store.imageUrl)
+    func bind(store: BossStoreInfoResponse) {
+        nameLabel.text = store.name
+        photoView.setImage(urlString: store.imageUrl)
         
         for category in store.categories {
             let categoryLagel = PaddingLabel(
@@ -166,9 +182,9 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
                 $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
             }
             
-            self.categoryStackView.addArrangedSubview(categoryLagel)
+            categoryStackView.addArrangedSubview(categoryLagel)
         }
         
-        self.snsValueLabel.text = store.snsUrl
+        snsValueLabel.text = store.snsUrl
     }
 }

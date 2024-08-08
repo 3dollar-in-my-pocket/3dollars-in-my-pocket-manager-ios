@@ -1,90 +1,9 @@
 import UIKit
 
-final class MyStoreInfoViewController: BaseViewController {
-    override var screenName: ScreenName {
-        return .myStoreInfo
-    }
-    
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
-        
-        collectionView.backgroundColor = .gray0
-        return collectionView
-    }()
-    
-    private let refreshControl = UIRefreshControl()
-    private let viewModel: MyStoreInfoViewModel
-    private lazy var dataSource = MyStoreInfoDataSource(collectionView: collectionView, viewModel: viewModel)
-    private var isRefreshing = false
-    
-    init(viewModel: MyStoreInfoViewModel = MyStoreInfoViewModel()) {
-        self.viewModel = viewModel
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupUI()
-        bind()
-        viewModel.input.load.send(())
-    }
-    
-    private func setupUI() {
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        collectionView.refreshControl = refreshControl
-        collectionView.delegate = self
-    }
-    
-    private func bind() {
-        refreshControl.isRefreshingPublisher
-            .filter { $0 }
-            .withUnretained(self)
-            .sink { (owner: MyStoreInfoViewController, _) in
-                owner.isRefreshing = true
-            }
-            .store(in: &cancellables)
-        
-        // Bind output
-        viewModel.output.dataSource
-            .main
-            .withUnretained(self)
-            .sink { (owner: MyStoreInfoViewController, sections: [MyStoreInfoSection]) in
-                owner.dataSource.reload(sections)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.isRefreshing
-            .filter { $0.isNot }
-            .main
-            .withUnretained(self)
-            .sink { (owner: MyStoreInfoViewController, _) in
-                owner.refreshControl.endRefreshing()
-                owner.isRefreshing = false
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.route
-            .main
-            .withUnretained(self)
-            .sink { (owner: MyStoreInfoViewController, route: MyStoreInfoViewModel.Route) in
-                // TODO: handle route
-            }
-            .store(in: &cancellables)
-    }
-    
-    private func createCollectionViewLayout() -> UICollectionViewLayout {
-        return UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
-            guard let self,
-                  let sectionType = dataSource.sectionIdentifier(section: sectionIndex)?.type else {
+final class MyStoreInfoCollectionView: UICollectionView {
+    init(dataSource: UICollectionViewDiffableDataSource<MyStoreInfoSection, MyStoreInfoSectionItem>) {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+            guard let sectionType = dataSource.sectionIdentifier(section: sectionIndex)?.type else {
                 fatalError("정의되지 않은 섹션입니다.")
             }
             
@@ -190,13 +109,13 @@ final class MyStoreInfoViewController: BaseViewController {
                 return section
             }
         }
+        
+        super.init(frame: .zero, collectionViewLayout: layout)
+        backgroundColor = .gray0
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
-extension MyStoreInfoViewController: UICollectionViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard isRefreshing else  { return }
-        
-        viewModel.input.refresh.send(())
-    }
-}

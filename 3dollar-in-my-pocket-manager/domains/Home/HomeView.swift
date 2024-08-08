@@ -169,7 +169,7 @@ final class HomeView: BaseView {
         centerMarker.isHidden = isOpen
         
         guard isOpen else { return }
-        if let location = store.location {
+        if store.location != nil {
             let position = NMGLatLng(
                 lat: store.location?.latitude ?? Constant.defaultLocation.coordinate.latitude,
                 lng: store.location?.longitude ?? Constant.defaultLocation.coordinate.longitude

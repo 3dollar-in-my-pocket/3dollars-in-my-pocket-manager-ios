@@ -98,7 +98,7 @@ extension BankListBottomSheetViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: BankListCell = collectionView.dequeueReuseableCell(indexPath: indexPath)
+        let cell: BankListCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         
         guard let item = datasource[safe: indexPath.item] else { return cell }
         cell.bind(item: item)

@@ -9,8 +9,8 @@ final class MyPageViewController: BaseViewController {
         options: nil
     )
     
-    private let pageViewControllers: [UIViewController] = [
-        MyStoreInfoViewController.instance(),
+    private lazy var pageViewControllers: [UIViewController] = [
+        createMyStoreInfoViewController(),
         StatisticsViewController.instance(),
         StorePostViewController()
     ]
@@ -116,6 +116,15 @@ final class MyPageViewController: BaseViewController {
         if isShownStoreNoticeNewBadge.isNot {
             userDefaults.shownStoreNoticeNewBadge = true
         }
+    }
+    
+    private func createMyStoreInfoViewController() -> UIViewController {
+        let viewModel = MyStoreInfoViewModel()
+        let viewController = MyStoreInfoViewController(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        
+        navigationController.isNavigationBarHidden = true
+        return navigationController
     }
 }
 

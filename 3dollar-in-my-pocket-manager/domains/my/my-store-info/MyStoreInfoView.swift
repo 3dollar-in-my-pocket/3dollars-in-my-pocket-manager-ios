@@ -14,11 +14,11 @@ final class MyStoreInfoView: BaseView {
             if sectionIndex == 0 {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(MyStoreInfoOverviewCell.height)
+                    heightDimension: .absolute(MyStoreInfoOverviewCell.Layout.height)
                 ))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(MyStoreInfoOverviewCell.height)
+                    heightDimension: .absolute(MyStoreInfoOverviewCell.Layout.height)
                 ), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 
@@ -26,18 +26,18 @@ final class MyStoreInfoView: BaseView {
             } else if sectionIndex == 1 {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(MyStoreInfoIntroductionCell.height)
+                    heightDimension: .estimated(MyStoreInfoIntroductionCell.Layout.height)
                 ))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(MyStoreInfoIntroductionCell.height)
+                    heightDimension: .estimated(MyStoreInfoIntroductionCell.Layout.height)
                 ), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 
                 section.boundarySupplementaryItems = [.init(
                     layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                        heightDimension: .absolute(MyStoreInfoHeaderView.Layout.height)
                     ),
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading
@@ -46,26 +46,26 @@ final class MyStoreInfoView: BaseView {
             } else if sectionIndex == 2 {
                 let menuItem = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(MyStoreInfoMenuCell.height)
+                    heightDimension: .estimated(MyStoreInfoMenuCell.Layout.height)
                 ))
                 let moreItem = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(MyStoreInfoMenuMoreCell.height)
+                    heightDimension: .absolute(MyStoreInfoMenuMoreCell.Layout.height)
                 ))
                 let emptyItem = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(MyStoreInfoMenuEmptyCell.height)
+                    heightDimension: .absolute(MyStoreInfoMenuEmptyCell.Layout.height)
                 ))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(MyStoreInfoMenuCell.height)
+                    heightDimension: .estimated(MyStoreInfoMenuCell.Layout.height)
                 ), subitems: [menuItem, moreItem, emptyItem])
                 let section = NSCollectionLayoutSection(group: group)
                 
                 section.boundarySupplementaryItems = [.init(
                     layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                        heightDimension: .absolute(MyStoreInfoHeaderView.Layout.height)
                     ),
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading
@@ -84,7 +84,7 @@ final class MyStoreInfoView: BaseView {
                 section.boundarySupplementaryItems = [.init(
                     layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                        heightDimension: .absolute(MyStoreInfoHeaderView.Layout.height)
                     ),
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading
@@ -93,18 +93,18 @@ final class MyStoreInfoView: BaseView {
             } else {
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(MyStoreInfoWorkDayCell.height)
+                    heightDimension: .estimated(MyStoreInfoWorkDayCell.Layout.height)
                 ))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(MyStoreInfoWorkDayCell.height)
+                    heightDimension: .estimated(MyStoreInfoWorkDayCell.Layout.height)
                 ), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 
                 section.boundarySupplementaryItems = [.init(
                     layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(MyStoreInfoHeaderView.height)
+                        heightDimension: .absolute(MyStoreInfoHeaderView.Layout.height)
                     ),
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading
@@ -125,11 +125,6 @@ final class MyStoreInfoView: BaseView {
             MyStoreInfoAccountCell.self,
         ])
         
-        $0.register(
-            MyStoreInfoHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: MyStoreInfoHeaderView.registerId
-        )
     }
     
     override func setup() {

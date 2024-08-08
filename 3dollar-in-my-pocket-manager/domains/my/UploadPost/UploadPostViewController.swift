@@ -122,16 +122,16 @@ extension UploadPostViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
-            let cell: UploadPhotoCell = collectionView.dequeueReuseableCell(indexPath: indexPath)
+            let cell: UploadPhotoCell = collectionView.dequeueReusableCell(indexPath: indexPath)
             cell.bind(count: photoDataSource.count)
             return cell
         } else {
             guard let imageContent = photoDataSource[safe: indexPath.item - 1] else  {
-                let cell: UICollectionViewCell = collectionView.dequeueReuseableCell(indexPath: indexPath)
+                let cell: UICollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 return cell
             }
             
-            let cell: PostPhotoCell = collectionView.dequeueReuseableCell(indexPath: indexPath)
+            let cell: PostPhotoCell = collectionView.dequeueReusableCell(indexPath: indexPath)
             cell.bind(imageContent: imageContent) { [weak self] in
                 self?.viewModel.input.didTapDeletePhoto.send(indexPath.item - 1)
             }

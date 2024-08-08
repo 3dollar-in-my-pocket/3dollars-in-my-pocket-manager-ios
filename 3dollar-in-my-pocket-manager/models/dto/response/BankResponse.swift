@@ -1,6 +1,6 @@
 import Foundation
 
-struct BankResponse: Decodable {
+struct BankResponse: Decodable, Hashable {
     let key: String
     let description: String
 }
