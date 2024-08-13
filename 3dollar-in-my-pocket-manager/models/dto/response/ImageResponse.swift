@@ -1,5 +1,5 @@
 import Foundation
 
-struct ImageUploadResponse: Codable {
+struct ImageResponse: Codable, Hashable {
     let imageUrl: String
 }

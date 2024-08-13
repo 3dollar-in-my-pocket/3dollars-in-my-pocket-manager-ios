@@ -6,36 +6,42 @@ import RxCocoa
 final class InputField: BaseView {
     var maxLength: Int? {
         willSet(newValue) {
-            self.textField.maxLength = newValue
+            textField.maxLength = newValue
         }
     }
     
     var keyboardType: UIKeyboardType? {
         willSet(newValue) {
-            self.textField.keyboardType = newValue
+            textField.keyboardType = newValue
         }
     }
     
     var format: String? {
         willSet {
-            self.textField.format = newValue
+            textField.format = newValue
         }
     }
     
-    private let titleLabel = UILabel().then {
-        $0.font = .bold(size: 14)
-        $0.textColor = .gray100
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 14)
+        label.textColor = .gray100
+        return label
+    }()
     
-    private let requiredDot = UIView().then {
-        $0.backgroundColor = .pink
-        $0.layer.cornerRadius = 2
-    }
+    private let requiredDot: UIView = {
+        let view = UIView()
+        view.backgroundColor = .pink
+        view.layer.cornerRadius = 2
+        return view
+    }()CategorySelectView
     
-    private let descriptionLabel = UILabel().then {
-        $0.textColor = .pink
-        $0.font = .bold(size: 12)
-    }
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .pink
+        label.font = .bold(size: 12)
+        return label
+    }()
     
     fileprivate let textField: TextField
     
@@ -58,44 +64,42 @@ final class InputField: BaseView {
     }
     
     override func setup() {
-        self.addSubViews([
-            self.titleLabel,
-            self.requiredDot,
-            self.descriptionLabel,
-            self.textField
+        addSubViews([
+            titleLabel,
+            requiredDot,
+            descriptionLabel,
+            textField
         ])
-    }
-    
-    override func bindConstraints() {
-        self.titleLabel.snp.makeConstraints { make in
+        
+        titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.left.equalToSuperview()
         }
         
-        self.requiredDot.snp.makeConstraints { make in
-            make.top.equalTo(self.titleLabel)
-            make.left.equalTo(self.titleLabel.snp.right).offset(4)
+        requiredDot.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel)
+            make.left.equalTo(titleLabel.snp.right).offset(4)
             make.width.height.equalTo(4)
         }
         
-        self.descriptionLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(self.titleLabel)
+        descriptionLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel)
             make.right.equalToSuperview()
         }
         
-        self.textField.snp.makeConstraints { make in
+        textField.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.top.equalTo(self.titleLabel.snp.bottom).offset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
         
-        self.snp.makeConstraints { make in
-            make.bottom.equalTo(self.textField).priority(.high)
+        snp.makeConstraints { make in
+            make.bottom.equalTo(textField).priority(.high)
         }
     }
     
     func setText(text: String?) {
-        self.textField.setText(text: text)
+        textField.setText(text: text)
     }
 }
 

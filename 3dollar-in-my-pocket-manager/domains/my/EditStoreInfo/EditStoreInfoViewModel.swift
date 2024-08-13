@@ -1,8 +1,156 @@
 import UIKit
+import Combine
 
 import ReactorKit
 import RxSwift
 import RxCocoa
+
+extension EditStoreInfoViewModel {
+    struct Input {
+        let load = PassthroughSubject<Void, Never>()
+        let inputStoreName = PassthroughSubject<String, Never>()
+        let selectCategory = PassthroughSubject<Int, Never>()
+        let deselectCategory = PassthroughSubject<Int, Never>()
+        let addPhotos = PassthroughSubject<[UIImage], Never>()
+        let didTapAddPhoto = PassthroughSubject<Void, Never>()
+        let deletePhoto = PassthroughSubject<Int, Never>()
+        let inputSNS = PassthroughSubject<String, Never>()
+        let didTapSave = PassthroughSubject<Void, Never>()
+    }
+    
+    struct Output {
+        let store: CurrentValueSubject<BossStoreInfoResponse, Never>
+        let categories = CurrentValueSubject<[StoreFoodCategoryResponse], Never>([])
+        let isEnableSaveButton = CurrentValueSubject<Bool, Never>(false)
+        let route = PassthroughSubject<Route, Never>()
+    }
+    
+    struct Config {
+        let store: BossStoreInfoResponse
+    }
+    
+    enum Route {
+        case showErrorAlert(Error)
+        case presentCategoryBottomSheet
+        case pop
+    }
+    
+    struct Dependency {
+        let storeRepository: StoreRepository
+        let categoryRepository: CategoryRepository
+        let imageRepository: ImageRepository
+        let logManager: LogManagerProtocol
+        
+        init(
+            storeRepository: StoreRepository = StoreRepositoryImpl(),
+            categoryRepository: CategoryRepository = CategoryRepositoryImpl(),
+            imageRepository: ImageRepository = ImageRepositoryImpl(),
+            logManager: LogManagerProtocol = LogManager.shared
+        ) {
+            self.storeRepository = storeRepository
+            self.categoryRepository = categoryRepository
+            self.imageRepository = imageRepository
+            self.logManager = logManager
+        }
+    }
+}
+
+final class EditStoreInfoViewModel: BaseViewModel {
+    let input = Input()
+    let output: Output
+    private let config: Config
+    private let dependency: Dependency
+    
+    init(config: Config, dependency: Dependency = Dependency()) {
+        self.config = config
+        self.dependency = dependency
+        self.output = Output(store: .init(config.store))
+        super.init()
+        
+        bind()
+    }
+    
+    private func bind() {
+        input.load
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewModel, _) in
+                owner.fetchCategories()
+            }
+            .store(in: &cancellables)
+        
+        input.inputStoreName
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewModel, storeName: String) in
+                var store = owner.output.store.value
+                store.name = storeName
+                owner.output.store.send(store)
+                owner.output.isEnableSaveButton.send(owner.validateStore(store: store))
+            }
+            .store(in: &cancellables)
+        
+        input.selectCategory
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewModel, index: Int) in
+                guard let selectedCategory = owner.output.categories.value[safe: index] else { return }
+                
+                var store = owner.output.store.value
+                store.categories.append(selectedCategory)
+            }
+            .store(in: &cancellables)
+        
+        input.deselectCategory
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewModel, index: Int) in
+                owner.deselectCategory(index: index)
+            }
+            .store(in: &cancellables)
+        
+        // TODO: 이미지 처리 필요
+        
+        input.inputSNS
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewModel, snsUrl: String) in
+                var store = owner.output.store.value
+                store.snsUrl = snsUrl
+                owner.output.store.send(store)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func fetchCategories() {
+        Task {
+            let result = await dependency.categoryRepository.fetchCategories()
+            
+            switch result {
+            case .success(let categories):
+                output.categories.send(categories)
+            case .failure(let error):
+                output.route.send(.showErrorAlert(error))
+            }
+        }
+    }
+    
+    private func validateStore(store: BossStoreInfoResponse) -> Bool {
+        return store != config.store && store.name.isNotEmpty
+    }
+    
+    private func selectCategory(index: Int) {
+        guard let selectedCategory = output.categories.value[safe: index] else { return }
+        
+        var store = output.store.value
+        store.categories.append(selectedCategory)
+        output.store.send(store)
+    }
+    
+    private func deselectCategory(index: Int) {
+        guard let deselectedCategory = output.categories.value[safe: index] else { return }
+        
+        var store = output.store.value
+        store.categories.removeAll { $0.categoryId == deselectedCategory.categoryId }
+        output.store.send(store)
+    }
+}
+
 
 final class EditStoreInfoReactor: BaseReactor, Reactor {
     enum Action {

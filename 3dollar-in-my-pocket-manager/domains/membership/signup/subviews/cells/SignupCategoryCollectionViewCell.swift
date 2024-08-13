@@ -1,48 +1,45 @@
+import Foundation
 import UIKit
 
 final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
-    static let registerID = "\(SignupCategoryCollectionViewCell.self)"
-    static let estimatedSize = CGSize(width: 56, height: 40)
-    
-    override var isSelected: Bool {
-        didSet {
-            self.backgroundColor = self.isSelected
-            ? .green
-            : UIColor(r: 242, g: 251, b: 247)
-            self.titleLabel.textColor = self.isSelected
-            ? .white
-            : .green
-            self.titleLabel.font = self.isSelected
-            ? .bold(size: 14)
-            : .regular(size: 14)
+    enum Layout {
+        static let estimatedSize = CGSize(width: 56, height: 40)
+        static let horizontalPadding: CGFloat = 32
+        static let height: CGFloat = 40
+        static func calculateSize(category: String) -> CGSize {
+            let string = NSString(string: category)
+            let stringWidth = string.size(withAttributes: [.font: UIFont.regular(size: 15) as Any]).width
+            return CGSize(width: stringWidth + horizontalPadding, height: height)
         }
     }
     
-    private let titleLabel = UILabel().then {
-        $0.textColor = .green
-        $0.font = .regular(size: 14)
-        $0.textAlignment = .center
+    override var isSelected: Bool {
+        didSet {
+            backgroundColor = isSelected ? .green : UIColor(r: 242, g: 251, b: 247)
+            paddingLabel.textColor = isSelected ? .white : .green
+            paddingLabel.font = isSelected ? .bold(size: 14) : .regular(size: 14)
+        }
     }
+    
+    private let paddingLabel: PaddingLabel = {
+        let label = PaddingLabel(topInset: 10, bottomInset: 10, leftInset: 16, rightInset: 16)
+        label.textColor = .green
+        label.font = .regular(size: 14)
+        label.textAlignment = .center
+        return label
+    }()
     
     override func setup() {
-        self.backgroundColor = UIColor(r: 242, g: 251, b: 247)
-        self.layer.cornerRadius = 8
-        self.addSubViews([
-            self.titleLabel
-        ])
-    }
-    
-    override func bindConstraints() {
-        self.titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(16).priority(.high)
-            make.right.equalToSuperview().offset(-16).priority(.high)
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(40)
+        backgroundColor = UIColor(r: 242, g: 251, b: 247)
+        layer.cornerRadius = 8
+        addSubViews([paddingLabel])
+        
+        paddingLabel.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
     func bind(category: StoreCategory) {
-        self.titleLabel.text = category.name
+        paddingLabel.text = category.name
     }
 }

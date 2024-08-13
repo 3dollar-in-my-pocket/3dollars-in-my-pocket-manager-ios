@@ -4,85 +4,89 @@ import RxSwift
 import RxCocoa
 
 final class CategorySelectView: BaseView {
-    private let titleLabel = UILabel().then {
-        $0.font = .bold(size: 14)
-        $0.textColor = .gray100
-        $0.text = "signup_category_title".localized
+    enum Constant {
+        static let maxCategoryCount = 3
     }
     
-    private let requiredDot = UIView().then {
-        $0.backgroundColor = .pink
-        $0.layer.cornerRadius = 2
+    enum Layout {
+        static let itemSpacing: CGFloat = 11
+        static let lineSpacing: CGFloat = 12
     }
     
-    private let descriptionLabel = UILabel().then {
-        $0.textColor = .pink
-        $0.font = .bold(size: 12)
-        $0.text = "signup_category_description".localized
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 14)
+        label.textColor = .gray100
+        label.text = "signup_category_title".localized
+        return label
+    }()
     
-    let categoryCollectionView = UICollectionView(
-        frame: .zero,
-        collectionViewLayout: UICollectionViewFlowLayout()
-    ).then {
-        let layout = LeftAlignedCollectionViewFlowLayout()
-        
-        layout.minimumInteritemSpacing = 11
-        layout.minimumLineSpacing = 12
-        layout.estimatedItemSize = SignupCategoryCollectionViewCell.estimatedSize
-        $0.collectionViewLayout = layout
-        $0.register(
-            SignupCategoryCollectionViewCell.self,
-            forCellWithReuseIdentifier: SignupCategoryCollectionViewCell.registerID
-        )
-        $0.allowsMultipleSelection = true
-        $0.backgroundColor = .clear
-    }
+    private let requiredDot: UIView = {
+        let view = UIView()
+        view.backgroundColor = .pink
+        view.layer.cornerRadius = 2
+        return view
+    }()
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .pink
+        label.font = .bold(size: 12)
+        label.text = "signup_category_description".localized
+        return label
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.allowsMultipleSelection = true
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
     
     override func setup() {
-        self.addSubViews([
-            self.titleLabel,
-            self.requiredDot,
-            self.descriptionLabel,
-            self.categoryCollectionView
+        collectionView.delegate = self
+        collectionView.register([SignupCategoryCollectionViewCell.self])
+        
+        addSubViews([
+            titleLabel,
+            requiredDot,
+            descriptionLabel,
+            collectionView
         ])
-        self.categoryCollectionView.delegate = self
-    }
-    
-    override func bindConstraints() {
-        self.titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview()
+        
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
             make.top.equalToSuperview()
         }
         
-        self.requiredDot.snp.makeConstraints { make in
-            make.left.equalTo(self.titleLabel.snp.right).offset(4)
-            make.top.equalTo(self.titleLabel)
+        requiredDot.snp.makeConstraints { make in
+            make.leading.equalTo(titleLabel.snp.right).offset(4)
+            make.top.equalTo(titleLabel)
             make.width.height.equalTo(4)
         }
         
-        self.descriptionLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(self.titleLabel)
-            make.right.equalToSuperview()
+        descriptionLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel)
+            make.trailing.equalToSuperview()
         }
         
-        self.categoryCollectionView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalTo(self.titleLabel.snp.bottom).offset(12)
+        collectionView.snp.makeConstraints { make in
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(12)
             make.height.equalTo(0)
         }
         
-        self.snp.makeConstraints { make in
-            make.top.equalTo(self.titleLabel).priority(.high)
-            make.bottom.equalTo(self.categoryCollectionView).priority(.high)
+        snp.makeConstraints { make in
+            make.top.equalTo(titleLabel).priority(.high)
+            make.bottom.equalTo(collectionView).priority(.high)
         }
     }
     
     func updateCollectionViewHeight(categories: [StoreCategory]) {
         let maxWidth = UIScreen.main.bounds.width - 48
         let spaceBetweenCells: CGFloat = 11
-        var height: CGFloat = SignupCategoryCollectionViewCell.estimatedSize.height
+        var height: CGFloat = SignupCategoryCollectionViewCell.Layout.height
         var currentWidth: CGFloat = 0
         
         for category in categories {
@@ -93,15 +97,24 @@ final class CategorySelectView: BaseView {
             
             if currentWidth + cellWidth >= maxWidth { // 셀 포함해서 한줄 넘어가는 경우
                 currentWidth = cellWidth + spaceBetweenCells
-                height += SignupCategoryCollectionViewCell.estimatedSize.height + 12
+                height += SignupCategoryCollectionViewCell.Layout.height + Layout.lineSpacing
             } else {
                 currentWidth = currentWidth + cellWidth + spaceBetweenCells
             }
         }
         
-        self.categoryCollectionView.snp.updateConstraints { make in
+        collectionView.snp.updateConstraints { make in
             make.height.equalTo(height)
         }
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = LeftAlignedCollectionViewFlowLayout()
+        
+        layout.minimumInteritemSpacing = Layout.itemSpacing
+        layout.minimumLineSpacing = Layout.lineSpacing
+        layout.estimatedItemSize = SignupCategoryCollectionViewCell.Layout.estimatedSize
+        return layout
     }
 }
 
@@ -111,7 +124,7 @@ extension CategorySelectView: UICollectionViewDelegate {
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
         if let selectedCount = collectionView.indexPathsForSelectedItems?.count {
-            return selectedCount < 3
+            return selectedCount < Constant.maxCategoryCount
         } else {
             return true
         }

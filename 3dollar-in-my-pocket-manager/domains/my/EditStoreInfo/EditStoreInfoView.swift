@@ -3,29 +3,31 @@ import UIKit
 final class EditStoreInfoView: BaseView {
     let tapBackground = UITapGestureRecognizer()
     
-    let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "ic_back"), for: .normal)
-    }
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "ic_back"), for: .normal)
+        return button
+    }()
     
-    private let titleLabel = UILabel().then {
-        $0.font = .semiBold(size: 16)
-        $0.textColor = .gray100
-        $0.text = "edit_store_info_title".localized
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .semiBold(size: 16)
+        label.textColor = .gray100
+        label.text = "edit_store_info_title".localized
+        return label
+    }()
     
-    private let scrollView = UIScrollView().then {
-        $0.backgroundColor = .clear
-    }
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .clear
+        return scrollView
+    }()
     
-    private let containerView = UIView()
-    
-    private let roundedBackgroundView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        $0.layer.cornerRadius = 24
-        $0.layer.shadowColor = UIColor(r: 0, g: 198, b: 103).cgColor
-        $0.layer.shadowOpacity = 0.04
-    }
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
+    }()
     
     let storeNameField = InputField(
         title: "signup_store_name".localized,

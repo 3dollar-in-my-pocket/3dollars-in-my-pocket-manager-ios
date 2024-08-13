@@ -16,3 +16,21 @@ struct BossStoreMenuResponse: Decodable, Hashable {
         self.price = price
     }
 }
+
+// MARK: BossStoreMenuRequest
+extension BossStoreMenuResponse: Encodable {
+    enum CodingKeys: String, CodingKey {
+        case groupName
+        case imageUrl
+        case name
+        case price
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        try container.encode(imageUrl, forKey: .imageUrl)
+        try container.encode(name, forKey: .name)
+        try container.encode(price, forKey: .price)
+    }
+}
