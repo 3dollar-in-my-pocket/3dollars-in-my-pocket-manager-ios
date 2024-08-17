@@ -30,7 +30,7 @@ extension MyStoreInfoViewModel {
     enum Route {
         case pushEditAccount(EditAccountReactor)
         case pushEditStoreInfo(EditStoreInfoViewModel)
-        case pushEditIntroduction(BossStoreInfoResponse)
+        case pushEditIntroduction(EditIntroductionViewModel)
         case pushEditMenus(BossStoreInfoResponse)
         case pushEditAppearanceDays(BossStoreInfoResponse)
         case showErrorAlert(Error)
@@ -155,7 +155,7 @@ final class MyStoreInfoViewModel: BaseViewModel {
         case .overview:
             pushEditStoreInfo()
         case .introduction:
-            output.route.send(.pushEditIntroduction(store))
+            pushEditIntroduction()
         case .menu:
             output.route.send(.pushEditMenus(store))
         case .account:
@@ -184,6 +184,16 @@ final class MyStoreInfoViewModel: BaseViewModel {
             }
             .store(in: &viewModel.cancellables)
     }
+    
+    private func bindEditIntroductionViewModel(_ viewModel: EditIntroductionViewModel) {
+        viewModel.output.updatedStore
+            .withUnretained(self)
+            .sink { (owner: MyStoreInfoViewModel, store: BossStoreInfoResponse) in
+                owner.state.store = store
+                owner.updateDataSource()
+            }
+            .store(in: &viewModel.cancellables)
+    }
 }
 
 // MARK: Rotue
@@ -195,6 +205,15 @@ extension MyStoreInfoViewModel {
         
         bindEditStoreInfoViewModel(viewModel)
         output.route.send(.pushEditStoreInfo(viewModel))
+    }
+    
+    private func pushEditIntroduction() {
+        guard let store = state.store else { return }
+        let config = EditIntroductionViewModel.Config(store: store)
+        let viewModel = EditIntroductionViewModel(config: config)
+        
+        bindEditIntroductionViewModel(viewModel)
+        output.route.send(.pushEditIntroduction(viewModel))
     }
 }
 

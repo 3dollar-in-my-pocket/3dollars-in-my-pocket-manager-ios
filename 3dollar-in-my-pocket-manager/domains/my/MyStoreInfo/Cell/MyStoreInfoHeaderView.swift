@@ -32,6 +32,12 @@ final class MyStoreInfoHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cancellables = Set<AnyCancellable>()
+    }
+    
     func bind(sectionType: MyStoreInfoSection.SectionType) {
         titleLabel.text = sectionType.title
         rightButton.setTitle(sectionType.rightButtonTitle, for: .normal)

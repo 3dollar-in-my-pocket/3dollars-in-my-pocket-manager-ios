@@ -26,7 +26,7 @@
 		6E1AB79D280D7ECF0059DCF4 /* MyStoreInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoViewModel.swift */; };
 		6E1AB7A1280D7F390059DCF4 /* EditIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */; };
 		6E1AB7A3280D84D60059DCF4 /* EditIntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */; };
-		6E1AB7A5280D8B040059DCF4 /* EditIntroductionReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A4280D8B040059DCF4 /* EditIntroductionReactor.swift */; };
+		6E1AB7A5280D8B040059DCF4 /* EditIntroductionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A4280D8B040059DCF4 /* EditIntroductionViewModel.swift */; };
 		6E1AB7A7280D918F0059DCF4 /* PatchBossStoreInfoRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A6280D918F0059DCF4 /* PatchBossStoreInfoRequest.swift */; };
 		6E1AB7A9280D928E0059DCF4 /* AppearanceDayRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A8280D928E0059DCF4 /* AppearanceDayRequest.swift */; };
 		6E1AB7AD280D966D0059DCF4 /* MenuRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7AC280D966D0059DCF4 /* MenuRequest.swift */; };
@@ -230,7 +230,6 @@
 		6EB5CA9A2935CB6100B6653C /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA992935CB6100B6653C /* UITableViewExtensions.swift */; };
 		6EB5CA9C2935CB6D00B6653C /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA9B2935CB6C00B6653C /* UICollectionView+.swift */; };
 		6EB5CA9E2935CB7600B6653C /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA9D2935CB7600B6653C /* Date+.swift */; };
-		6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */; };
 		6EB94EA427CB208F00609E77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA327CB208F00609E77 /* AppDelegate.swift */; };
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
@@ -345,7 +344,7 @@
 		6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoViewModel.swift; sourceTree = "<group>"; };
 		6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionView.swift; sourceTree = "<group>"; };
 		6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionViewController.swift; sourceTree = "<group>"; };
-		6E1AB7A4280D8B040059DCF4 /* EditIntroductionReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionReactor.swift; sourceTree = "<group>"; };
+		6E1AB7A4280D8B040059DCF4 /* EditIntroductionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionViewModel.swift; sourceTree = "<group>"; };
 		6E1AB7A6280D918F0059DCF4 /* PatchBossStoreInfoRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchBossStoreInfoRequest.swift; sourceTree = "<group>"; };
 		6E1AB7A8280D928E0059DCF4 /* AppearanceDayRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceDayRequest.swift; sourceTree = "<group>"; };
 		6E1AB7AC280D966D0059DCF4 /* MenuRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuRequest.swift; sourceTree = "<group>"; };
@@ -540,7 +539,6 @@
 		6EB5CA992935CB6100B6653C /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
 		6EB5CA9B2935CB6C00B6653C /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		6EB5CA9D2935CB7600B6653C /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
-		6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionCoordinator.swift; sourceTree = "<group>"; };
 		6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "3dollar-in-my-pocket-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EB94EA327CB208F00609E77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EB94EA527CB208F00609E77 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -706,15 +704,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		6E1AB79F280D7F1F0059DCF4 /* edit-introduction */ = {
+		6E1AB79F280D7F1F0059DCF4 /* EditIntroduction */ = {
 			isa = PBXGroup;
 			children = (
 				6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */,
 				6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */,
-				6E1AB7A4280D8B040059DCF4 /* EditIntroductionReactor.swift */,
-				6EB6D7CC2818231F0053CA3F /* EditIntroductionCoordinator.swift */,
+				6E1AB7A4280D8B040059DCF4 /* EditIntroductionViewModel.swift */,
 			);
-			path = "edit-introduction";
+			path = EditIntroduction;
 			sourceTree = "<group>";
 		};
 		6E1E5BA62827EB29003A1B51 /* setting */ = {
@@ -974,6 +971,7 @@
 		6E6C9C66280BD467009AFAE8 /* my */ = {
 			isa = PBXGroup;
 			children = (
+				6E1AB79F280D7F1F0059DCF4 /* EditIntroduction */,
 				6E63FF69281C192A00EC49DE /* EditStoreInfo */,
 				6EDA7D0D2C2CEAB100457D63 /* Subview */,
 				6ED290772C25CCF200C47892 /* UploadPost */,
@@ -993,7 +991,6 @@
 				6E8D7ACE2B234196008ABF64 /* edit-account */,
 				6E8D012F2843331C00FAB49E /* edit-menu */,
 				6E5F3DD3281D5F10002282B6 /* edit-schedule */,
-				6E1AB79F280D7F1F0059DCF4 /* edit-introduction */,
 				6E6C9C6F280BDC3B009AFAE8 /* Subview */,
 				6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */,
 				6E6C9C73280BE7B3009AFAE8 /* MyStoreInfoViewController.swift */,
@@ -1791,7 +1788,6 @@
 				6E21184B285DD94C00220E5A /* FAQ.swift in Sources */,
 				6E63FF6C281C19DE00EC49DE /* EditStoreInfoView.swift in Sources */,
 				6E6EDF2028A7B47D00D1A6ED /* ScreenName.swift in Sources */,
-				6EB6D7CD2818231F0053CA3F /* EditIntroductionCoordinator.swift in Sources */,
 				6ED370F7280C33A300C445E5 /* MyStoreInfoHeaderView.swift in Sources */,
 				6EBC20F72C1C42D800C08EE0 /* StoreFoodCategoryResponse.swift in Sources */,
 				6EA53B9C284DD18A007A3839 /* SettingTableFooterView.swift in Sources */,
@@ -1982,7 +1978,7 @@
 				6E37AF7127E707FC004FBE25 /* WaitingCoordinator.swift in Sources */,
 				6E142D6227D785A40084480C /* SignupView.swift in Sources */,
 				6EC803232B2C8B3800DA4F5E /* BankListCell.swift in Sources */,
-				6E1AB7A5280D8B040059DCF4 /* EditIntroductionReactor.swift in Sources */,
+				6E1AB7A5280D8B040059DCF4 /* EditIntroductionViewModel.swift in Sources */,
 				6E5DCE6E27FDC93000CA58EE /* BossStoreAppearanceDayResponse.swift in Sources */,
 				6E91A9852841D4B30090361F /* StatisticsReactor.swift in Sources */,
 				6EC803212B2C894B00DA4F5E /* BankListBottomSheetView.swift in Sources */,

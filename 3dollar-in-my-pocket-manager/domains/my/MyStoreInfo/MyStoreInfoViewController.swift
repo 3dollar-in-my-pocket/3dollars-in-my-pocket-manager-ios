@@ -198,6 +198,10 @@ final class MyStoreInfoViewController: BaseViewController {
             let viewController = EditStoreInfoViewController(viewModel: viewModel)
             
             parent?.navigationController?.pushViewController(viewController, animated: true)
+        case .pushEditIntroduction(let viewModel):
+            let viewController = EditIntroductionViewController(viewModel: viewModel)
+            
+            parent?.navigationController?.pushViewController(viewController, animated: true)
         default:
             break
         }

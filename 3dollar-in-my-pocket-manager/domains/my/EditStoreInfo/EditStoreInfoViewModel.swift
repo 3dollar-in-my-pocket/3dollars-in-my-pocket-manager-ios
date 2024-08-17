@@ -221,7 +221,7 @@ final class EditStoreInfoViewModel: BaseViewModel {
                     sendEditStoreLog()
                     output.showLoading.send(false)
                     output.updatedStore.send(state.store)
-                    output.toast.send("정보가 업데이트되었습니다")
+                    output.toast.send("정보가 업데이트 되었습니다")
                     output.route.send(.pop)
                 case .failure(let error):
                     output.showLoading.send(false)
@@ -271,19 +271,6 @@ extension EditStoreInfoViewModel {
             screen: output.screenName,
             eventName: .editStoreInfo,
             extraParameters: [.storeId: state.store.bossStoreId])
-        )
-    }
-}
-
-private extension BossStoreInfoResponse {
-    func toPatchRequest() -> BossStorePatchRequest {
-        return BossStorePatchRequest(
-            name: name,
-            representativeImages: representativeImages,
-            introduction: nil,
-            snsUrl: snsUrl,
-            menus: nil,
-            categoriesIds: categories.map { $0.categoryId }
         )
     }
 }

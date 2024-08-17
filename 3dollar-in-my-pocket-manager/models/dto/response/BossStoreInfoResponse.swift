@@ -5,7 +5,7 @@ struct BossStoreInfoResponse: Decodable, Hashable {
     var location: LocationResponse?
     let address: AddressResponse
     var representativeImages: [BossStoreImage]
-    let introduction: String?
+    var introduction: String?
     var snsUrl: String?
     let menus: [BossStoreMenu]
     let appearanceDays: [BossStoreAppearanceDayResponse]
@@ -16,6 +16,19 @@ struct BossStoreInfoResponse: Decodable, Hashable {
     let favorite: StoreFavoriteResponse
     let createdAt: String?
     let updatedAt: String?
+}
+
+extension BossStoreInfoResponse {
+    func toPatchRequest() -> BossStorePatchRequest {
+        return BossStorePatchRequest(
+            name: name,
+            representativeImages: representativeImages,
+            introduction: introduction,
+            snsUrl: snsUrl,
+            menus: nil,
+            categoriesIds: categories.map { $0.categoryId }
+        )
+    }
 }
 
 struct LocationResponse: Decodable, Hashable {
