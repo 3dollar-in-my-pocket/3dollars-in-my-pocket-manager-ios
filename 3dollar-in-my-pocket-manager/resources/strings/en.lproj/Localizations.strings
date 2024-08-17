@@ -1,5 +1,9 @@
 // Common
 "common_ok" = "확인";
+"common_load_image" = "이미지 불러오기";
+"common_album" = "앨범";
+"common_camera" = "카메라";
+"common_cancel" = "취소";
 
 // Error
 "error_unknown" = "알 수 없는 에러입니다.";
@@ -101,11 +105,13 @@
 "edit_introdution_edit_button" = "저장하기";
 
 // Edit Store Info
-"edit_store_info_title" = "대표 정보 수정";
-"edit_store_info_photo_title" = "대표 사진";
-"edit_store_info_upload_photo" = "이미지 수정";
-"edit_store_info_sns" = "SNS";
-"edit_store_info_save" = "저장하기";
+"edit_store_info.title" = "대표 정보 수정";
+"edit_store_info.photo_title" = "가게 사진";
+"edit_store_info.sns" = "SNS";
+"edit_store_info.save" = "저장하기";
+"edit_store_info.sns.placeholder" = "SNS주소를 적어주세요.";
+"edit_store_info.toast.maximum_photo" = "사진은 최대 10장까지 등록 가능합니다";
+"edit_store_info.photo.representative" = "대표";
 
 // Edit Schedule
 "edit_schedule_title" = "일정 관리";

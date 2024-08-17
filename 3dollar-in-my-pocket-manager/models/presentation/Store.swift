@@ -34,7 +34,7 @@ struct Store: Equatable {
         } else {
             self.openTime = nil
         }
-        self.imageUrl = response.imageUrl
+        self.imageUrl = response.representativeImages.first?.imageUrl
         self.categories = response.categories.map(StoreCategory.init)
         self.snsUrl = response.snsUrl
         self.introduction = response.introduction

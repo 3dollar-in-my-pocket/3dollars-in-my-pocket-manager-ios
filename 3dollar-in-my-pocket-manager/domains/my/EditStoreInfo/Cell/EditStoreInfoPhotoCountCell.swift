@@ -2,8 +2,15 @@ import UIKit
 
 final class EditStoreInfoPhotoCountCell: BaseCollectionViewCell {
     enum Layout {
-        static let size = CGSize(width: 72, height: 72)
+        static let size = CGSize(width: 76, height: 76)
     }
+    
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray5
+        view.layer.cornerRadius = 16
+        return view
+    }()
     
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -17,7 +24,7 @@ final class EditStoreInfoPhotoCountCell: BaseCollectionViewCell {
         imageView.image = UIImage(named: "ic_camera")?
             .resizeImage(scaledTo: 28)
             .withRenderingMode(.alwaysTemplate)
-            .withTintColor(.gray30)
+        imageView.tintColor = .gray30
         return imageView
     }()
     
@@ -30,11 +37,14 @@ final class EditStoreInfoPhotoCountCell: BaseCollectionViewCell {
     }()
     
     override func setup() {
-        contentView.backgroundColor = .gray5
-        contentView.layer.masksToBounds = true
-        contentView.layer.cornerRadius = 16
+        contentView.addSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.size.equalTo(72)
+            $0.leading.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
         
-        contentView.addSubview(stackView)
+        containerView.addSubview(stackView)
         stackView.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
@@ -45,5 +55,14 @@ final class EditStoreInfoPhotoCountCell: BaseCollectionViewCell {
         }
         
         stackView.addArrangedSubview(countLabel)
+    }
+    
+    func bind(count: Int) {
+        let string = "\(count)/10"
+        let attributedString = NSMutableAttributedString(string: string)
+        let range = (string as NSString).range(of: "\(count)")
+        attributedString.addAttribute(.foregroundColor, value: UIColor.green, range: range)
+        
+        countLabel.attributedText = attributedString
     }
 }

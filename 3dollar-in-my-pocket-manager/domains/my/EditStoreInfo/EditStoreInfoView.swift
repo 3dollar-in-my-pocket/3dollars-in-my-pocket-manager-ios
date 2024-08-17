@@ -13,7 +13,7 @@ final class EditStoreInfoView: BaseView {
         let label = UILabel()
         label.font = .semiBold(size: 16)
         label.textColor = .gray100
-        label.text = "edit_store_info_title".localized
+        label.text = "edit_store_info.title".localized
         return label
     }()
     
@@ -40,45 +40,37 @@ final class EditStoreInfoView: BaseView {
     
     let categoryCollectionView = CategorySelectView()
     
-    let photoView = PhotoUploadView(type: .edit)
+    let photoView = EditStoreInfoPhotoView()
     
     let snsField = InputField(
-        title: "edit_store_info_sns".localized,
+        title: "edit_store_info.sns".localized,
         isRequired: false,
-        placeholder: "edit_introduction_sns".localized
+        placeholder: "edit_store_info.sns.placeholder".localized
     )
     
-    let saveButton = UIButton().then {
-        $0.setTitle("edit_store_info_save".localized, for: .normal)
-        $0.titleLabel?.font = .medium(size: 16)
-        $0.setTitleColor(UIColor(r: 251, g: 251, b: 251), for: .normal)
-        $0.setBackgroundColor(color: .green, forState: .normal)
-        $0.setBackgroundColor(color: .gray30, forState: .disabled)
-        $0.isEnabled = false
-    }
+    let saveButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.title = "edit_store_info.save".localized
+        config.baseForegroundColor = UIColor(r: 251, g: 251, b: 251)
+        let button = UIButton(configuration: config)
+        button.configurationUpdateHandler = { button in
+            button.backgroundColor = button.isEnabled ? .green : .gray30
+            button.titleLabel?.font = .medium(size: 16)
+        }
+        button.isEnabled = false
+        return button
+    }()
+    
+    let buttonBackgroundView = UIView()
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
     override func setup() {
-        self.roundedBackgroundView.addGestureRecognizer(self.tapBackground)
-        self.setupKeyboardEvent()
-        self.backgroundColor = .gray0
-        self.containerView.addSubViews([
-            self.roundedBackgroundView,
-            self.storeNameField,
-            self.categoryCollectionView,
-            self.photoView,
-            self.snsField
-        ])
-        self.scrollView.addSubview(self.containerView)
-        self.addSubViews([
-            self.backButton,
-            self.titleLabel,
-            self.scrollView,
-            self.saveButton
-        ])
+        setupKeyboardEvent()
+        setupLayout()
+        
         self.tapBackground.rx.event
             .map { _ in Void() }
             .asDriver(onErrorJustReturn: ())
@@ -88,80 +80,80 @@ final class EditStoreInfoView: BaseView {
             .disposed(by: self.disposeBag)
     }
     
-    override func bindConstraints() {
-        self.backButton.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.top.equalTo(self.safeAreaLayoutGuide).offset(15)
-            make.width.height.equalTo(24)
+    private func setupLayout() {
+        backgroundColor = .gray0
+        
+        addSubview(backButton)
+        backButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(15)
+            $0.size.equalTo(24)
         }
         
-        self.titleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalTo(self.backButton)
+        addSubview(titleLabel)
+        titleLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalTo(backButton)
         }
         
-        self.scrollView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalTo(self.backButton.snp.bottom).offset(21)
-            make.bottom.equalTo(self.saveButton.snp.top)
+        stackView.addArrangedSubview(storeNameField)
+        stackView.setCustomSpacing(32, after: storeNameField)
+        stackView.addArrangedSubview(categoryCollectionView)
+        stackView.setCustomSpacing(32, after: categoryCollectionView)
+        stackView.addArrangedSubview(photoView)
+        stackView.setCustomSpacing(32, after: photoView)
+        stackView.addArrangedSubview(snsField)
+        
+        scrollView.addSubview(stackView)
+        stackView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(60)
+            $0.bottom.equalToSuperview().offset(-44)
         }
         
-        self.containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.top.equalTo(self.roundedBackgroundView).priority(.high)
-            make.bottom.equalTo(self.roundedBackgroundView).priority(.high)
-            make.width.equalTo(UIScreen.main.bounds.width)
+        addSubview(saveButton)
+        saveButton.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide)
+            $0.height.equalTo(64)
         }
         
-        self.roundedBackgroundView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(28)
-            make.bottom.equalTo(self.snsField).offset(44)
+        addSubview(buttonBackgroundView)
+        buttonBackgroundView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.top.equalTo(saveButton.snp.bottom)
         }
         
-        self.storeNameField.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
-            make.top.equalTo(self.roundedBackgroundView).offset(32)
-        }
-        
-        self.categoryCollectionView.snp.makeConstraints { make in
-            make.left.equalTo(self.storeNameField)
-            make.right.equalTo(self.storeNameField)
-            make.top.equalTo(self.storeNameField.snp.bottom).offset(32)
-        }
-        
-        self.photoView.snp.makeConstraints { make in
-            make.left.equalTo(self.storeNameField)
-            make.right.equalTo(self.storeNameField)
-            make.top.equalTo(self.categoryCollectionView.snp.bottom).offset(32)
-        }
-        
-        self.snsField.snp.makeConstraints { make in
-            make.left.equalTo(self.storeNameField)
-            make.right.equalTo(self.storeNameField)
-            make.top.equalTo(self.photoView.snp.bottom).offset(32)
-        }
-        
-        self.saveButton.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(82)
+        addSubview(scrollView)
+        scrollView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.top.equalTo(backButton.snp.bottom).offset(21)
+            $0.width.equalTo(UIUtils.windowBounds.width).priority(.high)
+            $0.bottom.equalTo(saveButton.snp.top)
         }
     }
     
-    func bind(store: Store) {
-        self.storeNameField.setText(text: store.name)
-        self.photoView.setImage(imageUrl: store.imageUrl)
-        self.snsField.setText(text: store.snsUrl)
+    func bind(store: BossStoreInfoResponse, categories: [StoreFoodCategoryResponse]) {
+        storeNameField.setText(text: store.name)
+        categoryCollectionView.bind(categories: categories)
+        categoryCollectionView.selectCategories(categories: store.categories)
+        photoView.bind(images: store.representativeImages)
+        snsField.setText(text: store.snsUrl)
     }
     
-    func selectCategories(indexes: [Int]) {
+    func setSaveButtonEnable(_ isEnable: Bool) {
+        saveButton.isEnabled = isEnable
+        let backgroundColor: UIColor = isEnable ? .green : .gray30
+        buttonBackgroundView.backgroundColor = backgroundColor
+    }
+    
+    private func selectCategories(indexes: [Int]) {
         for index in indexes {
-            self.categoryCollectionView.categoryCollectionView.selectItem(
+            categoryCollectionView.collectionView.selectItem(
                 at: IndexPath(row: index, section: 0),
                 animated: true,
                 scrollPosition: .centeredVertically

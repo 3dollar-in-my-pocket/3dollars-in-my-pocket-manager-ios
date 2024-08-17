@@ -1,7 +1,7 @@
 import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
+import CombineCocoa
 
 final class CategorySelectView: BaseView {
     enum Constant {
@@ -43,10 +43,19 @@ final class CategorySelectView: BaseView {
         return collectionView
     }()
     
+    private var datasource: [StoreFoodCategoryResponse] = []
+    
     override func setup() {
-        collectionView.delegate = self
-        collectionView.register([SignupCategoryCollectionViewCell.self])
+        setupLayout()
         
+        collectionView.dataSource = self
+        collectionView.register([
+            CategoryViewCell.self,
+            BaseCollectionViewCell.self
+        ])
+    }
+    
+    private func setupLayout() {
         addSubViews([
             titleLabel,
             requiredDot,
@@ -54,39 +63,58 @@ final class CategorySelectView: BaseView {
             collectionView
         ])
         
-        titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.top.equalToSuperview()
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.top.equalToSuperview()
         }
         
-        requiredDot.snp.makeConstraints { make in
-            make.leading.equalTo(titleLabel.snp.right).offset(4)
-            make.top.equalTo(titleLabel)
-            make.width.height.equalTo(4)
+        requiredDot.snp.makeConstraints {
+            $0.leading.equalTo(titleLabel.snp.trailing).offset(4)
+            $0.top.equalTo(titleLabel)
+            $0.width.height.equalTo(4)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel)
-            make.trailing.equalToSuperview()
+        descriptionLabel.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().offset(-24)
         }
         
-        collectionView.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
-            make.trailing.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
-            make.height.equalTo(0)
+        collectionView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+            $0.trailing.equalToSuperview().offset(-24)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+            $0.height.equalTo(0)
         }
         
-        snp.makeConstraints { make in
-            make.top.equalTo(titleLabel).priority(.high)
-            make.bottom.equalTo(collectionView).priority(.high)
+        snp.makeConstraints {
+            $0.top.equalTo(titleLabel).priority(.high)
+            $0.bottom.equalTo(collectionView).priority(.high)
         }
     }
     
+    func bind(categories: [StoreFoodCategoryResponse]) {
+        updateHeight(categories: categories)
+        datasource = categories
+        collectionView.reloadData()
+    }
+    
+    func selectCategories(categories: [StoreFoodCategoryResponse]) {
+        for category in categories {
+            if let targetIndex = datasource.firstIndex(of: category) {
+                collectionView.selectItem(
+                    at: IndexPath(item: targetIndex, section: 0),
+                    animated: false,
+                    scrollPosition: .centeredVertically
+                )
+            }
+        }
+    }
+    
+    @available(*, deprecated)
     func updateCollectionViewHeight(categories: [StoreCategory]) {
         let maxWidth = UIScreen.main.bounds.width - 48
         let spaceBetweenCells: CGFloat = 11
-        var height: CGFloat = SignupCategoryCollectionViewCell.Layout.height
+        var totalHeight: CGFloat = CategoryViewCell.Layout.height
         var currentWidth: CGFloat = 0
         
         for category in categories {
@@ -97,14 +125,39 @@ final class CategorySelectView: BaseView {
             
             if currentWidth + cellWidth >= maxWidth { // 셀 포함해서 한줄 넘어가는 경우
                 currentWidth = cellWidth + spaceBetweenCells
-                height += SignupCategoryCollectionViewCell.Layout.height + Layout.lineSpacing
+                totalHeight += CategoryViewCell.Layout.height + Layout.lineSpacing
             } else {
                 currentWidth = currentWidth + cellWidth + spaceBetweenCells
             }
         }
         
         collectionView.snp.updateConstraints { make in
-            make.height.equalTo(height)
+            make.height.equalTo(totalHeight)
+        }
+    }
+    
+    func updateHeight(categories: [StoreFoodCategoryResponse]) {
+        let maxWidth = UIScreen.main.bounds.width - 48
+        let spaceBetweenCells: CGFloat = 11
+        var totalHeight: CGFloat = CategoryViewCell.Layout.height
+        var currentWidth: CGFloat = 0
+        
+        for category in categories {
+            let stringWidth = (category.name as NSString)
+                .size(withAttributes: [.font: UIFont.regular(size: 14) as Any])
+                .width
+            let cellWidth = stringWidth + 36
+            
+            if currentWidth + cellWidth >= maxWidth { // 셀 포함해서 한줄 넘어가는 경우
+                currentWidth = cellWidth + spaceBetweenCells
+                totalHeight += CategoryViewCell.Layout.height + Layout.lineSpacing
+            } else {
+                currentWidth = currentWidth + cellWidth + spaceBetweenCells
+            }
+        }
+        
+        collectionView.snp.updateConstraints { make in
+            make.height.equalTo(totalHeight)
         }
     }
     
@@ -113,20 +166,32 @@ final class CategorySelectView: BaseView {
         
         layout.minimumInteritemSpacing = Layout.itemSpacing
         layout.minimumLineSpacing = Layout.lineSpacing
-        layout.estimatedItemSize = SignupCategoryCollectionViewCell.Layout.estimatedSize
+        layout.estimatedItemSize = CategoryViewCell.Layout.estimatedSize
         return layout
     }
 }
 
-extension CategorySelectView: UICollectionViewDelegate {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        shouldSelectItemAt indexPath: IndexPath
-    ) -> Bool {
-        if let selectedCount = collectionView.indexPathsForSelectedItems?.count {
-            return selectedCount < Constant.maxCategoryCount
-        } else {
-            return true
-        }
+extension CategorySelectView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return datasource.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let category = datasource[safe: indexPath.item] else { return BaseCollectionViewCell() }
+        let cell: CategoryViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+        
+        cell.bind(category: category)
+        return cell
+    }
+}
+
+
+extension CategorySelectView {
+    var didSelectItemPublisher: AnyPublisher<IndexPath, Never> {
+        return collectionView.didSelectItemPublisher
+    }
+    
+    var didDeselectItemPublisher: AnyPublisher<IndexPath, Never> {
+        return collectionView.didDeselectItemPublisher
     }
 }

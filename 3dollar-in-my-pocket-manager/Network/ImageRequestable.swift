@@ -41,10 +41,14 @@ extension ImageRequestable {
     
     var imageRequest: DataRequest {
         return AF.upload(multipartFormData: { multipartFormData in
-            for (index, imageData) in imageData.enumerated() {
+            let downsampledDatas = imageData.compactMap { data -> Data? in
+                return ImageUtil.downsampledImage(data: data, size: CGSize(width: 1024, height: 1024))?.jpegData(compressionQuality: 1)
+            }
+            
+            for (index, imageData) in downsampledDatas.enumerated() {
                 multipartFormData.append(
                     imageData,
-                    withName: "file",
+                    withName: "files",
                     fileName: DateUtils.todayString(format: "yyyy-MM-dd'T'HH-mm-ss") + "_image\(index).\(imageType.rawValue)",
                     mimeType: imageType.mimeType
                 )

@@ -34,7 +34,7 @@ final class InputField: BaseView {
         view.backgroundColor = .pink
         view.layer.cornerRadius = 2
         return view
-    }()CategorySelectView
+    }()
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
@@ -43,7 +43,7 @@ final class InputField: BaseView {
         return label
     }()
     
-    fileprivate let textField: TextField
+    let textField: TextField
     
     init(
         title: String,
@@ -64,6 +64,10 @@ final class InputField: BaseView {
     }
     
     override func setup() {
+        setupLayout()
+    }
+    
+    private func setupLayout() {
         addSubViews([
             titleLabel,
             requiredDot,
@@ -71,26 +75,26 @@ final class InputField: BaseView {
             textField
         ])
         
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.left.equalToSuperview()
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.left.equalToSuperview().offset(24)
         }
         
-        requiredDot.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel)
-            make.left.equalTo(titleLabel.snp.right).offset(4)
-            make.width.height.equalTo(4)
+        requiredDot.snp.makeConstraints {
+            $0.top.equalTo(titleLabel)
+            $0.left.equalTo(titleLabel.snp.right).offset(4)
+            $0.size.equalTo(4)
         }
         
-        descriptionLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel)
-            make.right.equalToSuperview()
+        descriptionLabel.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.right.equalToSuperview().offset(-24)
         }
         
-        textField.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+        textField.snp.makeConstraints {
+            $0.left.equalTo(titleLabel)
+            $0.right.equalTo(descriptionLabel)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
         
         snp.makeConstraints { make in

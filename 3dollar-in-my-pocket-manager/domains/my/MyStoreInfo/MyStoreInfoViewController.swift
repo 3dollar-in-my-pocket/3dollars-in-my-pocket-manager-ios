@@ -76,7 +76,7 @@ final class MyStoreInfoViewController: BaseViewController {
             .main
             .withUnretained(self)
             .sink { (owner: MyStoreInfoViewController, route: MyStoreInfoViewModel.Route) in
-                // TODO: handle route
+                owner.handleRoute(route)
             }
             .store(in: &cancellables)
     }
@@ -189,6 +189,17 @@ final class MyStoreInfoViewController: BaseViewController {
                 )]
                 return section
             }
+        }
+    }
+    
+    private func handleRoute(_ route: MyStoreInfoViewModel.Route) {
+        switch route {
+        case .pushEditStoreInfo(let viewModel):
+            let viewController = EditStoreInfoViewController(viewModel: viewModel)
+            
+            parent?.navigationController?.pushViewController(viewController, animated: true)
+        default:
+            break
         }
     }
 }

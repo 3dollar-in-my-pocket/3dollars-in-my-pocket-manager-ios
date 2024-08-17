@@ -7,12 +7,14 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         static let height: CGFloat = 477
     }
     
-    private let photoView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .gray5
-        return imageView
+    private lazy var photoCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.backgroundColor = .gray5
+        collectionView.isPagingEnabled = true
+        return collectionView
     }()
+    
+    private let photoCountLabel = PhotoCountLabel()
     
     private let containerView: UIView = {
         let view = UIView()
@@ -52,7 +54,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         let label = UILabel()
         label.font = .bold(size: 12)
         label.textColor = .black
-        label.text = "SNS"
+        label.text = "edit_store_info.sns".localized
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
     }()
@@ -68,14 +70,17 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     
     let editButton: UIButton = {
         let button = UIButton()
+        button.setTitle("edit_store_info.title".localized, for: .normal)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
-        button.setBackgroundColor(color: .green, forState: .normal)
-        button.setTitle("대표 정보 수정", for: .normal)
-        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .green
         button.titleLabel?.font = .bold(size: 14)
+        button.adjustsImageWhenHighlighted = false
+        button.setTitleColor(.white, for: .normal)
         return button
     }()
+    
+    private var datasource: [BossStoreImage] = []
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -83,12 +88,59 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         categoryStackView.arrangedSubviews.forEach {
             $0.removeFromSuperview()
         }
-        photoView.clear()
+        datasource.removeAll()
     }
     
     override func setup() {
+        setupLayout()
+        
+        photoCollectionView.register([
+            OverviewPhotoCell.self,
+            BaseCollectionViewCell.self
+        ])
+        photoCollectionView.dataSource = self
+        photoCollectionView.delegate = self
+    }
+    
+    func bind(store: BossStoreInfoResponse) {
+        nameLabel.text = store.name
+        datasource = store.representativeImages
+        photoCollectionView.reloadData()
+        
+        for category in store.categories {
+            let categoryLagel = PaddingLabel(
+                topInset: 4,
+                bottomInset: 4,
+                leftInset: 8,
+                rightInset: 8
+            ).then {
+                $0.backgroundColor = UIColor(r: 0, g: 198, b: 103, a: 0.1)
+                $0.textColor = .green
+                $0.layer.cornerRadius = 8
+                $0.text = category.name
+                $0.layer.masksToBounds = true
+                $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+            }
+            
+            categoryStackView.addArrangedSubview(categoryLagel)
+        }
+        
+        snsValueLabel.text = store.snsUrl
+    }
+    
+    private func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        layout.scrollDirection = .horizontal
+        layout.itemSize = OverviewPhotoCell.Layout.size
+        return layout
+    }
+    
+    private func setupLayout() {
         addSubViews([
-            photoView,
+            photoCollectionView,
+            photoCountLabel,
             containerView,
             nameLabel,
             categoryStackView,
@@ -98,17 +150,22 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             editButton
         ])
         
-        photoView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.height.equalTo(240)
+        photoCollectionView.snp.makeConstraints {
+            $0.left.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.height.equalTo(240)
+        }
+        
+        photoCountLabel.snp.makeConstraints {
+            $0.right.equalTo(photoCollectionView).offset(-24)
+            $0.bottom.equalTo(photoCollectionView).offset(-38)
         }
         
         containerView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(24)
             make.right.equalToSuperview().offset(-24)
-            make.top.equalTo(photoView.snp.bottom).offset(-30)
+            make.top.equalTo(photoCollectionView.snp.bottom).offset(-30)
             make.bottom.equalToSuperview().offset(-7)
         }
         
@@ -148,43 +205,120 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             make.height.equalTo(48)
         }
     }
-    
-    func bindPhotoConstraintAgain(height: CGFloat) {
-        photoView.snp.remakeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            if height >= 0 {
-                make.height.equalTo(240)
-                make.top.equalToSuperview()
-            } else {
-                make.height.equalTo(240-height)
-                make.top.equalToSuperview().offset(height)
+}
+
+extension MyStoreInfoOverviewCell {
+    final class OverviewPhotoCell: BaseCollectionViewCell {
+        enum Layout {
+            static let size = CGSize(width: UIUtils.windowBounds.width, height: 240)
+        }
+        
+        let imageView: UIImageView = {
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFill
+            imageView.clipsToBounds = true
+            return imageView
+        }()
+        
+        override func prepareForReuse() {
+            super.prepareForReuse()
+            imageView.clear()
+        }
+        
+        override func setup() {
+            setupLayout()
+        }
+        
+        func bind(photo: BossStoreImage) {
+            if let imageUrl = photo.imageUrl {
+                imageView.setImage(urlString: imageUrl)
+            } else if let image = photo.image {
+                imageView.image = image
+            } else if let url = photo.url {
+                imageView.setImage(urlString: url)
+            }
+        }
+        
+        private func setupLayout() {
+            contentView.addSubview(imageView)
+            imageView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
             }
         }
     }
     
-    func bind(store: BossStoreInfoResponse) {
-        nameLabel.text = store.name
-        photoView.setImage(urlString: store.imageUrl)
+    final class PhotoCountLabel: BaseView {
+        private let stackView: UIStackView = {
+            let stackView = UIStackView()
+            stackView.axis = .horizontal
+            stackView.spacing = 4
+            return stackView
+        }()
         
-        for category in store.categories {
-            let categoryLagel = PaddingLabel(
-                topInset: 4,
-                bottomInset: 4,
-                leftInset: 8,
-                rightInset: 8
-            ).then {
-                $0.backgroundColor = UIColor(r: 0, g: 198, b: 103, a: 0.1)
-                $0.textColor = .green
-                $0.layer.cornerRadius = 8
-                $0.text = category.name
-                $0.layer.masksToBounds = true
-                $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-            }
-            
-            categoryStackView.addArrangedSubview(categoryLagel)
+        private let photoIcon: UIImageView = {
+            let image = UIImage(named: "ic_camera")?
+                .resizeImage(scaledTo: 20)
+                .withRenderingMode(.alwaysTemplate)
+            let imageView = UIImageView(image: image)
+            imageView.tintColor = .white
+            return imageView
+        }()
+        
+        private let countLabel: UILabel = {
+            let label = UILabel()
+            label.textColor = .white
+            label.font = .bold(size: 12)
+            label.text = "1/10"
+            return label
+        }()
+        
+        override func setup() {
+            setupLayout()
         }
         
-        snsValueLabel.text = store.snsUrl
+        func bind(count: Int) {
+            countLabel.text = "\(count)/10"
+        }
+        
+        private func setupLayout() {
+            backgroundColor = .gray80
+            layer.cornerRadius = 16
+            layer.masksToBounds = true
+            
+            stackView.addArrangedSubview(photoIcon)
+            stackView.addArrangedSubview(countLabel)
+            addSubview(stackView)
+            stackView.snp.makeConstraints {
+                $0.trailing.equalToSuperview()
+                $0.centerY.equalToSuperview()
+            }
+            
+            snp.makeConstraints {
+                $0.leading.equalTo(stackView).offset(-8)
+                $0.trailing.equalTo(stackView).offset(8)
+                $0.height.equalTo(32)
+            }
+        }
+    }
+}
+
+extension MyStoreInfoOverviewCell: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return datasource.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let image = datasource[safe: indexPath.item] else { return BaseCollectionViewCell() }
+        let cell: OverviewPhotoCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+        
+        cell.bind(photo: image)
+        return cell
+    }
+}
+
+extension MyStoreInfoOverviewCell: UICollectionViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let index = Int(scrollView.contentOffset.x / OverviewPhotoCell.Layout.size.width) + 1
+        photoCountLabel.bind(count: index)
     }
 }

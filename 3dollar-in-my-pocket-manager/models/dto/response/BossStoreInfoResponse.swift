@@ -4,10 +4,10 @@ struct BossStoreInfoResponse: Decodable, Hashable {
     var name: String
     var location: LocationResponse?
     let address: AddressResponse
-    let representativeImages: [ImageResponse]
+    var representativeImages: [BossStoreImage]
     let introduction: String?
     var snsUrl: String?
-    let menus: [BossStoreMenuResponse]
+    let menus: [BossStoreMenu]
     let appearanceDays: [BossStoreAppearanceDayResponse]
     var categories: [StoreFoodCategoryResponse]
     let accountNumbers: [StoreAccountNumberResponse]

@@ -4,7 +4,7 @@ struct BossStoreSimpleResponse: Decodable {
     let name: String
     let location: LocationResponse?
     let address: AddressResponse
-    let menus: [BossStoreMenuResponse]
+    let menus: [BossStoreMenu]
     let categories: [StoreCategoryResponse]
     let openStatus: BossStoreOpenStatusResponse
     let distance: Int

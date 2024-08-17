@@ -1,7 +1,6 @@
-import Foundation
 import UIKit
 
-final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
+final class CategoryViewCell: BaseCollectionViewCell {
     enum Layout {
         static let estimatedSize = CGSize(width: 56, height: 40)
         static let horizontalPadding: CGFloat = 32
@@ -32,6 +31,10 @@ final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
     override func setup() {
         backgroundColor = UIColor(r: 242, g: 251, b: 247)
         layer.cornerRadius = 8
+        setupLayout()
+    }
+    
+    private func setupLayout() {
         addSubViews([paddingLabel])
         
         paddingLabel.snp.makeConstraints {
@@ -40,6 +43,10 @@ final class SignupCategoryCollectionViewCell: BaseCollectionViewCell {
     }
     
     func bind(category: StoreCategory) {
+        paddingLabel.text = category.name
+    }
+    
+    func bind(category: StoreFoodCategoryResponse) {
         paddingLabel.text = category.name
     }
 }

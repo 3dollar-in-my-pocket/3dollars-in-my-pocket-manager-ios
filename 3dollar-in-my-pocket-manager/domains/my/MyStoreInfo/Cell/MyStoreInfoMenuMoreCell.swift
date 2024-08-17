@@ -58,7 +58,7 @@ final class MyStoreInfoMenuMoreCell: BaseCollectionViewCell {
         }
     }
     
-    func bind(menus: [BossStoreMenuResponse]) {
+    func bind(menus: [BossStoreMenu]) {
         titleLabel.text = String.init(
             format: "my_store_info_menu_more_format".localized,
             menus.count
@@ -71,7 +71,7 @@ final class MyStoreInfoMenuMoreCell: BaseCollectionViewCell {
         }
     }
     
-    private func generatePhotoView(menu: BossStoreMenuResponse) -> UIImageView {
+    private func generatePhotoView(menu: BossStoreMenu) -> UIImageView {
         let photoView = UIImageView()
         
         photoView.layer.cornerRadius = 14

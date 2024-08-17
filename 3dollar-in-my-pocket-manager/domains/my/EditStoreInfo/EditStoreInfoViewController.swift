@@ -1,40 +1,27 @@
 import UIKit
 import PhotosUI
 
-import ReactorKit
+import CombineCocoa
 import SPPermissions
-import CropViewController
 
-final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfoCoordinator {
+final class EditStoreInfoViewController: BaseViewController {
     private let editStoreInfoView = EditStoreInfoView()
-    private let editStoreInfoReactor: EditStoreInfoReactor
-    private weak var coordinator: EditStoreInfoCoordinator?
+    private let viewModel: EditStoreInfoViewModel
+    private var photoLimit: Int?
+    
     override var screenName: ScreenName {
-        return .editStoreInfo
+        return viewModel.output.screenName
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
     }
     
-    static func instance(store: Store) -> EditStoreInfoViewController {
-        return EditStoreInfoViewController(store: store).then {
-            $0.hidesBottomBarWhenPushed = true
-        }
-    }
-    
-    init(store: Store) {
-        self.editStoreInfoReactor = EditStoreInfoReactor(
-            store: store,
-            storeService: StoreService(),
-            categoryService: CategoryService(),
-            imageService: ImageService(),
-            globalState: GlobalState.shared,
-            logManager: .shared
-        )
-        super.init(nibName: nil, bundle: nil)
+    init(viewModel: EditStoreInfoViewModel) {
+        self.viewModel = viewModel
         
-        self.editStoreInfoView.bind(store: store)
+        super.init(nibName: nil, bundle: nil)
+        hidesBottomBarWhenPushed = true
     }
     
     required init?(coder: NSCoder) {
@@ -42,119 +29,170 @@ final class EditStoreInfoViewController: BaseViewController, View, EditStoreInfo
     }
     
     override func loadView() {
-        self.view = self.editStoreInfoView
+        view = editStoreInfoView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.coordinator = self
-        self.reactor = self.editStoreInfoReactor
-        self.editStoreInfoReactor.action.onNext(.viewDidLoad)
+        bind()
+        editStoreInfoView.categoryCollectionView.collectionView.delegate = self
+        editStoreInfoView.photoView.collectionView.delegate = self
+        viewModel.input.load.send(())
     }
     
-    override func bindEvent() {
-        self.editStoreInfoView.backButton.rx.tap
-            .asDriver()
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.popViewController(animated: true)
-            })
-            .disposed(by: self.eventDisposeBag)
-        
-        self.editStoreInfoView.photoView.rx.tapUploadButton
-            .asDriver()
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.showPhotoActionSheet()
-            })
-            .disposed(by: self.eventDisposeBag)
-        
-        self.editStoreInfoReactor.popPublisher
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.coordinator?.popViewController(animated: true)
-            })
-            .disposed(by: self.eventDisposeBag)
-        
-        self.editStoreInfoReactor.selectCategoriesPublisher
-            .asDriver(onErrorJustReturn: [])
-            .drive(onNext: { [weak self] indexes in
-                self?.editStoreInfoView.selectCategories(indexes: indexes)
-            })
-            .disposed(by: self.eventDisposeBag)
-        
-        self.editStoreInfoReactor.showLoadginPublisher
-            .asDriver(onErrorJustReturn: false)
-            .drive(onNext: { [weak self] isShow in
-                self?.coordinator?.showLoading(isShow: isShow)
-            })
-            .disposed(by: self.eventDisposeBag)
-        
-        self.editStoreInfoReactor.showErrorAlert
-            .asDriver(onErrorJustReturn: BaseError.unknown)
-            .drive(onNext: { [weak self] error in
-                self?.coordinator?.showErrorAlert(error: error)
-            })
-            .disposed(by: self.eventDisposeBag)
-    }
-    
-    func bind(reactor: EditStoreInfoReactor) {
-        // Bind Action
-        self.editStoreInfoView.storeNameField.rx.text
-            .map { Reactor.Action.inputStoreName($0) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        self.editStoreInfoView.categoryCollectionView.categoryCollectionView.rx.itemSelected
-            .map { Reactor.Action.selectCategory(index: $0.row) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        self.editStoreInfoView.categoryCollectionView.categoryCollectionView.rx.itemDeselected
-            .map { Reactor.Action.deselectCategory(index: $0.row) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        self.editStoreInfoView.snsField.rx.text
-            .map { Reactor.Action.inputSNS($0) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        self.editStoreInfoView.saveButton.rx.tap
-            .map { Reactor.Action.tapSave }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        // Bind State
-        reactor.state
-            .map { $0.categories }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: [])
-            .do(onNext: { [weak self] categories in
-                self?.editStoreInfoView.categoryCollectionView.updateCollectionViewHeight(
-                    categories: categories
-                )
-            })
-            .drive(self.editStoreInfoView.categoryCollectionView.categoryCollectionView.rx.items(
-                cellIdentifier: SignupCategoryCollectionViewCell.registerID,
-                cellType: SignupCategoryCollectionViewCell.self
-            )) { row, category, cell in
-                cell.bind(category: category)
+    private func bind() {
+        editStoreInfoView.backButton.tapPublisher
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewController, _) in
+                owner.navigationController?.popViewController(animated: true)
             }
-            .disposed(by: self.disposeBag)
+            .store(in: &cancellables)
         
-        reactor.state
-            .map { $0.isEnableSaveButton }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: false)
-            .drive(self.editStoreInfoView.saveButton.rx.isEnabled)
-            .disposed(by: self.disposeBag)
+        // Input
+        editStoreInfoView.storeNameField.textField.textField.textPublisher
+            .compactMap { $0 }
+            .subscribe(viewModel.input.inputStoreName)
+            .store(in: &cancellables)
         
-        reactor.state
-            .compactMap { $0.photo }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: nil)
-            .drive(self.editStoreInfoView.photoView.rx.photo)
-            .disposed(by: self.disposeBag)
+        editStoreInfoView.snsField.textField.textField.textPublisher
+            .compactMap { $0 }
+            .subscribe(viewModel.input.inputSNS)
+            .store(in: &cancellables)
+        
+        editStoreInfoView.photoView.didTapDeletePhoto
+            .subscribe(viewModel.input.deletePhoto)
+            .store(in: &cancellables)
+        
+        editStoreInfoView.saveButton.tapPublisher
+            .subscribe(viewModel.input.didTapSave)
+            .store(in: &cancellables)
+        
+        // Output
+        viewModel.output.store
+            .combineLatest(viewModel.output.categories)
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewController, value: (BossStoreInfoResponse, [StoreFoodCategoryResponse])) in
+                let (store, categories) = value
+                owner.editStoreInfoView.bind(store: store, categories: categories)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.isEnableSaveButton
+            .removeDuplicates()
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewController, isEnable: Bool) in
+                owner.editStoreInfoView.setSaveButtonEnable(isEnable)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.toast
+            .main
+            .sink { message in
+                ToastManager.shared.show(message: message)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.showLoading
+            .main
+            .sink { (isShow: Bool) in
+                LoadingManager.shared.showLoading(isShow: isShow)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewController, route: EditStoreInfoViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func handleRoute(_ route: EditStoreInfoViewModel.Route) {
+        switch route {
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        case .pop:
+            navigationController?.popViewController(animated: true)
+        case .presentPhotoPicker(let limit):
+            showPhotoActionSheet(limit: limit)
+        }
+    }
+}
+
+// MARK: Route
+extension EditStoreInfoViewController {
+    func showPhotoActionSheet(limit: Int) {
+        let alert = UIAlertController(
+            title: "common_load_image".localized,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        let libraryAction = UIAlertAction(
+            title: "common_album".localized,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            if SPPermissions.Permission.photoLibrary.authorized {
+                showAlbumPicker(limit: limit)
+            } else {
+                let controller = SPPermissions.native([.photoLibrary])
+                
+                photoLimit = limit
+                controller.delegate = self
+                controller.present(on: self)
+            }
+        }
+        let cameraAction = UIAlertAction(
+            title: "common_camera".localized,
+            style: .default
+        ) { [weak self] _ in
+            guard let self else { return }
+            if SPPermissions.Permission.camera.authorized {
+                showCamera()
+            } else {
+                let controller = SPPermissions.native([.camera])
+                
+                controller.delegate = self
+                controller.present(on: self)
+            }
+        }
+        let cancelAction = UIAlertAction(
+            title: "common_cancel".localized,
+            style: .cancel,
+            handler: nil
+        )
+        
+        alert.addAction(libraryAction)
+        alert.addAction(cameraAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
+    }
+    
+    func showCamera() {
+        let imagePicker = UIImagePickerController().then {
+            $0.delegate = self
+            $0.sourceType = .camera
+            $0.cameraCaptureMode = .photo
+        }
+        
+        present(imagePicker, animated: true)
+    }
+    
+    func showAlbumPicker(limit: Int) {
+        var configuration = PHPickerConfiguration()
+        
+        configuration.filter = .images
+        configuration.selectionLimit = limit
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
 }
 
@@ -165,12 +203,10 @@ extension EditStoreInfoViewController:
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
     ) {
+        picker.dismiss(animated: true)
+        
         if let photo = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            picker.dismiss(animated: true) { [weak self] in
-                self?.coordinator?.presentPhotoCrop(photo: photo)
-            }
-        } else {
-            picker.dismiss(animated: true, completion: nil)
+            viewModel.input.addPhotos.send([photo])
         }
     }
 }
@@ -178,9 +214,10 @@ extension EditStoreInfoViewController:
 extension EditStoreInfoViewController: SPPermissionsDelegate {
     func didAllowPermission(_ permission: SPPermissions.Permission) {
         if permission == .camera {
-            self.coordinator?.showCamera()
+            showCamera()
         } else if permission == .photoLibrary {
-            self.coordinator?.showAlbumPicker()
+            let limit = photoLimit ?? EditStoreInfoViewModel.Constant.maxPhotoCount
+            showAlbumPicker(limit: limit)
         }
     }
     
@@ -201,33 +238,55 @@ extension EditStoreInfoViewController: SPPermissionsDelegate {
 
 extension EditStoreInfoViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        let itemProvider = results.first?.itemProvider
+        picker.dismiss(animated: true)
         
-        if let itemProvider = itemProvider,
-           itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) { (image, error) in
-                if let photo = image as? UIImage {
-                    DispatchQueue.main.async { [weak self] in
-                        picker.dismiss(animated: true) {
-                            self?.coordinator?.presentPhotoCrop(photo: photo)
-                        }
-                    }
-                }
+        guard results.isNotEmpty else { return }
+        
+        var images = [UIImage]()
+        let group = DispatchGroup()
+        
+        for result in results {
+            group.enter()
+            
+            guard result.itemProvider.canLoadObject(ofClass: UIImage.self) else {
+                group.leave()
+                continue
             }
-        } else {
-            // TODO: Handle empty results or item provider not being able load UIImage
+            result.itemProvider.loadObject(ofClass: UIImage.self) { image, error in
+                if let image = image as? UIImage {
+                    images.append(image)
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) { [weak self] in
+            self?.viewModel.input.addPhotos.send(images)
         }
     }
 }
 
-extension EditStoreInfoViewController: CropViewControllerDelegate {
-    func cropViewController(
-        _ cropViewController: CropViewController,
-        didCropToImage image: UIImage,
-        withRect cropRect: CGRect,
-        angle: Int
-    ) {
-        cropViewController.dismiss(animated: true, completion: nil)
-        self.editStoreInfoReactor.action.onNext(.selectPhoto(image))
+
+extension EditStoreInfoViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == editStoreInfoView.categoryCollectionView.collectionView {
+            viewModel.input.selectCategory.send(indexPath.item)
+        } else if collectionView == editStoreInfoView.photoView.collectionView && indexPath.item == 0 {
+            viewModel.input.didTapAddPhoto.send(())
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard collectionView == editStoreInfoView.categoryCollectionView.collectionView else { return }
+        viewModel.input.deselectCategory.send(indexPath.item)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard collectionView == editStoreInfoView.categoryCollectionView.collectionView else { return true }
+        if let selectedCount = collectionView.indexPathsForSelectedItems?.count {
+            return selectedCount < CategorySelectView.Constant.maxCategoryCount
+        } else {
+            return true
+        }
     }
 }

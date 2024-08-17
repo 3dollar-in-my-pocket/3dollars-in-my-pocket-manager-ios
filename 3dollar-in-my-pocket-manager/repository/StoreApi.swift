@@ -8,6 +8,7 @@ enum StoreApi {
     case closeStore(storeId: String)
     case renewStore(storeId: String, location: CLLocation)
     case fetchAroundStores(location: CLLocation, distance: Int)
+    case editStore(storeId: String, request: BossStorePatchRequest)
 }
 
 extension StoreApi: ApiRequest {
@@ -23,6 +24,8 @@ extension StoreApi: ApiRequest {
             return "/v1/boss/store/\(storeId)/renew"
         case .fetchAroundStores:
             return "/v1/boss/stores/around"
+        case .editStore(let storeId, _):
+            return "/v1/boss/store/\(storeId)"
         }
     }
     
@@ -38,6 +41,8 @@ extension StoreApi: ApiRequest {
             return .put
         case .fetchAroundStores:
             return .get
+        case .editStore:
+            return .patch
         }
     }
     
@@ -45,7 +50,7 @@ extension StoreApi: ApiRequest {
         switch self {
         case .fetchMyStore:
             return nil
-        case .openStore(_, let location):
+        case .openStore(_, _):
             return nil
         case .closeStore(_):
             return nil
@@ -60,6 +65,8 @@ extension StoreApi: ApiRequest {
                 "mapLongitude": location.coordinate.longitude,
                 "distanceKm": distance
             ]
+        case .editStore(_, let request):
+            return request.toDictionary
         }
     }
 }

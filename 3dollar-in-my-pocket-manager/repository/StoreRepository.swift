@@ -12,6 +12,8 @@ protocol StoreRepository {
     func renewStore(storeId: String, location: CLLocation) async -> ApiResult<String>
     
     func fetchAroundStores(location: CLLocation, distance: Int) async -> ApiResult<[BossStoreSimpleResponse]>
+    
+    func editStore(storeId: String, request: BossStorePatchRequest) async -> ApiResult<String>
 }
 
 final class StoreRepositoryImpl: StoreRepository {
@@ -33,5 +35,9 @@ final class StoreRepositoryImpl: StoreRepository {
     
     func fetchAroundStores(location: CLLocation, distance: Int) async -> ApiResult<[BossStoreSimpleResponse]> {
         return await StoreApi.fetchAroundStores(location: location, distance: distance).asyncRequest()
+    }
+    
+    func editStore(storeId: String, request: BossStorePatchRequest) async -> ApiResult<String> {
+        return await StoreApi.editStore(storeId: storeId, request: request).asyncRequest()
     }
 }

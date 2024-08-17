@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_delete_without_padding.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

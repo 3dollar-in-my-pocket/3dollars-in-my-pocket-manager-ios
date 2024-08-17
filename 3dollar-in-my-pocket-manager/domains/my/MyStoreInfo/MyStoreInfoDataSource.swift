@@ -18,8 +18,8 @@ struct MyStoreInfoSection: Hashable {
 enum MyStoreInfoSectionItem: Hashable {
     case overView(BossStoreInfoResponse)
     case introduction(String?)
-    case menu(BossStoreMenuResponse)
-    case menuMore([BossStoreMenuResponse])
+    case menu(BossStoreMenu)
+    case menuMore([BossStoreMenu])
     case emptyMenu
     case appearanceDay(BossStoreAppearanceDayResponse)
     case account([StoreAccountNumberResponse])
@@ -39,14 +39,6 @@ final class MyStoreInfoDataSource: UICollectionViewDiffableDataSource<MyStoreInf
                 let cell: MyStoreInfoOverviewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 
                 cell.bind(store: store)
-                collectionView.contentOffsetPublisher
-                    .map { $0.y }
-                    .main
-                    .withUnretained(collectionView)
-                    .sink { (collectionView: UICollectionView, offset: CGFloat) in
-                        cell.bindPhotoConstraintAgain(height: offset)
-                    }
-                    .store(in: &cell.cancellables)
                 cell.editButton.tapPublisher
                     .map { _ in MyStoreInfoSection.SectionType.overview }
                     .subscribe(viewModel.input.didTapHeaderRightButton)

@@ -73,7 +73,7 @@ final class MyStoreInfoMenuCell: BaseCollectionViewCell {
         }
     }
     
-    func bind(menu: BossStoreMenuResponse) {
+    func bind(menu: BossStoreMenu) {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         let price = numberFormatter.string(for: menu.price)
