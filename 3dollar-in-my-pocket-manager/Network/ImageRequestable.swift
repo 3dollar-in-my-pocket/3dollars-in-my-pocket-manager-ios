@@ -56,14 +56,14 @@ extension ImageRequestable {
         }, to: baseUrl + path, headers: headers)
     }
     
-    func asyncRequest() async -> ApiResult<[ImageUploadResponse]> {
+    func asyncRequest() async -> ApiResult<[BossStoreImage]> {
         let result = await imageRequest.serializingData().result
         
         switch result {
         case .success(let data):
             do {
                 let decoder = JSONDecoder()
-                let apiResponse = try decoder.decode(ApiResponse<[ImageUploadResponse]>.self, from: data)
+                let apiResponse = try decoder.decode(ApiResponse<[BossStoreImage]>.self, from: data)
                 
                 if let errorMessage = apiResponse.message {
                     return .failure(ApiError.serverError(errorMessage))

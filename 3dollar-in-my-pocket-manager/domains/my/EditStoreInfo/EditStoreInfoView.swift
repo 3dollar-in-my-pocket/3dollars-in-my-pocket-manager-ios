@@ -137,7 +137,7 @@ final class EditStoreInfoView: BaseView {
         }
     }
     
-    func bind(store: BossStoreInfoResponse, categories: [StoreFoodCategoryResponse]) {
+    func bind(store: BossStoreResponse, categories: [StoreFoodCategoryResponse]) {
         storeNameField.setText(text: store.name)
         categoryCollectionView.bind(categories: categories)
         categoryCollectionView.selectCategories(categories: store.categories)

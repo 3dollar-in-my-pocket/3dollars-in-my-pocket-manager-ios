@@ -82,6 +82,8 @@
 		6E37EA5F2C6F46CE00BDCDE8 /* BossStoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37EA5E2C6F46CE00BDCDE8 /* BossStoreImage.swift */; };
 		6E37EA622C6F7BC500BDCDE8 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37EA612C6F7BC500BDCDE8 /* ToastManager.swift */; };
 		6E37EA642C6F7BCF00BDCDE8 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E37EA632C6F7BCF00BDCDE8 /* ToastView.swift */; };
+		6E3A524C2C7186640093B4CA /* UIImageVIew+BossStoreImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3A524B2C7186640093B4CA /* UIImageVIew+BossStoreImage.swift */; };
+		6E3A524E2C7188360093B4CA /* EditMenuHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3A524D2C7188360093B4CA /* EditMenuHeaderView.swift */; };
 		6E408D4027EF2A8D00322365 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E408D3F27EF2A8D00322365 /* HomeViewModel.swift */; };
 		6E4455B727F3E69E00A8DECF /* ShowOtherStoreButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4455B627F3E69E00A8DECF /* ShowOtherStoreButton.swift */; };
 		6E473B9427D85D1C00232139 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E473B9327D85D1C00232139 /* InputField.swift */; };
@@ -176,6 +178,7 @@
 		6E8474BC2C54B3200064DE0A /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8474BB2C54B3200064DE0A /* CombineCocoa */; };
 		6E8474C02C54C0900064DE0A /* StorePostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8474BF2C54C0900064DE0A /* StorePostCellViewModel.swift */; };
 		6E8474C22C54C9D20064DE0A /* StorePostEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8474C12C54C9D20064DE0A /* StorePostEmptyView.swift */; };
+		6E873EC82C72278E00751811 /* AddMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E873EC72C72278E00751811 /* AddMenuButton.swift */; };
 		6E893CBA2C3A65F100357F66 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 6E893CB92C3A65F100357F66 /* netfox */; };
 		6E89A865281E5A3300B795EF /* EditScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */; };
 		6E8A80882C186E8F00A3C55C /* StorePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A80872C186E8F00A3C55C /* StorePostCell.swift */; };
@@ -183,10 +186,8 @@
 		6E8A808C2C18723100A3C55C /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A808B2C18723100A3C55C /* Color+.swift */; };
 		6E8D01322843333300FAB49E /* EditMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01312843333300FAB49E /* EditMenuView.swift */; };
 		6E8D01342843361700FAB49E /* EditMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01332843361700FAB49E /* EditMenuViewController.swift */; };
-		6E8D01362843365E00FAB49E /* EditMenuCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01352843365E00FAB49E /* EditMenuCoordinator.swift */; };
-		6E8D013A2843396800FAB49E /* EditMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01392843396800FAB49E /* EditMenuTableViewCell.swift */; };
-		6E8D013C2843415900FAB49E /* EditMenuReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D013B2843415900FAB49E /* EditMenuReactor.swift */; };
-		6E8D013E284341CB00FAB49E /* EditMenuTableFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D013D284341CB00FAB49E /* EditMenuTableFooterView.swift */; };
+		6E8D013A2843396800FAB49E /* EditMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01392843396800FAB49E /* EditMenuItemView.swift */; };
+		6E8D013C2843415900FAB49E /* EditMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D013B2843415900FAB49E /* EditMenuViewModel.swift */; };
 		6E8D7AD02B234331008ABF64 /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D7ACF2B234331008ABF64 /* EditAccountView.swift */; };
 		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
 		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
@@ -395,6 +396,8 @@
 		6E37EA5E2C6F46CE00BDCDE8 /* BossStoreImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossStoreImage.swift; sourceTree = "<group>"; };
 		6E37EA612C6F7BC500BDCDE8 /* ToastManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		6E37EA632C6F7BCF00BDCDE8 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		6E3A524B2C7186640093B4CA /* UIImageVIew+BossStoreImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageVIew+BossStoreImage.swift"; sourceTree = "<group>"; };
+		6E3A524D2C7188360093B4CA /* EditMenuHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuHeaderView.swift; sourceTree = "<group>"; };
 		6E408D3F27EF2A8D00322365 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		6E4455B627F3E69E00A8DECF /* ShowOtherStoreButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOtherStoreButton.swift; sourceTree = "<group>"; };
 		6E473B9327D85D1C00232139 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
@@ -488,16 +491,15 @@
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6E8474BF2C54C0900064DE0A /* StorePostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorePostCellViewModel.swift; path = "3dollar-in-my-pocket-manager/domains/my/StorePost/SubView/StorePostCellViewModel.swift"; sourceTree = SOURCE_ROOT; };
 		6E8474C12C54C9D20064DE0A /* StorePostEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorePostEmptyView.swift; path = "3dollar-in-my-pocket-manager/domains/my/StorePost/SubView/StorePostEmptyView.swift"; sourceTree = SOURCE_ROOT; };
+		6E873EC72C72278E00751811 /* AddMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMenuButton.swift; sourceTree = "<group>"; };
 		6E89A864281E5A3300B795EF /* EditScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		6E8A80872C186E8F00A3C55C /* StorePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePostCell.swift; sourceTree = "<group>"; };
 		6E8A80892C18711F00A3C55C /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		6E8A808B2C18723100A3C55C /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
 		6E8D01312843333300FAB49E /* EditMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuView.swift; sourceTree = "<group>"; };
 		6E8D01332843361700FAB49E /* EditMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuViewController.swift; sourceTree = "<group>"; };
-		6E8D01352843365E00FAB49E /* EditMenuCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuCoordinator.swift; sourceTree = "<group>"; };
-		6E8D01392843396800FAB49E /* EditMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuTableViewCell.swift; sourceTree = "<group>"; };
-		6E8D013B2843415900FAB49E /* EditMenuReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuReactor.swift; sourceTree = "<group>"; };
-		6E8D013D284341CB00FAB49E /* EditMenuTableFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuTableFooterView.swift; sourceTree = "<group>"; };
+		6E8D01392843396800FAB49E /* EditMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuItemView.swift; sourceTree = "<group>"; };
+		6E8D013B2843415900FAB49E /* EditMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuViewModel.swift; sourceTree = "<group>"; };
 		6E8D7ACF2B234331008ABF64 /* EditAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountView.swift; sourceTree = "<group>"; };
 		6E91A9842841D4B30090361F /* StatisticsReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsReactor.swift; sourceTree = "<group>"; };
 		6E91A9882841DC110090361F /* DailyStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyStatisticsView.swift; sourceTree = "<group>"; };
@@ -971,6 +973,7 @@
 		6E6C9C66280BD467009AFAE8 /* my */ = {
 			isa = PBXGroup;
 			children = (
+				6E8D012F2843331C00FAB49E /* EditMenu */,
 				6E1AB79F280D7F1F0059DCF4 /* EditIntroduction */,
 				6E63FF69281C192A00EC49DE /* EditStoreInfo */,
 				6EDA7D0D2C2CEAB100457D63 /* Subview */,
@@ -989,7 +992,6 @@
 			children = (
 				6E6C9C70280BDC3E009AFAE8 /* Cell */,
 				6E8D7ACE2B234196008ABF64 /* edit-account */,
-				6E8D012F2843331C00FAB49E /* edit-menu */,
 				6E5F3DD3281D5F10002282B6 /* edit-schedule */,
 				6E6C9C6F280BDC3B009AFAE8 /* Subview */,
 				6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */,
@@ -1070,39 +1072,31 @@
 			path = Subview;
 			sourceTree = "<group>";
 		};
-		6E8D012F2843331C00FAB49E /* edit-menu */ = {
+		6E8D012F2843331C00FAB49E /* EditMenu */ = {
 			isa = PBXGroup;
 			children = (
-				6EC8031F2B2C893100DA4F5E /* bank-list-bottomsheet */,
-				6E8D01372843395C00FAB49E /* subviews */,
+				6E8D01372843395C00FAB49E /* SubView */,
 				6E8D01312843333300FAB49E /* EditMenuView.swift */,
 				6E8D01332843361700FAB49E /* EditMenuViewController.swift */,
-				6E8D01352843365E00FAB49E /* EditMenuCoordinator.swift */,
-				6E8D013B2843415900FAB49E /* EditMenuReactor.swift */,
+				6E8D013B2843415900FAB49E /* EditMenuViewModel.swift */,
 			);
-			path = "edit-menu";
+			path = EditMenu;
 			sourceTree = "<group>";
 		};
-		6E8D01372843395C00FAB49E /* subviews */ = {
+		6E8D01372843395C00FAB49E /* SubView */ = {
 			isa = PBXGroup;
 			children = (
-				6E8D01382843396000FAB49E /* cells */,
-				6E8D013D284341CB00FAB49E /* EditMenuTableFooterView.swift */,
+				6E8D01392843396800FAB49E /* EditMenuItemView.swift */,
+				6E3A524D2C7188360093B4CA /* EditMenuHeaderView.swift */,
+				6E873EC72C72278E00751811 /* AddMenuButton.swift */,
 			);
-			path = subviews;
-			sourceTree = "<group>";
-		};
-		6E8D01382843396000FAB49E /* cells */ = {
-			isa = PBXGroup;
-			children = (
-				6E8D01392843396800FAB49E /* EditMenuTableViewCell.swift */,
-			);
-			path = cells;
+			path = SubView;
 			sourceTree = "<group>";
 		};
 		6E8D7ACE2B234196008ABF64 /* edit-account */ = {
 			isa = PBXGroup;
 			children = (
+				6EC8031F2B2C893100DA4F5E /* bank-list-bottomsheet */,
 				6E8D7ACF2B234331008ABF64 /* EditAccountView.swift */,
 				6E80AC912B26FC9300FC886B /* EditAccountInputField.swift */,
 				6E80AC952B27001200FC886B /* EditAccountViewController.swift */,
@@ -1399,6 +1393,7 @@
 				6E4A2B262C5BA66A00317349 /* UIImage+.swift */,
 				6E5DDDA22C5F1ECD00D58D40 /* AnyPublisher+.swift */,
 				6E01964B2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift */,
+				6E3A524B2C7186640093B4CA /* UIImageVIew+BossStoreImage.swift */,
 			);
 			path = extensions;
 			sourceTree = "<group>";
@@ -1784,7 +1779,7 @@
 				6E5ECC1A282013BB0033BAAA /* EditScheduleReactor.swift in Sources */,
 				6E7A49E227D8D3F800E6653C /* StoreCategory.swift in Sources */,
 				6E0EB1F62C5512DD008A5766 /* LogEvent.swift in Sources */,
-				6E8D013A2843396800FAB49E /* EditMenuTableViewCell.swift in Sources */,
+				6E8D013A2843396800FAB49E /* EditMenuItemView.swift in Sources */,
 				6E21184B285DD94C00220E5A /* FAQ.swift in Sources */,
 				6E63FF6C281C19DE00EC49DE /* EditStoreInfoView.swift in Sources */,
 				6E6EDF2028A7B47D00D1A6ED /* ScreenName.swift in Sources */,
@@ -1799,6 +1794,7 @@
 				6E5DCE7227FDCA3100CA58EE /* TimeInterval.swift in Sources */,
 				6E1F54A327CB79120050BBBA /* LoginResponse.swift in Sources */,
 				6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */,
+				6E3A524C2C7186640093B4CA /* UIImageVIew+BossStoreImage.swift in Sources */,
 				6E7A49E027D8D0E200E6653C /* CategoryService.swift in Sources */,
 				6E5E14AA28312BBA00B1F450 /* Statistic.swift in Sources */,
 				6E9C99352C60F1E100EE47FD /* PreferenceViewController.swift in Sources */,
@@ -1890,7 +1886,6 @@
 				6E91A98F2841DD9C0090361F /* DailyStatisticsTableViewCell.swift in Sources */,
 				6EB5CA982935CB3E00B6653C /* UILabelExtensions.swift in Sources */,
 				6E5DCE7427FDCA4A00CA58EE /* LocalTimeRes.swift in Sources */,
-				6E8D01362843365E00FAB49E /* EditMenuCoordinator.swift in Sources */,
 				6EFCBDA32B2C85D900CD1F9D /* EditAccountCoordinator.swift in Sources */,
 				6EF1D499282D366400DA9D35 /* TotalStatisticsView.swift in Sources */,
 				6E5E14A12830F5E400B1F450 /* FeedbackService.swift in Sources */,
@@ -1908,7 +1903,7 @@
 				6EE0CFB127CB5C390027A426 /* String+.swift in Sources */,
 				6E6EDF1E28A7B37A00D1A6ED /* EventName.swift in Sources */,
 				6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */,
-				6E8D013C2843415900FAB49E /* EditMenuReactor.swift in Sources */,
+				6E8D013C2843415900FAB49E /* EditMenuViewModel.swift in Sources */,
 				6E9F995427E7019700C95C41 /* WaitingView.swift in Sources */,
 				6EF2C3C62C651277005BEE17 /* ImageApi.swift in Sources */,
 				6EBC21032C1C601100C08EE0 /* ApiResponse.swift in Sources */,
@@ -1933,7 +1928,6 @@
 				6E5DDDA32C5F1ECD00D58D40 /* AnyPublisher+.swift in Sources */,
 				6E5DCE6C27FDC91100CA58EE /* BossStoreInfoResponse.swift in Sources */,
 				6EA7D1212A0A7FE0001224B3 /* DailyStatisticsEmptyTableViewCell.swift in Sources */,
-				6E8D013E284341CB00FAB49E /* EditMenuTableFooterView.swift in Sources */,
 				6E5678C1285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift in Sources */,
 				6E360F232C27FAB8008A4868 /* PostPhotoCell.swift in Sources */,
 				6E37EA5F2C6F46CE00BDCDE8 /* BossStoreImage.swift in Sources */,
@@ -1951,6 +1945,7 @@
 				6EF676B827EECC6D00D43E99 /* SplashReactor.swift in Sources */,
 				6EAF1EAC2B289AFD00B5295D /* BankService.swift in Sources */,
 				6E473B9827D8624300232139 /* BaseCoordinator.swift in Sources */,
+				6E873EC82C72278E00751811 /* AddMenuButton.swift in Sources */,
 				6E360F322C281310008A4868 /* UploadPostModel.swift in Sources */,
 				6EE0CFC327CB65320027A426 /* BundleExtensions.swift in Sources */,
 				6E1AB7A3280D84D60059DCF4 /* EditIntroductionViewController.swift in Sources */,
@@ -1973,6 +1968,7 @@
 				6E37AF7427E71455004FBE25 /* LoadingManager.swift in Sources */,
 				6E8474C22C54C9D20064DE0A /* StorePostEmptyView.swift in Sources */,
 				6E5F3DDA281D6150002282B6 /* EditScheduleViewController.swift in Sources */,
+				6E3A524E2C7188360093B4CA /* EditMenuHeaderView.swift in Sources */,
 				6E01964C2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift in Sources */,
 				6EBC20F32C1C41E700C08EE0 /* StoreApiResponse.swift in Sources */,
 				6E37AF7127E707FC004FBE25 /* WaitingCoordinator.swift in Sources */,

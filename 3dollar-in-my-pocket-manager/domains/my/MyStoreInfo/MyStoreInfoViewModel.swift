@@ -24,15 +24,15 @@ extension MyStoreInfoViewModel {
     }
     
     struct State {
-        var store: BossStoreInfoResponse?
+        var store: BossStoreResponse?
     }
     
     enum Route {
         case pushEditAccount(EditAccountReactor)
         case pushEditStoreInfo(EditStoreInfoViewModel)
         case pushEditIntroduction(EditIntroductionViewModel)
-        case pushEditMenus(BossStoreInfoResponse)
-        case pushEditAppearanceDays(BossStoreInfoResponse)
+        case pushEditMenus(EditMenuViewModel)
+        case pushEditAppearanceDays(BossStoreResponse)
         case showErrorAlert(Error)
     }
     
@@ -157,7 +157,7 @@ final class MyStoreInfoViewModel: BaseViewModel {
         case .introduction:
             pushEditIntroduction()
         case .menu:
-            output.route.send(.pushEditMenus(store))
+            pushEditMenus()
         case .account:
             // TODO: 데이터 변경 필요
 //            let reactor = EditAccountReactor(store: store)
@@ -178,7 +178,7 @@ final class MyStoreInfoViewModel: BaseViewModel {
     private func bindEditStoreInfoViewModel(_ viewModel: EditStoreInfoViewModel) {
         viewModel.output.updatedStore
             .withUnretained(self)
-            .sink { (owner: MyStoreInfoViewModel, store: BossStoreInfoResponse) in
+            .sink { (owner: MyStoreInfoViewModel, store: BossStoreResponse) in
                 owner.state.store = store
                 owner.updateDataSource()
             }
@@ -188,7 +188,17 @@ final class MyStoreInfoViewModel: BaseViewModel {
     private func bindEditIntroductionViewModel(_ viewModel: EditIntroductionViewModel) {
         viewModel.output.updatedStore
             .withUnretained(self)
-            .sink { (owner: MyStoreInfoViewModel, store: BossStoreInfoResponse) in
+            .sink { (owner: MyStoreInfoViewModel, store: BossStoreResponse) in
+                owner.state.store = store
+                owner.updateDataSource()
+            }
+            .store(in: &viewModel.cancellables)
+    }
+    
+    private func bindEditMenuViewModel(_ viewModel: EditMenuViewModel) {
+        viewModel.output.updatedStore
+            .withUnretained(self)
+            .sink { (owner: MyStoreInfoViewModel, store: BossStoreResponse) in
                 owner.state.store = store
                 owner.updateDataSource()
             }
@@ -214,6 +224,15 @@ extension MyStoreInfoViewModel {
         
         bindEditIntroductionViewModel(viewModel)
         output.route.send(.pushEditIntroduction(viewModel))
+    }
+    
+    private func pushEditMenus() {
+        guard let store = state.store else { return }
+        let config = EditMenuViewModel.Config(store: store)
+        let viewModel = EditMenuViewModel(config: config)
+        
+        bindEditMenuViewModel(viewModel)
+        output.route.send(.pushEditMenus(viewModel))
     }
 }
 

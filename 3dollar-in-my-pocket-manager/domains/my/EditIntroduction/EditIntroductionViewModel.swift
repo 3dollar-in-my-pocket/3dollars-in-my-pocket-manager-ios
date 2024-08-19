@@ -12,8 +12,8 @@ extension EditIntroductionViewModel {
     
     struct Output {
         let screenName: ScreenName = .editIntroduction
-        let store: CurrentValueSubject<BossStoreInfoResponse, Never>
-        let updatedStore = PassthroughSubject<BossStoreInfoResponse, Never>()
+        let store: CurrentValueSubject<BossStoreResponse, Never>
+        let updatedStore = PassthroughSubject<BossStoreResponse, Never>()
         let isEditButtonEnable = CurrentValueSubject<Bool, Never>(false)
         let toast = PassthroughSubject<String, Never>()
         let showLoading = PassthroughSubject<Bool, Never>()
@@ -21,11 +21,11 @@ extension EditIntroductionViewModel {
     }
     
     struct State {
-        var store: BossStoreInfoResponse
+        var store: BossStoreResponse
     }
     
     struct Config {
-        let store: BossStoreInfoResponse
+        let store: BossStoreResponse
     }
     
     enum Route {

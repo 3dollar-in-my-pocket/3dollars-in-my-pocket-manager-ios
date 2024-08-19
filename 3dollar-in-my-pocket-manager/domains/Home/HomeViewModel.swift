@@ -24,7 +24,7 @@ extension HomeViewModel {
         let isShowOtherStore = CurrentValueSubject<Bool, Never>(false)
         let myLocation = CurrentValueSubject<CLLocation?, Never>(nil)
         let cameraLocation = CurrentValueSubject<CLLocation?, Never>(nil)
-        let store = CurrentValueSubject<BossStoreInfoResponse?, Never>(nil)
+        let store = CurrentValueSubject<BossStoreResponse?, Never>(nil)
         let aroundStores = PassthroughSubject<[BossStoreSimpleResponse], Never>()
         let route = PassthroughSubject<Route, Never>()
     }

@@ -4,7 +4,7 @@ import RxSwift
 import Alamofire
 
 protocol StoreServiceType {
-    func fetchMyStore() -> Observable<BossStoreInfoResponse>
+    func fetchMyStore() -> Observable<BossStoreResponse>
     
     func openStore(storeId: String, location: CLLocation) -> Observable<String>
     
@@ -21,7 +21,7 @@ protocol StoreServiceType {
 }
 
 struct StoreService: StoreServiceType {
-    func fetchMyStore() -> Observable<BossStoreInfoResponse> {
+    func fetchMyStore() -> Observable<BossStoreResponse> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/store/me"
             let headers = HTTPUtils.defaultHeader()
@@ -33,7 +33,7 @@ struct StoreService: StoreServiceType {
             )
             .responseData(completionHandler: { response in
                 if response.isSuccess() {
-                    observer.processValue(type: BossStoreInfoResponse.self, response: response)
+                    observer.processValue(type: BossStoreResponse.self, response: response)
                 } else {
                     observer.processAPIError(response: response)
                 }

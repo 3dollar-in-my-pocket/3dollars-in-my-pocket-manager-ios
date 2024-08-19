@@ -117,7 +117,7 @@ final class HomeViewController: BaseViewController {
             .compactMap { $0 }
             .main
             .withUnretained(self)
-            .sink { (owner: HomeViewController, store: BossStoreInfoResponse) in
+            .sink { (owner: HomeViewController, store: BossStoreResponse) in
                 owner.homeView.bindStore(store)
             }
             .store(in: &cancellables)

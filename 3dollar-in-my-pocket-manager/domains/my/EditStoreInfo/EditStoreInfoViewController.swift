@@ -74,7 +74,7 @@ final class EditStoreInfoViewController: BaseViewController {
             .combineLatest(viewModel.output.categories)
             .main
             .withUnretained(self)
-            .sink { (owner: EditStoreInfoViewController, value: (BossStoreInfoResponse, [StoreFoodCategoryResponse])) in
+            .sink { (owner: EditStoreInfoViewController, value: (BossStoreResponse, [StoreFoodCategoryResponse])) in
                 let (store, categories) = value
                 owner.editStoreInfoView.bind(store: store, categories: categories)
             }
@@ -128,12 +128,12 @@ final class EditStoreInfoViewController: BaseViewController {
 extension EditStoreInfoViewController {
     func showPhotoActionSheet(limit: Int) {
         let alert = UIAlertController(
-            title: "common_load_image".localized,
+            title: "common.load_image".localized,
             message: nil,
             preferredStyle: .actionSheet
         )
         let libraryAction = UIAlertAction(
-            title: "common_album".localized,
+            title: "common.album".localized,
             style: .default
         ) { [weak self] _ in
             guard let self else { return }
@@ -148,7 +148,7 @@ extension EditStoreInfoViewController {
             }
         }
         let cameraAction = UIAlertAction(
-            title: "common_camera".localized,
+            title: "common.camera".localized,
             style: .default
         ) { [weak self] _ in
             guard let self else { return }
@@ -162,7 +162,7 @@ extension EditStoreInfoViewController {
             }
         }
         let cancelAction = UIAlertAction(
-            title: "common_cancel".localized,
+            title: "common.cancel".localized,
             style: .cancel,
             handler: nil
         )

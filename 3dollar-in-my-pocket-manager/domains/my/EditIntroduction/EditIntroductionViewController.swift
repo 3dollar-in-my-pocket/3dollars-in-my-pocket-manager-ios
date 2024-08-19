@@ -55,7 +55,7 @@ final class EditIntroductionViewController: BaseViewController {
         viewModel.output.store
             .main
             .withUnretained(self)
-            .sink { (owner: EditIntroductionViewController, store: BossStoreInfoResponse) in
+            .sink { (owner: EditIntroductionViewController, store: BossStoreResponse) in
                 owner.editIntroductionView.bind(introduction: store.introduction)
             }
             .store(in: &cancellables)

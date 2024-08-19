@@ -1,9 +1,9 @@
 // Common
 "common_ok" = "확인";
-"common_load_image" = "이미지 불러오기";
-"common_album" = "앨범";
-"common_camera" = "카메라";
-"common_cancel" = "취소";
+"common.load_image" = "이미지 불러오기";
+"common.album" = "앨범";
+"common.camera" = "카메라";
+"common.cancel" = "취소";
 
 // Error
 "error_unknown" = "알 수 없는 에러입니다.";

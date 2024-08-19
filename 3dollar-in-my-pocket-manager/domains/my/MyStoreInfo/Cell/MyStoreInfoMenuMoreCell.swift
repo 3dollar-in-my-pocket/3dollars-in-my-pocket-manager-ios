@@ -76,7 +76,9 @@ final class MyStoreInfoMenuMoreCell: BaseCollectionViewCell {
         
         photoView.layer.cornerRadius = 14
         photoView.layer.masksToBounds = true
-        photoView.setImage(urlString: menu.imageUrl)
+        if let image = menu.image {
+            photoView.setImage(image)
+        }
         photoView.snp.makeConstraints { make in
             make.width.equalTo(28)
             make.height.equalTo(28)

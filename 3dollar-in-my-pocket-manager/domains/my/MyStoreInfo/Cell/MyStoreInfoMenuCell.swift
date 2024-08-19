@@ -81,6 +81,8 @@ final class MyStoreInfoMenuCell: BaseCollectionViewCell {
         
         nameLabel.text = menu.name
         priceLabel.text = price
-        photoView.setImage(urlString: menu.imageUrl)
+        if let image = menu.image {
+            photoView.setImage(image)
+        }
     }
 }

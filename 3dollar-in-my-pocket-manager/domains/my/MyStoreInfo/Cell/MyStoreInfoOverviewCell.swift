@@ -102,7 +102,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         photoCollectionView.delegate = self
     }
     
-    func bind(store: BossStoreInfoResponse) {
+    func bind(store: BossStoreResponse) {
         nameLabel.text = store.name
         datasource = store.representativeImages
         photoCollectionView.reloadData()
@@ -230,13 +230,7 @@ extension MyStoreInfoOverviewCell {
         }
         
         func bind(photo: BossStoreImage) {
-            if let imageUrl = photo.imageUrl {
-                imageView.setImage(urlString: imageUrl)
-            } else if let image = photo.image {
-                imageView.image = image
-            } else if let url = photo.url {
-                imageView.setImage(urlString: url)
-            }
+            imageView.setImage(photo)
         }
         
         private func setupLayout() {

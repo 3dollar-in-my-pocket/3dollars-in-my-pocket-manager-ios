@@ -18,7 +18,7 @@ struct Menu: Equatable {
     
     init(response: BossStoreMenu) {
         self.photo = nil
-        self.imageUrl = response.imageUrl ?? ""
+        self.imageUrl = response.image?.imageUrl ?? ""
         self.name = response.name
         self.price = response.price
     }

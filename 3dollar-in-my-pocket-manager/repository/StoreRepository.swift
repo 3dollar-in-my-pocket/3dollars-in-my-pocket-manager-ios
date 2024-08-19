@@ -3,7 +3,7 @@ import CoreLocation
 import Alamofire
 
 protocol StoreRepository {
-    func fetchMyStore() async -> ApiResult<BossStoreInfoResponse>
+    func fetchMyStore() async -> ApiResult<BossStoreResponse>
     
     func openStore(storeId: String, location: CLLocation) async -> ApiResult<String>
     
@@ -17,7 +17,7 @@ protocol StoreRepository {
 }
 
 final class StoreRepositoryImpl: StoreRepository {
-    func fetchMyStore() async -> ApiResult<BossStoreInfoResponse> {
+    func fetchMyStore() async -> ApiResult<BossStoreResponse> {
         return await StoreApi.fetchMyStore.asyncRequest()
     }
     

@@ -163,7 +163,7 @@ final class HomeView: BaseView {
         }
     }
     
-    func bindStore(_ store: BossStoreInfoResponse) {
+    func bindStore(_ store: BossStoreResponse) {
         marker.mapView = nil
         let isOpen = store.openStatus.status == .open
         centerMarker.isHidden = isOpen

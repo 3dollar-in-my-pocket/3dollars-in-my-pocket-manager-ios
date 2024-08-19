@@ -1,4 +1,4 @@
-struct BossStoreInfoResponse: Decodable, Hashable {
+struct BossStoreResponse: Decodable, Hashable {
     let bossStoreId: String
     let isOwner: Bool
     var name: String
@@ -7,7 +7,7 @@ struct BossStoreInfoResponse: Decodable, Hashable {
     var representativeImages: [BossStoreImage]
     var introduction: String?
     var snsUrl: String?
-    let menus: [BossStoreMenu]
+    var menus: [BossStoreMenu]
     let appearanceDays: [BossStoreAppearanceDayResponse]
     var categories: [StoreFoodCategoryResponse]
     let accountNumbers: [StoreAccountNumberResponse]
@@ -18,7 +18,7 @@ struct BossStoreInfoResponse: Decodable, Hashable {
     let updatedAt: String?
 }
 
-extension BossStoreInfoResponse {
+extension BossStoreResponse {
     func toPatchRequest() -> BossStorePatchRequest {
         return BossStorePatchRequest(
             name: name,

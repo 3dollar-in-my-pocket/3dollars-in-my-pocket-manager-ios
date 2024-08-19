@@ -20,7 +20,7 @@ struct Store: Equatable {
         && !self.name.isEmpty
     }
     
-    init(response: BossStoreInfoResponse) {
+    init(response: BossStoreResponse) {
         self.id = response.bossStoreId
         if let location = response.location {
             self.location = CLLocation(latitude: location.latitude, longitude: location.longitude)

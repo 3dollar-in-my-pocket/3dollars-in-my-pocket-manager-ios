@@ -20,21 +20,21 @@ extension EditStoreInfoViewModel {
     
     struct Output {
         let screenName: ScreenName = .editStoreInfo
-        let store: CurrentValueSubject<BossStoreInfoResponse, Never>
+        let store: CurrentValueSubject<BossStoreResponse, Never>
         let categories = CurrentValueSubject<[StoreFoodCategoryResponse], Never>([])
         let isEnableSaveButton = CurrentValueSubject<Bool, Never>(false)
         let route = PassthroughSubject<Route, Never>()
         let toast = PassthroughSubject<String, Never>()
         let showLoading = PassthroughSubject<Bool, Never>()
-        let updatedStore = PassthroughSubject<BossStoreInfoResponse, Never>()
+        let updatedStore = PassthroughSubject<BossStoreResponse, Never>()
     }
     
     struct Config {
-        let store: BossStoreInfoResponse
+        let store: BossStoreResponse
     }
     
     struct State {
-        var store: BossStoreInfoResponse
+        var store: BossStoreResponse
         var categories: [StoreFoodCategoryResponse] = []
     }
     
@@ -232,9 +232,6 @@ final class EditStoreInfoViewModel: BaseViewModel {
     }
     
     private func uploadImagesIfNeeded(completion: @escaping (() -> ())) {
-        let imageIndex = state.store.representativeImages.enumerated().compactMap { (index, image) -> Int? in
-            return image.image.isNotNil ? index : nil
-        }
         let images = state.store.representativeImages.compactMap { $0.image }
         
         guard images.isNotEmpty else {
@@ -252,7 +249,7 @@ final class EditStoreInfoViewModel: BaseViewModel {
             case .success(let responses):
                 for (index, imageUploadResponse) in responses.enumerated() {
                     if state.store.representativeImages[safe: index].isNotNil {
-                        state.store.representativeImages[index].url = imageUploadResponse.imageUrl
+                        state.store.representativeImages[index] = imageUploadResponse
                     }
                 }
                 completion()

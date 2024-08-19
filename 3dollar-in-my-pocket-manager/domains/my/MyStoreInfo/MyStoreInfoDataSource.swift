@@ -16,7 +16,7 @@ struct MyStoreInfoSection: Hashable {
 }
 
 enum MyStoreInfoSectionItem: Hashable {
-    case overView(BossStoreInfoResponse)
+    case overView(BossStoreResponse)
     case introduction(String?)
     case menu(BossStoreMenu)
     case menuMore([BossStoreMenu])
