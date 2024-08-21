@@ -1,6 +1,50 @@
+import Combine
+
 import RxSwift
 import RxCocoa
 import ReactorKit
+
+extension EditAccountViewModel {
+    struct Input {
+        let inputName = PassthroughSubject<String, Never>()
+        let inputAccountName = PassthroughSubject<String, Never>()
+        let inputBank = PassthroughSubject<BankResponse, Never>()
+        let didTapBank = PassthroughSubject<Void, Never>()
+        let didTapSave = PassthroughSubject<Void, Never>()
+    }
+    
+    struct Output {
+        let store: CurrentValueSubject<BossStoreResponse, Never>
+        let updatedStore = PassthroughSubject<BossStoreResponse, Never>()
+        let isEnableSaveButton = CurrentValueSubject<Bool, Never>(false)
+        let showLoading = PassthroughSubject<Bool, Never>()
+        let route = PassthroughSubject<Route, Never>()
+    }
+    
+    struct State {
+        var store: BossStoreResponse
+    }
+    
+    enum Route {
+        case pop
+        case presentBankBottomSheet(BankListBottomSheetReactor)
+    }
+    
+    struct Config {
+        let store: BossStoreResponse
+    }
+    
+    struct Dependency {
+        let storeRepository: StoreRepository
+        let bankRepository:
+    }
+    
+    
+}
+
+final class EditAccountViewModel: BaseViewModel {
+    
+}
 
 final class EditAccountReactor: BaseReactor, Reactor {
     enum Action {

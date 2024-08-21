@@ -973,6 +973,7 @@
 		6E6C9C66280BD467009AFAE8 /* my */ = {
 			isa = PBXGroup;
 			children = (
+				6E8D7ACE2B234196008ABF64 /* EditAccount */,
 				6E8D012F2843331C00FAB49E /* EditMenu */,
 				6E1AB79F280D7F1F0059DCF4 /* EditIntroduction */,
 				6E63FF69281C192A00EC49DE /* EditStoreInfo */,
@@ -991,7 +992,6 @@
 			isa = PBXGroup;
 			children = (
 				6E6C9C70280BDC3E009AFAE8 /* Cell */,
-				6E8D7ACE2B234196008ABF64 /* edit-account */,
 				6E5F3DD3281D5F10002282B6 /* edit-schedule */,
 				6E6C9C6F280BDC3B009AFAE8 /* Subview */,
 				6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */,
@@ -1093,7 +1093,7 @@
 			path = SubView;
 			sourceTree = "<group>";
 		};
-		6E8D7ACE2B234196008ABF64 /* edit-account */ = {
+		6E8D7ACE2B234196008ABF64 /* EditAccount */ = {
 			isa = PBXGroup;
 			children = (
 				6EC8031F2B2C893100DA4F5E /* bank-list-bottomsheet */,
@@ -1103,7 +1103,7 @@
 				6E80AC972B2733C900FC886B /* EditAccountReactor.swift */,
 				6EFCBDA22B2C85D900CD1F9D /* EditAccountCoordinator.swift */,
 			);
-			path = "edit-account";
+			path = EditAccount;
 			sourceTree = "<group>";
 		};
 		6E91A9872841DBF10090361F /* daily-statistics */ = {

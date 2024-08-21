@@ -1,18 +1,19 @@
 import UIKit
 
-import RxSwift
-import RxCocoa
-
 final class EditAccountView: BaseView {
-    let backButton = UIButton().then {
-        $0.setImage(UIImage(named: "ic_back"), for: .normal)
-    }
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "ic_back"), for: .normal)
+        return button
+    }()
     
-    private let titleLabel = UILabel().then {
-        $0.font = .semiBold(size: 16)
-        $0.textColor = .gray100
-        $0.text = String(localized: "edit_account.account_numbuer")
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .semiBold(size: 16)
+        label.textColor = .gray100
+        label.text = String(localized: "edit_account.account_numbuer")
+        return label
+    }()
     
     let accountInputField = EditAccountInputField(
         title: String(localized: "edit_account.account_numbuer"),
@@ -21,14 +22,16 @@ final class EditAccountView: BaseView {
         placeholder: String(localized: "edit_account.account_number_placeholder")
     )
     
-    let bankInputField = EditAccountInputField(
-        title: String(localized: "edit_account.bank"),
-        isRedDotHidden: false,
-        isRightButtonHidden: false,
-        placeholder: String(localized: "edit_account.bank_placeholder")
-    ).then {
-        $0.textField.isUserInteractionEnabled = false
-    }
+    let bankInputField: EditAccountInputField = {
+        let inputField = EditAccountInputField(
+            title: String(localized: "edit_account.bank"),
+            isRedDotHidden: false,
+            isRightButtonHidden: false,
+            placeholder: String(localized: "edit_account.bank_placeholder")
+        )
+        inputField.textField.isUserInteractionEnabled = false
+        return inputField
+    }()
     
     let nameInputField = EditAccountInputField(
         title: String(localized: "edit_account.name"),
@@ -37,17 +40,32 @@ final class EditAccountView: BaseView {
         placeholder: String(localized: "edit_account.title_placeholder")
     )
     
-    let saveButton = UIButton().then {
-        $0.setTitle(String(localized: "edit_account.save"), for: .normal)
-        $0.titleLabel?.font = .medium(size: 16)
-        $0.setTitleColor(.white, for: .normal)
-    }
+    let saveButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(String(localized: "edit_account.save"), for: .normal)
+        button.titleLabel?.font = .medium(size: 16)
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
     
     fileprivate let buttonBackgroundView = UIView()
     
     override func setup() {
         backgroundColor = .white
-        
+        setupLayout()
+    }
+    
+    func setSaveButtonEnable(_ isEnable: Bool) {
+        if isEnable {
+            saveButton.backgroundColor = .green
+            buttonBackgroundView.backgroundColor = .green
+        } else {
+            saveButton.backgroundColor = .gray30
+            buttonBackgroundView.backgroundColor = .gray30
+        }
+    }
+    
+    private func setupLayout() {
         addSubViews([
             backButton,
             titleLabel,
@@ -57,9 +75,7 @@ final class EditAccountView: BaseView {
             saveButton,
             buttonBackgroundView
         ])
-    }
-    
-    override func bindConstraints() {
+        
         backButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
             $0.top.equalTo(safeAreaLayoutGuide).offset(15)
@@ -105,18 +121,3 @@ final class EditAccountView: BaseView {
         }
     }
 }
-
-extension Reactive where Base: EditAccountView {
-    var isEnableSaveButton: Binder<Bool> {
-        return Binder(base) { view, isEnable in
-            if isEnable {
-                view.saveButton.backgroundColor = .green
-                view.buttonBackgroundView.backgroundColor = .green
-            } else {
-                view.saveButton.backgroundColor = .gray30
-                view.buttonBackgroundView.backgroundColor = .gray30
-            }
-        }
-    }
-}
-

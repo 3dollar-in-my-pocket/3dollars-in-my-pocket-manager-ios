@@ -1,38 +1,45 @@
 import UIKit
 
-import RxSwift
-import RxCocoa
-
 final class EditAccountInputField: BaseView {
-    private let titleLabel = UILabel().then {
-        $0.font = .bold(size: 14)
-        $0.textColor = .gray100
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 14)
+        label.textColor = .gray100
+        return label
+    }()
     
-    private let redDot = UIView().then {
-        $0.backgroundColor = .pink
-        $0.layer.cornerRadius = 2
-        $0.isHidden = true
-    }
+    private let redDot: UIView = {
+        let view = UIView()
+        view.backgroundColor = .pink
+        view.layer.cornerRadius = 2
+        view.isHidden = true
+        return view
+    }()
     
-    private let textFieldContainer = UIView().then {
-        $0.backgroundColor = .gray5
-        $0.layer.cornerRadius = 8
-    }
+    private let textFieldContainer: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray5
+        view.layer.cornerRadius = 8
+        return view
+    }()
     
-    let textField = UITextField().then {
-        $0.textColor = .gray100
-        $0.font = .medium(size: 14)
-    }
+    let textField: UITextField = {
+        let textField = UITextField()
+        textField.textColor = .gray100
+        textField.font = .medium(size: 14)
+        return textField
+    }()
     
-    fileprivate let arrowDownButton = UIButton().then {
+    let arrowDownButton: UIButton = {
+        let button = UIButton()
         let icon = UIImage(named: "ic_arrow_down")?
             .withRenderingMode(.alwaysTemplate)
         
-        $0.setImage(icon, for: .normal)
-        $0.tintColor = .gray50
-        $0.isHidden = true
-    }
+        button.setImage(icon, for: .normal)
+        button.tintColor = .gray50
+        button.isHidden = true
+        return button
+    }()
     
     private let isRightButtonHidden: Bool
     
@@ -57,6 +64,10 @@ final class EditAccountInputField: BaseView {
     }
     
     override func setup() {
+        setupLayout()
+    }
+    
+    private func setupLayout() {
         addSubViews([
             titleLabel,
             redDot,
@@ -64,9 +75,7 @@ final class EditAccountInputField: BaseView {
             textField,
             arrowDownButton
         ])
-    }
-    
-    override func bindConstraints() {
+        
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.top.equalToSuperview()
@@ -116,21 +125,5 @@ final class EditAccountInputField: BaseView {
             .foregroundColor: UIColor.gray30
         ])
         textField.attributedPlaceholder = attributedPlaceholder
-    }
-}
-
-extension Reactive where Base: EditAccountInputField {
-    var text: ControlProperty<String> {
-        return base.textField.rx.text.orEmpty
-    }
-    
-    var value: Binder<String?> {
-        return Binder(base) { view, text in
-            view.textField.text = text
-        }
-    }
-    
-    var tap: ControlEvent<Void> {
-        return base.arrowDownButton.rx.tap
     }
 }
