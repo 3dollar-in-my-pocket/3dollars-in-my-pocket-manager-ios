@@ -40,7 +40,7 @@ final class MyStoreInfoAccountCell: BaseCollectionViewCell {
         }
     }
     
-    func bind(accountInfos: [StoreAccountNumberResponse]) {
+    func bind(accountInfos: [BossStoreAccountNumber]) {
         if let accountInfo = accountInfos.first {
             textLabel.text = "\(accountInfo.bank.description) \(accountInfo.accountNumber)"
             textLabel.textColor = .gray95

@@ -1,15 +1,13 @@
 import UIKit
 
-import RxSwift
-import ReactorKit
-
-final class EditAccountViewController: BaseViewController, View, EditAccountCoordinator {
+final class EditAccountViewController: BaseViewController {
+    private let viewModel: EditAccountViewModel
     private let editAccountView = EditAccountView()
-    private weak var coordinator: EditAccountCoordinator?
     
-    init(reactor: EditAccountReactor) {
+    init(viewModel: EditAccountViewModel) {
+        self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
-        self.reactor = reactor
         hidesBottomBarWhenPushed = true
     }
     
@@ -24,85 +22,100 @@ final class EditAccountViewController: BaseViewController, View, EditAccountCoor
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.coordinator = self
+        bind()
     }
     
-    override func bindEvent() {
-        editAccountView.backButton.rx.tap
-            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
-            .bind(onNext: { [weak self] _ in
-                self?.navigationController?.popViewController(animated: true)
-            })
-            .disposed(by: eventDisposeBag)
+    private func bind() {
+        // Event
+        editAccountView.backButton.tapPublisher
+            .throttleClick()
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditAccountViewController, _) in
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancellables)
         
-        reactor?.showErrorAlert
-            .bind(onNext: { [weak self] error in
-                self?.coordinator?.showErrorAlert(error: error)
-            })
-            .disposed(by: eventDisposeBag)
-    }
-    
-    func bind(reactor: EditAccountReactor) {
-        // Bind Action
-        editAccountView.nameInputField.rx.text
-            .skip(1)
-            .map { Reactor.Action.inputName($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        editAccountView.accountInputField.rx.text
-            .skip(1)
-            .map { Reactor.Action.inputAccountNumber($0) }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        editAccountView.bankInputField.rx.tap
-            .map { Reactor.Action.didTapBank }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        editAccountView.saveButton.rx.tap
-            .throttle(.milliseconds(200), scheduler: MainScheduler.instance)
-            .map { Reactor.Action.didTapSave }
-            .bind(to: reactor.action)
-            .disposed(by: disposeBag)
-        
-        // Bind State
-        reactor.state
-            .map(\.name)
-            .bind(to: editAccountView.nameInputField.rx.value)
-            .disposed(by: disposeBag)
-        
-        reactor.state
-            .map(\.bank?.description)
-            .bind(to: editAccountView.bankInputField.rx.value)
-            .disposed(by: disposeBag)
-        
-        reactor.state
-            .map(\.accountNumber)
-            .bind(to: editAccountView.accountInputField.rx.value)
-            .disposed(by: disposeBag)
-        
-        reactor.state
-            .map(\.isEnableSaveButton)
-            .bind(to: editAccountView.rx.isEnableSaveButton)
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$route)
+        // Input
+        editAccountView.nameInputField.textField.textPublisher
+            .dropFirst()
             .compactMap { $0 }
-            .bind(onNext: { [weak self] route in
-                self?.handleRoute(route)
-            })
-            .disposed(by: disposeBag)
+            .subscribe(viewModel.input.inputName)
+            .store(in: &cancellables)
+        
+        editAccountView.accountInputField.textField.textPublisher
+            .dropFirst()
+            .compactMap { $0 }
+            .subscribe(viewModel.input.inputAccountNumber)
+            .store(in: &cancellables)
+        
+        editAccountView.bankInputField.arrowDownButton.tapPublisher
+            .mapVoid
+            .subscribe(viewModel.input.didTapBank)
+            .store(in: &cancellables)
+        
+        editAccountView.saveButton.tapPublisher
+            .throttleClick()
+            .subscribe(viewModel.input.didTapSave)
+            .store(in: &cancellables)
+        
+        // Output
+        viewModel.output.store
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditAccountViewController, store: BossStoreResponse) in
+                owner.editAccountView.bind(store: store)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.isEnableSaveButton
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditAccountViewController, isEnable: Bool) in
+                owner.editAccountView.setSaveButtonEnable(isEnable)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.showLoading
+            .main
+            .sink { (isShow: Bool) in
+                LoadingManager.shared.showLoading(isShow: isShow)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.toast
+            .main
+            .sink { (message: String) in
+                ToastManager.shared.show(message: message)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: EditAccountViewController, route: EditAccountViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
     }
-    
-    private func handleRoute(_ route: EditAccountReactor.Route) {
+}
+
+// MARK: Route
+extension EditAccountViewController {
+    private func handleRoute(_ route: EditAccountViewModel.Route) {
         switch route {
         case .pop:
             navigationController?.popViewController(animated: true)
-            
-        case .presentBankBottomSheet(let reactor):
-            coordinator?.presentBankListBottomSheet(reactor: reactor)
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        case .presentBankBottomSheet(let viewModel):
+            presentBankBotomSheet(viewModel: viewModel)
         }
+    }
+    
+    private func presentBankBotomSheet(viewModel: BankListBottomSheetViewModel) {
+        let viewController = BankListBottomSheetViewController(viewModel: viewModel)
+        
+        presentPanModal(viewController)
     }
 }

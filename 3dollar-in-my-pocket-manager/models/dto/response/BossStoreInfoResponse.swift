@@ -10,7 +10,7 @@ struct BossStoreResponse: Decodable, Hashable {
     var menus: [BossStoreMenu]
     let appearanceDays: [BossStoreAppearanceDayResponse]
     var categories: [StoreFoodCategoryResponse]
-    let accountNumbers: [StoreAccountNumberResponse]
+    var accountNumbers: [BossStoreAccountNumber]
     var openStatus: BossStoreOpenStatusResponse
     let distance: Int
     let favorite: StoreFavoriteResponse
@@ -26,7 +26,8 @@ extension BossStoreResponse {
             introduction: introduction,
             snsUrl: snsUrl,
             menus: nil,
-            categoriesIds: categories.map { $0.categoryId }
+            categoriesIds: categories.map { $0.categoryId },
+            accountNumbers: accountNumbers
         )
     }
 }
@@ -46,16 +47,29 @@ struct AddressResponse: Decodable, Hashable {
 }
 
 
-struct StoreAccountNumberResponse: Decodable, Hashable {
-    let bank: BankResponse
-    let accountHolder: String
-    let accountNumber: String
+struct BossStoreAccountNumber: Codable, Hashable {
+    var bank: BossBank
+    var accountHolder: String
+    var accountNumber: String
     let description: String?
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(bank.key, forKey: .bank)
+        try container.encode(accountHolder, forKey: .accountHolder)
+        try container.encode(accountNumber, forKey: .accountNumber)
+        try container.encodeIfPresent(description, forKey: .description)
+    }
 }
 
-struct BankResponse: Decodable, Hashable {
+struct BossBank: Decodable, Hashable {
     let key: String
     let description: String
+    
+    init(key: String, description: String) {
+        self.key = key
+        self.description = description
+    }
 }
 
 

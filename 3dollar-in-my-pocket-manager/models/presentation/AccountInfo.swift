@@ -6,7 +6,7 @@ struct AccountInfo: Equatable {
     let number: String
     let description: String?
     
-    init(response: StoreAccountNumberResponse) {
+    init(response: BossStoreAccountNumber) {
         self.bank = Bank(response: response.bank)
         self.holder = response.accountHolder
         self.number = response.accountNumber

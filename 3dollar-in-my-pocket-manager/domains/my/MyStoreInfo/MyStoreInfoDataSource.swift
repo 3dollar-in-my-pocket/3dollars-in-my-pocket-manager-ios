@@ -22,7 +22,7 @@ enum MyStoreInfoSectionItem: Hashable {
     case menuMore([BossStoreMenu])
     case emptyMenu
     case appearanceDay(BossStoreAppearanceDayResponse)
-    case account([StoreAccountNumberResponse])
+    case account([BossStoreAccountNumber])
 }
 
 

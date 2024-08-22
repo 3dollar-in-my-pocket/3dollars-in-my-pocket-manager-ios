@@ -11,38 +11,38 @@ final class EditAccountView: BaseView {
         let label = UILabel()
         label.font = .semiBold(size: 16)
         label.textColor = .gray100
-        label.text = String(localized: "edit_account.account_numbuer")
+        label.text = "edit_account.account_numbuer".localized
         return label
     }()
     
     let accountInputField = EditAccountInputField(
-        title: String(localized: "edit_account.account_numbuer"),
+        title: "edit_account.account_numbuer".localized,
         isRedDotHidden: false,
         isRightButtonHidden: true,
-        placeholder: String(localized: "edit_account.account_number_placeholder")
+        placeholder: "edit_account.account_number_placeholder".localized
     )
     
     let bankInputField: EditAccountInputField = {
         let inputField = EditAccountInputField(
-            title: String(localized: "edit_account.bank"),
+            title: "edit_account.bank".localized,
             isRedDotHidden: false,
             isRightButtonHidden: false,
-            placeholder: String(localized: "edit_account.bank_placeholder")
+            placeholder: "edit_account.bank_placeholder".localized
         )
         inputField.textField.isUserInteractionEnabled = false
         return inputField
     }()
     
     let nameInputField = EditAccountInputField(
-        title: String(localized: "edit_account.name"),
+        title: "edit_account.name".localized,
         isRedDotHidden: false,
         isRightButtonHidden: true,
-        placeholder: String(localized: "edit_account.title_placeholder")
+        placeholder: "edit_account.title_placeholder".localized
     )
     
     let saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle(String(localized: "edit_account.save"), for: .normal)
+        button.setTitle("edit_account.save".localized, for: .normal)
         button.titleLabel?.font = .medium(size: 16)
         button.setTitleColor(.white, for: .normal)
         return button
@@ -53,6 +53,14 @@ final class EditAccountView: BaseView {
     override func setup() {
         backgroundColor = .white
         setupLayout()
+    }
+    
+    func bind(store: BossStoreResponse) {
+        guard let account = store.accountNumbers.first else { return }
+        
+        nameInputField.textField.text = account.accountHolder
+        accountInputField.textField.text = account.accountNumber
+        bankInputField.textField.text = account.bank.description
     }
     
     func setSaveButtonEnable(_ isEnable: Bool) {

@@ -206,6 +206,10 @@ final class MyStoreInfoViewController: BaseViewController {
             let viewController = EditMenuViewController(viewModel: viewModel)
             
             parent?.navigationController?.pushViewController(viewController, animated: true)
+        case .pushEditAccount(let viewModel):
+            let viewController = EditAccountViewController(viewModel: viewModel)
+            
+            parent?.navigationController?.pushViewController(viewController, animated: true)
         default:
             break
         }

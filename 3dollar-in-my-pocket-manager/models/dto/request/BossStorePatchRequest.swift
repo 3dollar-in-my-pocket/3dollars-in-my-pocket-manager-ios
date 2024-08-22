@@ -8,5 +8,5 @@ struct BossStorePatchRequest: Encodable {
     let menus: [BossStoreMenu]?
 //    let appearanceDays: [BossStoreAppearanceDayRequest]?
     let categoriesIds: [String]?
-//    let accountNumbers: BossStoreAccountNumberRequest?
+    let accountNumbers: [BossStoreAccountNumber]?
 }

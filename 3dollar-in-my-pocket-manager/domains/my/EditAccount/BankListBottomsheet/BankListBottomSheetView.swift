@@ -6,15 +6,19 @@ final class BankListBottomSheetView: BaseView {
         static let lineSpace: CGFloat = 6
     }
     
-    private let titleLabel = UILabel().then {
-        $0.font = .semiBold(size: 20)
-        $0.textColor = .gray100
-        $0.text = "은행 선택"
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .semiBold(size: 20)
+        label.textColor = .gray100
+        label.text = "은행 선택"
+        return label
+    }()
     
-    let closeButton = UIButton().then {
-        $0.setImage(UIImage(named: "ic_close_circle"), for: .normal)
-    }
+    let closeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "ic_close_circle"), for: .normal)
+        return button
+    }()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
     
@@ -24,14 +28,16 @@ final class BankListBottomSheetView: BaseView {
         collectionView.contentInset = .init(top: 0, left: 20, bottom: 20, right: 20)
         collectionView.backgroundColor = .white
         
+        setupLayout()
+    }
+    
+    private func setupLayout() {
         addSubViews([
             titleLabel,
             closeButton,
             collectionView
         ])
-    }
-    
-    override func bindConstraints() {
+        
         titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(24).priority(.high)

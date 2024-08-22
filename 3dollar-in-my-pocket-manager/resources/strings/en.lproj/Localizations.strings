@@ -137,8 +137,14 @@
 "edit_menu_save_alert_ok" = "나가기";
 
 // Edit Account
-"edit_account_title" = "계좌번호 등록";
-
+"edit_account.bank" = "은행";
+"edit_account.save" = "저장하기";
+"edit_account.account_number_placeholder" = "계좌번호를 입력해주세요.";
+"edit_account.name" = "예금주";
+"edit_account.title" = "계좌번호 등록";
+"edit_account.title_placeholder" = "예금주를 입력해주세요.";
+"edit_account.account_numbuer" = "계좌번호";
+"edit_account.bank_placeholder" = "은행을 선택해주세요.";
 
 // Statistics
 "statistics_filter_total" = "전체";

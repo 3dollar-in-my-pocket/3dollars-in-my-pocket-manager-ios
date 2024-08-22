@@ -12,30 +12,39 @@ final class BankListCell: BaseCollectionViewCell {
         }
     }
     
-    private let containerView = UIView().then {
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 12
-        $0.layer.borderColor = UIColor.gray40.cgColor
-    }
+    private let containerView: UIView = {
+        let view = UIView()
+        view.layer.borderWidth = 1
+        view.layer.cornerRadius = 12
+        view.layer.borderColor = UIColor.gray40.cgColor
+        return view
+    }()
     
-    private let titleLabel = UILabel().then {
-        $0.font = .regular(size: 14)
-        $0.textColor = .gray50
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .regular(size: 14)
+        label.textColor = .gray50
+        return label
+    }()
     
-    private let checkImage = UIImageView(image: UIImage(named: "ic_check_line")).then {
-        $0.isHidden = true
-    }
+    private let checkImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "ic_check_line")
+        imageView.isHidden = true
+        return imageView
+    }()
     
     override func setup() {
+        setupLayout()
+    }
+    
+    private func setupLayout() {
         contentView.addSubViews([
             containerView,
             titleLabel,
             checkImage
         ])
-    }
-    
-    override func bindConstraints() {
+        
         containerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -53,9 +62,8 @@ final class BankListCell: BaseCollectionViewCell {
         }
     }
     
-    func bind(item: BankListBottomSheetReactor.Item) {
-        titleLabel.text = item.bank.description
-        setSelected(item.isSelected)
+    func bind(bank: BossBank) {
+        titleLabel.text = bank.description
     }
     
     private func setSelected(_ isSelected: Bool) {
