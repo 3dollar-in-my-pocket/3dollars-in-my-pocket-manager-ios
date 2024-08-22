@@ -74,7 +74,7 @@ final class EditScheduleView: BaseView {
         button.setTitleColor(UIColor(r: 251, g: 251, b: 251), for: .normal)
         button.setBackgroundColor(color: .green, forState: .normal)
         button.setBackgroundColor(color: .gray30, forState: .disabled)
-        button.showsTouchWhenHighlighted = false
+        button.adjustsImageWhenHighlighted = false
         return button
     }()
     

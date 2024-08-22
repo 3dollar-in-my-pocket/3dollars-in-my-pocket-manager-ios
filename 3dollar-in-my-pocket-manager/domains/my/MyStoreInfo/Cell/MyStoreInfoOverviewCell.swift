@@ -105,6 +105,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     func bind(store: BossStoreResponse) {
         nameLabel.text = store.name
         datasource = store.representativeImages
+        photoCountLabel.bind(count: 1, total: store.representativeImages.count)
         photoCollectionView.reloadData()
         
         for category in store.categories {
@@ -262,7 +263,6 @@ extension MyStoreInfoOverviewCell {
             let label = UILabel()
             label.textColor = .white
             label.font = .bold(size: 12)
-            label.text = "1/10"
             return label
         }()
         
@@ -270,8 +270,8 @@ extension MyStoreInfoOverviewCell {
             setupLayout()
         }
         
-        func bind(count: Int) {
-            countLabel.text = "\(count)/10"
+        func bind(count: Int, total: Int) {
+            countLabel.text = "\(count)/\(total)"
         }
         
         private func setupLayout() {
@@ -313,6 +313,6 @@ extension MyStoreInfoOverviewCell: UICollectionViewDataSource {
 extension MyStoreInfoOverviewCell: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let index = Int(scrollView.contentOffset.x / OverviewPhotoCell.Layout.size.width) + 1
-        photoCountLabel.bind(count: index)
+        photoCountLabel.bind(count: index, total: datasource.count)
     }
 }

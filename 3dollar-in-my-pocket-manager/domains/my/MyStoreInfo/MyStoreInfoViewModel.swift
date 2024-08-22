@@ -142,6 +142,7 @@ final class MyStoreInfoViewModel: BaseViewModel {
         
         for appearanceDay in appearanceDays {
             initialAppearanceDays[appearanceDay.dayOfTheWeek.index] = appearanceDay
+            initialAppearanceDays[appearanceDay.dayOfTheWeek.index].isClosedDay = false
         }
         
         let items = initialAppearanceDays.map { MyStoreInfoSectionItem.appearanceDay($0) }
