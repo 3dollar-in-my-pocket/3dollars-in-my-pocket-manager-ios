@@ -210,6 +210,10 @@ final class MyStoreInfoViewController: BaseViewController {
             let viewController = EditAccountViewController(viewModel: viewModel)
             
             parent?.navigationController?.pushViewController(viewController, animated: true)
+        case .pushEditAppearanceDays(let viewModel):
+            let viewController = EditScheduleViewController(viewModel: viewModel)
+            
+            parent?.navigationController?.pushViewController(viewController, animated: true)
         default:
             break
         }

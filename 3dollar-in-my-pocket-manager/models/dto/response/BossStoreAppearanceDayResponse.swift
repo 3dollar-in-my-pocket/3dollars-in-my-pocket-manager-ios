@@ -1,7 +1,7 @@
 struct BossStoreAppearanceDayResponse: Decodable, Hashable {
     let dayOfTheWeek: DayOfTheWeek
-    let locationDescription: String
-    let openingHours: OperatingHours
+    var locationDescription: String
+    var openingHours: OperatingHours
     
     /// UI 에서만 사용하는 필드
     var isClosedDay: Bool

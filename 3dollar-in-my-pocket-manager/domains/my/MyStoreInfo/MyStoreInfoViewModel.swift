@@ -32,7 +32,7 @@ extension MyStoreInfoViewModel {
         case pushEditStoreInfo(EditStoreInfoViewModel)
         case pushEditIntroduction(EditIntroductionViewModel)
         case pushEditMenus(EditMenuViewModel)
-        case pushEditAppearanceDays(BossStoreResponse)
+        case pushEditAppearanceDays(EditScheduleViewModel)
         case showErrorAlert(Error)
     }
     
@@ -161,7 +161,7 @@ final class MyStoreInfoViewModel: BaseViewModel {
         case .account:
             pushEditAccount()
         case .appearanceDay:
-            output.route.send(.pushEditAppearanceDays(store))
+            pushEditSchedule()
         }
     }
     
@@ -196,6 +196,16 @@ final class MyStoreInfoViewModel: BaseViewModel {
     }
     
     private func bindEditAccountViewModel(_ viewModel: EditAccountViewModel) {
+        viewModel.output.updatedStore
+            .withUnretained(self)
+            .sink { (owner: MyStoreInfoViewModel, store: BossStoreResponse) in
+                owner.state.store = store
+                owner.updateDataSource()
+            }
+            .store(in: &viewModel.cancellables)
+    }
+    
+    private func bindEditScheduleViewModel(_ viewModel: EditScheduleViewModel) {
         viewModel.output.updatedStore
             .withUnretained(self)
             .sink { (owner: MyStoreInfoViewModel, store: BossStoreResponse) in
@@ -242,6 +252,15 @@ extension MyStoreInfoViewModel {
         
         bindEditAccountViewModel(viewModel)
         output.route.send(.pushEditAccount(viewModel))
+    }
+    
+    private func pushEditSchedule() {
+        guard let store = state.store else { return }
+        let config = EditScheduleViewModel.Config(store: store)
+        let viewModel = EditScheduleViewModel(config: config)
+        
+        bindEditScheduleViewModel(viewModel)
+        output.route.send(.pushEditAppearanceDays(viewModel))
     }
 }
 

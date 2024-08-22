@@ -8,7 +8,7 @@ struct BossStoreResponse: Decodable, Hashable {
     var introduction: String?
     var snsUrl: String?
     var menus: [BossStoreMenu]
-    let appearanceDays: [BossStoreAppearanceDayResponse]
+    var appearanceDays: [BossStoreAppearanceDayResponse]
     var categories: [StoreFoodCategoryResponse]
     var accountNumbers: [BossStoreAccountNumber]
     var openStatus: BossStoreOpenStatusResponse
@@ -26,6 +26,7 @@ extension BossStoreResponse {
             introduction: introduction,
             snsUrl: snsUrl,
             menus: nil,
+            appearanceDays: appearanceDays.map { .init(response: $0) },
             categoriesIds: categories.map { $0.categoryId },
             accountNumbers: accountNumbers
         )
