@@ -4,19 +4,19 @@ import RxSwift
 import Alamofire
 
 protocol FeedbackServiceType {
-    func fetchFeedbackTypes() -> Observable<[BossStoreFeedbackTypeResponse]>
+    func fetchFeedbackTypes() -> Observable<[FeedbackTypeResponse]>
     
-    func fetchTotalStatistics(storeId: String) -> Observable<[BossStoreFeedbackCountResponse]>
+    func fetchTotalStatistics(storeId: String) -> Observable<[FeedbackCountWithRatioResponse]>
     
     func fetchDailyStatistics(
         storeId: String,
         startDate: Date,
         endDate: Date
-    ) -> Observable<BossStoreFeedbackCursorResponse>
+    ) -> Observable<ContentListWithCursor<FeedbackGroupingDateResponse>>
 }
 
 struct FeedbackService: FeedbackServiceType {
-    func fetchFeedbackTypes() -> Observable<[BossStoreFeedbackTypeResponse]> {
+    func fetchFeedbackTypes() -> Observable<[FeedbackTypeResponse]> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/store/feedback/types"
             let headers = HTTPUtils.jsonHeader()
@@ -29,7 +29,7 @@ struct FeedbackService: FeedbackServiceType {
             .responseData(completionHandler: { response in
                 if response.isSuccess() {
                     observer.processValue(
-                        type: [BossStoreFeedbackTypeResponse].self,
+                        type: [FeedbackTypeResponse].self,
                         response: response
                     )
                 } else {
@@ -41,7 +41,7 @@ struct FeedbackService: FeedbackServiceType {
         }
     }
     
-    func fetchTotalStatistics(storeId: String) -> Observable<[BossStoreFeedbackCountResponse]> {
+    func fetchTotalStatistics(storeId: String) -> Observable<[FeedbackCountWithRatioResponse]> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/store/\(storeId)/feedbacks/full"
             let headers = HTTPUtils.jsonHeader()
@@ -54,7 +54,7 @@ struct FeedbackService: FeedbackServiceType {
             .responseData(completionHandler: { response in
                 if response.isSuccess() {
                     observer.processValue(
-                        type: [BossStoreFeedbackCountResponse].self,
+                        type: [FeedbackCountWithRatioResponse].self,
                         response: response
                     )
                 } else {
@@ -70,7 +70,7 @@ struct FeedbackService: FeedbackServiceType {
         storeId: String,
         startDate: Date,
         endDate: Date
-    ) -> Observable<BossStoreFeedbackCursorResponse> {
+    ) -> Observable<ContentListWithCursor<FeedbackGroupingDateResponse>> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/store/\(storeId)/feedbacks/specific"
             let headers = HTTPUtils.jsonHeader()
@@ -87,7 +87,7 @@ struct FeedbackService: FeedbackServiceType {
             ).responseData(completionHandler: { response in
                 if response.isSuccess() {
                     observer.processValue(
-                        type: BossStoreFeedbackCursorResponse.self,
+                        type: ContentListWithCursor<FeedbackGroupingDateResponse>.self,
                         response: response
                     )
                 } else {
