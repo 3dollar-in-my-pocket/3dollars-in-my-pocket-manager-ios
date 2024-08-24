@@ -14,7 +14,7 @@ extension StatisticsViewModel {
         let screenName: ScreenName = .statistics
         let subscriberCount = PassthroughSubject<Int, Never>()
         let totalReviewCount = PassthroughSubject<Int, Never>()
-        let setPageViewController = PassthroughSubject<(TotalStatisticsViewModel), Never>()
+        let setPageViewController = PassthroughSubject<(TotalStatisticsViewModel, DailyStatisticsViewModel), Never>()
         let filter = PassthroughSubject<StatisticsFilterButton.FilterType, Never>()
         let updateContainerHeight = PassthroughSubject<CGFloat, Never>()
         let route = PassthroughSubject<Route, Never>()
@@ -54,6 +54,7 @@ final class StatisticsViewModel: BaseViewModel {
     private let dependency: Dependency
     
     var totalStatisticsViewModel: TotalStatisticsViewModel?
+    var dailyStatisticsViewModel: DailyStatisticsViewModel?
     
     init(dependency: Dependency = Dependency()) {
         self.dependency = dependency
@@ -80,6 +81,7 @@ final class StatisticsViewModel: BaseViewModel {
             .sink { (owner: StatisticsViewModel, filterType: StatisticsFilterButton.FilterType) in
                 owner.state.selectedFilter = filterType
                 owner.sendClickFilterLog(filterType: filterType)
+                owner.output.filter.send(filterType)
             }
             .store(in: &cancellables)
         
@@ -112,7 +114,10 @@ final class StatisticsViewModel: BaseViewModel {
             let totalStatisticsViewModel = createTotalStatisticsViewModel()
             self.totalStatisticsViewModel = totalStatisticsViewModel
             
-            output.setPageViewController.send(totalStatisticsViewModel)
+            let dailyStatisticsViewModel = createDailyStatisticsViewModel()
+            self.dailyStatisticsViewModel = dailyStatisticsViewModel
+            
+            output.setPageViewController.send((totalStatisticsViewModel, dailyStatisticsViewModel))
         }
     }
     
@@ -123,6 +128,17 @@ final class StatisticsViewModel: BaseViewModel {
         viewModel.output.reviewTotalCount
             .subscribe(input.totalReviewCount)
             .store(in: &viewModel.cancellables)
+        
+        viewModel.output.updateContainerHeight
+            .subscribe(input.updateContainerHeight)
+            .store(in: &viewModel.cancellables)
+        
+        return viewModel
+    }
+    
+    private func createDailyStatisticsViewModel() -> DailyStatisticsViewModel {
+        let config = DailyStatisticsViewModel.Config(feedbackTypes: state.feedbackTypes)
+        let viewModel = DailyStatisticsViewModel(config: config)
         
         viewModel.output.updateContainerHeight
             .subscribe(input.updateContainerHeight)
@@ -142,79 +158,3 @@ extension StatisticsViewModel {
         )
     }
 }
-
-//final class StatisticsReactor: Reactor {
-//    enum Action {
-//        case refresh
-//        case tapFilterButton(StatisticsFilterButton.FilterType)
-//    }
-//    
-//    enum Mutation {
-//        case updateReviewCount(Int)
-//        case setTab(StatisticsFilterButton.FilterType)
-//        case refresh(StatisticsFilterButton.FilterType)
-//    }
-//    
-//    struct State {
-//        var totalReviewCount: Int
-//        var selectedFilter: StatisticsFilterButton.FilterType
-//    }
-//    
-//    let initialState: State
-//    let refreshPublisher = PublishRelay<StatisticsFilterButton.FilterType>()
-//    private let globalState: GlobalState
-//    private let logManager: LogManagerProtocol
-//    
-//    init(
-//        globalState: GlobalState,
-//        logManager: LogManagerProtocol,
-//        state: State = State(
-//            totalReviewCount: 0,
-//            selectedFilter: .total
-//        )
-//    ) {
-//        self.globalState = globalState
-//        self.logManager = logManager
-//        self.initialState = state
-//    }
-//    
-//    func mutate(action: Action) -> Observable<Mutation> {
-//        switch action {
-//        case .tapFilterButton(let filterType):
-//            logManager.sendEvent(.init(
-//                screen: .statistics,
-//                eventName: .tapStatisticTab,
-//                extraParameters: [.filterType: filterType.name]
-//            ))
-//            return .just(.setTab(filterType))
-//            
-//        case .refresh:
-//            return .just(.refresh(self.currentState.selectedFilter))
-//        }
-//    }
-//    
-//    func transform(mutation: Observable<Mutation>) -> Observable<Mutation> {
-//        return .merge([
-//            mutation,
-//            self.globalState.updateReviewCountPublisher
-//                .map { .updateReviewCount($0) }
-//        ])
-//    }
-//    
-//    func reduce(state: State, mutation: Mutation) -> State {
-//        var newState = state
-//        
-//        switch mutation {
-//        case .updateReviewCount(let totalReviewCount):
-//            newState.totalReviewCount = totalReviewCount
-//            
-//        case .setTab(let filterType):
-//            newState.selectedFilter = filterType
-//            
-//        case .refresh(let filterType):
-//            self.refreshPublisher.accept(filterType)
-//        }
-//        
-//        return newState
-//    }
-//}

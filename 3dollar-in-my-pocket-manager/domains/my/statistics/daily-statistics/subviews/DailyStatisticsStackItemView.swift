@@ -1,55 +1,65 @@
 import UIKit
 
 final class DailyStatisticsStackItemView: BaseView {
-    static let height: CGFloat = 22
-    
-    private let titleLabel = UILabel().then {
-        $0.font = .bold(size: 14)
-        $0.textColor = .gray95
+    enum Layout {
+        static let height: CGFloat = 26
     }
     
-    private let countLabel = PaddingLabel(
-        topInset: 4,
-        bottomInset: 4,
-        leftInset: 8,
-        rightInset: 8
-    ).then {
-        $0.font = .regular(size: 12)
-        $0.textColor = .green
-        $0.layer.borderColor = UIColor.green.cgColor
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = 11
-    }
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 14)
+        label.textColor = .gray95
+        return label
+    }()
+    
+    private let countLabel: PaddingLabel = {
+        let label = PaddingLabel(
+            topInset: 4,
+            bottomInset: 4,
+            leftInset: 8,
+            rightInset: 8
+        )
+        label.font = .regular(size: 12)
+        label.textColor = .green
+        label.layer.borderColor = UIColor.green.cgColor
+        label.layer.borderWidth = 1
+        label.layer.cornerRadius = 11
+        return label
+    }()
     
     override func setup() {
-        self.backgroundColor = .clear
-        self.addSubViews([
-            self.titleLabel,
-            self.countLabel
+        backgroundColor = .clear
+        
+        setupLayout()
+    }
+    
+    private func setupLayout() {
+        addSubViews([
+            titleLabel,
+            countLabel
         ])
-    }
-    
-    override func bindConstraints() {
-        self.titleLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.centerY.equalToSuperview()
+        
+        titleLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
         
-        self.countLabel.snp.makeConstraints { make in
-            make.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.height.equalTo(Self.height)
+        countLabel.snp.makeConstraints {
+            $0.right.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.height.equalTo(Layout.height)
         }
         
-        self.snp.makeConstraints { make in
-            make.top.equalTo(self.countLabel).priority(.high)
-            make.bottom.equalTo(self.countLabel).priority(.high)
+        snp.makeConstraints {
+            $0.top.equalTo(countLabel).priority(.high)
+            $0.bottom.equalTo(countLabel).priority(.high)
+            $0.height.equalTo(Layout.height)
         }
     }
     
-    func bind(statistic: Statistic) {
-        self.titleLabel.text = "\(statistic.type.emoji) \(statistic.type.description)"
-        self.countLabel.text = "\(statistic.count)개"
+    func bind(feedback: FeedbackCountResponse, feedbackType: FeedbackTypeResponse) {
+        titleLabel.text = "\(feedbackType.emoji) \(feedbackType.description)"
+        countLabel.text = "\(feedback.count)개"
     }
 }

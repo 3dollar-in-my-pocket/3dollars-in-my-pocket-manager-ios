@@ -1,98 +1,114 @@
 import UIKit
 
-import ReactorKit
-
-final class DailyStatisticsViewController: BaseViewController, View, DailyStatisticCoordinator {
-    private let dailyStatisticsView = DailyStatisticsView()
-    private let dailyStatisticsReactor = DailyStatisticsReactor(
-        feedbackService: FeedbackService(),
-        globalState: GlobalState.shared,
-        userDefaults: Preference.shared
-    )
-    private weak var coordinator: DailyStatisticCoordinator?
+final class DailyStatisticsViewController: BaseViewController {
+    private lazy var collectionView: UICollectionView = {
+       let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
     
-    static func instance() -> DailyStatisticsViewController {
-        return DailyStatisticsViewController(nibName: nil, bundle: nil)
+    private let viewModel: DailyStatisticsViewModel
+    private var datasource: [FeedbackGroupingDateResponse] = []
+    
+    init(viewModel: DailyStatisticsViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
     }
     
-    override func loadView() {
-        self.view = self.dailyStatisticsView
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.reactor = self.dailyStatisticsReactor
-        self.coordinator = self
-        self.dailyStatisticsReactor.action.onNext(.viewDidLoad)
+        setupLayout()
+        bind()
+        viewModel.input.viewDidLoad.send(())
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    private func setupLayout() {
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register([
+            BaseCollectionViewCell.self,
+            DailyStatisticsCell.self,
+            DailyStatisticsEmptyCell.self
+        ])
         
-        self.dailyStatisticsReactor.action.onNext(.viewWillAppear)
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
-    override func bindEvent() {
-        self.dailyStatisticsReactor.showErrorAlert
-            .asDriver(onErrorJustReturn: BaseError.unknown)
-            .drive(onNext: { [weak self] error in
-                self?.coordinator?.showErrorAlert(error: error)
-            })
-            .disposed(by: self.eventDisposeBag)
+    private func bind() {
+        // Output
+        viewModel.output.statisticGroups
+            .main
+            .withUnretained(self)
+            .sink { (owner: DailyStatisticsViewController, groups:  [FeedbackGroupingDateResponse]) in
+                owner.datasource = groups
+                owner.collectionView.reloadData()
+            }
+            .store(in: &cancellables)
         
-        self.dailyStatisticsReactor.updateTableViewHeightPublisher
-            .asDriver(onErrorJustReturn: [])
-            .drive(onNext: { [weak self] statisticGroups in
-                if let statisticsView = self?.parent?.parent?.view as? StatisticsView,
-                   let dailyStatisticsViewHeight = self?.dailyStatisticsView
-                    .calculatorTableViewHeight(statisticGroups: statisticGroups) {
-//                    statisticsView.updateContainerViewHeight(
-//                        tableViewHeight: dailyStatisticsViewHeight
-//                    )
-                }
-            })
-            .disposed(by: self.eventDisposeBag)
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: DailyStatisticsViewController, route: DailyStatisticsViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
     }
     
-    func bind(reactor: DailyStatisticsReactor) {
-        // Bind Action
-        self.dailyStatisticsView.tableView.rx.willDisplayCell
-            .map { Reactor.Action.willDisplayCell(index: $0.indexPath.row) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
+    private func createLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 12
+        return layout
+    }
+}
+
+extension DailyStatisticsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return datasource.isEmpty ? 1 : datasource.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if datasource.isEmpty {
+            let cell: DailyStatisticsEmptyCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+            return cell
+        } else {
+            guard let feedbackGroup = datasource[safe: indexPath.item] else { return BaseCollectionViewCell() }
+            let cell: DailyStatisticsCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+            cell.bind(feedbackGroup: feedbackGroup, feedbackTypes: viewModel.output.feedbackTypes)
+            return cell
+        }
+    }
+}
+
+extension DailyStatisticsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let feedbackGroup = datasource[safe: indexPath.item] else {
+            return DailyStatisticsEmptyCell.Layout.size
+        }
         
-        // Bind State
-        reactor.state
-            .map { $0.statisticGroups }
-            .distinctUntilChanged()
-            .asDriver(onErrorJustReturn: [])
-            .do(onNext: { [weak self] statisticGroups in
-                if let statisticsView = self?.parent?.parent?.view as? StatisticsView,
-                let dailyStatisticsViewHeight = self?.dailyStatisticsView
-                    .calculatorTableViewHeight(statisticGroups: statisticGroups) {
-//                    statisticsView.updateContainerViewHeight(
-//                        tableViewHeight: dailyStatisticsViewHeight
-//                    )
-                }
-            })
-            .delay(.milliseconds(500))
-                .drive(self.dailyStatisticsView.tableView.rx.items) { tableView, row, item in
-                    if let statisticGroup = item {
-                        guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyStatisticsTableViewCell.registerId) as? DailyStatisticsTableViewCell else { return UITableViewCell() }
-                        
-                        cell.bind(statisticGroup: statisticGroup)
-                        return cell
-                    } else {
-                        guard let cell = tableView.dequeueReusableCell(withIdentifier: DailyStatisticsEmptyTableViewCell.registerId) as? DailyStatisticsEmptyTableViewCell else { return UITableViewCell() }
-                        
-                        return cell
-                    }
-                }
-            .disposed(by: self.disposeBag)
+        return .zero
     }
     
-    func refreshData() {
-        self.dailyStatisticsReactor.action.onNext(.refresh)
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        viewModel.input.willDisplayCell.send(indexPath.item)
+    }
+}
+
+// MARK: Route
+extension DailyStatisticsViewController {
+    func handleRoute(_ route: DailyStatisticsViewModel.Route) {
+        switch route {
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        }
     }
 }

@@ -14,7 +14,7 @@ final class StatisticsViewController: BaseViewController {
     private var pageViewControllers: [UIViewController] = []
     
     private var totalStatisticsViewController: TotalStatisticsViewController?
-    private let dailyStatisticsViewController = DailyStatisticsViewController.instance()
+    private var dailyStatisticsViewController: DailyStatisticsViewController?
     
     private var isRefreshing = false
     
@@ -83,8 +83,12 @@ final class StatisticsViewController: BaseViewController {
         viewModel.output.setPageViewController
             .main
             .withUnretained(self)
-            .sink { (owner: StatisticsViewController, viewModels: (TotalStatisticsViewModel)) in
-                owner.setupPageViewController(totalStatisticsViewModel: viewModels)
+            .sink { (owner: StatisticsViewController, viewModels) in
+                let (totalStatisticsViewModel, dailyStatisticsViewModel) = viewModels
+                owner.setupPageViewController(
+                    totalStatisticsViewModel: totalStatisticsViewModel,
+                    dailyStatisticsViewModel: dailyStatisticsViewModel
+                )
             }
             .store(in: &cancellables)
         
@@ -105,33 +109,20 @@ final class StatisticsViewController: BaseViewController {
             .store(in: &cancellables)
     }
     
-//    override func bindEvent() {
-//        
-        // TODO: 뷰모델에서 처리할 수 있을듯?
-//        self.statisticsReactor.refreshPublisher
-//            .asDriver(onErrorJustReturn: .total)
-//            .drive(onNext: { [weak self] filterType in
-//                switch filterType {
-//                case .total:
-//                    self?.totalStatisticsViewController.refreshData()
-//                    
-//                case .day:
-//                    self?.dailyStatisticsViewController.refreshData()
-//                }
-//                self?.statisticsView.rx.endRefreshing.onNext(())
-//            })
-//            .disposed(by: self.eventDisposeBag)
-//    }
-    
     private func setupPageViewController(
-        totalStatisticsViewModel: TotalStatisticsViewModel
+        totalStatisticsViewModel: TotalStatisticsViewModel,
+        dailyStatisticsViewModel: DailyStatisticsViewModel
     ) {
         let totalStatisticsViewController = TotalStatisticsViewController(viewModel: totalStatisticsViewModel)
         self.totalStatisticsViewController = totalStatisticsViewController
         
+        let dailyStatisticsViewController = DailyStatisticsViewController(viewModel: dailyStatisticsViewModel)
+        self.dailyStatisticsViewController = dailyStatisticsViewController
+        
         pageViewControllers.removeAll()
         pageViewControllers = [
-            totalStatisticsViewController
+            totalStatisticsViewController,
+            dailyStatisticsViewController
         ]
         addChild(pageViewController)
         pageViewController.delegate = self
