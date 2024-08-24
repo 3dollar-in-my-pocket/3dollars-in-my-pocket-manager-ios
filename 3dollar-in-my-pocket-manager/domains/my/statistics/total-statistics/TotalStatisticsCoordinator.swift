@@ -1,3 +1,0 @@
-protocol TotalStatisticsCoordinator: BaseCoordinator, AnyObject {
-    
-}

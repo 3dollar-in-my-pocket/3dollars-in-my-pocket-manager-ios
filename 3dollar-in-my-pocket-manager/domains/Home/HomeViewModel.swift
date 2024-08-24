@@ -33,7 +33,7 @@ extension HomeViewModel {
         let mapRepository: MapRepository
         let storeRepository: StoreRepository
         let locationManager: CLLocationManager
-        let preference: Preference
+        var preference: Preference
         let logManager: LogManagerProtocol
         
         init(
@@ -169,6 +169,7 @@ final class HomeViewModel: BaseViewModel {
             switch result {
             case .success(let storeInfo):
                 output.store.send(storeInfo)
+                dependency.preference.storeId = storeInfo.bossStoreId
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))
             }

@@ -1,16 +1,23 @@
 import UIKit
 
-import RxSwift
-import RxCocoa
-
 final class StatisticsView: BaseView {
-    fileprivate let refreshControl = UIRefreshControl()
+    let refreshControl = UIRefreshControl()
     
-    let scrollView = UIScrollView().then {
-        $0.backgroundColor = .gray0
-    }
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .gray0
+        return scrollView
+    }()
     
-    private let scrollViewContainerView = UIView()
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    let favoriteCountLabel = FavoriteCountLabel()
+    
+    let dividerView = DividerView()
     
     let reviewCountLabel = ReviewCountLabel()
     
@@ -19,67 +26,48 @@ final class StatisticsView: BaseView {
     let containerView = UIView()
     
     override func setup() {
-        self.scrollView.refreshControl = self.refreshControl
-        self.scrollViewContainerView.addSubViews([
-            self.reviewCountLabel,
-            self.filterButton,
-            self.containerView
-        ])
-        self.scrollView.addSubview(self.scrollViewContainerView)
-        self.addSubview(self.scrollView)
+        scrollView.refreshControl = refreshControl
+        setupLayout()
     }
     
-    override func bindConstraints() {
-        self.scrollView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+    private func setupLayout() {
+        scrollView.addSubview(stackView)
+        
+        stackView.addArrangedSubview(favoriteCountLabel)
+        stackView.setCustomSpacing(24, after: favoriteCountLabel)
+        
+        stackView.addArrangedSubview(dividerView)
+        stackView.setCustomSpacing(24, after: dividerView)
+        
+        stackView.addArrangedSubview(reviewCountLabel)
+        stackView.setCustomSpacing(19, after: reviewCountLabel)
+        
+        stackView.addArrangedSubview(filterButton)
+        stackView.setCustomSpacing(28, after: filterButton)
+        
+        stackView.addArrangedSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.height.equalTo(200)
+        }
+        addSubview(scrollView)
+        
+        scrollView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
-        self.scrollViewContainerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-            make.width.equalToSuperview()
-            make.top.equalTo(self.reviewCountLabel).offset(-20).priority(.high)
-            make.bottom.equalTo(self.containerView).priority(.high)
-        }
-        
-        self.reviewCountLabel.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.top.equalToSuperview().offset(20)
-        }
-        
-        self.filterButton.snp.makeConstraints { make in
-            make.top.equalTo(self.reviewCountLabel.snp.bottom).offset(19)
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
-        }
-        
-        self.containerView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.top.equalTo(self.filterButton.snp.bottom).offset(28)
-            make.height.equalTo(0)
+        stackView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(20)
+            $0.leading.trailing.bottom.equalToSuperview()
+            $0.width.equalTo(UIUtils.windowBounds.width)
         }
     }
     
-    func updateContainerViewHeight(tableViewHeight: CGFloat) {
-        self.containerView.snp.updateConstraints { make in
-            make.height.equalTo(tableViewHeight)
-        }
-    }
-}
-
-extension Reactive where Base: StatisticsView {
-    var pullToRefresh: ControlEvent<Void> {
-        return ControlEvent(events: base.refreshControl.rx.controlEvent(.valueChanged)
-            .map { _ in () })
-    }
-    
-    var endRefreshing: Binder<Void> {
-        return Binder(self.base) { view, _ in
-            view.refreshControl.endRefreshing()
+    func updateContainerHeight(_ height: CGFloat) {
+        containerView.snp.updateConstraints {
+            $0.height.equalTo(height)
         }
     }
 }

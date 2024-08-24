@@ -1,132 +1,167 @@
 import UIKit
 
-import ReactorKit
+import CombineCocoa
 
-final class StatisticsViewController: BaseViewController, View {
+final class StatisticsViewController: BaseViewController {
+    private let viewModel: StatisticsViewModel
     private let statisticsView = StatisticsView()
-    private let statisticsReactor = StatisticsReactor(
-        globalState: GlobalState.shared,
-        logManager: LogManager.shared
-    )
+    
     private let pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,
         options: nil
     )
-    private let totalStatisticsViewController = TotalStatisticsViewController.instance()
-    private let dailyStatisticsViewController = DailyStatisticsViewController.instance()
     private var pageViewControllers: [UIViewController] = []
+    
+    private var totalStatisticsViewController: TotalStatisticsViewController?
+    private let dailyStatisticsViewController = DailyStatisticsViewController.instance()
+    
     private var isRefreshing = false
+    
+    init(viewModel: StatisticsViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override var screenName: ScreenName {
-        return .statistics
+        return viewModel.output.screenName
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
     }
     
-    static func instance() -> StatisticsViewController {
-        return StatisticsViewController(nibName: nil, bundle: nil)
-    }
-    
     override func loadView() {
-        self.view = self.statisticsView
+        view = statisticsView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupPageViewController()
-        self.statisticsView.scrollView.delegate = self
-        self.reactor = self.statisticsReactor
+        bind()
+        
+        statisticsView.scrollView.delegate = self
+        viewModel.input.viewDidLoad.send(())
     }
     
-    override func bindEvent() {
-        self.statisticsView.rx.pullToRefresh
-            .bind(onNext: { [weak self] in
-                self?.isRefreshing = true
-            })
-            .disposed(by: self.eventDisposeBag)
+    private func bind() {
+        // Input
+        statisticsView.refreshControl.isRefreshingPublisher
+            .filter { $0 }
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewController, _) in
+                owner.isRefreshing = true
+            }
+            .store(in: &cancellables)
         
-        self.statisticsReactor.refreshPublisher
-            .asDriver(onErrorJustReturn: .total)
-            .drive(onNext: { [weak self] filterType in
-                switch filterType {
-                case .total:
-                    self?.totalStatisticsViewController.refreshData()
-                    
-                case .day:
-                    self?.dailyStatisticsViewController.refreshData()
-                }
-                self?.statisticsView.rx.endRefreshing.onNext(())
-            })
-            .disposed(by: self.eventDisposeBag)
+        statisticsView.filterButton.tapPublisher
+            .subscribe(viewModel.input.didTapFilter)
+            .store(in: &cancellables)
+        
+        // Output
+        viewModel.output.subscriberCount
+            .main
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewController, subscriberCount: Int) in
+                owner.statisticsView.favoriteCountLabel.bind(subscriberCount)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.totalReviewCount
+            .main
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewController, reviewCount: Int) in
+                owner.statisticsView.reviewCountLabel.bind(reviewCount)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.setPageViewController
+            .main
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewController, viewModels: (TotalStatisticsViewModel)) in
+                owner.setupPageViewController(totalStatisticsViewModel: viewModels)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.filter
+            .main
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewController, filterType: StatisticsFilterButton.FilterType) in
+                owner.setPage(filterType: filterType)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.updateContainerHeight
+            .main
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewController, height: CGFloat) in
+                owner.statisticsView.updateContainerHeight(height)
+            }
+            .store(in: &cancellables)
     }
     
-    func bind(reactor: StatisticsReactor) {
-        // BindAction
-        self.statisticsView.filterButton.rx.tap
-            .map { Reactor.Action.tapFilterButton($0) }
-            .bind(to: reactor.action)
-            .disposed(by: self.disposeBag)
-        
-        // Bind State
-        reactor.state
-            .map { $0.totalReviewCount }
-            .asDriver(onErrorJustReturn: 0)
-            .distinctUntilChanged()
-            .drive(self.statisticsView.reviewCountLabel.rx.reviewCount)
-            .disposed(by: self.disposeBag)
-        
-        reactor.state
-            .map { $0.selectedFilter }
-            .asDriver(onErrorJustReturn: .total)
-            .distinctUntilChanged()
-            .drive(onNext: { [weak self] filterType in
-                self?.setPage(filterType: filterType)
-            })
-            .disposed(by: self.disposeBag)
-    }
+//    override func bindEvent() {
+//        
+        // TODO: 뷰모델에서 처리할 수 있을듯?
+//        self.statisticsReactor.refreshPublisher
+//            .asDriver(onErrorJustReturn: .total)
+//            .drive(onNext: { [weak self] filterType in
+//                switch filterType {
+//                case .total:
+//                    self?.totalStatisticsViewController.refreshData()
+//                    
+//                case .day:
+//                    self?.dailyStatisticsViewController.refreshData()
+//                }
+//                self?.statisticsView.rx.endRefreshing.onNext(())
+//            })
+//            .disposed(by: self.eventDisposeBag)
+//    }
     
-    private func setupPageViewController() {
-        self.pageViewControllers = [
-            self.totalStatisticsViewController,
-            self.dailyStatisticsViewController
+    private func setupPageViewController(
+        totalStatisticsViewModel: TotalStatisticsViewModel
+    ) {
+        let totalStatisticsViewController = TotalStatisticsViewController(viewModel: totalStatisticsViewModel)
+        self.totalStatisticsViewController = totalStatisticsViewController
+        
+        pageViewControllers.removeAll()
+        pageViewControllers = [
+            totalStatisticsViewController
         ]
-        self.addChild(self.pageViewController)
-        self.pageViewController.delegate = self
-        self.pageViewController.dataSource = self
-        self.statisticsView.containerView.addSubview(self.pageViewController.view)
-        self.pageViewController.view.snp.makeConstraints { make in
-            make.edges.equalTo(self.statisticsView.containerView)
+        addChild(pageViewController)
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
+        
+        statisticsView.containerView.addSubview(pageViewController.view)
+        pageViewController.view.snp.makeConstraints {
+            $0.edges.equalTo(statisticsView.containerView)
         }
-        self.pageViewController.setViewControllers(
-            [self.pageViewControllers[0]],
+        pageViewController.setViewControllers(
+            [totalStatisticsViewController],
             direction: .forward,
             animated: false,
             completion: nil
         )
-        
-        for view in self.pageViewController.view.subviews {
-            if let scrollView = view as? UIScrollView {
-                scrollView.isScrollEnabled = false
-            }
-        }
     }
     
     private func setPage(filterType: StatisticsFilterButton.FilterType) {
         switch filterType {
         case .total:
-            self.pageViewController.setViewControllers(
-                [self.pageViewControllers[0]],
+            pageViewController.setViewControllers(
+                [pageViewControllers[0]],
                 direction: .forward,
                 animated: false,
                 completion: nil
             )
             
         case .day:
-            self.pageViewController.setViewControllers(
-                [self.pageViewControllers[1]],
+            pageViewController.setViewControllers(
+                [pageViewControllers[1]],
                 direction: .forward,
                 animated: false,
                 completion: nil
@@ -153,9 +188,10 @@ extension StatisticsViewController: UIPageViewControllerDelegate, UIPageViewCont
 
 extension StatisticsViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if self.isRefreshing {
-            self.statisticsReactor.action.onNext(.refresh)
-            self.isRefreshing = false
+        if isRefreshing {
+            viewModel.input.refresh.send(())
+            isRefreshing = false
+            statisticsView.refreshControl.endRefreshing()
         }
     }
 }

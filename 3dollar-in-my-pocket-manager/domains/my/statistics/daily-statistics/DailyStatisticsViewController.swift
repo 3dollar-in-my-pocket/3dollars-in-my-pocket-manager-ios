@@ -47,9 +47,9 @@ final class DailyStatisticsViewController: BaseViewController, View, DailyStatis
                 if let statisticsView = self?.parent?.parent?.view as? StatisticsView,
                    let dailyStatisticsViewHeight = self?.dailyStatisticsView
                     .calculatorTableViewHeight(statisticGroups: statisticGroups) {
-                    statisticsView.updateContainerViewHeight(
-                        tableViewHeight: dailyStatisticsViewHeight
-                    )
+//                    statisticsView.updateContainerViewHeight(
+//                        tableViewHeight: dailyStatisticsViewHeight
+//                    )
                 }
             })
             .disposed(by: self.eventDisposeBag)
@@ -71,9 +71,9 @@ final class DailyStatisticsViewController: BaseViewController, View, DailyStatis
                 if let statisticsView = self?.parent?.parent?.view as? StatisticsView,
                 let dailyStatisticsViewHeight = self?.dailyStatisticsView
                     .calculatorTableViewHeight(statisticGroups: statisticGroups) {
-                    statisticsView.updateContainerViewHeight(
-                        tableViewHeight: dailyStatisticsViewHeight
-                    )
+//                    statisticsView.updateContainerViewHeight(
+//                        tableViewHeight: dailyStatisticsViewHeight
+//                    )
                 }
             })
             .delay(.milliseconds(500))

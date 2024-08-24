@@ -11,7 +11,7 @@ final class MyPageViewController: BaseViewController {
     
     private lazy var pageViewControllers: [UIViewController] = [
         createMyStoreInfoViewController(),
-        StatisticsViewController.instance(),
+        createStatisticsViewController(),
         StorePostViewController()
     ]
     
@@ -125,6 +125,13 @@ final class MyPageViewController: BaseViewController {
         
         navigationController.isNavigationBarHidden = true
         return navigationController
+    }
+    
+    private func createStatisticsViewController() -> UIViewController {
+        let viewModel = StatisticsViewModel()
+        let viewController = StatisticsViewController(viewModel: viewModel)
+        
+        return viewController
     }
 }
 
