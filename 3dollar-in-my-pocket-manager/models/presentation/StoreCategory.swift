@@ -6,4 +6,9 @@ struct StoreCategory: Equatable {
         self.categoryId = response.categoryId
         self.name = response.name
     }
+    
+    init(response: StoreFoodCategoryResponse) {
+        self.categoryId = response.categoryId
+        self.name = response.name
+    }
 }

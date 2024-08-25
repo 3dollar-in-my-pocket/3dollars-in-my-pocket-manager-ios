@@ -146,8 +146,8 @@ final class SignupView: BaseView {
         }
         
         self.ownerNameField.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(24)
-            make.right.equalToSuperview().offset(-24)
+            make.left.equalToSuperview()
+            make.right.equalToSuperview()
             make.top.equalTo(self.roundedBackgroundView).offset(32)
         }
         
@@ -170,8 +170,8 @@ final class SignupView: BaseView {
         }
         
         self.photoView.snp.makeConstraints { make in
-            make.left.equalTo(self.ownerNameField)
-            make.right.equalTo(self.ownerNameField)
+            make.left.equalTo(self.ownerNameField).offset(24)
+            make.right.equalTo(self.ownerNameField).offset(-24)
             make.top.equalTo(self.categoryCollectionView.snp.bottom).offset(32)
         }
         

@@ -90,7 +90,7 @@ final class MainTabController: UITabBarController {
     
     private func setupTabBarController() {
         self.setViewControllers([
-            HomeViewController.instance(),
+            createHomeViewController(),
             MyPageViewController.instance(),
             SettingViewController.instance()
         ], animated: true)
@@ -102,5 +102,13 @@ final class MainTabController: UITabBarController {
         self.tabBar.barTintColor = .white
         self.tabBar.backgroundColor = .white
         self.tabBar.layer.addSublayer(self.borderLayer)
+    }
+    
+    private func createHomeViewController() -> UINavigationController {
+        let viewController = HomeViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.isNavigationBarHidden = true
+        navigationController.interactivePopGestureRecognizer?.delegate = nil
+        return navigationController
     }
 }

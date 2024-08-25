@@ -16,20 +16,26 @@ final class TextField: BaseView {
     
     var format: String?
     
-    fileprivate lazy var datePicker = UIDatePicker().then {
-        $0.datePickerMode = .time
-        $0.preferredDatePickerStyle = .wheels
-    }
+    fileprivate lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .time
+        datePicker.preferredDatePickerStyle = .wheels
+        return datePicker
+    }()
     
-    private let containerView = UIView().then {
-        $0.backgroundColor = .gray5
-        $0.layer.cornerRadius = 8
-    }
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .gray5
+        view.layer.cornerRadius = 8
+        return view
+    }()
     
-    fileprivate let textField = UITextField().then {
-        $0.font = .medium(size: 14)
-        $0.textColor = .gray100
-    }
+    let textField: UITextField = {
+        let textField = UITextField()
+        textField.font = .medium(size: 14)
+        textField.textColor = .gray100
+        return textField
+    }()
     
     init(placeholder: String? = nil) {
         super.init(frame: .zero)
@@ -42,30 +48,8 @@ final class TextField: BaseView {
     }
     
     override func setup() {
-        self.addSubViews([
-            self.containerView,
-            self.textField
-        ])
-        self.textField.delegate = self
-    }
-    
-    override func bindConstraints() {
-        self.containerView.snp.makeConstraints { make in
-            make.left.equalToSuperview()
-            make.top.equalToSuperview()
-            make.right.equalToSuperview()
-            make.height.equalTo(48)
-        }
-        
-        self.textField.snp.makeConstraints { make in
-            make.left.equalTo(self.containerView).offset(12)
-            make.right.equalTo(self.containerView).offset(-12)
-            make.centerY.equalTo(self.containerView)
-        }
-        
-        self.snp.makeConstraints { make in
-            make.edges.equalTo(self.containerView)
-        }
+        setupLayout()
+        textField.delegate = self
     }
     
     func setText(text: String?) {
@@ -76,8 +60,8 @@ final class TextField: BaseView {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = "HH:mm"
-        self.datePicker.date = date
-        self.textField.text = dateFormatter.string(from: date)
+        datePicker.date = date
+        textField.text = dateFormatter.string(from: date)
     }
     
     fileprivate func format(with mask: String, text: String) -> String {
@@ -99,6 +83,27 @@ final class TextField: BaseView {
             }
         }
         return result
+    }
+    
+    private func setupLayout() {
+        addSubview(containerView)
+        containerView.snp.makeConstraints {
+            $0.left.equalToSuperview()
+            $0.top.equalToSuperview()
+            $0.right.equalToSuperview()
+            $0.height.equalTo(48)
+        }
+        
+        addSubview(textField)
+        textField.snp.makeConstraints {
+            $0.left.equalTo(containerView).offset(12)
+            $0.right.equalTo(containerView).offset(-12)
+            $0.centerY.equalTo(containerView)
+        }
+        
+        snp.makeConstraints {
+            $0.edges.equalTo(containerView)
+        }
     }
     
     private func setPlaceholder(placeholder: String?) {

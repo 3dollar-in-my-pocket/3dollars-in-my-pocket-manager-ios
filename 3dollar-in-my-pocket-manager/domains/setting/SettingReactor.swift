@@ -31,13 +31,13 @@ final class SettingReactor: BaseReactor, Reactor {
     let showCopyTokenSuccessAlertPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
     private let deviceService: DeviceServiceType
-    private let userDefaults: UserDefaultsUtils
+    private let userDefaults: Preference
     private let logManager: LogManager
     
     init(
         authService: AuthServiceType,
         deviceService: DeviceServiceType,
-        userDefaults: UserDefaultsUtils,
+        userDefaults: Preference,
         logManager: LogManager,
         state: State = State(user: User())
     ) {

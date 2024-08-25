@@ -3,6 +3,8 @@ import PhotosUI
 
 import ReactorKit
 import RxSwift
+import RxCocoa
+import RxDataSources
 import SPPermissions
 import CropViewController
 
@@ -27,7 +29,7 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             imageService: ImageService(),
             authService: AuthService(),
             deviceService: DeviceService(),
-            userDefaultsUtils: UserDefaultsUtils(),
+            userDefaultsUtils: Preference.shared,
             logManager: LogManager.shared
         )
         super.init(nibName: nil, bundle: nil)
@@ -47,7 +49,8 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.signupView.categoryCollectionView.collectionView.dataSource = nil
         self.reactor = self.signupReactor
         self.coordinator = self
         self.signupReactor.action.onNext(.viewDidLoad)
@@ -117,12 +120,12 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        self.signupView.categoryCollectionView.categoryCollectionView.rx.itemSelected
+        self.signupView.categoryCollectionView.collectionView.rx.itemSelected
             .map { Reactor.Action.selectCategory(index: $0.row) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-        signupView.categoryCollectionView.categoryCollectionView.rx.itemDeselected
+        signupView.categoryCollectionView.collectionView.rx.itemDeselected
             .map { Reactor.Action.selectCategory(index: $0.row) }
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
@@ -148,9 +151,9 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .do(onNext: { [weak self] categories in
                 self?.signupView.categoryCollectionView.updateCollectionViewHeight(categories: categories)
             })
-            .drive(self.signupView.categoryCollectionView.categoryCollectionView.rx.items(
-                cellIdentifier: SignupCategoryCollectionViewCell.registerID,
-                cellType: SignupCategoryCollectionViewCell.self
+            .drive(self.signupView.categoryCollectionView.collectionView.rx.items(
+                cellIdentifier: "CategoryViewCell",
+                cellType: CategoryViewCell.self
             )) { row, category, cell in
                 cell.bind(category: category)
             }

@@ -5,7 +5,7 @@ struct AppearanceDay: Equatable, Comparable {
     
     var dayOfTheWeek: DayOfTheWeek
     var locationDescription: String
-    var openingHours: TimeInterval
+    var openingHours: OperatingHours
     var isClosedDay: Bool
     
     init(response: BossStoreAppearanceDayResponse) {
@@ -18,7 +18,7 @@ struct AppearanceDay: Equatable, Comparable {
     init(dayOfTheWeek: DayOfTheWeek, isClosed: Bool = false) {
         self.dayOfTheWeek = dayOfTheWeek
         self.locationDescription = ""
-        self.openingHours = TimeInterval()
+        self.openingHours = OperatingHours()
         self.isClosedDay = isClosed
     }
 }
@@ -46,6 +46,9 @@ extension AppearanceDay {
             
         case .sunday:
             return 6
+        
+        case .unknown:
+            return 0
         }
     }
 }

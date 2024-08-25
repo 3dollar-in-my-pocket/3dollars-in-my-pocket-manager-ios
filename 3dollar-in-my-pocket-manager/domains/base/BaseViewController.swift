@@ -35,7 +35,7 @@ class BaseViewController: UIViewController {
                 message: httpError.description,
                 okbuttonTitle: "common_ok".localized
             ) {
-                UserDefaultsUtils().clear()
+                Preference.shared.clear()
                 self.goToSignin()
             }
         } else if let apiError = error as? ApiError {

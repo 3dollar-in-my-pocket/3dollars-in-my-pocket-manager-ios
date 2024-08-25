@@ -4,7 +4,7 @@ struct Bank: Equatable {
     let key: String
     let description: String
     
-    init(response: BankResponse) {
+    init(response: BossBank) {
         self.key = response.key
         self.description = response.description
     }

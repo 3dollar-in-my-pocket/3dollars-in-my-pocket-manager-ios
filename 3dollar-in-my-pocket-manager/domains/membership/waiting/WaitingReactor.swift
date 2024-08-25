@@ -26,12 +26,12 @@ final class WaitingReactor: BaseReactor, Reactor {
     let presentMailComposerPublisher = PublishRelay<String>()
     let goToSigninPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
-    private let userDefaults: UserDefaultsUtils
+    private let userDefaults: Preference
     private let logManager: LogManagerProtocol
     
     init(
         authService: AuthServiceType,
-        userDefaults: UserDefaultsUtils,
+        userDefaults: Preference,
         logManager: LogManagerProtocol
     ) {
         self.authService = authService
