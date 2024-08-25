@@ -66,8 +66,12 @@ final class StatisticsView: BaseView {
     }
     
     func updateContainerHeight(_ height: CGFloat) {
-        containerView.snp.updateConstraints {
-            $0.height.equalTo(height)
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            containerView.snp.updateConstraints {
+                $0.height.equalTo(height)
+            }
         }
+        
     }
 }

@@ -54,7 +54,7 @@ final class DailyStatisticsStackItemView: BaseView {
         snp.makeConstraints {
             $0.top.equalTo(countLabel).priority(.high)
             $0.bottom.equalTo(countLabel).priority(.high)
-            $0.height.equalTo(Layout.height)
+            $0.height.equalTo(Layout.height).priority(.high)
         }
     }
     

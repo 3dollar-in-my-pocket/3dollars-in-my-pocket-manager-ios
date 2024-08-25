@@ -1,6 +1,10 @@
 import UIKit
 
 final class DailyStatisticsViewController: BaseViewController {
+    enum Layout {
+        static let space: CGFloat = 12
+    }
+    
     private lazy var collectionView: UICollectionView = {
        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .clear
@@ -26,6 +30,12 @@ final class DailyStatisticsViewController: BaseViewController {
         setupLayout()
         bind()
         viewModel.input.viewDidLoad.send(())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.input.viewWillAppear.send(())
     }
     
     private func setupLayout() {
@@ -66,7 +76,7 @@ final class DailyStatisticsViewController: BaseViewController {
     private func createLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 12
+        layout.minimumInteritemSpacing = Layout.space
         return layout
     }
 }
@@ -95,7 +105,8 @@ extension DailyStatisticsViewController: UICollectionViewDelegateFlowLayout {
             return DailyStatisticsEmptyCell.Layout.size
         }
         
-        return .zero
+        let height = DailyStatisticsCell.Layout.calculateHeight(feedbackGroup)
+        return CGSize(width: UIUtils.windowBounds.width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

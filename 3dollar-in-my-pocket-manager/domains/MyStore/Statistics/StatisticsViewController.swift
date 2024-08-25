@@ -60,6 +60,7 @@ final class StatisticsViewController: BaseViewController {
             .store(in: &cancellables)
         
         statisticsView.filterButton.tapPublisher
+            .removeDuplicates()
             .subscribe(viewModel.input.didTapFilter)
             .store(in: &cancellables)
         

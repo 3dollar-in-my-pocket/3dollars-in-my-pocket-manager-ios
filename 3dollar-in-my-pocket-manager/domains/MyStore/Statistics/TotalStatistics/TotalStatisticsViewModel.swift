@@ -4,6 +4,7 @@ import Combine
 extension TotalStatisticsViewModel {
     struct Input {
         let viewDidLoad = PassthroughSubject<Void, Never>()
+        let viewWillAppear = PassthroughSubject<Void, Never>()
     }
     
     struct Output {
@@ -12,6 +13,10 @@ extension TotalStatisticsViewModel {
         let reviewTotalCount = PassthroughSubject<Int, Never>()
         let updateContainerHeight = PassthroughSubject<CGFloat, Never>()
         let route = PassthroughSubject<Route, Never>()
+    }
+    
+    struct State {
+        var containerHeight: CGFloat = .zero
     }
     
     enum Route {
@@ -39,6 +44,7 @@ extension TotalStatisticsViewModel {
 final class TotalStatisticsViewModel: BaseViewModel {
     let input = Input()
     let output: Output
+    private var state = State()
     private let dependency: Dependency
     
     init(config: Config, dependency: Dependency = Dependency()) {
@@ -54,6 +60,13 @@ final class TotalStatisticsViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: TotalStatisticsViewModel, _) in
                 owner.fetchStatistics()
+            }
+            .store(in: &cancellables)
+        
+        input.viewWillAppear
+            .withUnretained(self)
+            .sink { (owner: TotalStatisticsViewModel, _) in
+                owner.output.updateContainerHeight.send(owner.state.containerHeight)
             }
             .store(in: &cancellables)
     }
@@ -81,6 +94,8 @@ final class TotalStatisticsViewModel: BaseViewModel {
         let itemHeight = TotalStatisticsItemView.Layout.height * CGFloat(statistics.count)
         let space = TotalStatisticsViewController.Layout.spacing * CGFloat(statistics.count - 1)
         let totalHeight = TotalStatisticsViewController.Layout.topPadding + itemHeight + space
+        
+        state.containerHeight = totalHeight
         output.updateContainerHeight.send(totalHeight)
     }
 }

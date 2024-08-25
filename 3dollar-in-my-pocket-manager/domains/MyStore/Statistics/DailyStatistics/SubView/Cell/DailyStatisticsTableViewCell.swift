@@ -1,6 +1,17 @@
 import UIKit
 
 final class DailyStatisticsCell: BaseCollectionViewCell {
+    enum Layout {
+        static let space: CGFloat = 16
+        static let verticalPadding: CGFloat = 42
+        static func calculateHeight(_ feedbackGroup: FeedbackGroupingDateResponse) -> CGFloat {
+            let itemHeight: CGFloat = DailyStatisticsStackItemView.Layout.height * CGFloat(feedbackGroup.feedbacks.count)
+            let itemSpace: CGFloat = space * CGFloat(feedbackGroup.feedbacks.count - 1)
+            
+            return itemHeight + itemSpace + verticalPadding
+        }
+    }
+    
     private let dayView = DailyStatisticsDayView()
     
     private let stackView: UIStackView = {

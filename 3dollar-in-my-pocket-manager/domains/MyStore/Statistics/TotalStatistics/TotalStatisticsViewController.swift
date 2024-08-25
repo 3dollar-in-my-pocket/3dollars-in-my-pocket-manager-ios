@@ -37,6 +37,12 @@ final class TotalStatisticsViewController: BaseViewController {
         viewModel.input.viewDidLoad.send(())
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.input.viewWillAppear.send(())
+    }
+    
     private func setupLayout() {
         stackView.addArrangedSubview(spaceView)
         stackView.setCustomSpacing(0, after: spaceView)

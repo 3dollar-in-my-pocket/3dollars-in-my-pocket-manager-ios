@@ -8,6 +8,7 @@ extension DailyStatisticsViewModel {
     
     struct Input {
         let viewDidLoad = PassthroughSubject<Void, Never>()
+        let viewWillAppear = PassthroughSubject<Void, Never>()
         let willDisplayCell = PassthroughSubject<Int, Never>()
     }
     
@@ -22,6 +23,7 @@ extension DailyStatisticsViewModel {
         var statisticGroups: [FeedbackGroupingDateResponse] = []
         var endDate: Date? = Date()
         var startDate = Date().addWeek(week: -1)
+        var containerHeight: CGFloat = .zero
     }
     
     enum Route {
@@ -72,6 +74,13 @@ final class DailyStatisticsViewModel: BaseViewModel {
             }
             .store(in: &cancellables)
         
+        input.viewWillAppear
+            .withUnretained(self)
+            .sink { (owner: DailyStatisticsViewModel, _) in
+                owner.output.updateContainerHeight.send(owner.state.containerHeight)
+            }
+            .store(in: &cancellables)
+        
         input.willDisplayCell
             .withUnretained(self)
             .sink { (owner: DailyStatisticsViewModel, index: Int) in
@@ -109,10 +118,12 @@ final class DailyStatisticsViewModel: BaseViewModel {
                 
                 if response.contents.isEmpty {
                     fetchStatistics(startDate: state.startDate, endDate: state.endDate)
+                    updateContainerHeight()
                     return
                 } else {
                     state.statisticGroups.append(contentsOf: response.contents)
                     output.statisticGroups.send(state.statisticGroups)
+                    updateContainerHeight()
                 }
                 
             case .failure(let error):
@@ -123,5 +134,22 @@ final class DailyStatisticsViewModel: BaseViewModel {
     
     private func canLoadMore(index: Int) -> Bool {
         return index >= state.statisticGroups.count - 1 && state.endDate.isNotNil
+    }
+    
+    private func updateContainerHeight() {
+        var containerHeight: CGFloat
+        if state.statisticGroups.isEmpty {
+            containerHeight = DailyStatisticsEmptyCell.Layout.size.height
+        } else {
+            let itemHeight = state.statisticGroups.map {
+                DailyStatisticsCell.Layout.calculateHeight($0)
+            }.reduce(0, +)
+            let space = DailyStatisticsViewController.Layout.space * CGFloat(state.statisticGroups.count - 1)
+            
+            containerHeight = itemHeight + space
+        }
+        
+        state.containerHeight = containerHeight
+        output.updateContainerHeight.send(containerHeight)
     }
 }

@@ -24,7 +24,6 @@
 		6E142D5F27D77EA50084480C /* NetworkActivityLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */; };
 		6E142D6227D785A40084480C /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E142D6127D785A40084480C /* SignupView.swift */; };
 		6E15C0F62C54889900888984 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E15C0F52C54889900888984 /* UIImageView+.swift */; };
-		6E15C0F82C548A6100888984 /* StorePostCell+PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E15C0F72C548A6100888984 /* StorePostCell+PhotoCell.swift */; };
 		6E1AB79D280D7ECF0059DCF4 /* MyStoreInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoViewModel.swift */; };
 		6E1AB7A1280D7F390059DCF4 /* EditIntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */; };
 		6E1AB7A3280D84D60059DCF4 /* EditIntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */; };
@@ -176,11 +175,12 @@
 		6E80AC9A2B273B8600FC886B /* BossStoreAccountNumberApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80AC992B273B8600FC886B /* BossStoreAccountNumberApiRequest.swift */; };
 		6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E81503527EEEA110032C518 /* HomeViewController.swift */; };
 		6E8474BC2C54B3200064DE0A /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8474BB2C54B3200064DE0A /* CombineCocoa */; };
-		6E8474C02C54C0900064DE0A /* StorePostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8474BF2C54C0900064DE0A /* StorePostCellViewModel.swift */; };
-		6E8474C22C54C9D20064DE0A /* StorePostEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8474C12C54C9D20064DE0A /* StorePostEmptyView.swift */; };
 		6E873EC82C72278E00751811 /* AddMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E873EC72C72278E00751811 /* AddMenuButton.swift */; };
 		6E893CBA2C3A65F100357F66 /* netfox in Frameworks */ = {isa = PBXBuildFile; productRef = 6E893CB92C3A65F100357F66 /* netfox */; };
 		6E89A865281E5A3300B795EF /* EditScheduleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E89A864281E5A3300B795EF /* EditScheduleItemView.swift */; };
+		6E8A067B2C7AE588000C1B78 /* StorePostCell+PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A067A2C7AE588000C1B78 /* StorePostCell+PhotoCell.swift */; };
+		6E8A067D2C7AE594000C1B78 /* StorePostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A067C2C7AE594000C1B78 /* StorePostCellViewModel.swift */; };
+		6E8A067F2C7AE599000C1B78 /* StorePostEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A067E2C7AE599000C1B78 /* StorePostEmptyView.swift */; };
 		6E8A80882C186E8F00A3C55C /* StorePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A80872C186E8F00A3C55C /* StorePostCell.swift */; };
 		6E8A808A2C18711F00A3C55C /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A80892C18711F00A3C55C /* Font+.swift */; };
 		6E8A808C2C18723100A3C55C /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8A808B2C18723100A3C55C /* Color+.swift */; };
@@ -343,7 +343,6 @@
 		6E142D5E27D77EA50084480C /* NetworkActivityLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkActivityLogger.swift; sourceTree = "<group>"; };
 		6E142D6127D785A40084480C /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		6E15C0F52C54889900888984 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
-		6E15C0F72C548A6100888984 /* StorePostCell+PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "StorePostCell+PhotoCell.swift"; path = "3dollar-in-my-pocket-manager/domains/my/StorePost/SubView/StorePostCell+PhotoCell.swift"; sourceTree = SOURCE_ROOT; };
 		6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoViewModel.swift; sourceTree = "<group>"; };
 		6E1AB7A0280D7F390059DCF4 /* EditIntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionView.swift; sourceTree = "<group>"; };
 		6E1AB7A2280D84D60059DCF4 /* EditIntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIntroductionViewController.swift; sourceTree = "<group>"; };
@@ -489,10 +488,11 @@
 		6E80AC972B2733C900FC886B /* EditAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewModel.swift; sourceTree = "<group>"; };
 		6E80AC992B273B8600FC886B /* BossStoreAccountNumberApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossStoreAccountNumberApiRequest.swift; sourceTree = "<group>"; };
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		6E8474BF2C54C0900064DE0A /* StorePostCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorePostCellViewModel.swift; path = "3dollar-in-my-pocket-manager/domains/my/StorePost/SubView/StorePostCellViewModel.swift"; sourceTree = SOURCE_ROOT; };
-		6E8474C12C54C9D20064DE0A /* StorePostEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorePostEmptyView.swift; path = "3dollar-in-my-pocket-manager/domains/my/StorePost/SubView/StorePostEmptyView.swift"; sourceTree = SOURCE_ROOT; };
 		6E873EC72C72278E00751811 /* AddMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMenuButton.swift; sourceTree = "<group>"; };
 		6E89A864281E5A3300B795EF /* EditScheduleItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScheduleItemView.swift; sourceTree = "<group>"; };
+		6E8A067A2C7AE588000C1B78 /* StorePostCell+PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "StorePostCell+PhotoCell.swift"; path = "3dollar-in-my-pocket-manager/domains/MyStore/StorePost/SubView/StorePostCell+PhotoCell.swift"; sourceTree = SOURCE_ROOT; };
+		6E8A067C2C7AE594000C1B78 /* StorePostCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorePostCellViewModel.swift; path = "3dollar-in-my-pocket-manager/domains/MyStore/StorePost/SubView/StorePostCellViewModel.swift"; sourceTree = SOURCE_ROOT; };
+		6E8A067E2C7AE599000C1B78 /* StorePostEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StorePostEmptyView.swift; path = "3dollar-in-my-pocket-manager/domains/MyStore/StorePost/SubView/StorePostEmptyView.swift"; sourceTree = SOURCE_ROOT; };
 		6E8A80872C186E8F00A3C55C /* StorePostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePostCell.swift; sourceTree = "<group>"; };
 		6E8A80892C18711F00A3C55C /* Font+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+.swift"; sourceTree = "<group>"; };
 		6E8A808B2C18723100A3C55C /* Color+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+.swift"; sourceTree = "<group>"; };
@@ -1059,9 +1059,9 @@
 			isa = PBXGroup;
 			children = (
 				6E8A80872C186E8F00A3C55C /* StorePostCell.swift */,
-				6E15C0F72C548A6100888984 /* StorePostCell+PhotoCell.swift */,
-				6E8474BF2C54C0900064DE0A /* StorePostCellViewModel.swift */,
-				6E8474C12C54C9D20064DE0A /* StorePostEmptyView.swift */,
+				6E8A067A2C7AE588000C1B78 /* StorePostCell+PhotoCell.swift */,
+				6E8A067E2C7AE599000C1B78 /* StorePostEmptyView.swift */,
+				6E8A067C2C7AE594000C1B78 /* StorePostCellViewModel.swift */,
 			);
 			path = Subview;
 			sourceTree = "<group>";
@@ -1757,6 +1757,7 @@
 				6E80AC982B2733C900FC886B /* EditAccountViewModel.swift in Sources */,
 				6E4843C62B1C6E6700EB8CFD /* AccountInfo.swift in Sources */,
 				6E4A2B272C5BA66A00317349 /* UIImage+.swift in Sources */,
+				6E8A067D2C7AE594000C1B78 /* StorePostCellViewModel.swift in Sources */,
 				6EB5CA8A2935CA4200B6653C /* BaseViewController.swift in Sources */,
 				6EB5CA8E2935CA7B00B6653C /* BaseCollectionViewCell.swift in Sources */,
 				6E80AC962B27001200FC886B /* EditAccountViewController.swift in Sources */,
@@ -1769,6 +1770,7 @@
 				6E6EDF2028A7B47D00D1A6ED /* ScreenName.swift in Sources */,
 				6ED370F7280C33A300C445E5 /* MyStoreInfoHeaderView.swift in Sources */,
 				6EBC20F72C1C42D800C08EE0 /* StoreFoodCategoryResponse.swift in Sources */,
+				6E8A067B2C7AE588000C1B78 /* StorePostCell+PhotoCell.swift in Sources */,
 				6EA53B9C284DD18A007A3839 /* SettingTableFooterView.swift in Sources */,
 				6EB5CA962935CB1D00B6653C /* UIViewExtensions.swift in Sources */,
 				6E6B4319285DB66800AD84A5 /* FAQViewController.swift in Sources */,
@@ -1831,7 +1833,6 @@
 				6E5DCE6327FDB04600CA58EE /* Region.swift in Sources */,
 				6E1C3A102C79992800921337 /* FavoritCountLabel.swift in Sources */,
 				6E408D4027EF2A8D00322365 /* HomeViewModel.swift in Sources */,
-				6E8474C02C54C0900064DE0A /* StorePostCellViewModel.swift in Sources */,
 				6E91A98B2841DCAF0090361F /* DailyStatisticsViewController.swift in Sources */,
 				6EE0CFA527CB573E0027A426 /* KakaoSignInManager.swift in Sources */,
 				6E6F98F527DE0BAE001302A6 /* FileType.swift in Sources */,
@@ -1950,7 +1951,6 @@
 				6E21184D285DE0A800220E5A /* FAQSectionModel.swift in Sources */,
 				6EF676BA27EECF5400D43E99 /* SplashCoordinator.swift in Sources */,
 				6E37AF7427E71455004FBE25 /* LoadingManager.swift in Sources */,
-				6E8474C22C54C9D20064DE0A /* StorePostEmptyView.swift in Sources */,
 				6E5F3DDA281D6150002282B6 /* EditScheduleViewController.swift in Sources */,
 				6E3A524E2C7188360093B4CA /* EditMenuHeaderView.swift in Sources */,
 				6E01964C2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift in Sources */,
@@ -1962,6 +1962,7 @@
 				6E5DCE6E27FDC93000CA58EE /* BossStoreAppearanceDayResponse.swift in Sources */,
 				6E91A9852841D4B30090361F /* StatisticsViewModel.swift in Sources */,
 				6EC803212B2C894B00DA4F5E /* BankListBottomSheetView.swift in Sources */,
+				6E8A067F2C7AE599000C1B78 /* StorePostEmptyView.swift in Sources */,
 				6EBC20F52C1C426300C08EE0 /* StoreType.swift in Sources */,
 				6EEA3D6B27F1E74C00BC5F31 /* MainTabController.swift in Sources */,
 				6E25FED327F535F100BE2941 /* LocationManager.swift in Sources */,
@@ -1982,7 +1983,6 @@
 				6E360F1C2C27EFB3008A4868 /* UploadPostViewController.swift in Sources */,
 				6EB56F2C28A229F500834663 /* FAQCategoryResponse.swift in Sources */,
 				6E6C9C72280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift in Sources */,
-				6E15C0F82C548A6100888984 /* StorePostCell+PhotoCell.swift in Sources */,
 				6EBC20EB2C1C1EC500C08EE0 /* StorePostViewModel.swift in Sources */,
 				6E37EA642C6F7BCF00BDCDE8 /* ToastView.swift in Sources */,
 				6EBC20E92C1C1CCD00C08EE0 /* StorePostViewController.swift in Sources */,
