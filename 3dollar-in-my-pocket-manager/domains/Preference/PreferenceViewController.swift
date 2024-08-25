@@ -101,7 +101,7 @@ final class PreferenceViewController: BaseViewController {
             .main
             .withUnretained(self)
             .sink { (owner: PreferenceViewController, isOn: Bool) in
-                owner.locationSettingItem.settingSwitch.isOn = isOn
+                owner.locationSettingItem.settingSwitch.isOn = !isOn
             }
             .store(in: &cancellables)
         
