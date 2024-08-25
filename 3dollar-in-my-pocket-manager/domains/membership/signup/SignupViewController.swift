@@ -3,6 +3,8 @@ import PhotosUI
 
 import ReactorKit
 import RxSwift
+import RxCocoa
+import RxDataSources
 import SPPermissions
 import CropViewController
 
@@ -47,7 +49,8 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.signupView.categoryCollectionView.collectionView.dataSource = nil
         self.reactor = self.signupReactor
         self.coordinator = self
         self.signupReactor.action.onNext(.viewDidLoad)
@@ -117,15 +120,15 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .bind(to: reactor.action)
             .disposed(by: self.disposeBag)
         
-//        self.signupView.categoryCollectionView.categoryCollectionView.rx.itemSelected
-//            .map { Reactor.Action.selectCategory(index: $0.row) }
-//            .bind(to: reactor.action)
-//            .disposed(by: self.disposeBag)
-//        
-//        signupView.categoryCollectionView.categoryCollectionView.rx.itemDeselected
-//            .map { Reactor.Action.selectCategory(index: $0.row) }
-//            .bind(to: reactor.action)
-//            .disposed(by: self.disposeBag)
+        self.signupView.categoryCollectionView.collectionView.rx.itemSelected
+            .map { Reactor.Action.selectCategory(index: $0.row) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
+        
+        signupView.categoryCollectionView.collectionView.rx.itemDeselected
+            .map { Reactor.Action.selectCategory(index: $0.row) }
+            .bind(to: reactor.action)
+            .disposed(by: self.disposeBag)
         
         self.signupView.signupButton.rx.tap
             .map { Reactor.Action.tapSignup }
@@ -141,20 +144,20 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             })
             .disposed(by: disposeBag)
         
-//        reactor.state
-//            .map { $0.categories }
-//            .distinctUntilChanged()
-//            .asDriver(onErrorJustReturn: [])
-//            .do(onNext: { [weak self] categories in
-//                self?.signupView.categoryCollectionView.updateCollectionViewHeight(categories: categories)
-//            })
-//            .drive(self.signupView.categoryCollectionView.categoryCollectionView.rx.items(
-//                cellIdentifier: SignupCategoryCollectionViewCell.registerID,
-//                cellType: SignupCategoryCollectionViewCell.self
-//            )) { row, category, cell in
-//                cell.bind(category: category)
-//            }
-//            .disposed(by: self.disposeBag)
+        reactor.state
+            .map { $0.categories }
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: [])
+            .do(onNext: { [weak self] categories in
+                self?.signupView.categoryCollectionView.updateCollectionViewHeight(categories: categories)
+            })
+            .drive(self.signupView.categoryCollectionView.collectionView.rx.items(
+                cellIdentifier: "CategoryViewCell",
+                cellType: CategoryViewCell.self
+            )) { row, category, cell in
+                cell.bind(category: category)
+            }
+            .disposed(by: self.disposeBag)
         
         reactor.state
             .map { $0.photo }

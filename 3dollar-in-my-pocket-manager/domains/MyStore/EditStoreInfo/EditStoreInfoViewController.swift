@@ -53,11 +53,13 @@ final class EditStoreInfoViewController: BaseViewController {
         // Input
         editStoreInfoView.storeNameField.textField.textField.textPublisher
             .compactMap { $0 }
+            .dropFirst()
             .subscribe(viewModel.input.inputStoreName)
             .store(in: &cancellables)
         
         editStoreInfoView.snsField.textField.textField.textPublisher
             .compactMap { $0 }
+            .dropFirst()
             .subscribe(viewModel.input.inputSNS)
             .store(in: &cancellables)
         

@@ -112,5 +112,23 @@ final class PreferenceViewController: BaseViewController {
                 owner.statusSettingItem.settingSwitch.isOn = isOn
             }
             .store(in: &cancellables)
+        
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: PreferenceViewController, route: PreferenceViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
+    }
+}
+
+// MARK: Route
+extension PreferenceViewController {
+    private func handleRoute(_ route: PreferenceViewModel.Route) {
+        switch route {
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        }
     }
 }
