@@ -1,11 +1,11 @@
 import Foundation
 
 struct StorePreferencePatchRequest: Encodable {
-    let removeLocationOnClose: Bool
+    let retainLocationOnClose: Bool
     let autoOpenCloseControl: Bool
 }
 
 struct StorePreferenceResponse: Decodable {
-    let removeLocationOnClose: Bool
+    let retainLocationOnClose: Bool
     let autoOpenCloseControl: Bool
 }

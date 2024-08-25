@@ -88,7 +88,7 @@ final class PreferenceViewController: BaseViewController {
         locationSettingItem.settingSwitch.isOnPublisher
             .dropFirst()
             .mapVoid
-            .subscribe(viewModel.input.toggleRemoveLocationOnClose)
+            .subscribe(viewModel.input.toggleRetainLocationOnClose)
             .store(in: &cancellables)
         
         statusSettingItem.settingSwitch.isOnPublisher
@@ -97,11 +97,11 @@ final class PreferenceViewController: BaseViewController {
             .subscribe(viewModel.input.toggleAutoOpenControl)
             .store(in: &cancellables)
         
-        viewModel.output.removeLocationOnClose
+        viewModel.output.retainLocationOnClose
             .main
             .withUnretained(self)
             .sink { (owner: PreferenceViewController, isOn: Bool) in
-                owner.locationSettingItem.settingSwitch.isOn = !isOn
+                owner.locationSettingItem.settingSwitch.isOn = isOn
             }
             .store(in: &cancellables)
         
