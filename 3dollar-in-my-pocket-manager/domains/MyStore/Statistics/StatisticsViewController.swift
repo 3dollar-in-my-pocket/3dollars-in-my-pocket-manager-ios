@@ -82,11 +82,11 @@ final class StatisticsViewController: BaseViewController {
             .store(in: &cancellables)
         
         viewModel.output.setPageViewController
-            .combineLatest(viewModel.output.filter)
             .main
             .withUnretained(self)
             .sink { (owner: StatisticsViewController, viewModels) in
-                let ((totalStatisticsViewModel, dailyStatisticsViewModel), selectedFilter) = viewModels
+                let (totalStatisticsViewModel, dailyStatisticsViewModel) = viewModels
+                let selectedFilter = owner.viewModel.output.filter.value
                 owner.setupPageViewController(
                     totalStatisticsViewModel: totalStatisticsViewModel,
                     dailyStatisticsViewModel: dailyStatisticsViewModel,

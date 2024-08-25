@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6E0196482C648AAA00164FCA /* MyStoreInfoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0196472C648AAA00164FCA /* MyStoreInfoCollectionView.swift */; };
 		6E01964A2C648FB900164FCA /* MyStoreInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0196492C648FB900164FCA /* MyStoreInfoDataSource.swift */; };
 		6E01964C2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E01964B2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift */; };
 		6E07F9B9284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */; };
@@ -147,7 +146,6 @@
 		6E6B4321285DBB5900AD84A5 /* FAQHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6B4320285DBB5900AD84A5 /* FAQHeaderView.swift */; };
 		6E6C9C69280BD513009AFAE8 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C68280BD513009AFAE8 /* MyPageViewController.swift */; };
 		6E6C9C6B280BD702009AFAE8 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C6A280BD702009AFAE8 /* MyPageView.swift */; };
-		6E6C9C6E280BD943009AFAE8 /* MyStoreInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */; };
 		6E6C9C72280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C71280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift */; };
 		6E6C9C74280BE7B3009AFAE8 /* MyStoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C73280BE7B3009AFAE8 /* MyStoreInfoViewController.swift */; };
 		6E6C9C77280BEE26009AFAE8 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6E6C9C76280BEE26009AFAE8 /* Kingfisher */; };
@@ -326,7 +324,6 @@
 /* Begin PBXFileReference section */
 		2485BFD46CCBCCA4FDB38FB3 /* Pods-3dollar-in-my-pocket-manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3dollar-in-my-pocket-manager.release.xcconfig"; path = "Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager.release.xcconfig"; sourceTree = "<group>"; };
 		2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_3dollar_in_my_pocket_manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E0196472C648AAA00164FCA /* MyStoreInfoCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoCollectionView.swift; sourceTree = "<group>"; };
 		6E0196492C648FB900164FCA /* MyStoreInfoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoDataSource.swift; sourceTree = "<group>"; };
 		6E01964B2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewDiffableDataSource+.swift"; sourceTree = "<group>"; };
 		6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoMenuMoreCell.swift; sourceTree = "<group>"; };
@@ -461,7 +458,6 @@
 		6E6B4320285DBB5900AD84A5 /* FAQHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQHeaderView.swift; sourceTree = "<group>"; };
 		6E6C9C68280BD513009AFAE8 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		6E6C9C6A280BD702009AFAE8 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoView.swift; sourceTree = "<group>"; };
 		6E6C9C71280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoOverviewCell.swift; sourceTree = "<group>"; };
 		6E6C9C73280BE7B3009AFAE8 /* MyStoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoViewController.swift; sourceTree = "<group>"; };
 		6E6C9C7A280BF1EF009AFAE8 /* MyStoreInfoIntroductionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoIntroductionCell.swift; sourceTree = "<group>"; };
@@ -996,21 +992,11 @@
 			isa = PBXGroup;
 			children = (
 				6E6C9C70280BDC3E009AFAE8 /* Cell */,
-				6E6C9C6F280BDC3B009AFAE8 /* Subview */,
-				6E6C9C6D280BD943009AFAE8 /* MyStoreInfoView.swift */,
 				6E6C9C73280BE7B3009AFAE8 /* MyStoreInfoViewController.swift */,
 				6E1AB79C280D7ECF0059DCF4 /* MyStoreInfoViewModel.swift */,
 				6E0196492C648FB900164FCA /* MyStoreInfoDataSource.swift */,
 			);
 			path = MyStoreInfo;
-			sourceTree = "<group>";
-		};
-		6E6C9C6F280BDC3B009AFAE8 /* Subview */ = {
-			isa = PBXGroup;
-			children = (
-				6E0196472C648AAA00164FCA /* MyStoreInfoCollectionView.swift */,
-			);
-			path = Subview;
 			sourceTree = "<group>";
 		};
 		6E6C9C70280BDC3E009AFAE8 /* Cell */ = {
@@ -1901,7 +1887,6 @@
 				6EF676B127EEC91E00D43E99 /* BossAccountInfoResponse.swift in Sources */,
 				6EFB2F08285A098D006E37F9 /* FeedbackTypeResponse.swift in Sources */,
 				6EFB2F08285A098D006E37F9 /* FeedbackTypeResponse.swift in Sources */,
-				6E0196482C648AAA00164FCA /* MyStoreInfoCollectionView.swift in Sources */,
 				6E1F54AC27CB94EB0050BBBA /* Requestable.swift in Sources */,
 				6EAF1EB22B28A0F000B5295D /* Bank.swift in Sources */,
 				6E5E14A62830F89D00B1F450 /* FeedbackCountWithRatioResponse.swift in Sources */,
@@ -1969,7 +1954,6 @@
 				6EC8032B2B2C91B600DA4F5E /* ArrayExtension.swift in Sources */,
 				6E5F21342819778E00922A99 /* Menu.swift in Sources */,
 				6E63FF6E281C1FEA00EC49DE /* EditStoreInfoViewController.swift in Sources */,
-				6E6C9C6E280BD943009AFAE8 /* MyStoreInfoView.swift in Sources */,
 				6ED883A727CB443F00278E14 /* UIColorExtensions.swift in Sources */,
 				6E01964A2C648FB900164FCA /* MyStoreInfoDataSource.swift in Sources */,
 				6EF676BD27EEE57A00D43E99 /* HomeView.swift in Sources */,

@@ -23,7 +23,7 @@ final class DailyStatisticsStackItemView: BaseView {
         label.textColor = .green
         label.layer.borderColor = UIColor.green.cgColor
         label.layer.borderWidth = 1
-        label.layer.cornerRadius = 11
+        label.layer.cornerRadius = 13
         return label
     }()
     
@@ -61,5 +61,6 @@ final class DailyStatisticsStackItemView: BaseView {
     func bind(feedback: FeedbackCountResponse, feedbackType: FeedbackTypeResponse) {
         titleLabel.text = "\(feedbackType.emoji) \(feedbackType.description)"
         countLabel.text = "\(feedback.count)개"
+        countLabel.setLineHeight(lineHeight: 18)
     }
 }

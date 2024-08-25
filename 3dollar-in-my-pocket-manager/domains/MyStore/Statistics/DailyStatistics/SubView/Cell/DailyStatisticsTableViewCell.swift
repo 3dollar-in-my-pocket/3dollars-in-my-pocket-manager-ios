@@ -3,12 +3,12 @@ import UIKit
 final class DailyStatisticsCell: BaseCollectionViewCell {
     enum Layout {
         static let space: CGFloat = 16
-        static let verticalPadding: CGFloat = 42
+        static let verticalPadding: CGFloat = 21
         static func calculateHeight(_ feedbackGroup: FeedbackGroupingDateResponse) -> CGFloat {
             let itemHeight: CGFloat = DailyStatisticsStackItemView.Layout.height * CGFloat(feedbackGroup.feedbacks.count)
             let itemSpace: CGFloat = space * CGFloat(feedbackGroup.feedbacks.count - 1)
             
-            return itemHeight + itemSpace + verticalPadding
+            return itemHeight + itemSpace + (verticalPadding * 2)
         }
     }
     
@@ -20,6 +20,8 @@ final class DailyStatisticsCell: BaseCollectionViewCell {
         stackView.spacing = 16
         stackView.backgroundColor = .white
         stackView.layer.cornerRadius = 16
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.layoutMargins = .init(top: Layout.verticalPadding, left: 16, bottom: Layout.verticalPadding, right: 16)
         return stackView
     }()
     
@@ -50,8 +52,8 @@ final class DailyStatisticsCell: BaseCollectionViewCell {
         stackView.snp.makeConstraints {
             $0.leading.equalTo(dayView.snp.trailing).offset(11)
             $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-20)
-            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-24)
         }
     }
     

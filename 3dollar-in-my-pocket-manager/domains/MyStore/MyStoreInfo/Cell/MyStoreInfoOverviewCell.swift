@@ -11,6 +11,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .gray5
         collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     

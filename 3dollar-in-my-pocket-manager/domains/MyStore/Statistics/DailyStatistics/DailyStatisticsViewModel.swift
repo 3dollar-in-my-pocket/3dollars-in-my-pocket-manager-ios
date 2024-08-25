@@ -133,6 +133,7 @@ final class DailyStatisticsViewModel: BaseViewModel {
     }
     
     private func canLoadMore(index: Int) -> Bool {
+        guard state.statisticGroups.isNotEmpty else { return false }
         return index >= state.statisticGroups.count - 1 && state.endDate.isNotNil
     }
     

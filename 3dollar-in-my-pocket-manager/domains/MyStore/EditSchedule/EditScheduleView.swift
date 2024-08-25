@@ -17,7 +17,11 @@ final class EditScheduleView: BaseView {
         return label
     }()
     
-    private let scrollView = UIScrollView()
+    private let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
     
     let stackView: UIStackView = {
         let stackView = UIStackView()

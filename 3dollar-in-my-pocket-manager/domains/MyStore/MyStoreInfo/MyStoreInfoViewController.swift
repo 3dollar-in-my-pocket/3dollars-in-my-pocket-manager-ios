@@ -8,6 +8,7 @@ final class MyStoreInfoViewController: BaseViewController {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .gray0
         return collectionView
     }()
