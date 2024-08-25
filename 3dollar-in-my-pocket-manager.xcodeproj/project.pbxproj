@@ -973,7 +973,7 @@
 			path = cells;
 			sourceTree = "<group>";
 		};
-		6E6C9C66280BD467009AFAE8 /* my */ = {
+		6E6C9C66280BD467009AFAE8 /* MyStore */ = {
 			isa = PBXGroup;
 			children = (
 				6E5F3DD3281D5F10002282B6 /* EditSchedule */,
@@ -984,12 +984,12 @@
 				6EDA7D0D2C2CEAB100457D63 /* Subview */,
 				6ED290772C25CCF200C47892 /* UploadPost */,
 				6E8A80852C186D0700A3C55C /* StorePost */,
-				6EC5E42A282BD73900AD571C /* statistics */,
+				6EC5E42A282BD73900AD571C /* Statistics */,
 				6E6C9C6C280BD92B009AFAE8 /* MyStoreInfo */,
 				6E6C9C68280BD513009AFAE8 /* MyPageViewController.swift */,
 				6E6C9C6A280BD702009AFAE8 /* MyPageView.swift */,
 			);
-			path = my;
+			path = MyStore;
 			sourceTree = "<group>";
 		};
 		6E6C9C6C280BD92B009AFAE8 /* MyStoreInfo */ = {
@@ -1099,25 +1099,25 @@
 			path = EditAccount;
 			sourceTree = "<group>";
 		};
-		6E91A9872841DBF10090361F /* daily-statistics */ = {
+		6E91A9872841DBF10090361F /* DailyStatistics */ = {
 			isa = PBXGroup;
 			children = (
-				6E91A98C2841DD870090361F /* subviews */,
+				6E91A98C2841DD870090361F /* SubView */,
 				6E91A9882841DC110090361F /* DailyStatisticsView.swift */,
 				6E91A98A2841DCAF0090361F /* DailyStatisticsViewController.swift */,
 				6E7964AA28420D2C005EA0E2 /* DailyStatisticsViewModel.swift */,
 			);
-			path = "daily-statistics";
+			path = DailyStatistics;
 			sourceTree = "<group>";
 		};
-		6E91A98C2841DD870090361F /* subviews */ = {
+		6E91A98C2841DD870090361F /* SubView */ = {
 			isa = PBXGroup;
 			children = (
 				6E91A98D2841DD8B0090361F /* Cell */,
 				6E91A9902841E09C0090361F /* DailyStatisticsDayView.swift */,
 				6E7964B128423909005EA0E2 /* DailyStatisticsStackItemView.swift */,
 			);
-			path = subviews;
+			path = SubView;
 			sourceTree = "<group>";
 		};
 		6E91A98D2841DD8B0090361F /* Cell */ = {
@@ -1256,17 +1256,17 @@
 			path = Subview;
 			sourceTree = "<group>";
 		};
-		6EC5E42A282BD73900AD571C /* statistics */ = {
+		6EC5E42A282BD73900AD571C /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
-				6E91A9872841DBF10090361F /* daily-statistics */,
+				6E91A9872841DBF10090361F /* DailyStatistics */,
 				6EF1D496282D361100DA9D35 /* TotalStatistics */,
 				6EC5E42E282BD7D200AD571C /* Subview */,
 				6EC5E42C282BD77A00AD571C /* StatisticsView.swift */,
 				6EC5E431282BDB3000AD571C /* StatisticsViewController.swift */,
 				6E91A9842841D4B30090361F /* StatisticsViewModel.swift */,
 			);
-			path = statistics;
+			path = Statistics;
 			sourceTree = "<group>";
 		};
 		6EC5E42E282BD7D200AD571C /* Subview */ = {
@@ -1308,7 +1308,7 @@
 			children = (
 				6E9C99332C60F1D700EE47FD /* Preference */,
 				6E1E5BA62827EB29003A1B51 /* setting */,
-				6E6C9C66280BD467009AFAE8 /* my */,
+				6E6C9C66280BD467009AFAE8 /* MyStore */,
 				6EEA3D6827F1E73A00BC5F31 /* main */,
 				6EF676BB27EEE57500D43E99 /* Home */,
 				6EF676B227EECBE600D43E99 /* splash */,

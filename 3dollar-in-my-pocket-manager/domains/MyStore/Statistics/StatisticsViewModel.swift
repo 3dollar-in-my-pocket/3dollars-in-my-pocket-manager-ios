@@ -15,7 +15,7 @@ extension StatisticsViewModel {
         let subscriberCount = PassthroughSubject<Int, Never>()
         let totalReviewCount = PassthroughSubject<Int, Never>()
         let setPageViewController = PassthroughSubject<(TotalStatisticsViewModel, DailyStatisticsViewModel), Never>()
-        let filter = PassthroughSubject<StatisticsFilterButton.FilterType, Never>()
+        let filter = CurrentValueSubject<StatisticsFilterButton.FilterType, Never>(.total)
         let updateContainerHeight = PassthroughSubject<CGFloat, Never>()
         let route = PassthroughSubject<Route, Never>()
     }

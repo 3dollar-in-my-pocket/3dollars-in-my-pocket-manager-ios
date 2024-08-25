@@ -81,18 +81,21 @@ final class StatisticsViewController: BaseViewController {
             .store(in: &cancellables)
         
         viewModel.output.setPageViewController
+            .combineLatest(viewModel.output.filter)
             .main
             .withUnretained(self)
             .sink { (owner: StatisticsViewController, viewModels) in
-                let (totalStatisticsViewModel, dailyStatisticsViewModel) = viewModels
+                let ((totalStatisticsViewModel, dailyStatisticsViewModel), selectedFilter) = viewModels
                 owner.setupPageViewController(
                     totalStatisticsViewModel: totalStatisticsViewModel,
-                    dailyStatisticsViewModel: dailyStatisticsViewModel
+                    dailyStatisticsViewModel: dailyStatisticsViewModel,
+                    selectedFilter: selectedFilter
                 )
             }
             .store(in: &cancellables)
         
         viewModel.output.filter
+            .dropFirst()
             .main
             .withUnretained(self)
             .sink { (owner: StatisticsViewController, filterType: StatisticsFilterButton.FilterType) in
@@ -111,7 +114,8 @@ final class StatisticsViewController: BaseViewController {
     
     private func setupPageViewController(
         totalStatisticsViewModel: TotalStatisticsViewModel,
-        dailyStatisticsViewModel: DailyStatisticsViewModel
+        dailyStatisticsViewModel: DailyStatisticsViewModel,
+        selectedFilter: StatisticsFilterButton.FilterType
     ) {
         let totalStatisticsViewController = TotalStatisticsViewController(viewModel: totalStatisticsViewModel)
         self.totalStatisticsViewController = totalStatisticsViewController
@@ -124,16 +128,27 @@ final class StatisticsViewController: BaseViewController {
             totalStatisticsViewController,
             dailyStatisticsViewController
         ]
-        addChild(pageViewController)
+        if pageViewController.parent.isNil {
+            addChild(pageViewController)
+            statisticsView.containerView.addSubview(pageViewController.view)
+            pageViewController.view.snp.makeConstraints {
+                $0.edges.equalTo(statisticsView.containerView)
+            }
+        }
+        
         pageViewController.delegate = self
         pageViewController.dataSource = self
         
-        statisticsView.containerView.addSubview(pageViewController.view)
-        pageViewController.view.snp.makeConstraints {
-            $0.edges.equalTo(statisticsView.containerView)
+        var selectedViewController: UIViewController
+        switch selectedFilter {
+        case .total:
+            selectedViewController = totalStatisticsViewController
+        case .day:
+            selectedViewController = dailyStatisticsViewController
         }
+        
         pageViewController.setViewControllers(
-            [totalStatisticsViewController],
+            [selectedViewController],
             direction: .forward,
             animated: false,
             completion: nil
