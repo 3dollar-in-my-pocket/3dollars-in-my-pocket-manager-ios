@@ -7,7 +7,7 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
     private let waitingView = WaitingView()
     private let waitingReactor = WaitingReactor(
         authService: AuthService(),
-        userDefaults: UserDefaultsUtils(),
+        userDefaults: Preference.shared,
         logManager: LogManager.shared
     )
     private weak var coordinator: WaitingCoordinator?

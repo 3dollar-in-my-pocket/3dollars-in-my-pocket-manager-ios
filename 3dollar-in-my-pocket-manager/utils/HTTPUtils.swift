@@ -37,8 +37,8 @@ struct HTTPUtils {
         var headers = HTTPHeaders()
         headers.add(self.defaultUserAgent)
         
-        if !UserDefaultsUtils().userToken.isEmpty {
-            headers.add(HTTPHeader(name: "Authorization", value: "Bearer " + UserDefaultsUtils().userToken))
+        if !Preference.shared.userToken.isEmpty {
+            headers.add(HTTPHeader(name: "Authorization", value: "Bearer " + Preference.shared.userToken))
         }
 
         return headers
@@ -47,7 +47,7 @@ struct HTTPUtils {
     static func jsonWithTokenHeader() -> HTTPHeaders {
         var headers = [
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + UserDefaultsUtils().userToken
+            "Authorization": "Bearer " + Preference.shared.userToken
         ] as HTTPHeaders
         
         headers.add(self.defaultUserAgent)

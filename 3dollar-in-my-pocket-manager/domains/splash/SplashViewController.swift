@@ -8,7 +8,7 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
     private let splashReactor = SplashReactor(
         authService: AuthService(),
         feedbackService: FeedbackService(),
-        userDefaultsUtils: UserDefaultsUtils(),
+        userDefaultsUtils: Preference.shared,
         context: SharedContext.shared
     )
     private weak var coordinator: SplashCoordinator?

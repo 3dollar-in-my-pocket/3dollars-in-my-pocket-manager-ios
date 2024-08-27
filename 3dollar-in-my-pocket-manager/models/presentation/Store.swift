@@ -20,7 +20,7 @@ struct Store: Equatable {
         && !self.name.isEmpty
     }
     
-    init(response: BossStoreInfoResponse) {
+    init(response: BossStoreResponse) {
         self.id = response.bossStoreId
         if let location = response.location {
             self.location = CLLocation(latitude: location.latitude, longitude: location.longitude)
@@ -34,7 +34,7 @@ struct Store: Equatable {
         } else {
             self.openTime = nil
         }
-        self.imageUrl = response.imageUrl
+        self.imageUrl = response.representativeImages.first?.imageUrl
         self.categories = response.categories.map(StoreCategory.init)
         self.snsUrl = response.snsUrl
         self.introduction = response.introduction
@@ -44,7 +44,7 @@ struct Store: Equatable {
         self.accountInfos = response.accountNumbers.map({ AccountInfo(response: $0) })
     }
     
-    init(response: BossStoreAroundInfoResponse) {
+    init(response: BossStoreSimpleResponse) {
         self.id = response.bossStoreId
         if let location = response.location {
             self.location = CLLocation(latitude: location.latitude, longitude: location.longitude)

@@ -1,6 +1,6 @@
 import Foundation
 
-struct StoreFoodCategoryResponse: Decodable {
+struct StoreFoodCategoryResponse: Decodable, Hashable {
     let categoryId: String
     let name: String
     let imageUrl: String
@@ -8,3 +8,9 @@ struct StoreFoodCategoryResponse: Decodable {
     let classification: StoreFoodCategoryClassificationResponse
     let isNew: Bool
 }
+
+struct StoreFoodCategoryClassificationResponse: Decodable, Hashable {
+    let type: String
+    let description: String
+}
+

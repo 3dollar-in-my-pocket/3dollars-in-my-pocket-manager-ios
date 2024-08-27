@@ -49,7 +49,7 @@ final class SignupReactor: BaseReactor, Reactor {
     private let deviceService: DeviceServiceType
     private let imageService: ImageServiceType
     private let authService: AuthServiceType
-    private var userDefaultsUtils: UserDefaultsUtils
+    private var userDefaultsUtils: Preference
     private let logManager: LogManagerProtocol
     
     init(
@@ -60,7 +60,7 @@ final class SignupReactor: BaseReactor, Reactor {
         imageService: ImageServiceType,
         authService: AuthServiceType,
         deviceService: DeviceServiceType,
-        userDefaultsUtils: UserDefaultsUtils,
+        userDefaultsUtils: Preference,
         logManager: LogManagerProtocol
     ) {
         self.initialState = State(ownerName: name ?? "")

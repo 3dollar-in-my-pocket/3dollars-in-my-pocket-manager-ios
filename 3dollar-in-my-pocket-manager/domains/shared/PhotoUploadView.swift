@@ -98,7 +98,7 @@ final class PhotoUploadView: BaseView {
             make.left.equalTo(self.containerView).offset(12)
             make.top.equalTo(self.containerView).offset(14)
             make.right.equalTo(self.containerView).offset(-12)
-            make.height.equalTo(self.imageView.snp.width).dividedBy(2.227)
+            make.height.equalTo(self.imageView.snp.width).dividedBy(1.59)
         }
         
         self.uploadButton.snp.makeConstraints { make in

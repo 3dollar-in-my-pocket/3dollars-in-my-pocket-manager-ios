@@ -12,7 +12,7 @@ struct DateUtils {
         return dateFormatter.string(from: date)
     }
     
-    static func toString(date: Date, format: String?) -> String {
+    static func toString(date: Date, format: String? = nil) -> String {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = format ?? Self.defaultFormat

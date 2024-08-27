@@ -1,5 +1,9 @@
 // Common
 "common_ok" = "확인";
+"common.load_image" = "이미지 불러오기";
+"common.album" = "앨범";
+"common.camera" = "카메라";
+"common.cancel" = "취소";
 
 // Error
 "error_unknown" = "알 수 없는 에러입니다.";
@@ -94,18 +98,21 @@
 "my_store_info_account_empty_placeholder" = "계좌정보를 등록해주세요!\n손님들에게 바로 계좌번호를 알려줄 수 있습니다.";
 
 // Edit Introduction
-"edit_introduction_title" = "사장님 한마디 수정";
-"edit_introduction_main_description" = "손님들에게 하고 싶은 말을\n적어주세요!";
-"edit_introduction_sub_description" = "ex) 오전에 오시면 서비스가 있습니다 😋";
-"edit_introduction_sns" = "SNS주소를 적어주세요.";
-"edit_introdution_edit_button" = "저장하기";
+"edit_introduction.title" = "사장님 한마디 수정";
+"edit_introduction.main_description" = "손님들에게 하고 싶은 말을\n적어주세요!";
+"edit_introduction.main_description.bold" = "손님들에게 하고 싶은 말";
+"edit_introduction.sub_description" = "ex) 오전에 오시면 서비스가 있습니다 😋";
+"edit_introdution.edit_button" = "저장하기";
+"edit_introduction.toast.success_update" = "정보가 업데이트 되었습니다";
 
 // Edit Store Info
-"edit_store_info_title" = "대표 정보 수정";
-"edit_store_info_photo_title" = "대표 사진";
-"edit_store_info_upload_photo" = "이미지 수정";
-"edit_store_info_sns" = "SNS";
-"edit_store_info_save" = "저장하기";
+"edit_store_info.title" = "대표 정보 수정";
+"edit_store_info.photo_title" = "가게 사진";
+"edit_store_info.sns" = "SNS";
+"edit_store_info.save" = "저장하기";
+"edit_store_info.sns.placeholder" = "SNS주소를 적어주세요.";
+"edit_store_info.toast.maximum_photo" = "사진은 최대 10장까지 등록 가능합니다";
+"edit_store_info.photo.representative" = "대표";
 
 // Edit Schedule
 "edit_schedule_title" = "일정 관리";
@@ -130,8 +137,14 @@
 "edit_menu_save_alert_ok" = "나가기";
 
 // Edit Account
-"edit_account_title" = "계좌번호 등록";
-
+"edit_account.bank" = "은행";
+"edit_account.save" = "저장하기";
+"edit_account.account_number_placeholder" = "계좌번호를 입력해주세요.";
+"edit_account.name" = "예금주";
+"edit_account.title" = "계좌번호 등록";
+"edit_account.title_placeholder" = "예금주를 입력해주세요.";
+"edit_account.account_numbuer" = "계좌번호";
+"edit_account.bank_placeholder" = "은행을 선택해주세요.";
 
 // Statistics
 "statistics_filter_total" = "전체";
@@ -157,3 +170,10 @@
 // FAQ
 "faq_title" = "FAQ";
 "faq_description" = "어떤 점이 궁금하셨나요?";
+
+// MARK: Preference
+"preference.title" = "영업 설정";
+"preference.remove_location_on_close.title" = "영업 종료 시 위치 노출";
+"preference.remove_location_on_close.description" = "엽업 종료 시에도 위치가 손님들에게 공개됩니다.";
+"preference.auto_open_close_control.title" = "영업 상태 자동 변경";
+"preference.auto_open_close_control.description" = "설정한 영업 일정에 따라 자동으로 영업 상태가 변경됩니다.";

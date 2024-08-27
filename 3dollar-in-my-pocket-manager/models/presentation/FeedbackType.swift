@@ -5,7 +5,7 @@ struct FeedbackType: Equatable {
     let emoji: String
     let feedbackType: String
     
-    init(response: BossStoreFeedbackTypeResponse) {
+    init(response: FeedbackTypeResponse) {
         self.description = response.description
         self.emoji = response.emoji
         self.feedbackType = response.feedbackType

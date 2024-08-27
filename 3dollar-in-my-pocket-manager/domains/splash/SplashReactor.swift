@@ -25,13 +25,13 @@ final class SplashReactor: BaseReactor, Reactor {
     let goToWaitingPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
     private let feedbackService: FeedbackServiceType
-    private let userDefaultsUtils: UserDefaultsUtils
+    private let userDefaultsUtils: Preference
     private let context: SharedContext
     
     init(
         authService: AuthServiceType,
         feedbackService: FeedbackServiceType,
-        userDefaultsUtils: UserDefaultsUtils,
+        userDefaultsUtils: Preference,
         context: SharedContext
     ) {
         self.authService = authService

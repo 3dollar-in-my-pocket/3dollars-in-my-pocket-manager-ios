@@ -31,7 +31,7 @@ extension BaseCoordinator where Self: BaseViewController {
                 message: httpError.description,
                 okbuttonTitle: "common_ok".localized
             ) {
-                UserDefaultsUtils().clear()
+                Preference.shared.clear()
                 self.goToSignin()
             }
         } else if let localizedError = error as? LocalizedError {

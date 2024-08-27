@@ -42,7 +42,7 @@ final class SigninReactor: BaseReactor, Reactor {
     private let appleSignInManager: AppleSignInManagerProtocol
     private let authService: AuthServiceType
     private let deviceService: DeviceServiceType
-    private var userDefaultsUtils: UserDefaultsUtils
+    private var userDefaultsUtils: Preference
     private let logManager: LogManager
     
     init(
@@ -50,7 +50,7 @@ final class SigninReactor: BaseReactor, Reactor {
         appleSignInManager: AppleSignInManagerProtocol,
         authService: AuthServiceType,
         deviceService: DeviceServiceType,
-        userDefaultsUtils: UserDefaultsUtils,
+        userDefaultsUtils: Preference,
         logManager: LogManager
     ) {
         self.kakaoSignInManager = kakaoManager
