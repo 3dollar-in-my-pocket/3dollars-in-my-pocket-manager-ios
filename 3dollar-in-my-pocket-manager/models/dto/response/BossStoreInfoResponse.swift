@@ -25,7 +25,7 @@ extension BossStoreResponse {
             representativeImages: representativeImages,
             introduction: introduction,
             snsUrl: snsUrl,
-            menus: nil,
+            menus: menus,
             appearanceDays: appearanceDays.map { .init(response: $0) },
             categoriesIds: categories.map { $0.categoryId },
             accountNumbers: accountNumbers
