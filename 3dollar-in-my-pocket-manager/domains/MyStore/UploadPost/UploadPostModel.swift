@@ -11,8 +11,15 @@ struct StorePostApiResponse: Decodable {
     var sections: [PostSectionApiResponse]
     let isOwner: Bool
     let store: StoreApiResponse
+    let stickers: [StickerResponse]
     let createdAt: String
     let updatedAt: String
+}
+
+extension StorePostApiResponse {
+    var likeCount: Int {
+        stickers.first?.count ?? 0
+    }
 }
 
 struct PostSectionApiResponse: Decodable, Hashable {
@@ -43,4 +50,11 @@ struct PostSectionCreateApiRequest: Encodable {
     let sectionType: PostSectionType
     let url: String
     let ratio: Double
+}
+
+struct StickerResponse: Decodable {
+    let stickerId: String
+    let emoji: String
+    let count: Int
+    let reactedByMe: Bool
 }

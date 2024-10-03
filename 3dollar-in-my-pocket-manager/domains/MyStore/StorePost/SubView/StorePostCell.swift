@@ -8,9 +8,9 @@ final class StorePostCell: BaseCollectionViewCell {
             var height = calculateBodyHeight(body: storePost.body)
             
             if storePost.sections.isEmpty {
-                height += 84
+                height += 116
             } else {
-                height += 304
+                height += 336
             }
             
             return height
@@ -21,11 +21,17 @@ final class StorePostCell: BaseCollectionViewCell {
             label.text = body
             label.numberOfLines = 0
             
+            let style = NSMutableParagraphStyle()
+            style.maximumLineHeight = 20
+            style.minimumLineHeight = 20
             let maxSize = CGSize(width: UIScreen.main.bounds.width, height: CGFloat.greatestFiniteMagnitude)
             let textRect = label.text?.boundingRect(
                 with: maxSize,
                 options: [.usesLineFragmentOrigin, .usesFontLeading],
-                attributes: [NSAttributedString.Key.font: UIFont.regular(size: 14)!],
+                attributes: [
+                    NSAttributedString.Key.font: UIFont.regular(size: 14)!,
+                    NSAttributedString.Key.paragraphStyle: style
+                ],
                 context: nil
             )
             return ceil(textRect?.height ?? .zero)
@@ -80,7 +86,7 @@ final class StorePostCell: BaseCollectionViewCell {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         
         collectionView.backgroundColor = .clear
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 24)
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register([
@@ -92,11 +98,34 @@ final class StorePostCell: BaseCollectionViewCell {
     }()
     
     private let descriptionLabel: PaddingLabel = {
-        let label = PaddingLabel(topInset: 0, bottomInset: 0, leftInset: 24, rightInset: 24)
+        let label = PaddingLabel(topInset: 0, bottomInset: 0, leftInset: 0, rightInset: 24)
         
         label.textColor = .gray95
         label.font = .regular(size: 14)
         label.numberOfLines = 0
+        return label
+    }()
+    
+    private let likeStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        return stackView
+    }()
+    
+    private let likeImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "ic_heart_fill")?
+            .resizeImage(scaledTo: 16)
+            .withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .gray50
+        return imageView
+    }()
+    
+    private let likeCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .medium(size: 10)
+        label.textColor = .gray60
         return label
     }()
     
@@ -143,6 +172,12 @@ final class StorePostCell: BaseCollectionViewCell {
             $0.top.equalTo(categoryImage.snp.bottom).offset(12)
         }
         
+        likeStackView.addArrangedSubview(likeImage)
+        likeImage.snp.makeConstraints {
+            $0.size.equalTo(16)
+        }
+        likeStackView.addArrangedSubview(likeCountLabel)
+        
         moreButton.menu = createMenu()
         moreButton.showsMenuAsPrimaryAction = true
     }
@@ -179,6 +214,12 @@ final class StorePostCell: BaseCollectionViewCell {
         
         stackView.addArrangedSubview(descriptionLabel)
         descriptionLabel.setLineHeight(lineHeight: 20)
+        
+        stackView.addArrangedSubview(likeStackView)
+        likeStackView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(24)
+        }
+        likeCountLabel.text = "좋아요 \(viewModel.output.storePost.likeCount)"
         
         self.viewModel = viewModel
     }
