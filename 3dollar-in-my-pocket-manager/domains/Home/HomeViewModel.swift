@@ -29,9 +29,14 @@ extension HomeViewModel {
         let route = PassthroughSubject<Route, Never>()
     }
     
+    struct State {
+        var isAutoOpen: Bool = false
+    }
+    
     struct Dependency {
         let mapRepository: MapRepository
         let storeRepository: StoreRepository
+        let preferenceRepository: PreferenceRepository
         let locationManager: CLLocationManager
         var preference: Preference
         let logManager: LogManagerProtocol
@@ -39,12 +44,14 @@ extension HomeViewModel {
         init(
             mapRepository: MapRepository = MapRepositoryImpl(),
             storeRepository: StoreRepository = StoreRepositoryImpl(),
+            preferenceRepository: PreferenceRepository = PreferenceRepositoryImpl(),
             locationManager: CLLocationManager = CLLocationManager(),
             preference: Preference = Preference.shared,
             logManager: LogManagerProtocol = LogManager.shared
         ) {
             self.mapRepository = mapRepository
             self.storeRepository = storeRepository
+            self.preferenceRepository = preferenceRepository
             self.locationManager = locationManager
             self.preference = preference
             self.logManager = logManager
@@ -55,12 +62,14 @@ extension HomeViewModel {
         case showInvalidPositionAlert
         case showErrorAlert(Error)
         case pushOperationSetting
+        case presentAutoAlert
     }
 }
 
 final class HomeViewModel: BaseViewModel {
     let input = Input()
     let output = Output()
+    private var state = State()
     private let dependency: Dependency
     
     init(dependency: Dependency = Dependency()) {
@@ -105,7 +114,12 @@ final class HomeViewModel: BaseViewModel {
             .sink { (owner: HomeViewModel, _) in
                 if let store = owner.output.store.value,
                    store.openStatus.status == .open {
-                    owner.closeStore()
+                    
+                    if owner.state.isAutoOpen {
+                        owner.output.route.send(.presentAutoAlert)
+                    } else {
+                        owner.closeStore()
+                    }
                 } else {
                     if owner.isInRightPosition() {
                         owner.openStore()
@@ -170,6 +184,7 @@ final class HomeViewModel: BaseViewModel {
             case .success(let storeInfo):
                 output.store.send(storeInfo)
                 dependency.preference.storeId = storeInfo.bossStoreId
+                fetchPreference()
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))
             }
@@ -183,6 +198,19 @@ final class HomeViewModel: BaseViewModel {
             switch result {
             case .success(let stores):
                 output.aroundStores.send(stores)
+            case .failure(let error):
+                output.route.send(.showErrorAlert(error))
+            }
+        }
+    }
+    
+    private func fetchPreference() {
+        Task {
+            let result = await dependency.preferenceRepository.fetchPreference(storeId: dependency.preference.storeId)
+            
+            switch result {
+            case .success(let preference):
+                state.isAutoOpen = preference.autoOpenCloseControl
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))
             }

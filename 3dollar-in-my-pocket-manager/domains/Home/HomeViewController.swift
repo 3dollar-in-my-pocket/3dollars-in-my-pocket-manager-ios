@@ -167,6 +167,8 @@ final class HomeViewController: BaseViewController {
             showErrorAlert(error: error)
         case .pushOperationSetting:
             pushPreference()
+        case .presentAutoAlert:
+            presentAutoAlert()
         }
     }
     
@@ -184,6 +186,14 @@ final class HomeViewController: BaseViewController {
         let viewController = PreferenceViewController()
         
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func presentAutoAlert() {
+        let viewController = HomeAutoAlertViewController { [weak self] in
+            self?.pushPreference()
+        }
+        
+        tabBarController?.present(viewController, animated: true)
     }
 }
 

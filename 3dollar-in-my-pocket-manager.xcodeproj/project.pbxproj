@@ -63,6 +63,7 @@
 		6E2D406E2C5DB1F90074489E /* StoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D406D2C5DB1F90074489E /* StoreRepository.swift */; };
 		6E2D40702C5DB4330074489E /* MapApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D406F2C5DB4330074489E /* MapApi.swift */; };
 		6E2D40722C5DB5330074489E /* MapRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2D40712C5DB5330074489E /* MapRepository.swift */; };
+		6E2F12E02CAFCB9500C3BB25 /* DimManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2F12DF2CAFCB9500C3BB25 /* DimManager.swift */; };
 		6E2FF3AE28A1F79A00497FE4 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E2FF3AD28A1F79A00497FE4 /* loading.json */; };
 		6E3603EA2C78946400F3813C /* TotalStatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3603E92C78946400F3813C /* TotalStatisticsViewModel.swift */; };
 		6E360F1A2C27C8B1008A4868 /* ImageContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E360F192C27C8B1008A4868 /* ImageContent.swift */; };
@@ -233,6 +234,7 @@
 		6EB94EA627CB208F00609E77 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB94EA527CB208F00609E77 /* SceneDelegate.swift */; };
 		6EB94EAD27CB209000609E77 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAC27CB209000609E77 /* Assets.xcassets */; };
 		6EB94EB027CB209000609E77 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */; };
+		6EBC1F5A2CAF8695007CD702 /* HomeAutoAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC1F592CAF8695007CD702 /* HomeAutoAlertViewController.swift */; };
 		6EBC20E92C1C1CCD00C08EE0 /* StorePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20E82C1C1CCD00C08EE0 /* StorePostViewController.swift */; };
 		6EBC20EB2C1C1EC500C08EE0 /* StorePostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20EA2C1C1EC400C08EE0 /* StorePostViewModel.swift */; };
 		6EBC20ED2C1C404900C08EE0 /* AccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EBC20EC2C1C404900C08EE0 /* AccountResponse.swift */; };
@@ -378,6 +380,7 @@
 		6E2D406D2C5DB1F90074489E /* StoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreRepository.swift; sourceTree = "<group>"; };
 		6E2D406F2C5DB4330074489E /* MapApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapApi.swift; sourceTree = "<group>"; };
 		6E2D40712C5DB5330074489E /* MapRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRepository.swift; sourceTree = "<group>"; };
+		6E2F12DF2CAFCB9500C3BB25 /* DimManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimManager.swift; sourceTree = "<group>"; };
 		6E2FF3AD28A1F79A00497FE4 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		6E3603E92C78946400F3813C /* TotalStatisticsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TotalStatisticsViewModel.swift; sourceTree = "<group>"; };
 		6E360F192C27C8B1008A4868 /* ImageContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageContent.swift; sourceTree = "<group>"; };
@@ -543,6 +546,7 @@
 		6EB94EAC27CB209000609E77 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EB94EAF27CB209000609E77 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6EB94EB127CB209000609E77 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EBC1F592CAF8695007CD702 /* HomeAutoAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAutoAlertViewController.swift; sourceTree = "<group>"; };
 		6EBC20E82C1C1CCD00C08EE0 /* StorePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePostViewController.swift; sourceTree = "<group>"; };
 		6EBC20EA2C1C1EC400C08EE0 /* StorePostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePostViewModel.swift; sourceTree = "<group>"; };
 		6EBC20EC2C1C404900C08EE0 /* AccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountResponse.swift; sourceTree = "<group>"; };
@@ -1406,6 +1410,7 @@
 				6E25FED427F5362A00BE2941 /* location */,
 				6E37AF7227E7144B004FBE25 /* loading */,
 				6EE0CF9C27CB54AE0027A426 /* social-sign-in */,
+				6E2F12DF2CAFCB9500C3BB25 /* DimManager.swift */,
 			);
 			path = managers;
 			sourceTree = "<group>";
@@ -1533,6 +1538,7 @@
 				6EC51D0327EEEC08009B5527 /* Subview */,
 				6EF676BC27EEE57A00D43E99 /* HomeView.swift */,
 				6E81503527EEEA110032C518 /* HomeViewController.swift */,
+				6EBC1F592CAF8695007CD702 /* HomeAutoAlertViewController.swift */,
 				6E408D3F27EF2A8D00322365 /* HomeViewModel.swift */,
 			);
 			path = Home;
@@ -1744,6 +1750,7 @@
 				6E4843C62B1C6E6700EB8CFD /* AccountInfo.swift in Sources */,
 				6E4A2B272C5BA66A00317349 /* UIImage+.swift in Sources */,
 				6E8A067D2C7AE594000C1B78 /* StorePostCellViewModel.swift in Sources */,
+				6EBC1F5A2CAF8695007CD702 /* HomeAutoAlertViewController.swift in Sources */,
 				6EB5CA8A2935CA4200B6653C /* BaseViewController.swift in Sources */,
 				6EB5CA8E2935CA7B00B6653C /* BaseCollectionViewCell.swift in Sources */,
 				6E80AC962B27001200FC886B /* EditAccountViewController.swift in Sources */,
@@ -1793,6 +1800,7 @@
 				6E91A9952841EE620090361F /* CursorString.swift in Sources */,
 				6E6B431B285DB6B900AD84A5 /* FAQCoordinator.swift in Sources */,
 				6EB5CA9A2935CB6100B6653C /* UITableViewExtensions.swift in Sources */,
+				6E2F12E02CAFCB9500C3BB25 /* DimManager.swift in Sources */,
 				6EF8D108280AA993004D27C9 /* BossStoreSimpleResponse.swift in Sources */,
 				6E91A9892841DC110090361F /* DailyStatisticsView.swift in Sources */,
 				6EBC210E2C1C79A600C08EE0 /* ApiError.swift in Sources */,
