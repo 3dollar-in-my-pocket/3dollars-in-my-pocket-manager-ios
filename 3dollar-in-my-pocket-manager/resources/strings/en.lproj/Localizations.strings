@@ -70,6 +70,10 @@
 "home_on_toggle" = "셔텨 내리기";
 "home_show_other" = "다른 푸드트럭 보기";
 "home_invalid_position" = "빨간 원(현재 위치의 반경 100m 이내) 안에서 장사를 시작해주세요.";
+"home_auto_alert_title" = "영업 상태 자동 변경이\n설정되어 있습니다!";
+"home_auto_alert_description" = "임의로 영업 상태를 변경하고 싶다면 영업 설정에서\n상태 자동 변경을 꺼주세요.";
+"home_auto_alert_go_preference" = "영업 설정으로 이동하기";
+"home_auto_alert_close" = "닫기";
 
 // Waiting
 "waiting_title" = "신청 완료!";
