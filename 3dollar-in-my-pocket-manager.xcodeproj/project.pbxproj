@@ -317,15 +317,31 @@
 		6EF8D108280AA993004D27C9 /* BossStoreSimpleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF8D107280AA993004D27C9 /* BossStoreSimpleResponse.swift */; };
 		6EFB2F08285A098D006E37F9 /* FeedbackTypeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB2F07285A098D006E37F9 /* FeedbackTypeResponse.swift */; };
 		6EFB2F0B285A0BFC006E37F9 /* Context.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EFB2F0A285A0BFC006E37F9 /* Context.swift */; };
+		6EFCE03D2CAFDBE000D97E3F /* NMapsGeometry.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03B2CAFDBE000D97E3F /* NMapsGeometry.xcframework */; };
+		6EFCE03E2CAFDBE000D97E3F /* NMapsGeometry.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03B2CAFDBE000D97E3F /* NMapsGeometry.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6EFCE03F2CAFDBE000D97E3F /* NMapsMap.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03C2CAFDBE000D97E3F /* NMapsMap.xcframework */; };
+		6EFCE0402CAFDBE000D97E3F /* NMapsMap.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03C2CAFDBE000D97E3F /* NMapsMap.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6EFF46C22B23FEDB001F71D4 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6EFF46C12B23FEDB001F71D4 /* Localizable.xcstrings */; };
 		8E2659382C786E04004D44E2 /* ContentListWithCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2659372C786E04004D44E2 /* ContentListWithCursor.swift */; };
 		8E26593A2C786EA0004D44E2 /* FeedbackCountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2659392C786EA0004D44E2 /* FeedbackCountResponse.swift */; };
-		CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		6EFCE0412CAFDBE000D97E3F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6EFCE0402CAFDBE000D97E3F /* NMapsMap.xcframework in Embed Frameworks */,
+				6EFCE03E2CAFDBE000D97E3F /* NMapsGeometry.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		2485BFD46CCBCCA4FDB38FB3 /* Pods-3dollar-in-my-pocket-manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3dollar-in-my-pocket-manager.release.xcconfig"; path = "Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager.release.xcconfig"; sourceTree = "<group>"; };
-		2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_3dollar_in_my_pocket_manager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0196492C648FB900164FCA /* MyStoreInfoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoDataSource.swift; sourceTree = "<group>"; };
 		6E01964B2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewDiffableDataSource+.swift"; sourceTree = "<group>"; };
 		6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoMenuMoreCell.swift; sourceTree = "<group>"; };
@@ -616,10 +632,11 @@
 		6EFA3A0E27F3E1E000C13906 /* Base.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Base.framework; path = "../../../Library/Developer/Xcode/DerivedData/3dollar-in-my-pocket-manager-cintsqyfrfisoodqdbyniuyngmnr/Build/Products/Debug-iphoneos/Base.framework"; sourceTree = "<group>"; };
 		6EFB2F07285A098D006E37F9 /* FeedbackTypeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackTypeResponse.swift; sourceTree = "<group>"; };
 		6EFB2F0A285A0BFC006E37F9 /* Context.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Context.swift; sourceTree = "<group>"; };
+		6EFCE03B2CAFDBE000D97E3F /* NMapsGeometry.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NMapsGeometry.xcframework; path = Frameworks/NMapsGeometry.xcframework; sourceTree = "<group>"; };
+		6EFCE03C2CAFDBE000D97E3F /* NMapsMap.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = NMapsMap.xcframework; path = Frameworks/NMapsMap.xcframework; sourceTree = "<group>"; };
 		6EFF46C12B23FEDB001F71D4 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8E2659372C786E04004D44E2 /* ContentListWithCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListWithCursor.swift; sourceTree = "<group>"; };
 		8E2659392C786EA0004D44E2 /* FeedbackCountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackCountResponse.swift; sourceTree = "<group>"; };
-		90AB2FCCDB6AA6ABA4B64642 /* Pods-3dollar-in-my-pocket-manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-3dollar-in-my-pocket-manager.debug.xcconfig"; path = "Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -627,6 +644,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6EFCE03F2CAFDBE000D97E3F /* NMapsMap.xcframework in Frameworks */,
 				6EE0CFA127CB567B0027A426 /* KakaoSDKCommon in Frameworks */,
 				6EE0CF9F27CB567B0027A426 /* KakaoSDKAuth in Frameworks */,
 				6E8474BC2C54B3200064DE0A /* CombineCocoa in Frameworks */,
@@ -649,10 +667,10 @@
 				6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */,
 				6EE2624A27DDBE64008B3531 /* SPPermissionsCamera in Frameworks */,
 				6E37A2E62860AFE4008C046F /* FirebaseCrashlytics in Frameworks */,
+				6EFCE03D2CAFDBE000D97E3F /* NMapsGeometry.xcframework in Frameworks */,
 				6EC8031E2B2C891A00DA4F5E /* PanModal in Frameworks */,
 				6E37A2EA2860AFE4008C046F /* FirebaseRemoteConfig in Frameworks */,
 				6E2410B52875553C00BADDD5 /* RxDataSources in Frameworks */,
-				CEBEC490A703C26FE9A7B8CC /* Pods_3dollar_in_my_pocket_manager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,9 +717,10 @@
 		6E1AA1B827CB215700C96D92 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6EFCE03B2CAFDBE000D97E3F /* NMapsGeometry.xcframework */,
+				6EFCE03C2CAFDBE000D97E3F /* NMapsMap.xcframework */,
 				6E808CAD27F016CF00C46459 /* Base.framework */,
 				6EFA3A0E27F3E1E000C13906 /* Base.framework */,
-				2A1BF8BB4E06EB007E405B35 /* Pods_3dollar_in_my_pocket_manager.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1165,7 +1184,6 @@
 				6EB94EA227CB208F00609E77 /* 3dollar-in-my-pocket-manager */,
 				6EB94EA127CB208F00609E77 /* Products */,
 				6E1AA1B827CB215700C96D92 /* Frameworks */,
-				AF15A4E5DB0B63600E149F85 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1544,15 +1562,6 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		AF15A4E5DB0B63600E149F85 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				90AB2FCCDB6AA6ABA4B64642 /* Pods-3dollar-in-my-pocket-manager.debug.xcconfig */,
-				2485BFD46CCBCCA4FDB38FB3 /* Pods-3dollar-in-my-pocket-manager.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1560,12 +1569,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EB94EB427CB209000609E77 /* Build configuration list for PBXNativeTarget "3dollar-in-my-pocket-manager" */;
 			buildPhases = (
-				326682B484AEB07117F894B2 /* [CP] Check Pods Manifest.lock */,
 				6EA3D2B328A748E600E4C389 /* Setup Firebase */,
 				6EB94E9C27CB208F00609E77 /* Sources */,
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
-				A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */,
+				6EFCE0412CAFDBE000D97E3F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1628,20 +1636,20 @@
 			);
 			mainGroup = 6EB94E9727CB208E00609E77;
 			packageReferences = (
-				6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit.git" */,
 				6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */,
 				6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
-				6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
 				6EE2624827DDBE64008B3531 /* XCRemoteSwiftPackageReference "SPPermissions" */,
-				6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */,
-				6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */,
+				6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
 				6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */,
-				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */,
-				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */,
+				6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
+				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit.git" */,
+				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources.git" */,
+				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal.git" */,
 				6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */,
-				6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa.git" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -1672,28 +1680,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		326682B484AEB07117F894B2 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-3dollar-in-my-pocket-manager-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		6EA3D2B328A748E600E4C389 /* Setup Firebase */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1711,23 +1697,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\ncase \"${CONFIGURATION}\" in\n  \"Debug\" )\ncp -r \"$SRCROOT/3dollar-in-my-pocket-manager/resources/firebase/GoogleService-Info-Dev.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n  \"Release\" )\ncp -r \"$SRCROOT/3dollar-in-my-pocket-manager/resources/firebase/GoogleService-Info-Prod.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n*)\n;;\nesac\n";
-		};
-		A58E810CE5357D74C009D053 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-3dollar-in-my-pocket-manager/Pods-3dollar-in-my-pocket-manager-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2159,7 +2128,6 @@
 		};
 		6EB94EB527CB209000609E77 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 90AB2FCCDB6AA6ABA4B64642 /* Pods-3dollar-in-my-pocket-manager.debug.xcconfig */;
 			buildSettings = {
 				API_URL = "https://dev.threedollars.co.kr";
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
@@ -2206,7 +2174,6 @@
 		};
 		6EB94EB627CB209000609E77 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2485BFD46CCBCCA4FDB38FB3 /* Pods-3dollar-in-my-pocket-manager.release.xcconfig */;
 			buildSettings = {
 				API_URL = "https://threedollars.co.kr";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2275,7 +2242,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
+		6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
 			requirement = {
@@ -2283,7 +2250,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+		6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
 			requirement = {
@@ -2295,11 +2262,11 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 11.3.0;
 			};
 		};
-		6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -2307,7 +2274,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
+		6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
 			requirement = {
@@ -2323,7 +2290,7 @@
 				version = 1.21.0;
 			};
 		};
-		6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
+		6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
 			requirement = {
@@ -2331,7 +2298,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */ = {
+		6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/slackhq/PanModal.git";
 			requirement = {
@@ -2339,23 +2306,23 @@
 				version = 1.2.6;
 			};
 		};
-		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
-				branch = develop;
-				kind = branch;
+				kind = exactVersion;
+				version = 5.7.1;
 			};
 		};
 		6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = exactVersion;
+				version = 3.0.0;
 			};
 		};
-		6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -2371,7 +2338,7 @@
 				version = 2.11.1;
 			};
 		};
-		6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -2387,7 +2354,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+		6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -2400,12 +2367,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		6E2410B02875550800BADDD5 /* ReactorKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */;
+			package = 6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit.git" */;
 			productName = ReactorKit;
 		};
 		6E2410B42875553C00BADDD5 /* RxDataSources */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			package = 6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources.git" */;
 			productName = RxDataSources;
 		};
 		6E37A2E32860AFE4008C046F /* FirebaseAnalytics */ = {
@@ -2430,12 +2397,12 @@
 		};
 		6E6C9C76280BEE26009AFAE8 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
 			productName = Kingfisher;
 		};
 		6E8474BB2C54B3200064DE0A /* CombineCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			package = 6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa.git" */;
 			productName = CombineCocoa;
 		};
 		6E893CB92C3A65F100357F66 /* netfox */ = {
@@ -2445,22 +2412,22 @@
 		};
 		6E8E7F2E27EEBDB7005345BB /* CropViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */;
 			productName = CropViewController;
 		};
 		6E8E7F3027EEBDB7005345BB /* TOCropViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */;
+			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */;
 			productName = TOCropViewController;
 		};
 		6EC8031D2B2C891A00DA4F5E /* PanModal */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */;
+			package = 6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal.git" */;
 			productName = PanModal;
 		};
 		6ED8838927CB395B00278E14 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit.git" */;
 			productName = SnapKit;
 		};
 		6ED8838C27CB398300278E14 /* Then */ = {
@@ -2470,7 +2437,7 @@
 		};
 		6EE041D7288ADAD300E17D5B /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
 			productName = Lottie;
 		};
 		6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */ = {
@@ -2490,7 +2457,7 @@
 		};
 		6EE0CFC027CB64E40027A426 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
 			productName = Alamofire;
 		};
 		6EE2624927DDBE64008B3531 /* SPPermissionsCamera */ = {
@@ -2520,7 +2487,7 @@
 		};
 		6EEBC7BE28731F7700CBA0F0 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			package = 6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
