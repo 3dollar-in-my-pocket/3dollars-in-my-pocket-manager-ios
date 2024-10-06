@@ -11,6 +11,7 @@ extension HomeViewModel {
     
     struct Input {
         let firstLoad = PassthroughSubject<Void, Never>()
+        let viewWillAppear = PassthroughSubject<Void, Never>()
         let didTapShowOtherStore = PassthroughSubject<Void, Never>()
         let didTapCurrentLocation = PassthroughSubject<Void, Never>()
         let didTapSalesToggle = PassthroughSubject<Void, Never>()
@@ -143,6 +144,14 @@ final class HomeViewModel: BaseViewModel {
         input.didTapOperationSetting
             .map { Route.pushOperationSetting }
             .subscribe(output.route)
+            .store(in: &cancellables)
+        
+        input.viewWillAppear
+            .dropFirst()
+            .withUnretained(self)
+            .sink { (owner: HomeViewModel, _) in
+                owner.fetchPreference()
+            }
             .store(in: &cancellables)
     }
     
