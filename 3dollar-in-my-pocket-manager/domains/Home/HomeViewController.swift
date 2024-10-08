@@ -47,6 +47,12 @@ final class HomeViewController: BaseViewController {
         viewModel.input.firstLoad.send(())
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.input.viewWillAppear.send(())
+    }
+    
     private func bind() {
         bindInput()
         bindOutput()
