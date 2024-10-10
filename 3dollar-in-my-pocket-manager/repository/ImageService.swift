@@ -20,7 +20,11 @@ final class ImageService: ImageServiceType {
     
     
     func uploadImage(image: UIImage, fileType: FileType) -> Observable<ImageUploadResponse> {
-        guard let data = image.jpegData(compressionQuality: Constant.compressionQuality) else {
+        guard let imageData = image.jpegData(compressionQuality: Constant.compressionQuality) else {
+            return .error(BaseError.nilValue)
+        }
+        
+        guard let downsampledDatas = ImageUtil.downsampledImage(data: imageData, size: CGSize(width: 1024, height: 1024))?.jpegData(compressionQuality: 1) else {
             return .error(BaseError.nilValue)
         }
         
@@ -30,7 +34,7 @@ final class ImageService: ImageServiceType {
             
             HTTPUtils.fileUploadSession.upload(multipartFormData: { multipartFormData in
                 multipartFormData.append(
-                    data,
+                    downsampledDatas,
                     withName: "file",
                     fileName: DateUtils.todayString(format: "yyyy-MM-dd'T'HH-mm-ss") + "_image.png",
                     mimeType: "image/png"
@@ -60,13 +64,17 @@ final class ImageService: ImageServiceType {
             datas.append(data)
         }
         
+        let downsampledDatas = datas.compactMap { data -> Data? in
+            return ImageUtil.downsampledImage(data: data, size: CGSize(width: 1024, height: 1024))?.jpegData(compressionQuality: 1)
+        }
+        
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/upload/\(fileType.rawValue)/bulk"
             
             HTTPUtils.fileUploadSession.upload(multipartFormData: { multipartFormData in
-                for index in datas.indices {
+                for index in downsampledDatas.indices {
                     multipartFormData.append(
-                        datas[index],
+                        downsampledDatas[index],
                         withName: "files",
                         fileName: DateUtils.todayString(format: "yyyy-MM-dd'T'HH-mm-ss") + "_image\(index).png",
                         mimeType: "image/png"
@@ -90,12 +98,17 @@ final class ImageService: ImageServiceType {
         guard let data = image.jpegData(compressionQuality: Constant.compressionQuality) else {
             return .failure(BaseError.nilValue)
         }
+        
+        guard let downsampledDatas = ImageUtil.downsampledImage(data: data, size: CGSize(width: 1024, height: 1024))?.jpegData(compressionQuality: 1) else {
+            return .failure(BaseError.nilValue)
+        }
+        
         let urlString = HTTPUtils.url + "/boss/v1/upload/\(fileType.rawValue)"
         let headers = HTTPUtils.defaultHeader()
         
         let result = await AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(
-                data,
+                downsampledDatas,
                 withName: "file",
                 fileName: DateUtils.todayString(format: "yyyy-MM-dd'T'HH-mm-ss") + "_image.png",
                 mimeType: "image/png"
@@ -140,10 +153,14 @@ final class ImageService: ImageServiceType {
             datas.append(data)
         }
         
+        let downsampledDatas = datas.compactMap { data -> Data? in
+            return ImageUtil.downsampledImage(data: data, size: CGSize(width: 1024, height: 1024))?.jpegData(compressionQuality: 1)
+        }
+        
         let result = await AF.upload(multipartFormData: { multipartFormData in
-            for index in datas.indices {
+            for index in downsampledDatas.indices {
                 multipartFormData.append(
-                    datas[index],
+                    downsampledDatas[index],
                     withName: "files",
                     fileName: DateUtils.todayString(format: "yyyy-MM-dd'T'HH-mm-ss") + "_image\(index).png",
                     mimeType: "image/png"
