@@ -1636,20 +1636,20 @@
 			);
 			mainGroup = 6EB94E9727CB208E00609E77;
 			packageReferences = (
-				6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit.git" */,
+				6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */,
 				6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
-				6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire.git" */,
+				6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				6EE2624827DDBE64008B3531 /* XCRemoteSwiftPackageReference "SPPermissions" */,
-				6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */,
-				6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher.git" */,
+				6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */,
+				6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios.git" */,
-				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit.git" */,
-				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources.git" */,
-				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal.git" */,
+				6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */,
 				6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */,
-				6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa.git" */,
+				6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -2160,7 +2160,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.1;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2206,7 +2206,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 1.4.1;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2242,7 +2242,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit.git" */ = {
+		6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
 			requirement = {
@@ -2250,7 +2250,7 @@
 				minimumVersion = 3.0.0;
 			};
 		};
-		6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources.git" */ = {
+		6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
 			requirement = {
@@ -2266,7 +2266,7 @@
 				version = 11.3.0;
 			};
 		};
-		6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher.git" */ = {
+		6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
@@ -2274,7 +2274,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa.git" */ = {
+		6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
 			requirement = {
@@ -2290,7 +2290,7 @@
 				version = 1.21.0;
 			};
 		};
-		6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */ = {
+		6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/TimOliver/TOCropViewController.git";
 			requirement = {
@@ -2298,7 +2298,7 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal.git" */ = {
+		6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/slackhq/PanModal.git";
 			requirement = {
@@ -2306,7 +2306,7 @@
 				version = 1.2.6;
 			};
 		};
-		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit.git" */ = {
+		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
 			requirement = {
@@ -2322,7 +2322,7 @@
 				version = 3.0.0;
 			};
 		};
-		6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
+		6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -2338,7 +2338,7 @@
 				version = 2.11.1;
 			};
 		};
-		6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire.git" */ = {
+		6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -2354,7 +2354,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios.git" */ = {
+		6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
 			requirement = {
@@ -2367,12 +2367,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		6E2410B02875550800BADDD5 /* ReactorKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit.git" */;
+			package = 6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */;
 			productName = ReactorKit;
 		};
 		6E2410B42875553C00BADDD5 /* RxDataSources */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources.git" */;
+			package = 6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
 		};
 		6E37A2E32860AFE4008C046F /* FirebaseAnalytics */ = {
@@ -2397,12 +2397,12 @@
 		};
 		6E6C9C76280BEE26009AFAE8 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher.git" */;
+			package = 6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 		6E8474BB2C54B3200064DE0A /* CombineCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa.git" */;
+			package = 6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
 		};
 		6E893CB92C3A65F100357F66 /* netfox */ = {
@@ -2412,22 +2412,22 @@
 		};
 		6E8E7F2E27EEBDB7005345BB /* CropViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */;
+			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = CropViewController;
 		};
 		6E8E7F3027EEBDB7005345BB /* TOCropViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController.git" */;
+			package = 6E8E7F2D27EEBDB7005345BB /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = TOCropViewController;
 		};
 		6EC8031D2B2C891A00DA4F5E /* PanModal */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal.git" */;
+			package = 6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */;
 			productName = PanModal;
 		};
 		6ED8838927CB395B00278E14 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit.git" */;
+			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 		6ED8838C27CB398300278E14 /* Then */ = {
@@ -2437,7 +2437,7 @@
 		};
 		6EE041D7288ADAD300E17D5B /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
+			package = 6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 		6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */ = {
@@ -2457,7 +2457,7 @@
 		};
 		6EE0CFC027CB64E40027A426 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire.git" */;
+			package = 6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 		6EE2624927DDBE64008B3531 /* SPPermissionsCamera */ = {
@@ -2487,7 +2487,7 @@
 		};
 		6EEBC7BE28731F7700CBA0F0 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios.git" */;
+			package = 6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
