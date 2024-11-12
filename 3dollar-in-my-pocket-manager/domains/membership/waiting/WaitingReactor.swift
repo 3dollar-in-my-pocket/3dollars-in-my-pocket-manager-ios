@@ -82,7 +82,10 @@ final class WaitingReactor: BaseReactor, Reactor {
     }
     
     private func logout() -> Observable<Mutation> {
-        return self.authService.logout()
+        let fcmToken = userDefaults.fcmToken
+        let deviceRequest = BossLogOutDeviceRequest(pushPlatform: "FCM", pushToken: fcmToken)
+        let logoutRequest = BossLogOutRequest(logoutDevice: deviceRequest)
+        return self.authService.logout(input: logoutRequest)
             .do(onNext: { [weak self] _ in
                 guard let self = self else { return }
                 let userId = self.userDefaults.userId

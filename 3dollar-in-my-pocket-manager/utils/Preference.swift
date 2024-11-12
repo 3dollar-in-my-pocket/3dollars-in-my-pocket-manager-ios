@@ -50,6 +50,15 @@ final class Preference {
         }
     }
     
+    var fcmToken: String? {
+        set {
+            instance.set(newValue, forKey: "KEY_FCM_TOKEN")
+        }
+        get {
+            return instance.string(forKey: "KEY_FCM_TOKEN")
+        }
+    }
+    
     func clear() {
         instance.removeObject(forKey: "KEY_TOKEN")
         instance.removeObject(forKey: "KEY_USER_ID")
