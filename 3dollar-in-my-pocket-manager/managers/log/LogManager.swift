@@ -13,13 +13,8 @@ protocol LogManagerProtocol {
 
 final class LogManager: LogManagerProtocol {
     static let shared = LogManager()
-    private var isEnableDebug: Bool {
-        #if DEBUG
-        return true
-        #else
-        return false
-        #endif
-    }
+    
+    private let osLogger = Logger(subsystem: Bundle.identifier, category: LogCategory.logManager.rawValue)
     
     func sendPageView(screen: ScreenName, type: AnyObject.Type) {
         Analytics.logEvent(AnalyticsEventScreenView, parameters: [
@@ -27,17 +22,13 @@ final class LogManager: LogManagerProtocol {
             AnalyticsParameterScreenClass: NSStringFromClass(type.self)
         ])
         
-        if isEnableDebug {
-            debugPageView(screen: screen, type: type)
-        }
+        debugPageView(screen: screen, type: type)
     }
     
     func sendEvent(_ event: LogEvent) {
         Analytics.logEvent(event.name.rawValue, parameters: event.parameters)
         
-        if isEnableDebug {
-            debugCustomEvent(event)
-        }
+        debugCustomEvent(event)
     }
     
     func setUserId(_ userId: String) {
@@ -45,23 +36,21 @@ final class LogManager: LogManagerProtocol {
     }
     
     private func debugPageView(screen: ScreenName, type: AnyObject.Type) {
-        let message: StaticString = """
-        🧡 [LogManager]: PageView
-            => screen: %{PUBLIC}@
-            => type: %{PUBLIC}@
-        """
-        
-        os_log(.debug, message, screen.rawValue, String(describing: type))
+        osLogger.debug("""
+        [✍️LogManager]
+        => type: PageView
+        => screen: \(screen.rawValue)
+        => class: \(String(describing: type))
+        """)
     }
     
     private func debugCustomEvent(_ event: LogEvent) {
-        let message: StaticString = """
-        🧡 [LogManager]: CustomEvent
-            => name: %{PUBLIC}@
-            => parameter: %{PUBLIC}@
-        """
-        
-        os_log(.debug, message, event.name.rawValue, event.parameters.prettyString)
+        osLogger.debug("""
+        [✍️LogManager]
+        => type: CustomEvent
+        => naem: \(event.name.rawValue)
+        => parameter: \(event.parameters.prettyString)
+        """)
     }
 }
 

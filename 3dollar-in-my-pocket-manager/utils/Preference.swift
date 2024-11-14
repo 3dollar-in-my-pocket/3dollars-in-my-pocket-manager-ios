@@ -41,12 +41,12 @@ final class Preference {
         }
     }
     
-    var shownStoreNoticeNewBadge: Bool {
+    var shownMessageNewBadge: Bool {
         set {
-            instance.set(newValue, forKey: "KEY_SHOWN_STORE_NOTICE_NEW_BADGE")
+            instance.set(newValue, forKey: "KEY_SHOWN_MESSAGE_NEW_BADGE")
         }
         get {
-            return instance.bool(forKey: "KEY_SHOWN_STORE_NOTICE_NEW_BADGE")
+            return instance.bool(forKey: "KEY_SHOWN_MESSAGE_NEW_BADGE")
         }
     }
     

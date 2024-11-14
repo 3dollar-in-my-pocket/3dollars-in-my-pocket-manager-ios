@@ -83,8 +83,10 @@
 "waiting_logout" = "로그아웃";
 
 // My Page
-"my_page_store_info" = "가게정보";
-"my_pate_statistics" = "통계";
+"my_page.sub_tab.store_info" = "가게정보";
+"my_page.sub_tab.statistics" = "통계";
+"my_page.sub_tab.notice" = "가게소식";
+"my_page.sub_tab.message" = "메세지";
 
 // My Store Info
 "my_store_info_introduction_placeholder" = "손님들에게 하고 싶은 말을 적어주세요!\nex) 오전에 오시면 서비스가 있습니다!";

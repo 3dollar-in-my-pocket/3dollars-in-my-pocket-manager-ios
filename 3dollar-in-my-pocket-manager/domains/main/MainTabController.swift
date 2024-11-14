@@ -7,6 +7,14 @@ final class MainTabController: UITabBarController {
     private let disposeBag = DisposeBag()
     private let borderLayer = CALayer()
     
+    private let myPageViewController: UINavigationController = {
+        let viewController = MyPageViewController(viewModel: MyPageViewModel())
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.isNavigationBarHidden = true
+        navigationController.interactivePopGestureRecognizer?.delegate = nil
+        return navigationController
+    }()
+    
     static func instance() -> MainTabController {
         return MainTabController(nibName: nil, bundle: nil)
     }
@@ -91,7 +99,7 @@ final class MainTabController: UITabBarController {
     private func setupTabBarController() {
         self.setViewControllers([
             createHomeViewController(),
-            MyPageViewController.instance(),
+            myPageViewController,
             SettingViewController.instance()
         ], animated: true)
         

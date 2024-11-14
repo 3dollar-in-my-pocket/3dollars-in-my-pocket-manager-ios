@@ -1,14 +1,17 @@
 import UIKit
 
 final class MyPageViewController: BaseViewController {
-    private let myPageView = MyPageView()
+    private let subTabView = MyPageSubTabView()
+    
+    private let containerView = UIView()
     
     private let pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal,
         options: nil
     )
-    
+
+    private let viewModel: MyPageViewModel
     private lazy var pageViewControllers: [UIViewController] = [
         createMyStoreInfoViewController(),
         createStatisticsViewController(),
@@ -19,61 +22,55 @@ final class MyPageViewController: BaseViewController {
         return .darkContent
     }
     
-    static func instance() -> UINavigationController {
-        let viewController = MyPageViewController(nibName: nil, bundle: nil).then {
-            $0.tabBarItem = UITabBarItem(
-                title: nil,
-                image: UIImage(named: "ic_truck"),
-                tag: TabBarTag.myPage.rawValue
-            )
-            $0.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
-        }
+    init(viewModel: MyPageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        tabBarItem = UITabBarItem(title: nil, image: Assets.icTruck.image, tag: TabBarTag.myPage.rawValue)
+        tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
         
-        return UINavigationController(rootViewController: viewController).then {
-            $0.isNavigationBarHidden = true
-            $0.interactivePopGestureRecognizer?.delegate = nil
-        }
-    }
-    
-    override func loadView() {
-        self.view = myPageView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupPageViewController()
-        setNoticeNewBadgeIfNeeded()
+        setupUI()
+        setupPageViewController()
+        bind()
+        
+        viewModel.input.load.send(())
     }
     
-    override func bindEvent() {
-        self.myPageView.rx.tapTab
-            .asDriver()
-            .do(onNext: { [weak self] index in
-                self?.sendAnalyticsEvent(selectedIndex: index)
-            })
-            .drive(onNext: { [weak self] index in
-                guard let self = self else { return }
-                self.pageViewController.setViewControllers(
-                    [self.pageViewControllers[index]],
-                    direction: .forward,
-                    animated: false,
-                    completion: nil
-                )
-            })
-            .disposed(by: self.eventDisposeBag)
+    private func setupUI() {
+        view.addSubview(subTabView)
+        view.addSubview(containerView)
+        
+        subTabView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        containerView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.top.equalTo(subTabView.snp.bottom)
+        }
     }
     
     private func setupPageViewController() {
-        self.addChild(self.pageViewController)
-        self.pageViewController.delegate = self
-        self.pageViewController.dataSource = self
-        self.myPageView.containerView.addSubview(self.pageViewController.view)
-        self.pageViewController.view.snp.makeConstraints { make in
-            make.edges.equalTo(self.myPageView.containerView)
+        addChild(pageViewController)
+        pageViewController.delegate = self
+        pageViewController.dataSource = self
+        containerView.addSubview(pageViewController.view)
+        pageViewController.view.snp.makeConstraints {
+            $0.edges.equalTo(containerView)
         }
-        self.pageViewController.setViewControllers(
-            [self.pageViewControllers[0]],
+        pageViewController.setViewControllers(
+            [pageViewControllers[0]],
             direction: .forward,
             animated: false,
             completion: nil
@@ -86,36 +83,29 @@ final class MyPageViewController: BaseViewController {
         }
     }
     
-    private func sendAnalyticsEvent(selectedIndex: Int) {
-        if selectedIndex == 0 {
-            LogManager.shared.sendEvent(.init(
-                screen: .myStoreInfo,
-                eventName: .tapMyTopTab,
-                extraParameters: [.tab: "myStoreInfo"]
-            ))
-        } else if selectedIndex == 1 {
-            LogManager.shared.sendEvent(.init(
-                screen: .myStoreInfo,
-                eventName: .tapMyTopTab,
-                extraParameters: [.tab: "statistics"]
-            ))
-        } else {
-            LogManager.shared.sendEvent(.init(
-                screen: .myStoreInfo,
-                eventName: .tapMyTopTab,
-                extraParameters: [.tab: "storePost"]
-            ))
-        }
-    }
-    
-    private func setNoticeNewBadgeIfNeeded() {
-        var userDefaults = Preference.shared
-        let isShownStoreNoticeNewBadge = userDefaults.shownStoreNoticeNewBadge
+    private func bind() {
+        // Input
+        subTabView.didTapPublisher
+            .subscribe(viewModel.input.didTapSubTab)
+            .store(in: &cancellables)
         
-        myPageView.storeNoticeButton.isNew = isShownStoreNoticeNewBadge.isNot
-        if isShownStoreNoticeNewBadge.isNot {
-            userDefaults.shownStoreNoticeNewBadge = true
-        }
+        // Output
+        viewModel.output.showNewBadge
+            .main
+            .withUnretained(self)
+            .sink { (owner: MyPageViewController, _) in
+                owner.subTabView.messageButton.isNew = true
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.pageViewControllerIndex
+            .main
+            .withUnretained(self)
+            .sink { (owner: MyPageViewController, selectedIndex: Int) in
+                let selectedViewController = owner.pageViewControllers[selectedIndex]
+                owner.pageViewController.setViewControllers([selectedViewController], direction: .forward, animated: false)
+            }
+            .store(in: &cancellables)
     }
     
     private func createMyStoreInfoViewController() -> UIViewController {
