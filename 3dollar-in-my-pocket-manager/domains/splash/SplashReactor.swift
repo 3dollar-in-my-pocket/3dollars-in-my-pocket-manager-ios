@@ -44,11 +44,7 @@ final class SplashReactor: BaseReactor, Reactor {
         switch action {
         case .viewDidLoad:
             if self.userDefaultsUtils.userToken.isEmpty {
-                return .merge([
-                    self.fetchFeedbackTypes(),
-                    .just(.goToSignin)
-                ])
-                
+                return fetchFeedbackTypes()
             } else {
                 return .merge([
                     self.fetchFeedbackTypes(),
@@ -105,8 +101,11 @@ final class SplashReactor: BaseReactor, Reactor {
     
     private func fetchFeedbackTypes() -> Observable<Mutation> {
         return self.feedbackService.fetchFeedbackTypes()
-            .map { $0.map(FeedbackType.init(response:)) }
-            .map { .setFeedbackTypes($0) }
+            .flatMap({ (response: [FeedbackTypeResponse]) -> Observable<Mutation> in
+                let feedbackTypes = response.map(FeedbackType.init(response:))
+                
+                return .merge([.just(.setFeedbackTypes(feedbackTypes)), .just(.goToSignin)])
+            })
             .catch { .just(.showErrorAlert($0)) }
     }
 }
