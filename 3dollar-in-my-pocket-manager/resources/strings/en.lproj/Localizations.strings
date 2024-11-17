@@ -183,3 +183,14 @@
 "preference.remove_location_on_close.description" = "엽업 종료 시에도 위치가 손님들에게 공개됩니다.";
 "preference.auto_open_close_control.title" = "영업 상태 자동 변경";
 "preference.auto_open_close_control.description" = "설정한 영업 일정에 따라 자동으로 영업 상태가 변경됩니다.";
+
+// MARK: Message
+"message.overview.user_count_format" = "%d명";
+"message.overview.title.first" = "의 고객님에게";
+"message.overview.title.second" = "오늘의 메시지 보내기";
+"message.overview.description.first" = "가게를 즐겨찾기한 고객님들께 푸시 메세지가 전송돼요.";
+"message.overview.description.second" = "하루 1회 횟수 제한이 있으니 신중히 발송해 주세요.";
+"message.overview.description.second.colored" = "하루 1회";
+"message.overview.description.third" = "전송 24시간 이후 다음 메세지를 발송할 수 있어요.";
+"message.overview.description.third.colored" = "24시간 이후 다음 메세지를 발송";
+

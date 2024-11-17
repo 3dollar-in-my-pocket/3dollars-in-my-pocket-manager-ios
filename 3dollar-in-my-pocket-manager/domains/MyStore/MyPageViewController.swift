@@ -15,7 +15,8 @@ final class MyPageViewController: BaseViewController {
     private lazy var pageViewControllers: [UIViewController] = [
         createMyStoreInfoViewController(),
         createStatisticsViewController(),
-        StorePostViewController()
+        StorePostViewController(),
+        MessageViewController()
     ]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

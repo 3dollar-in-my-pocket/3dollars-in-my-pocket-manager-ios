@@ -326,6 +326,36 @@ internal enum Strings {
       internal static let maximumPhoto = Strings.tr("Localizations", "edit_store_info.toast.maximum_photo", fallback: "사진은 최대 10장까지 등록 가능합니다")
     }
   }
+  internal enum Message {
+    internal enum Overview {
+      /// %d명
+      internal static func userCountFormat(_ p1: Int) -> String {
+        return Strings.tr("Localizations", "message.overview.user_count_format", p1, fallback: "%d명")
+      }
+      internal enum Description {
+        /// 가게를 즐겨찾기한 고객님들께 푸시 메세지가 전송돼요.
+        internal static let first = Strings.tr("Localizations", "message.overview.description.first", fallback: "가게를 즐겨찾기한 고객님들께 푸시 메세지가 전송돼요.")
+        /// 하루 1회 횟수 제한이 있으니 신중히 발송해 주세요.
+        internal static let second = Strings.tr("Localizations", "message.overview.description.second", fallback: "하루 1회 횟수 제한이 있으니 신중히 발송해 주세요.")
+        /// 전송 24시간 이후 다음 메세지를 발송할 수 있어요.
+        internal static let third = Strings.tr("Localizations", "message.overview.description.third", fallback: "전송 24시간 이후 다음 메세지를 발송할 수 있어요.")
+        internal enum Second {
+          /// 하루 1회
+          internal static let colored = Strings.tr("Localizations", "message.overview.description.second.colored", fallback: "하루 1회")
+        }
+        internal enum Third {
+          /// 24시간 이후 다음 메세지를 발송
+          internal static let colored = Strings.tr("Localizations", "message.overview.description.third.colored", fallback: "24시간 이후 다음 메세지를 발송")
+        }
+      }
+      internal enum Title {
+        /// 의 고객님에게
+        internal static let first = Strings.tr("Localizations", "message.overview.title.first", fallback: "의 고객님에게")
+        /// 오늘의 메시지 보내기
+        internal static let second = Strings.tr("Localizations", "message.overview.title.second", fallback: "오늘의 메시지 보내기")
+      }
+    }
+  }
   internal enum MyPage {
     internal enum SubTab {
       /// 메세지

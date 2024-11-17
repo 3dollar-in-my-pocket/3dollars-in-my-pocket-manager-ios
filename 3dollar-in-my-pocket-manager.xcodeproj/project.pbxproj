@@ -646,6 +646,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		6E1036A22CE89C2E000994D3 /* Message */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Message; sourceTree = "<group>"; };
 		6EB5E58B2CE5DC420057993E /* Generated */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Generated; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -1006,6 +1007,7 @@
 		6E6C9C66280BD467009AFAE8 /* MyStore */ = {
 			isa = PBXGroup;
 			children = (
+				6E1036A22CE89C2E000994D3 /* Message */,
 				6E5F3DD3281D5F10002282B6 /* EditSchedule */,
 				6E8D7ACE2B234196008ABF64 /* EditAccount */,
 				6E8D012F2843331C00FAB49E /* EditMenu */,
@@ -1594,6 +1596,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				6E1036A22CE89C2E000994D3 /* Message */,
 				6EB5E58B2CE5DC420057993E /* Generated */,
 			);
 			name = "3dollar-in-my-pocket-manager";

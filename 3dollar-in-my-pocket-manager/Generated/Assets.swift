@@ -41,6 +41,7 @@ internal enum Assets {
   internal static let icDeleteWithoutPadding = ImageAsset(name: "ic_delete_without_padding")
   internal static let icHeartFill = ImageAsset(name: "ic_heart_fill")
   internal static let icHome = ImageAsset(name: "ic_home")
+  internal static let icInformation = ImageAsset(name: "ic_information")
   internal static let icKakao = ImageAsset(name: "ic_kakao")
   internal static let icKakaoLogo = ImageAsset(name: "ic_kakao_logo")
   internal static let icLocation = ImageAsset(name: "ic_location")
