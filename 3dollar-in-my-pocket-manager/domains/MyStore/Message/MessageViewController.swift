@@ -14,7 +14,7 @@ final class MessageViewController: BaseViewController {
         
         setupUI()
         
-        dataSource.reload([.init(type: .overview, items: [.overview])])
+        dataSource.reload([.init(type: .first, items: [.toast, .firstTitle])])
     }
     
     private func setupUI() {
@@ -42,6 +42,23 @@ final class MessageViewController: BaseViewController {
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .absolute(MessageOverviewCell.Layout.height)
                 ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                
+                return section
+            case .first:
+                let toastItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageDisableToastCell.Layout.height)
+                ))
+                let titleItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageFirstTitleCell.Layout.height)
+                ))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageDisableToastCell.Layout.height + MessageFirstTitleCell.Layout.height)
+                ), subitems: [toastItem, titleItem])
+                group.interItemSpacing = .fixed(0)
                 let section = NSCollectionLayoutSection(group: group)
                 
                 return section

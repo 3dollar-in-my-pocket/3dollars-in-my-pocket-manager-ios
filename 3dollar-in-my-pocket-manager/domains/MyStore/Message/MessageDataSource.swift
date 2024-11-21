@@ -2,6 +2,7 @@ import UIKit
 
 struct MessageSection: Hashable {
     enum SectionType {
+        case first
         case overview
     }
     
@@ -11,6 +12,8 @@ struct MessageSection: Hashable {
 
 enum MessageSectionItem: Hashable {
     case overview
+    case toast
+    case firstTitle
 }
 
 final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection, MessageSectionItem> {
@@ -23,11 +26,21 @@ final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection
                 let cell: MessageOverviewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 
                 return cell
+            case .toast:
+                let cell: MessageDisableToastCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                
+                return cell
+            case .firstTitle:
+                let cell: MessageFirstTitleCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                
+                return cell
             }
         }
         
         collectionView.register([
-            MessageOverviewCell.self
+            MessageOverviewCell.self,
+            MessageDisableToastCell.self,
+            MessageFirstTitleCell.self
         ])
     }
     

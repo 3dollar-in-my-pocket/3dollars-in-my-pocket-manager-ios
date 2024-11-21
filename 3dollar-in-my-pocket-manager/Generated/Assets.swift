@@ -32,6 +32,7 @@ internal enum Assets {
   internal static let icArrowDown = ImageAsset(name: "ic_arrow_down")
   internal static let icArrowRight = ImageAsset(name: "ic_arrow_right")
   internal static let icBack = ImageAsset(name: "ic_back")
+  internal static let icBookmarkSolid = ImageAsset(name: "ic_bookmark_solid")
   internal static let icCamera = ImageAsset(name: "ic_camera")
   internal static let icCheck = ImageAsset(name: "ic_check")
   internal static let icCheckLine = ImageAsset(name: "ic_check_line")
