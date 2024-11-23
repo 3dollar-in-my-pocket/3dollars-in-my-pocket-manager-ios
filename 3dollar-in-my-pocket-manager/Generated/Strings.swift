@@ -327,6 +327,8 @@ internal enum Strings {
     }
   }
   internal enum Message {
+    /// 메시지 전송
+    internal static let sendMessage = Strings.tr("Localizations", "message.send_message", fallback: "메시지 전송")
     internal enum FirstTitle {
       internal enum Description {
         /// 단골 고객님들께
@@ -334,9 +336,8 @@ internal enum Strings {
         /// 북마크를 요청해 보세요!
         internal static let second = Strings.tr("Localizations", "message.first_title.description.second", fallback: "북마크를 요청해 보세요!")
         /// 하루에 한 번 메세지를
-        /// 
         /// 전송할 수 있어요.
-        internal static let third = Strings.tr("Localizations", "message.first_title.description.third", fallback: "하루에 한 번 메세지를\n\n전송할 수 있어요.")
+        internal static let third = Strings.tr("Localizations", "message.first_title.description.third", fallback: "하루에 한 번 메세지를\n전송할 수 있어요.")
         internal enum Second {
           /// 북마크
           internal static let colord = Strings.tr("Localizations", "message.first_title.description.second.colord", fallback: "북마크")

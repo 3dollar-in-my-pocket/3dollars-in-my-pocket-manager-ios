@@ -14,6 +14,8 @@ enum MessageSectionItem: Hashable {
     case overview
     case toast
     case firstTitle
+    case bookmark
+    case introduction
 }
 
 final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection, MessageSectionItem> {
@@ -34,13 +36,23 @@ final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection
                 let cell: MessageFirstTitleCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 
                 return cell
+            case .bookmark:
+                let cell: MessageBookmarkCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                
+                return cell
+            case .introduction:
+                let cell: MessageIntroductionCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                
+                return cell
             }
         }
         
         collectionView.register([
             MessageOverviewCell.self,
             MessageDisableToastCell.self,
-            MessageFirstTitleCell.self
+            MessageFirstTitleCell.self,
+            MessageBookmarkCell.self,
+            MessageIntroductionCell.self
         ])
     }
     

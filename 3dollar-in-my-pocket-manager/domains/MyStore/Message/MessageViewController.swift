@@ -7,6 +7,23 @@ final class MessageViewController: BaseViewController {
         return collectionView
     }()
     
+    private let messageButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = AttributedString(Strings.Message.sendMessage, attributes: .init([
+            .font: UIFont.medium(size: 14) as Any,
+            .foregroundColor: UIColor.white
+        ]))
+        config.image = Assets.icCommunitySolid.image.resizeImage(scaledTo: 20)
+        config.imagePadding = 4
+        config.contentInsets = .init(top: 12, leading: 16, bottom: 12, trailing: 16)
+        config.baseForegroundColor = .white
+        let button = UIButton(configuration: config)
+        button.backgroundColor = .green
+        button.layer.cornerRadius = 22
+        button.layer.masksToBounds = true
+        return button
+    }()
+    
     private lazy var dataSource = MessageDataSource(collectionView: collectionView)
     
     override func viewDidLoad() {
@@ -14,14 +31,21 @@ final class MessageViewController: BaseViewController {
         
         setupUI()
         
-        dataSource.reload([.init(type: .first, items: [.toast, .firstTitle])])
+        dataSource.reload([.init(type: .first, items: [.toast, .firstTitle, .bookmark, .introduction])])
     }
     
     private func setupUI() {
         view.addSubview(collectionView)
+        view.addSubview(messageButton)
         
         collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.top.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        messageButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-24)
+            $0.trailing.equalToSuperview().offset(-12)
         }
     }
     
@@ -54,10 +78,18 @@ final class MessageViewController: BaseViewController {
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .absolute(MessageFirstTitleCell.Layout.height)
                 ))
+                let bookmarkItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageBookmarkCell.Layout.height)
+                ))
+                let introductionItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageIntroductionCell.Layout.height)
+                ))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(MessageDisableToastCell.Layout.height + MessageFirstTitleCell.Layout.height)
-                ), subitems: [toastItem, titleItem])
+                    heightDimension: .absolute(MessageDisableToastCell.Layout.height + MessageFirstTitleCell.Layout.height + MessageBookmarkCell.Layout.height + MessageIntroductionCell.Layout.height)
+                ), subitems: [toastItem, titleItem, bookmarkItem, introductionItem])
                 group.interItemSpacing = .fixed(0)
                 let section = NSCollectionLayoutSection(group: group)
                 

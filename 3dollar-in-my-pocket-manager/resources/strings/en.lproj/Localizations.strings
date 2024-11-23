@@ -199,3 +199,4 @@
 "message.first_title.description.second.colord" = "북마크";
 "message.first_title.description.third" = "하루에 한 번 메세지를\n전송할 수 있어요.";
 "message.first_title.description.third.colored" = "하루에 한 번 메세지";
+"message.send_message" = "메시지 전송";
