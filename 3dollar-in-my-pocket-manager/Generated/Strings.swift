@@ -378,6 +378,11 @@ internal enum Strings {
         internal static let second = Strings.tr("Localizations", "message.overview.title.second", fallback: "오늘의 메시지 보내기")
       }
     }
+    internal enum Toast {
+      /// 💌 고객님께 메세지를 전달드렸어요
+      /// 다음 메세지는 24시간 후 전송할 수 있어요
+      internal static let finish = Strings.tr("Localizations", "message.toast.finish", fallback: "💌 고객님께 메세지를 전달드렸어요\n다음 메세지는 24시간 후 전송할 수 있어요")
+    }
   }
   internal enum MyPage {
     internal enum SubTab {

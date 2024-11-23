@@ -1,4 +1,5 @@
 import UIKit
+import CombineCocoa
 
 final class MessageViewController: BaseViewController {
     private lazy var collectionView: UICollectionView = {
@@ -32,6 +33,15 @@ final class MessageViewController: BaseViewController {
         setupUI()
         
         dataSource.reload([.init(type: .first, items: [.toast, .firstTitle, .bookmark, .introduction])])
+        
+        messageButton.tapPublisher
+            .main
+            .withUnretained(self)
+            .sink { (owner: MessageViewController, _) in
+                let viewController = SendingMessageViewController(viewModel: SendingMessageViewModel())
+                owner.presentPanModal(viewController)
+            }
+            .store(in: &cancellables)
     }
     
     private func setupUI() {
