@@ -38,8 +38,11 @@ final class MessageViewController: BaseViewController {
             .main
             .withUnretained(self)
             .sink { (owner: MessageViewController, _) in
-                let viewController = SendingMessageViewController(viewModel: SendingMessageViewModel())
-                owner.presentPanModal(viewController)
+//                let viewController = SendingMessageViewController(viewModel: SendingMessageViewModel())
+//                owner.presentPanModal(viewController)
+                
+                let viewController = ConfirmMessageViewController()
+                owner.tabBarController?.present(viewController, animated: true)
             }
             .store(in: &cancellables)
     }
