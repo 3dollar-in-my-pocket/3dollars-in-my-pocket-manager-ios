@@ -71,7 +71,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func goToMain() {
-        self.window?.rootViewController = MainTabController.instance()
+        self.window?.rootViewController = MainTabController(viewModel: MainViewModel())
         self.window?.makeKeyAndVisible()
     }
 }

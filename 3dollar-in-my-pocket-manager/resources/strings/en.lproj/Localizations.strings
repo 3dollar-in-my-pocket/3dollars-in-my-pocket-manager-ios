@@ -43,6 +43,8 @@
 "saturday_full" = "토요일";
 "sunday_full" = "일요일";
 
+"main.message_tooltip" = "내 가게를 북마크한 고객님들께\n메세지를 보낼 수 있어요";
+
 // Signup
 "signup_title" = "회원가입";
 "signup_description" = "사장님, 가게 정보 등록하시고\n부자 되세요~!";
@@ -83,8 +85,11 @@
 "waiting_logout" = "로그아웃";
 
 // My Page
-"my_page_store_info" = "가게정보";
-"my_pate_statistics" = "통계";
+"my_page.sub_tab.store_info" = "가게정보";
+"my_page.sub_tab.statistics" = "리뷰통계";
+"my_page.sub_tab.notice" = "가게소식";
+"my_page.sub_tab.message" = "메세지";
+"my_page.message.tool_tip" = "고객님들께 첫 인사를 보내보세요!";
 
 // My Store Info
 "my_store_info_introduction_placeholder" = "손님들에게 하고 싶은 말을 적어주세요!\nex) 오전에 오시면 서비스가 있습니다!";
@@ -181,3 +186,36 @@
 "preference.remove_location_on_close.description" = "엽업 종료 시에도 위치가 손님들에게 공개됩니다.";
 "preference.auto_open_close_control.title" = "영업 상태 자동 변경";
 "preference.auto_open_close_control.description" = "설정한 영업 일정에 따라 자동으로 영업 상태가 변경됩니다.";
+
+// MARK: Message
+"message.overview.user_count_format" = "%d명";
+"message.overview.title.first" = "의 고객님에게";
+"message.overview.title.second" = "오늘의 메시지 보내기";
+"message.overview.description.first" = "가게를 즐겨찾기한 고객님들께 푸시 메세지가 전송돼요.";
+"message.overview.description.second" = "하루 1회 횟수 제한이 있으니 신중히 발송해 주세요.";
+"message.overview.description.second.colored" = "하루 1회";
+"message.overview.description.third" = "전송 24시간 이후 다음 메세지를 발송할 수 있어요.";
+"message.overview.description.third.colored" = "24시간 이후 다음 메세지를 발송";
+"message.overview.disable_toast" = "아직 메세지를 보낼 수 없어요";
+"message.first_title.description.first" = "단골 고객님들께";
+"message.first_title.description.second" = "북마크를 요청해 보세요!";
+"message.first_title.description.second.colord" = "북마크";
+"message.first_title.description.third" = "하루에 한 번 메세지를\n전송할 수 있어요.";
+"message.first_title.description.third.colored" = "하루에 한 번 메세지";
+"message.send_message" = "메시지 전송";
+"message.send_message_after_time" = "%@ 후 발송 가능";
+"message.toast.finish" = "💌 고객님께 메세지를 전달드렸어요\n다음 메세지는 24시간 후 전송할 수 있어요";
+"message.message.header_title" = "이전 메세지 모두보기";
+
+// MARK: SendingMessage
+"sending_message.title" = "고객님께 전송할 메세지를\n입력해 주세요.";
+"sending_message.description" = "한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!";
+"sending_message.description.colored" = "취소가 불가능";
+"sending_message.warning" = "*최소 10자에서 최대 100자 이내로 입력해 주세요.";
+"sending_message.send" = "오늘의 메세지 전송하기";
+
+// MARK: MessageConfirm
+"message_confirm.content.title_format" = "내가 즐겨 찾은 가게 %@의 메세지가 도착하였습니다.";
+"message_confirm.title" = "정말 아래의 메세지로 전송하시나요?\n다시 한 번 확인해 주세요.";
+"message_confirm.send" = "메세지 전송";
+"message_confirm.rewrite" = "다시 쓰기";

@@ -32,4 +32,12 @@ extension Bundle {
         
         return privacyUrl
     }
+    
+    static var identifier: String {
+        guard let identifier = Bundle.main.bundleIdentifier else  {
+            fatalError("identifier이 정의되지 않았습니다.")
+        }
+        
+        return identifier
+    }
 }

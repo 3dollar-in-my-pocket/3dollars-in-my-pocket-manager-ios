@@ -41,12 +41,21 @@ final class Preference {
         }
     }
     
-    var shownStoreNoticeNewBadge: Bool {
+    var storeName: String {
         set {
-            instance.set(newValue, forKey: "KEY_SHOWN_STORE_NOTICE_NEW_BADGE")
+            instance.set(newValue, forKey: "KEY_STORE_NAME")
         }
         get {
-            return instance.bool(forKey: "KEY_SHOWN_STORE_NOTICE_NEW_BADGE")
+            return instance.string(forKey: "KEY_STORE_NAME") ?? ""
+        }
+    }
+    
+    var shownMessageNewBadge: Bool {
+        set {
+            instance.set(newValue, forKey: "KEY_SHOWN_MESSAGE_NEW_BADGE")
+        }
+        get {
+            return instance.bool(forKey: "KEY_SHOWN_MESSAGE_NEW_BADGE")
         }
     }
     
@@ -59,10 +68,31 @@ final class Preference {
         }
     }
     
+    var shownMessageTooltip: Bool {
+        set {
+            instance.set(newValue, forKey: "KEY_SHOWN_MESSAGE_TOOLTIP")
+        }
+        get {
+            return instance.bool(forKey: "KEY_SHOWN_MESSAGE_TOOLTIP")
+        }
+    }
+    
+    var shownMyPageMessageTooltip: Bool {
+        set {
+            instance.set(newValue, forKey: "KEY_SHOWN_MYPAGE_MESSAGE_TOOLTIP")
+        }
+        get {
+            return instance.bool(forKey: "KEY_SHOWN_MYPAGE_MESSAGE_TOOLTIP")
+        }
+    }
+    
     func clear() {
         instance.removeObject(forKey: "KEY_TOKEN")
         instance.removeObject(forKey: "KEY_USER_ID")
         instance.removeObject(forKey: "KEY_STORE_ID")
         instance.removeObject(forKey: "KEY_SHOWN_STORE_NOTICE_NEW_BADGE")
+        instance.removeObject(forKey: "KEY_STORE_NAME")
+        instance.removeObject(forKey: "KEY_SHOWN_MESSAGE_TOOLTIP")
+        instance.removeObject(forKey: "KEY_SHOWN_MYPAGE_MESSAGE_TOOLTIP")
     }
 }

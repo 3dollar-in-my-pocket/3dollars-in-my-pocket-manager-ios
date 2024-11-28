@@ -1,24 +1,7 @@
 import UIKit
-import RxCocoa
-import RxSwift
+import Combine
 
 final class MyPageSubTab: BaseView {
-    private let newImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "img_new")
-        
-        return imageView
-    }()
-    
-    let button: UIButton = {
-        let button = UIButton()
-        button.setTitleColor(.gray30, for: .normal)
-        button.setTitleColor(.gray95, for: .selected)
-        button.titleLabel?.font = .extraBold(size: 18)
-        
-        return button
-    }()
-    
     var isSelected: Bool {
         didSet {
             button.isSelected = isSelected
@@ -30,6 +13,26 @@ final class MyPageSubTab: BaseView {
             newImage.isHidden = isNew.isNot
         }
     }
+    
+    var tapPublisher: AnyPublisher<Void, Never> {
+        button.tapPublisher
+    }
+    
+    private let newImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = Assets.imgNew.image
+        imageView.isHidden = true
+        return imageView
+    }()
+    
+    private let button: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.gray30, for: .normal)
+        button.setTitleColor(.gray95, for: .selected)
+        button.titleLabel?.font = .extraBold(size: 18)
+        
+        return button
+    }()
     
     init(title: String, isSelected: Bool) {
         self.isSelected = isSelected
@@ -58,14 +61,7 @@ final class MyPageSubTab: BaseView {
         }
         
         snp.makeConstraints {
-            $0.leading.top.bottom.equalTo(button)
-            $0.trailing.equalTo(newImage)
+            $0.edges.equalTo(button)
         }
-    }
-}
-
-extension Reactive where Base: MyPageSubTab {
-    var tap: ControlEvent<Void> {
-        return base.button.rx.tap
     }
 }
