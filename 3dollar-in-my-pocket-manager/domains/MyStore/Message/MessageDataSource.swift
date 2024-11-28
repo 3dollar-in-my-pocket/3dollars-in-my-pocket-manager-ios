@@ -23,10 +23,7 @@ enum MessageSectionItem: Hashable {
 final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection, MessageSectionItem> {
     typealias Snapshot = NSDiffableDataSourceSnapshot<MessageSection, MessageSectionItem>
     
-    private let viewModel: MessageViewModel
-    
-    init(collectionView: UICollectionView, viewModel: MessageViewModel) {
-        self.viewModel = viewModel
+    init(collectionView: UICollectionView) {
         super.init(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             switch itemIdentifier {
             case .overview(let subscriberCount):
@@ -76,7 +73,6 @@ final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection
             MessageHistoryCell.self
         ])
         collectionView.registerHeader(MessageHistoryHeaderView.self)
-        collectionView.delegate = self
     }
     
     func reload(_ sections: [MessageSection]) {
@@ -87,14 +83,5 @@ final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection
             snapshot.appendItems(section.items, toSection: section)
         }
         apply(snapshot, animatingDifferences: false)
-    }
-}
-
-extension MessageDataSource: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard sectionIdentifier(section: indexPath.section)?.type == .message else { return }
-        
-        print("💚willDisplay: \(indexPath.item)")
-        viewModel.input.willDisplay.send(indexPath.item)
     }
 }

@@ -76,6 +76,7 @@ final class ConfirmMessageViewController: BaseViewController {
         
         setupUI()
         bind()
+        viewModel.input.firstLoad.send(())
         messageContentView.bind(storeName: viewModel.output.storeName, message: viewModel.output.message)
     }
     
@@ -120,6 +121,7 @@ final class ConfirmMessageViewController: BaseViewController {
     
     private func bind() {
         sendButton.tapPublisher
+            .throttleClick()
             .subscribe(viewModel.input.didTapSend)
             .store(in: &cancellables)
         

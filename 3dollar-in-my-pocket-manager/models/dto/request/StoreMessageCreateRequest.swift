@@ -3,6 +3,7 @@ import Foundation
 struct StoreMessageCreateRequest: Encodable {
     let storeId: String
     let body: String
+    let nonceToken: String
     
     enum CodingKeys: CodingKey {
         case body

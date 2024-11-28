@@ -3,13 +3,13 @@ import Foundation
 import Alamofire
 
 protocol MessageRepository {
-    func sendMessage(input: StoreMessageCreateRequest) async -> ApiResult<StoreMessageResponse>
+    func sendMessage(input: StoreMessageCreateRequest) async -> ApiResult<StoreMessageCreateResponse>
     
     func fetchMessages(storeId: String, cursor: String?) async -> ApiResult<StoreMessageListResponse>
 }
 
 final class MessageRepositoryImpl: MessageRepository {
-    func sendMessage(input: StoreMessageCreateRequest) async -> ApiResult<StoreMessageResponse> {
+    func sendMessage(input: StoreMessageCreateRequest) async -> ApiResult<StoreMessageCreateResponse> {
         return await MessageApi.sendMessage(input: input).asyncRequest()
     }
     

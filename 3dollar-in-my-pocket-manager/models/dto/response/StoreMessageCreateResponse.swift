@@ -1,5 +1,10 @@
 import Foundation
 
+struct StoreMessageCreateResponse: Decodable {
+    let message: StoreMessageResponse
+    let policy: StoreMessagePolicyResponse
+}
+
 struct StoreMessageResponse: Decodable, Hashable {
     let messageId: String
     let body: String
@@ -19,7 +24,6 @@ struct ContentListWithCursorStoreMessageResponse: Decodable {
 }
 
 struct StoreMessagePolicyResponse: Decodable {
-    let dailyLimit: Int
     let canSendNow: Bool
     let nextAvailableSendDateTime: String
 }

@@ -36,4 +36,15 @@ extension MessageApi: ApiRequest {
             return params
         }
     }
+    
+    var headers: HTTPHeaders {
+        switch self {
+        case .sendMessage(let input):
+            var header = HTTPUtils.defaultHeader()
+            header.add(HTTPHeader(name: "X-Nonce-Token", value: input.nonceToken))
+            return header
+        case .fetchMessages:
+            return HTTPUtils.defaultHeader()
+        }
+    }
 }

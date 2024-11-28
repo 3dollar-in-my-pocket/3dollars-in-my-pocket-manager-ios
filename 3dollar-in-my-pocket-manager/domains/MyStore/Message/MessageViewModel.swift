@@ -5,19 +5,22 @@ extension MessageViewModel {
         let firstLoad = PassthroughSubject<Void, Never>()
         let didTapSendingMessage = PassthroughSubject<Void, Never>()
         let willDisplay = PassthroughSubject<Int, Never>()
+        let refresh = PassthroughSubject<Void, Never>()
         
         // From SendingMessage
         let didTapSendingMessageFromBottomSheet = PassthroughSubject<String, Never>()
         
         // From ConfirmMessage
-        let didSendedMessage = PassthroughSubject<StoreMessageResponse, Never>()
+        let didSendedMessage = PassthroughSubject<StoreMessageCreateResponse, Never>()
         let didTapRewrite = PassthroughSubject<String, Never>()
     }
     
     struct Output {
+        let policy = PassthroughSubject<StoreMessagePolicyResponse, Never>()
         let datasource = PassthroughSubject<[MessageSection], Never>()
         let showErrorAlert = PassthroughSubject<Error, Never>()
         let route = PassthroughSubject<Route, Never>()
+        let isRefreshing = CurrentValueSubject<Bool, Never>(false)
     }
     
     struct State {
@@ -70,9 +73,13 @@ final class MessageViewModel: BaseViewModel {
     }
     
     private func bind() {
-        input.firstLoad
+        Publishers.Merge(input.firstLoad, input.refresh)
             .withUnretained(self)
             .sink { (owner: MessageViewModel, _) in
+                owner.state.messages.removeAll()
+                owner.state.cursor = nil
+                owner.state.hasMore = true
+                owner.state.subscriberCount = 0
                 owner.firstLoadDatas()
             }
             .store(in: &cancellables)
@@ -106,8 +113,9 @@ final class MessageViewModel: BaseViewModel {
     private func bindConfirmMessageDialog() {
         input.didSendedMessage
             .withUnretained(self)
-            .sink { (owner: MessageViewModel, message: StoreMessageResponse) in
-                owner.state.messages.insert(message, at: 0)
+            .sink { (owner: MessageViewModel, response: StoreMessageCreateResponse) in
+                owner.state.messages.insert(response.message, at: 0)
+                owner.output.policy.send(response.policy)
                 owner.updateDataSource()
             }
             .store(in: &cancellables)
@@ -130,6 +138,7 @@ final class MessageViewModel: BaseViewModel {
                 state.subscriberCount = response.favorite.subscriberCount
             case .failure(let error):
                 output.showErrorAlert.send(error)
+                output.isRefreshing.send(false)
                 return
             }
             
@@ -138,12 +147,15 @@ final class MessageViewModel: BaseViewModel {
                 state.cursor = response.messages.cursor.nextCursor
                 state.hasMore = response.messages.cursor.hasMore
                 state.messages = response.messages.contents
+                output.policy.send(response.policy)
             case .failure(let error):
                 output.showErrorAlert.send(error)
+                output.isRefreshing.send(false)
                 return
             }
             
             updateDataSource()
+            output.isRefreshing.send(false)
         }
     }
     
@@ -157,6 +169,7 @@ final class MessageViewModel: BaseViewModel {
                 state.cursor = response.messages.cursor.nextCursor
                 state.hasMore = response.messages.cursor.hasMore
                 state.messages.append(contentsOf: response.messages.contents)
+                updateDataSource()
             case .failure(let error):
                 output.showErrorAlert.send(error)
             }

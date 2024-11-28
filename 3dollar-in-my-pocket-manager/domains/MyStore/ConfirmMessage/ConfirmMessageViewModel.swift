@@ -2,6 +2,7 @@ import Combine
 
 extension ConfirmMessageViewModel {
     struct Input {
+        let firstLoad = PassthroughSubject<Void, Never>()
         let didTapSend = PassthroughSubject<Void, Never>()
         let didTapReWrite = PassthroughSubject<Void, Never>()
     }
@@ -14,8 +15,12 @@ extension ConfirmMessageViewModel {
         let toast = PassthroughSubject<String, Never>()
         
         // 이벤트 전달용
-        let didSendedMessage = PassthroughSubject<StoreMessageResponse, Never>()
+        let didSendedMessage = PassthroughSubject<StoreMessageCreateResponse, Never>()
         let didTapRewrite = PassthroughSubject<String, Never>()
+    }
+    
+    struct State {
+        var nonceToken: String?
     }
     
     struct Config {
@@ -28,15 +33,18 @@ extension ConfirmMessageViewModel {
     
     struct Dependency {
         let messageRepository: MessageRepository
+        let sharedRepository: SharedRepository
         let logManager: LogManagerProtocol
         let preference: Preference
         
         init(
             messageRepository: MessageRepository = MessageRepositoryImpl(),
+            sharedRepository: SharedRepository = SharedRepositoryImpl(),
             logManager: LogManagerProtocol = LogManager.shared,
             preference: Preference = Preference.shared
         ) {
             self.messageRepository = messageRepository
+            self.sharedRepository = sharedRepository
             self.logManager = logManager
             self.preference = preference
         }
@@ -46,6 +54,7 @@ extension ConfirmMessageViewModel {
 final class ConfirmMessageViewModel: BaseViewModel {
     let input = Input()
     let output: Output
+    private var state = State()
     private let dependency: Dependency
     
     init(config: Config, dependency: Dependency = Dependency()) {
@@ -58,6 +67,13 @@ final class ConfirmMessageViewModel: BaseViewModel {
     }
     
     private func bind() {
+        input.firstLoad
+            .withUnretained(self)
+            .sink { (owner: ConfirmMessageViewModel, _) in
+                owner.createNonceToken()
+            }
+            .store(in: &cancellables)
+        
         input.didTapSend
             .withUnretained(self)
             .sink { (owner: ConfirmMessageViewModel, _) in
@@ -74,14 +90,32 @@ final class ConfirmMessageViewModel: BaseViewModel {
             .store(in: &cancellables)
     }
     
-    private func sendMessage() {
+    private func createNonceToken() {
         Task {
-            let input = StoreMessageCreateRequest(storeId: dependency.preference.storeId, body: output.message)
+            let nonceResult = await dependency.sharedRepository.createNonce(input: .init())
+            
+            switch nonceResult {
+            case .success(let response):
+                state.nonceToken = response.nonce
+            case .failure(let error):
+                output.showErrorAlert.send(error)
+            }
+        }
+    }
+    
+    private func sendMessage() {
+        guard let nonceToken = state.nonceToken else { return }
+        Task {
+            let input = StoreMessageCreateRequest(
+                storeId: dependency.preference.storeId,
+                body: output.message,
+                nonceToken: nonceToken
+            )
             let result = await dependency.messageRepository.sendMessage(input: input)
             
             switch result {
-            case .success(let messageResponse):
-                output.didSendedMessage.send(messageResponse)
+            case .success(let response):
+                output.didSendedMessage.send(response)
                 output.toast.send(Strings.Message.Toast.finish)
                 output.route.send(.dismiss)
             case .failure(let error):

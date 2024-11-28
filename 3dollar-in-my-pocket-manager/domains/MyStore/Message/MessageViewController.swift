@@ -25,9 +25,12 @@ final class MessageViewController: BaseViewController {
         return button
     }()
     
+    private let refreshControl = UIRefreshControl()
+    
     private let viewModel: MessageViewModel
-    private lazy var dataSource = MessageDataSource(collectionView: collectionView, viewModel: viewModel)
+    private lazy var dataSource = MessageDataSource(collectionView: collectionView)
     private var timer: Timer?
+    private var isRefreshing: Bool = false
     
     init(viewModel: MessageViewModel) {
         self.viewModel = viewModel
@@ -43,12 +46,14 @@ final class MessageViewController: BaseViewController {
         
         setupUI()
         bind()
+        collectionView.delegate = self
         viewModel.input.firstLoad.send(())
     }
     
     private func setupUI() {
         view.addSubview(collectionView)
         view.addSubview(messageButton)
+        collectionView.refreshControl = refreshControl
         
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
@@ -62,6 +67,14 @@ final class MessageViewController: BaseViewController {
     }
     
     private func bind() {
+        refreshControl.isRefreshingPublisher
+            .filter { $0 }
+            .withUnretained(self)
+            .sink { (owner: MessageViewController, _) in
+                owner.isRefreshing = true
+            }
+            .store(in: &cancellables)
+        
         messageButton.tapPublisher
             .subscribe(viewModel.input.didTapSendingMessage)
             .store(in: &cancellables)
@@ -72,6 +85,14 @@ final class MessageViewController: BaseViewController {
             .withUnretained(self)
             .sink { (owner: MessageViewController, sections: [MessageSection]) in
                 owner.dataSource.reload(sections)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.policy
+            .main
+            .withUnretained(self)
+            .sink { (owner: MessageViewController, policy: StoreMessagePolicyResponse) in
+                owner.setupSendingButton(policy: policy)
             }
             .store(in: &cancellables)
         
@@ -88,6 +109,16 @@ final class MessageViewController: BaseViewController {
             .withUnretained(self)
             .sink { (owner: MessageViewController, route: MessageViewModel.Route) in
                 owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.isRefreshing
+            .filter { $0.isNot }
+            .main
+            .withUnretained(self)
+            .sink { (owner: MessageViewController, _) in
+                owner.refreshControl.endRefreshing()
+                owner.isRefreshing = false
             }
             .store(in: &cancellables)
     }
@@ -178,11 +209,6 @@ final class MessageViewController: BaseViewController {
             messageButton.backgroundColor = .gray40
             
             let nextAvailableSendDate = DateUtils.toDate(dateString: policy.nextAvailableSendDateTime)
-            let diff = timeDifferenceBetween(Date(), nextAvailableSendDate)
-            messageButton.configuration?.attributedTitle = AttributedString(Strings.Message.sendMessageAfterTime(nextAvailableSendDate), attributes: .init([
-                .font: UIFont.medium(size: 14) as Any,
-                .foregroundColor: UIColor.white
-            ]))
             messageButton.isEnabled = false
             startCountdown(to: nextAvailableSendDate)
         }
@@ -222,6 +248,21 @@ final class MessageViewController: BaseViewController {
         return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
     }
 }
+
+extension MessageViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard dataSource.sectionIdentifier(section: indexPath.section)?.type == .message else { return }
+        
+        viewModel.input.willDisplay.send(indexPath.item)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard isRefreshing else  { return }
+        
+        viewModel.input.refresh.send(())
+    }
+}
+
 
 // MARK: Route
 extension MessageViewController {

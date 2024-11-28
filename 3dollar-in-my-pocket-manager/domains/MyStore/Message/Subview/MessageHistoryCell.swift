@@ -21,6 +21,7 @@ final class MessageHistoryCell: BaseCollectionViewCell {
         let label = UILabel()
         label.textColor = .gray95
         label.font = .regular(size: 14)
+        label.numberOfLines = 0
         return label
     }()
     
