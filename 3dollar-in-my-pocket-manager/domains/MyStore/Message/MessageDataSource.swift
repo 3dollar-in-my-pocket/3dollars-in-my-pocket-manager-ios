@@ -4,6 +4,7 @@ struct MessageSection: Hashable {
     enum SectionType {
         case first
         case overview
+        case message
     }
     
     let type: SectionType
@@ -11,22 +12,27 @@ struct MessageSection: Hashable {
 }
 
 enum MessageSectionItem: Hashable {
-    case overview
+    case overview(subscriberCount: Int)
     case toast
     case firstTitle
     case bookmark
     case introduction
+    case message(StoreMessageResponse)
 }
 
 final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection, MessageSectionItem> {
     typealias Snapshot = NSDiffableDataSourceSnapshot<MessageSection, MessageSectionItem>
     
-    init(collectionView: UICollectionView) {
+    private let viewModel: MessageViewModel
+    
+    init(collectionView: UICollectionView, viewModel: MessageViewModel) {
+        self.viewModel = viewModel
         super.init(collectionView: collectionView) { collectionView, indexPath, itemIdentifier in
             switch itemIdentifier {
-            case .overview:
+            case .overview(let subscriberCount):
                 let cell: MessageOverviewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 
+                cell.bind(count: subscriberCount)
                 return cell
             case .toast:
                 let cell: MessageDisableToastCell = collectionView.dequeueReusableCell(indexPath: indexPath)
@@ -44,7 +50,21 @@ final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection
                 let cell: MessageIntroductionCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 
                 return cell
+            case .message(let message):
+                let cell: MessageHistoryCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                
+                cell.bind(message: message)
+                return cell
             }
+        }
+        
+        supplementaryViewProvider = { [weak self] collectionView, kind, indexPath -> UICollectionReusableView? in
+            guard let self,
+                  let section = sectionIdentifier(section: indexPath.section),
+                  section.type == .message else { return nil }
+            
+            let headerView: MessageHistoryHeaderView = collectionView.dequeueReusableHeader(indexPath: indexPath)
+            return headerView
         }
         
         collectionView.register([
@@ -52,8 +72,11 @@ final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection
             MessageDisableToastCell.self,
             MessageFirstTitleCell.self,
             MessageBookmarkCell.self,
-            MessageIntroductionCell.self
+            MessageIntroductionCell.self,
+            MessageHistoryCell.self
         ])
+        collectionView.registerHeader(MessageHistoryHeaderView.self)
+        collectionView.delegate = self
     }
     
     func reload(_ sections: [MessageSection]) {
@@ -64,5 +87,14 @@ final class MessageDataSource: UICollectionViewDiffableDataSource<MessageSection
             snapshot.appendItems(section.items, toSection: section)
         }
         apply(snapshot, animatingDifferences: false)
+    }
+}
+
+extension MessageDataSource: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard sectionIdentifier(section: indexPath.section)?.type == .message else { return }
+        
+        print("💚willDisplay: \(indexPath.item)")
+        viewModel.input.willDisplay.send(indexPath.item)
     }
 }

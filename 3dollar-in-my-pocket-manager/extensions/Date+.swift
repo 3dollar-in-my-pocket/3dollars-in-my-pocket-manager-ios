@@ -12,4 +12,9 @@ extension Date {
     public func get(_ component: Calendar.Component, calendar: Calendar = Calendar.current) -> Int {
         return calendar.component(component, from: self)
     }
+    
+    public func isToday() -> Bool {
+        let calendar = Calendar.current
+        return calendar.isDateInToday(self)
+    }
 }

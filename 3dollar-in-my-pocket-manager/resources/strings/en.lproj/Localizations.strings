@@ -200,7 +200,9 @@
 "message.first_title.description.third" = "하루에 한 번 메세지를\n전송할 수 있어요.";
 "message.first_title.description.third.colored" = "하루에 한 번 메세지";
 "message.send_message" = "메시지 전송";
+"message.send_message_after_time" = "%@ 후 발송 가능";
 "message.toast.finish" = "💌 고객님께 메세지를 전달드렸어요\n다음 메세지는 24시간 후 전송할 수 있어요";
+"message.message.header_title" = "이전 메세지 모두보기";
 
 // MARK: SendingMessage
 "sending_message.title" = "고객님께 전송할 메세지를\n입력해 주세요.";

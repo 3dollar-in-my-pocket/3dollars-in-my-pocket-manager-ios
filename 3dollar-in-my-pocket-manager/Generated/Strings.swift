@@ -329,6 +329,10 @@ internal enum Strings {
   internal enum Message {
     /// 메시지 전송
     internal static let sendMessage = Strings.tr("Localizations", "message.send_message", fallback: "메시지 전송")
+    /// %@ 후 발송 가능
+    internal static func sendMessageAfterTime(_ p1: Any) -> String {
+      return Strings.tr("Localizations", "message.send_message_after_time", String(describing: p1), fallback: "%@ 후 발송 가능")
+    }
     internal enum FirstTitle {
       internal enum Description {
         /// 단골 고객님들께
@@ -347,6 +351,10 @@ internal enum Strings {
           internal static let colored = Strings.tr("Localizations", "message.first_title.description.third.colored", fallback: "하루에 한 번 메세지")
         }
       }
+    }
+    internal enum Message {
+      /// 이전 메세지 모두보기
+      internal static let headerTitle = Strings.tr("Localizations", "message.message.header_title", fallback: "이전 메세지 모두보기")
     }
     internal enum Overview {
       /// 아직 메세지를 보낼 수 없어요

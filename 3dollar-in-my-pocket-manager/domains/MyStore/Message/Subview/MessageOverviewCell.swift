@@ -7,7 +7,6 @@ final class MessageOverviewCell: BaseCollectionViewCell {
     
     private let userCountLabel: PaddingLabel = {
         let label = PaddingLabel(topInset: 4, bottomInset: 4, leftInset: 8, rightInset: 8)
-        label.text = "0명"
         label.textColor = .green
         label.font = .bold(size: 16)
         label.backgroundColor = UIColor(hex: "#E1F3EA")
@@ -19,7 +18,7 @@ final class MessageOverviewCell: BaseCollectionViewCell {
     private let firstTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray95
-        label.text = "의 고객님에게"
+        label.text = Strings.Message.Overview.Title.first
         label.setLineHeight(lineHeight: 32)
         label.setKern(kern: -0.01)
         label.font = .bold(size: 24)
@@ -29,7 +28,7 @@ final class MessageOverviewCell: BaseCollectionViewCell {
     private let secondTitleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray95
-        label.text = "오늘의 메세지 보내기"
+        label.text = Strings.Message.Overview.Title.second
         label.setLineHeight(lineHeight: 32)
         label.setKern(kern: -0.01)
         label.font = .bold(size: 24)
@@ -67,6 +66,10 @@ final class MessageOverviewCell: BaseCollectionViewCell {
             $0.trailing.equalToSuperview().offset(-24)
             $0.top.equalTo(secondTitleLabel.snp.bottom).offset(16)
         }
+    }
+    
+    func bind(count: Int) {
+        userCountLabel.text = Strings.Message.Overview.userCountFormat(count)
     }
 }
 
