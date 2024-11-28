@@ -87,6 +87,10 @@ final class SendingMessageTextView: BaseView {
         currentCountLabel.textColor = state.textColor
     }
     
+    func setText(_ text: String) {
+        textView.text = text
+    }
+    
     private func setupUI() {
         backgroundColor = .gray10
         layer.cornerRadius = 12

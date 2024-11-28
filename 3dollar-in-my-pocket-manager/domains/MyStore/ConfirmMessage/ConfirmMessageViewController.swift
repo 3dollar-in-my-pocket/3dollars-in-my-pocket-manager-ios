@@ -1,4 +1,5 @@
 import UIKit
+import CombineCocoa
 
 final class ConfirmMessageViewController: BaseViewController {
     private let containerView: UIView = {
@@ -21,7 +22,7 @@ final class ConfirmMessageViewController: BaseViewController {
         label.textColor = .gray100
         label.numberOfLines = 0
         
-        let text = "정말 아래의 메세지로 전송하시나요?\n다시 한 번 확인해 주세요."
+        let text = Strings.MessageConfirm.title
         let style = NSMutableParagraphStyle()
         
         style.maximumLineHeight = 28
@@ -31,11 +32,11 @@ final class ConfirmMessageViewController: BaseViewController {
         return label
     }()
     
-    private let messageView = MessageView()
+    private let messageContentView = ConfirmMessageContentView()
     
-    let sendButton: UIButton = {
+    private let sendButton: UIButton = {
         let button = UIButton()
-        button.setTitle("메세지 전송", for: .normal)
+        button.setTitle(Strings.MessageConfirm.send, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .green
         button.layer.cornerRadius = 8
@@ -44,9 +45,9 @@ final class ConfirmMessageViewController: BaseViewController {
         return button
     }()
     
-    let reWriteButton: UIButton = {
+    private let rewriteButton: UIButton = {
         let button = UIButton()
-        button.setTitle("다시 쓰기", for: .normal)
+        button.setTitle(Strings.MessageConfirm.rewrite, for: .normal)
         button.setTitleColor(.green, for: .normal)
         button.titleLabel?.font = .bold(size: 14)
         button.backgroundColor = .white
@@ -57,7 +58,10 @@ final class ConfirmMessageViewController: BaseViewController {
         return button
     }()
     
-    init() {
+    private let viewModel: ConfirmMessageViewModel
+    
+    init(viewModel: ConfirmMessageViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
         modalPresentationStyle = .overCurrentContext
@@ -71,6 +75,8 @@ final class ConfirmMessageViewController: BaseViewController {
         super.viewDidLoad()
         
         setupUI()
+        bind()
+        messageContentView.bind(storeName: viewModel.output.storeName, message: viewModel.output.message)
     }
     
     private func setupUI() {
@@ -84,17 +90,17 @@ final class ConfirmMessageViewController: BaseViewController {
         ])
         stackView.addArrangedSubview(titleLabel)
         stackView.setCustomSpacing(8, after: titleLabel)
-        stackView.addArrangedSubview(messageView)
-        stackView.setCustomSpacing(24, after: messageView)
+        stackView.addArrangedSubview(messageContentView)
+        stackView.setCustomSpacing(24, after: messageContentView)
         stackView.addArrangedSubview(sendButton)
         stackView.setCustomSpacing(8, after: sendButton)
-        stackView.addArrangedSubview(reWriteButton)
+        stackView.addArrangedSubview(rewriteButton)
         
         sendButton.snp.makeConstraints {
             $0.height.equalTo(48)
         }
         
-        reWriteButton.snp.makeConstraints {
+        rewriteButton.snp.makeConstraints {
             $0.height.equalTo(48)
         }
         
@@ -111,84 +117,49 @@ final class ConfirmMessageViewController: BaseViewController {
             $0.bottom.equalTo(stackView).offset(24)
         }
     }
+    
+    private func bind() {
+        sendButton.tapPublisher
+            .subscribe(viewModel.input.didTapSend)
+            .store(in: &cancellables)
+        
+        rewriteButton.tapPublisher
+            .subscribe(viewModel.input.didTapReWrite)
+            .store(in: &cancellables)
+        
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: ConfirmMessageViewController, route: ConfirmMessageViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.showErrorAlert
+            .main
+            .withUnretained(self)
+            .sink { (owner: ConfirmMessageViewController, error: any Error) in
+                owner.showErrorAlert(error: error)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.toast
+            .main
+            .sink { (message: String) in
+                ToastManager.shared.show(message: message)
+            }
+            .store(in: &cancellables)
+    }
 }
 
 
+// MARK: Route
 extension ConfirmMessageViewController {
-    final class MessageView: BaseView {
-        private let horizontalStackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .horizontal
-            stackView.spacing = 8
-            stackView.layoutMargins = .init(top: 10, left: 16, bottom: 10, right: 16)
-            stackView.isLayoutMarginsRelativeArrangement = true
-            stackView.alignment = .top
-            return stackView
-        }()
-        
-        private let emojiView: UILabel = {
-            let label = UILabel()
-            label.text = "💌"
-            label.font = .regular(size: 14)
-            return label
-        }()
-        
-        private let verticalStackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .vertical
-            stackView.spacing = 8
-            return stackView
-        }()
-        
-        private let titleLabel: UILabel = {
-            let label = UILabel()
-            label.textColor = .gray95
-            label.font = .semiBold(size: 14)
-            label.text = "내가 즐겨 찾은 가게 은평구 핫도그 아저씨의 메세지가 도착하였습니다."
-            label.numberOfLines = 0
-            label.textAlignment = .left
-            label.setLineHeight(lineHeight: 20)
-            return label
-        }()
-        
-        private let messageLabel: UILabel = {
-            let label = UILabel()
-            label.textColor = .gray95
-            label.font = .regular(size: 14)
-            label.numberOfLines = 0
-            label.textAlignment = .left
-            label.text = "성원에 감사합니다 여러분~~~~매일 매일 감사합니다. 잘때도 생각합니다 어제 꿈에도 나왔습니당"
-            label.setLineHeight(lineHeight: 20)
-            return label
-        }()
-        
-        override func setup() {
-            setupUI()
-        }
-        
-        private func setupUI() {
-            backgroundColor = .gray10
-            layer.cornerRadius = 12
-            layer.masksToBounds = true
-            
-            addSubview(horizontalStackView)
-            horizontalStackView.addArrangedSubview(emojiView)
-            horizontalStackView.addArrangedSubview(verticalStackView)
-            
-            verticalStackView.addArrangedSubview(titleLabel)
-            verticalStackView.addArrangedSubview(messageLabel)
-            
-            emojiView.snp.makeConstraints {
-                $0.width.equalTo(20)
-                $0.height.equalTo(20)
-            }
-            
-            horizontalStackView.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-            
-            snp.makeConstraints {
-                $0.edges.equalTo(horizontalStackView)
+    private func handleRoute(_ route: ConfirmMessageViewModel.Route) {
+        switch route {
+        case .dismiss:
+            dismiss(animated: true) {
+                DimManager.shared.hideDim()
             }
         }
     }

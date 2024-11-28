@@ -16,7 +16,7 @@ final class MyPageViewController: BaseViewController {
         createMyStoreInfoViewController(),
         createStatisticsViewController(),
         StorePostViewController(),
-        MessageViewController()
+        MessageViewController(viewModel: MessageViewModel())
     ]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

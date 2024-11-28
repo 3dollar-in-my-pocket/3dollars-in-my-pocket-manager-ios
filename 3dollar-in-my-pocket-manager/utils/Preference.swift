@@ -41,6 +41,15 @@ final class Preference {
         }
     }
     
+    var storeName: String {
+        set {
+            instance.set(newValue, forKey: "KEY_STORE_NAME")
+        }
+        get {
+            return instance.string(forKey: "KEY_STORE_NAME") ?? ""
+        }
+    }
+    
     var shownMessageNewBadge: Bool {
         set {
             instance.set(newValue, forKey: "KEY_SHOWN_MESSAGE_NEW_BADGE")

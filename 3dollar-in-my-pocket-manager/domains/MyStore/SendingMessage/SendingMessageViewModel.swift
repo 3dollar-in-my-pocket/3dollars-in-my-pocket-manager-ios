@@ -12,47 +12,35 @@ extension SendingMessageViewModel {
     }
     
     struct Output {
+        let firstMessage: String
         let state = PassthroughSubject<SendingMessageTextView.State, Never>()
-        let didSendedMessage = PassthroughSubject<StoreMessageResponse, Never>()
         let route = PassthroughSubject<Route, Never>()
-        let showErrorAlert = PassthroughSubject<Error, Never>()
-        let toast = PassthroughSubject<String, Never>()
+        
+        // 이벤트 전달용
+        let didTapSend = PassthroughSubject<String, Never>()
     }
     
     struct State {
-        var message = ""
+        var message: String
+    }
+    
+    struct Config {
+        let message: String
     }
     
     enum Route {
         case dismiss
     }
-    
-    struct Dependency {
-        let messageRepository: MessageRepository
-        let logManager: LogManagerProtocol
-        let preference: Preference
-        
-        init(
-            messageRepository: MessageRepository = MessageRepositoryImpl(),
-            logManager: LogManagerProtocol = LogManager.shared,
-            preference: Preference = Preference.shared
-        ) {
-            self.messageRepository = messageRepository
-            self.logManager = logManager
-            self.preference = preference
-        }
-    }
 }
 
 final class SendingMessageViewModel: BaseViewModel {
     let input = Input()
-    let output = Output()
-    var state = State()
-    private let dependency: Dependency
+    let output: Output
+    private var state: State
     
-    init(dependency: Dependency = Dependency()) {
-        self.dependency = dependency
-        
+    init(config: Config) {
+        self.output = Output(firstMessage: config.message)
+        self.state = State(message: config.message)
         super.init()
         
         bind()
@@ -73,7 +61,9 @@ final class SendingMessageViewModel: BaseViewModel {
                     owner.output.state.send(.warning)
                     return
                 }
-                owner.sendMessage()
+                
+                owner.output.route.send(.dismiss)
+                owner.output.didTapSend.send(owner.state.message)
             }
             .store(in: &cancellables)
     }
@@ -84,21 +74,5 @@ final class SendingMessageViewModel: BaseViewModel {
     
     private func validateMessageLength() -> Bool {
         return state.message.count >= Constant.minimumLength && state.message.count <= Constant.maximumLength
-    }
-    
-    private func sendMessage() {
-        Task {
-            let input = StoreMessageCreateRequest(storeId: dependency.preference.storeId, body: state.message)
-            let result = await dependency.messageRepository.sendMessage(input: input)
-            
-            switch result {
-            case .success(let messageResponse):
-                output.didSendedMessage.send(messageResponse)
-                output.toast.send(Strings.Message.Toast.finish)
-                output.route.send(.dismiss)
-            case .failure(let error):
-                output.showErrorAlert.send(error)
-            }
-        }
     }
 }

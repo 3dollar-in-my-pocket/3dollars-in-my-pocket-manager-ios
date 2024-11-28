@@ -193,6 +193,7 @@ final class HomeViewModel: BaseViewModel {
             case .success(let storeInfo):
                 output.store.send(storeInfo)
                 dependency.preference.storeId = storeInfo.bossStoreId
+                dependency.preference.storeName = storeInfo.name
                 fetchPreference()
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))

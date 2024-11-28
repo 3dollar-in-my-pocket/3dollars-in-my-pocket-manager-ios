@@ -25,26 +25,25 @@ final class MessageViewController: BaseViewController {
         return button
     }()
     
+    private let viewModel: MessageViewModel
     private lazy var dataSource = MessageDataSource(collectionView: collectionView)
+    
+    init(viewModel: MessageViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+        bind()
         
         dataSource.reload([.init(type: .first, items: [.toast, .firstTitle, .bookmark, .introduction])])
-        
-        messageButton.tapPublisher
-            .main
-            .withUnretained(self)
-            .sink { (owner: MessageViewController, _) in
-//                let viewController = SendingMessageViewController(viewModel: SendingMessageViewModel())
-//                owner.presentPanModal(viewController)
-                
-                let viewController = ConfirmMessageViewController()
-                owner.tabBarController?.present(viewController, animated: true)
-            }
-            .store(in: &cancellables)
     }
     
     private func setupUI() {
@@ -60,6 +59,20 @@ final class MessageViewController: BaseViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-24)
             $0.trailing.equalToSuperview().offset(-12)
         }
+    }
+    
+    private func bind() {
+        messageButton.tapPublisher
+            .subscribe(viewModel.input.didTapSendingMessage)
+            .store(in: &cancellables)
+        
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: MessageViewController, route: MessageViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -110,5 +123,27 @@ final class MessageViewController: BaseViewController {
             }
             
         }
+    }
+}
+
+// MARK: Route
+extension MessageViewController {
+    private func handleRoute(_ route: MessageViewModel.Route) {
+        switch route {
+        case .sendingMessage(let viewModel):
+            presentSendingMessage(viewModel: viewModel)
+        case .confirmMessage(let viewModel):
+            presentConfirmMEssage(viewModel: viewModel)
+        }
+    }
+    
+    private func presentSendingMessage(viewModel: SendingMessageViewModel) {
+        let viewController = SendingMessageViewController(viewModel: viewModel)
+        presentPanModal(viewController)
+    }
+    
+    private func presentConfirmMEssage(viewModel: ConfirmMessageViewModel) {
+        let viewController = ConfirmMessageViewController(viewModel: viewModel)
+        tabBarController?.present(viewController, animated: true)
     }
 }

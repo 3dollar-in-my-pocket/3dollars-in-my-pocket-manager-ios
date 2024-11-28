@@ -7,7 +7,7 @@ final class SendingMessageViewController: BaseViewController {
         let label = UILabel()
         label.font = .semiBold(size: 20)
         label.textColor = .gray100
-        label.text = "고객님께 전송할 메세지를\n입력해 주세요."
+        label.text = Strings.SendingMessage.title
         label.numberOfLines = 0
         return label
     }()
@@ -25,9 +25,9 @@ final class SendingMessageViewController: BaseViewController {
         label.font = .regular(size: 14)
         label.textColor = .gray50
         
-        let string = "한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!"
-        let coloredRange = (string as NSString).range(of: "취소가 불가능")
-        let attributedString = NSMutableAttributedString(string: "한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!")
+        let string = Strings.SendingMessage.description
+        let coloredRange = (string as NSString).range(of: Strings.SendingMessage.Description.colored)
+        let attributedString = NSMutableAttributedString(string: string)
         attributedString.addAttribute(.foregroundColor, value: UIColor.gray95, range: coloredRange)
         label.attributedText = attributedString
         return label
@@ -39,13 +39,13 @@ final class SendingMessageViewController: BaseViewController {
         let label = UILabel()
         label.textColor = .gray50
         label.font = .medium(size: 12)
-        label.text = "*최소 10자에서 최대 100자 이내로 입력해 주세요."
+        label.text = Strings.SendingMessage.warning
         return label
     }()
     
     private let sendButton: UIButton = {
         let button = UIButton()
-        button.setTitle("오늘의 메세지 전송하기", for: .normal)
+        button.setTitle(Strings.SendingMessage.send, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .green
         button.layer.cornerRadius = 12
@@ -77,6 +77,7 @@ final class SendingMessageViewController: BaseViewController {
         setupUI()
         setupKeyboardEvent()
         bind()
+        textView.setText(viewModel.output.firstMessage)
     }
     
     private func setupUI() {
@@ -159,21 +160,6 @@ final class SendingMessageViewController: BaseViewController {
             .withUnretained(self)
             .sink { (owner: SendingMessageViewController, route: SendingMessageViewModel.Route) in
                 owner.handleRoute(route)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.showErrorAlert
-            .main
-            .withUnretained(self)
-            .sink { (owner: SendingMessageViewController, error: Error) in
-                owner.showErrorAlert(error: error)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.toast
-            .main
-            .sink { message in
-                ToastManager.shared.show(message: message)
             }
             .store(in: &cancellables)
     }

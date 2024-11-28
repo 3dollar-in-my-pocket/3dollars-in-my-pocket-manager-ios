@@ -384,6 +384,21 @@ internal enum Strings {
       internal static let finish = Strings.tr("Localizations", "message.toast.finish", fallback: "💌 고객님께 메세지를 전달드렸어요\n다음 메세지는 24시간 후 전송할 수 있어요")
     }
   }
+  internal enum MessageConfirm {
+    /// 다시 쓰기
+    internal static let rewrite = Strings.tr("Localizations", "message_confirm.rewrite", fallback: "다시 쓰기")
+    /// 메세지 전송
+    internal static let send = Strings.tr("Localizations", "message_confirm.send", fallback: "메세지 전송")
+    /// 정말 아래의 메세지로 전송하시나요?
+    /// 다시 한 번 확인해 주세요.
+    internal static let title = Strings.tr("Localizations", "message_confirm.title", fallback: "정말 아래의 메세지로 전송하시나요?\n다시 한 번 확인해 주세요.")
+    internal enum Content {
+      /// 내가 즐겨 찾은 가게 %@의 메세지가 도착하였습니다.
+      internal static func titleFormat(_ p1: Any) -> String {
+        return Strings.tr("Localizations", "message_confirm.content.title_format", String(describing: p1), fallback: "내가 즐겨 찾은 가게 %@의 메세지가 도착하였습니다.")
+      }
+    }
+  }
   internal enum MyPage {
     internal enum SubTab {
       /// 메세지
@@ -410,6 +425,21 @@ internal enum Strings {
       internal static let description = Strings.tr("Localizations", "preference.remove_location_on_close.description", fallback: "엽업 종료 시에도 위치가 손님들에게 공개됩니다.")
       /// 영업 종료 시 위치 노출
       internal static let title = Strings.tr("Localizations", "preference.remove_location_on_close.title", fallback: "영업 종료 시 위치 노출")
+    }
+  }
+  internal enum SendingMessage {
+    /// 한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!
+    internal static let description = Strings.tr("Localizations", "sending_message.description", fallback: "한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!")
+    /// 오늘의 메세지 전송하기
+    internal static let send = Strings.tr("Localizations", "sending_message.send", fallback: "오늘의 메세지 전송하기")
+    /// 고객님께 전송할 메세지를
+    /// 입력해 주세요.
+    internal static let title = Strings.tr("Localizations", "sending_message.title", fallback: "고객님께 전송할 메세지를\n입력해 주세요.")
+    /// *최소 10자에서 최대 100자 이내로 입력해 주세요.
+    internal static let warning = Strings.tr("Localizations", "sending_message.warning", fallback: "*최소 10자에서 최대 100자 이내로 입력해 주세요.")
+    internal enum Description {
+      /// 취소가 불가능
+      internal static let colored = Strings.tr("Localizations", "sending_message.description.colored", fallback: "취소가 불가능")
     }
   }
 }
