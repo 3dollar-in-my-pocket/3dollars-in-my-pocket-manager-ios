@@ -10,6 +10,8 @@ final class MyPageViewController: BaseViewController {
         navigationOrientation: .horizontal,
         options: nil
     )
+    
+    private var tooltipView: TooltipView?
 
     private let viewModel: MyPageViewModel
     private lazy var pageViewControllers: [UIViewController] = [
@@ -42,6 +44,12 @@ final class MyPageViewController: BaseViewController {
         bind()
         
         viewModel.input.load.send(())
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.input.willAppear.send(())
     }
     
     private func setupUI() {
@@ -107,6 +115,19 @@ final class MyPageViewController: BaseViewController {
                 owner.pageViewController.setViewControllers([selectedViewController], direction: .forward, animated: false)
             }
             .store(in: &cancellables)
+        
+        viewModel.output.showMessageTooptip
+            .removeDuplicates()
+            .main
+            .withUnretained(self)
+            .sink { (owner: MyPageViewController, isShow: Bool) in
+                if isShow {
+                    owner.showMessageTooltip()
+                } else {
+                    owner.tooltipView?.removeFromSuperview()
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func createMyStoreInfoViewController() -> UIViewController {
@@ -123,6 +144,16 @@ final class MyPageViewController: BaseViewController {
         let viewController = StatisticsViewController(viewModel: viewModel)
         
         return viewController
+    }
+    
+    private func showMessageTooltip() {
+        let tooltipView = TooltipView(emoji: "🙋", message: Strings.MyPage.Message.toolTip, tailDirection: .topRight)
+        view.addSubview(tooltipView)
+        tooltipView.snp.makeConstraints {
+            $0.trailing.equalTo(subTabView.messageButton.snp.centerX).offset(26)
+            $0.top.equalTo(subTabView.messageButton.snp.bottom).offset(4)
+        }
+        self.tooltipView = tooltipView
     }
 }
 

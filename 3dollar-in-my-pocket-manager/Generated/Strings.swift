@@ -326,6 +326,11 @@ internal enum Strings {
       internal static let maximumPhoto = Strings.tr("Localizations", "edit_store_info.toast.maximum_photo", fallback: "사진은 최대 10장까지 등록 가능합니다")
     }
   }
+  internal enum Main {
+    /// 내 가게를 북마크한 고객님들께
+    /// 메세지를 보낼 수 있어요
+    internal static let messageTooltip = Strings.tr("Localizations", "main.message_tooltip", fallback: "내 가게를 북마크한 고객님들께\n메세지를 보낼 수 있어요")
+  }
   internal enum Message {
     /// 메시지 전송
     internal static let sendMessage = Strings.tr("Localizations", "message.send_message", fallback: "메시지 전송")
@@ -408,13 +413,17 @@ internal enum Strings {
     }
   }
   internal enum MyPage {
+    internal enum Message {
+      /// 고객님들께 첫 인사를 보내보세요!
+      internal static let toolTip = Strings.tr("Localizations", "my_page.message.tool_tip", fallback: "고객님들께 첫 인사를 보내보세요!")
+    }
     internal enum SubTab {
       /// 메세지
       internal static let message = Strings.tr("Localizations", "my_page.sub_tab.message", fallback: "메세지")
       /// 가게소식
       internal static let notice = Strings.tr("Localizations", "my_page.sub_tab.notice", fallback: "가게소식")
-      /// 통계
-      internal static let statistics = Strings.tr("Localizations", "my_page.sub_tab.statistics", fallback: "통계")
+      /// 리뷰통계
+      internal static let statistics = Strings.tr("Localizations", "my_page.sub_tab.statistics", fallback: "리뷰통계")
       /// 가게정보
       internal static let storeInfo = Strings.tr("Localizations", "my_page.sub_tab.store_info", fallback: "가게정보")
     }

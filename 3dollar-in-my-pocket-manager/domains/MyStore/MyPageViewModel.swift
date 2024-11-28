@@ -3,12 +3,14 @@ import Combine
 extension MyPageViewModel {
     struct Input {
         let load = PassthroughSubject<Void, Never>()
+        let willAppear = PassthroughSubject<Void, Never>()
         let didTapSubTab = PassthroughSubject<MyPageSubTabType, Never>()
     }
     
     struct Output {
         let screenName: ScreenName = .myStoreInfo
         let showNewBadge = PassthroughSubject<Void, Never>()
+        let showMessageTooptip = PassthroughSubject<Bool, Never>()
         let pageViewControllerIndex = CurrentValueSubject<Int, Never>(0)
     }
     
@@ -48,12 +50,24 @@ final class MyPageViewModel: BaseViewModel {
             }
             .store(in: &cancellables)
         
+        input.willAppear
+            .withUnretained(self)
+            .sink { (owner: MyPageViewModel, _) in
+                owner.showMessageTooltipIfNeeded()
+            }
+            .store(in: &cancellables)
+        
         input.didTapSubTab
             .withUnretained(self)
             .sink { (owner: MyPageViewModel, subTab: MyPageSubTabType) in
                 guard let selectedIndex = owner.state.subTabs.firstIndex(of: subTab) else { return }
                 owner.output.pageViewControllerIndex.send(selectedIndex)
                 owner.sendClickSubTabLog(subTab)
+                
+                if subTab == .message {
+                    owner.dependency.preference.shownMyPageMessageTooltip = true
+                    owner.output.showMessageTooptip.send(false)
+                }
             }
             .store(in: &cancellables)
     }
@@ -62,6 +76,11 @@ final class MyPageViewModel: BaseViewModel {
         guard dependency.preference.shownMessageNewBadge.isNot else { return }
         dependency.preference.shownMessageNewBadge = true
         output.showNewBadge.send(())
+    }
+    
+    private func showMessageTooltipIfNeeded() {
+        let shownMessageTooptip = dependency.preference.shownMyPageMessageTooltip
+        output.showMessageTooptip.send(!shownMessageTooptip)
     }
 }
 
