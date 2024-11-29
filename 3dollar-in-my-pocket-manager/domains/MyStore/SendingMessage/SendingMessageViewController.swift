@@ -3,6 +3,10 @@ import PanModal
 import CombineCocoa
 
 final class SendingMessageViewController: BaseViewController {
+    override var screenName: ScreenName {
+        return viewModel.output.screenName
+    }
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .semiBold(size: 20)

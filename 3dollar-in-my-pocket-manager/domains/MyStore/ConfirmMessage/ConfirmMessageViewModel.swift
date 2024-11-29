@@ -8,6 +8,7 @@ extension ConfirmMessageViewModel {
     }
     
     struct Output {
+        let screenName: ScreenName = .messageConfirmDialog
         let storeName: String
         let message: String
         let route = PassthroughSubject<Route, Never>()

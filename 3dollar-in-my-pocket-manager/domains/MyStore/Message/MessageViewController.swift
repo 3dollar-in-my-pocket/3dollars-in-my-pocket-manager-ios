@@ -2,6 +2,10 @@ import UIKit
 import CombineCocoa
 
 final class MessageViewController: BaseViewController {
+    override var screenName: ScreenName {
+        viewModel.output.screenName
+    }
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.backgroundColor = .clear
