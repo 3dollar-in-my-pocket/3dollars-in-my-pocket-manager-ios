@@ -53,6 +53,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     private func setupUI() {
+        view.backgroundColor = .gray0
         view.addSubview(subTabView)
         view.addSubview(containerView)
         

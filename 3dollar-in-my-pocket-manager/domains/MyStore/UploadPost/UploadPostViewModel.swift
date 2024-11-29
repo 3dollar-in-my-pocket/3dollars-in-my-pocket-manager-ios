@@ -5,6 +5,7 @@ import SwiftUI
 extension UploadPostViewModel {
     enum Constant {
         static let maxPhotoCount = 10
+        static let maxTextLength = 500
     }
     
     struct Dependency {
