@@ -16,7 +16,7 @@ extension MessageViewModel {
     }
     
     struct Output {
-        let policy = PassthroughSubject<StoreMessagePolicyResponse, Never>()
+        let buttonState = PassthroughSubject<(StoreMessagePolicyResponse, Int), Never>()
         let datasource = PassthroughSubject<[MessageSection], Never>()
         let showErrorAlert = PassthroughSubject<Error, Never>()
         let route = PassthroughSubject<Route, Never>()
@@ -115,7 +115,7 @@ final class MessageViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: MessageViewModel, response: StoreMessageCreateResponse) in
                 owner.state.messages.insert(response.message, at: 0)
-                owner.output.policy.send(response.policy)
+                owner.output.buttonState.send((response.policy, owner.state.subscriberCount))
                 owner.updateDataSource()
             }
             .store(in: &cancellables)
@@ -147,7 +147,7 @@ final class MessageViewModel: BaseViewModel {
                 state.cursor = response.messages.cursor.nextCursor
                 state.hasMore = response.messages.cursor.hasMore
                 state.messages = response.messages.contents
-                output.policy.send(response.policy)
+                output.buttonState.send((response.policy, state.subscriberCount))
             case .failure(let error):
                 output.showErrorAlert.send(error)
                 output.isRefreshing.send(false)
@@ -178,7 +178,11 @@ final class MessageViewModel: BaseViewModel {
     
     private func updateDataSource() {
         if state.messages.isEmpty {
-            output.datasource.send([.init(type: .first, items: [.toast, .firstTitle, .bookmark, .introduction])])
+            if state.subscriberCount == 0 {
+                output.datasource.send([.init(type: .first, items: [.toast, .firstTitle, .bookmark, .introduction])])
+            } else {
+                output.datasource.send([.init(type: .noHistory, items: [.overview(subscriberCount: state.subscriberCount), .introduction])])
+            }
         } else {
             var sections: [MessageSection] = []
             sections.append(MessageSection(type: .overview, items: [.overview(subscriberCount: state.subscriberCount)]))

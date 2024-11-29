@@ -88,11 +88,12 @@ final class MessageViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.output.policy
+        viewModel.output.buttonState
             .main
             .withUnretained(self)
-            .sink { (owner: MessageViewController, policy: StoreMessagePolicyResponse) in
-                owner.setupSendingButton(policy: policy)
+            .sink { (owner: MessageViewController, state) in
+                let (policy, subscriberCount) = state
+                owner.setupSendingButton(policy: policy, subscriberCount: subscriberCount)
             }
             .store(in: &cancellables)
         
@@ -168,6 +169,22 @@ final class MessageViewController: BaseViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 
                 return section
+            case .noHistory:
+                let overviewItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageOverviewCell.Layout.height)
+                ))
+                let introductionItem = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageIntroductionCell.Layout.height)
+                ))
+                let group = NSCollectionLayoutGroup.vertical(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(MessageOverviewCell.Layout.height + MessageIntroductionCell.Layout.height)
+                ), subitems: [overviewItem, introductionItem])
+                group.interItemSpacing = .fixed(0)
+                let section = NSCollectionLayoutSection(group: group)
+                return section
             case .message:
                 let messageItem = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -197,20 +214,29 @@ final class MessageViewController: BaseViewController {
         return layout
     }
     
-    private func setupSendingButton(policy: StoreMessagePolicyResponse) {
-        if policy.canSendNow {
-            messageButton.backgroundColor = .green
+    private func setupSendingButton(policy: StoreMessagePolicyResponse, subscriberCount: Int) {
+        if subscriberCount == 0 {
+            messageButton.backgroundColor = .gray40
             messageButton.configuration?.attributedTitle = AttributedString(Strings.Message.sendMessage, attributes: .init([
                 .font: UIFont.medium(size: 14) as Any,
                 .foregroundColor: UIColor.white
             ]))
-            messageButton.isEnabled = true
-        } else {
-            messageButton.backgroundColor = .gray40
-            
-            let nextAvailableSendDate = DateUtils.toDate(dateString: policy.nextAvailableSendDateTime)
             messageButton.isEnabled = false
-            startCountdown(to: nextAvailableSendDate)
+        } else {
+            if policy.canSendNow {
+                messageButton.backgroundColor = .green
+                messageButton.configuration?.attributedTitle = AttributedString(Strings.Message.sendMessage, attributes: .init([
+                    .font: UIFont.medium(size: 14) as Any,
+                    .foregroundColor: UIColor.white
+                ]))
+                messageButton.isEnabled = true
+            } else {
+                messageButton.backgroundColor = .gray40
+                
+                let nextAvailableSendDate = DateUtils.toDate(dateString: policy.nextAvailableSendDateTime)
+                messageButton.isEnabled = false
+                startCountdown(to: nextAvailableSendDate)
+            }
         }
     }
     

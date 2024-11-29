@@ -198,7 +198,7 @@
 "message.overview.description.second.colored" = "하루 1회";
 "message.overview.description.third" = "전송 24시간 이후 다음 메세지를 발송할 수 있어요.";
 "message.overview.description.third.colored" = "24시간 이후 다음 메세지를 발송";
-"message.overview.disable_toast" = "아직 메세지를 보낼 수 없어요";
+"message.overview.disable_toast" = "메세지를 보내려면 1명 이상의 북마크 고객이 필요해요.";
 "message.first_title.description.first" = "단골 고객님들께";
 "message.first_title.description.second" = "북마크를 요청해 보세요!";
 "message.first_title.description.second.colord" = "북마크";
