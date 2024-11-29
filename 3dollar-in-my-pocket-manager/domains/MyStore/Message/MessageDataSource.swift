@@ -3,6 +3,7 @@ import UIKit
 struct MessageSection: Hashable {
     enum SectionType {
         case first
+        case noHistory
         case overview
         case message
     }

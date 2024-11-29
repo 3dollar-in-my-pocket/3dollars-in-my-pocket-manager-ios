@@ -370,8 +370,8 @@ internal enum Strings {
       internal static let headerTitle = Strings.tr("Localizations", "message.message.header_title", fallback: "이전 메세지 모두보기")
     }
     internal enum Overview {
-      /// 아직 메세지를 보낼 수 없어요
-      internal static let disableToast = Strings.tr("Localizations", "message.overview.disable_toast", fallback: "아직 메세지를 보낼 수 없어요")
+      /// 메세지를 보내려면 1명 이상의 북마크 고객이 필요해요.
+      internal static let disableToast = Strings.tr("Localizations", "message.overview.disable_toast", fallback: "메세지를 보내려면 1명 이상의 북마크 고객이 필요해요.")
       /// %d명
       internal static func userCountFormat(_ p1: Int) -> String {
         return Strings.tr("Localizations", "message.overview.user_count_format", p1, fallback: "%d명")
