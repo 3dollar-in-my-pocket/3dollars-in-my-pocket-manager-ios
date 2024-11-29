@@ -151,6 +151,7 @@
 		6E6B431B285DB6B900AD84A5 /* FAQCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6B431A285DB6B900AD84A5 /* FAQCoordinator.swift */; };
 		6E6B431F285DB9B300AD84A5 /* FAQCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6B431E285DB9B300AD84A5 /* FAQCollectionViewCell.swift */; };
 		6E6B4321285DBB5900AD84A5 /* FAQHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6B4320285DBB5900AD84A5 /* FAQHeaderView.swift */; };
+		6E6B82B62CF980E300A5BFAC /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 6E6B82B52CF980E300A5BFAC /* Then */; };
 		6E6C9C69280BD513009AFAE8 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C68280BD513009AFAE8 /* MyPageViewController.swift */; };
 		6E6C9C72280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C71280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift */; };
 		6E6C9C74280BE7B3009AFAE8 /* MyStoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C73280BE7B3009AFAE8 /* MyStoreInfoViewController.swift */; };
@@ -285,7 +286,6 @@
 		6ED370FA280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED370F9280C3B3200C445E5 /* MyStoreInfoWorkDayCell.swift */; };
 		6ED80A982CE777BC005E7A62 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED80A972CE777BC005E7A62 /* MyPageViewModel.swift */; };
 		6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838927CB395B00278E14 /* SnapKit */; };
-		6ED8838D27CB398300278E14 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 6ED8838C27CB398300278E14 /* Then */; };
 		6ED8839927CB3A1700278E14 /* SigninView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED8839827CB3A1700278E14 /* SigninView.swift */; };
 		6ED8839C27CB3A7A00278E14 /* SocialSigninButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ED8839B27CB3A7A00278E14 /* SocialSigninButton.swift */; };
 		6ED883A327CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6ED883A227CB3C6600278E14 /* AppleSDGothicNeoEB00.ttf */; };
@@ -678,6 +678,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6EFCE03F2CAFDBE000D97E3F /* NMapsMap.xcframework in Frameworks */,
+				6E6B82B62CF980E300A5BFAC /* Then in Frameworks */,
 				6EE0CFA127CB567B0027A426 /* KakaoSDKCommon in Frameworks */,
 				6EE0CF9F27CB567B0027A426 /* KakaoSDKAuth in Frameworks */,
 				6E8474BC2C54B3200064DE0A /* CombineCocoa in Frameworks */,
@@ -685,7 +686,6 @@
 				6EE2624C27DDBE64008B3531 /* SPPermissionsLocationAlways in Frameworks */,
 				6E6C9C77280BEE26009AFAE8 /* Kingfisher in Frameworks */,
 				6E37A2E82860AFE4008C046F /* FirebaseMessaging in Frameworks */,
-				6ED8838D27CB398300278E14 /* Then in Frameworks */,
 				6EE2624E27DDBE64008B3531 /* SPPermissionsLocationWhenInUse in Frameworks */,
 				6EE2625227DDBE64008B3531 /* SPPermissionsPhotoLibrary in Frameworks */,
 				6E37A2E42860AFE4008C046F /* FirebaseAnalytics in Frameworks */,
@@ -1638,7 +1638,6 @@
 			name = "3dollar-in-my-pocket-manager";
 			packageProductDependencies = (
 				6ED8838927CB395B00278E14 /* SnapKit */,
-				6ED8838C27CB398300278E14 /* Then */,
 				6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */,
 				6EE0CFA027CB567B0027A426 /* KakaoSDKCommon */,
 				6EE0CFA227CB567B0027A426 /* KakaoSDKUser */,
@@ -1661,6 +1660,7 @@
 				6EC8031D2B2C891A00DA4F5E /* PanModal */,
 				6E893CB92C3A65F100357F66 /* netfox */,
 				6E8474BB2C54B3200064DE0A /* CombineCocoa */,
+				6E6B82B52CF980E300A5BFAC /* Then */,
 			);
 			productName = "3dollar-in-my-pocket-manager";
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
@@ -1693,7 +1693,6 @@
 			mainGroup = 6EB94E9727CB208E00609E77;
 			packageReferences = (
 				6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */,
 				6EE0CF9D27CB567B0027A426 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				6EE0CFBF27CB64E40027A426 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				6EE2624827DDBE64008B3531 /* XCRemoteSwiftPackageReference "SPPermissions" */,
@@ -1706,6 +1705,7 @@
 				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */,
 				6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */,
 				6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -2335,6 +2335,14 @@
 				version = 11.3.0;
 			};
 		};
+		6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = exactVersion;
+				version = 3.0.0;
+			};
+		};
 		6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -2381,14 +2389,6 @@
 			requirement = {
 				kind = exactVersion;
 				version = 5.7.1;
-			};
-		};
-		6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.0;
 			};
 		};
 		6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
@@ -2464,6 +2464,11 @@
 			package = 6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
 		};
+		6E6B82B52CF980E300A5BFAC /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
 		6E6C9C76280BEE26009AFAE8 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */;
@@ -2498,11 +2503,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		6ED8838C27CB398300278E14 /* Then */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6ED8838B27CB398300278E14 /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
 		};
 		6EE041D7288ADAD300E17D5B /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
