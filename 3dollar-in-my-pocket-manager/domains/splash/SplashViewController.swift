@@ -71,10 +71,29 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
         self.splashReactor.showErrorAlert
             .asDriver(onErrorJustReturn: BaseError.unknown)
             .drive(onNext: { [weak self] error in
-                self?.coordinator?.showErrorAlert(error: error)
+                self?.showErrorAlert(error)
             })
             .disposed(by: self.eventDisposeBag)
     }
     
     func bind(reactor: SplashReactor) { }
+}
+
+// MARK: Route
+extension SplashViewController {
+    private func showErrorAlert(_ error: Error) {
+        if let httpError = error as? HTTPError,
+           case .maintenance = httpError {
+            showMaintenanceAlert()
+        } else {
+            self.coordinator?.showErrorAlert(error: error)
+        }
+    }
+    
+    private func showMaintenanceAlert() {
+        guard let topViewController = UIUtils.topViewController() else { return }
+        AlertUtils.showWithAction(viewController: topViewController, title: nil, message: HTTPError.maintenance.description) {
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        }
+    }
 }

@@ -4,6 +4,7 @@ import Combine
 extension HomeViewModel {
     enum Constant {
         static let aroundDistance = 1
+        static let defaultLocation = CLLocation(latitude: 37.497941, longitude: 127.027616)
         
         /// 가게를 오픈할 수 있는 현재 위치와의 최대 거리
         static let maximumOpenDistance: Double = 100
@@ -165,6 +166,9 @@ final class HomeViewModel: BaseViewModel {
                 fetchAddress(location: location)
             } catch {
                 output.route.send(.showErrorAlert(error))
+                output.cameraLocation.send(Constant.defaultLocation)
+                output.myLocation.send(Constant.defaultLocation)
+                fetchAddress(location: Constant.defaultLocation)
             }
         }
     }
@@ -193,6 +197,7 @@ final class HomeViewModel: BaseViewModel {
             case .success(let storeInfo):
                 output.store.send(storeInfo)
                 dependency.preference.storeId = storeInfo.bossStoreId
+                dependency.preference.storeName = storeInfo.name
                 fetchPreference()
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))

@@ -16,6 +16,7 @@ final class ToastView: UIView {
         messageLabel.textColor = .white
         messageLabel.textAlignment = .center
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.numberOfLines = 0
         
         return messageLabel
     }()
@@ -48,6 +49,6 @@ final class ToastView: UIView {
         containerView.leftAnchor.constraint(equalTo: messageLabel.leftAnchor, constant: -16).isActive = true
         containerView.rightAnchor.constraint(equalTo: messageLabel.rightAnchor, constant: 16).isActive = true
         containerView.centerYAnchor.constraint(equalTo: messageLabel.centerYAnchor).isActive = true
-        containerView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        containerView.heightAnchor.constraint(equalTo: messageLabel.heightAnchor, constant: 32).isActive = true
     }
 }

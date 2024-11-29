@@ -12,11 +12,11 @@ extension CLLocationManager {
             case .notDetermined:
                 requestWhenInUseAuthorization()
             case .restricted, .denied:
-                delegate.continuation?.resume(throwing: LocationError.denied)
+                throw LocationError.denied
             case .authorizedAlways, .authorizedWhenInUse, .authorized:
                 startUpdatingLocation()
             @unknown default:
-                delegate.continuation?.resume(throwing: LocationError.unknown)
+                throw LocationError.unknown
             }
         } else {
             delegate.continuation?.resume(throwing: LocationError.disableLocationService)

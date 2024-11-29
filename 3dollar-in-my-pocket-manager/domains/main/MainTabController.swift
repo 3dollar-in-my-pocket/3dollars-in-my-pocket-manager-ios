@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 import RxSwift
 
@@ -6,9 +7,25 @@ final class MainTabController: UITabBarController {
     private let feedbackGenerator = UISelectionFeedbackGenerator()
     private let disposeBag = DisposeBag()
     private let borderLayer = CALayer()
+    private let viewModel: MainViewModel
+    private var cancellables = Set<AnyCancellable>()
     
-    static func instance() -> MainTabController {
-        return MainTabController(nibName: nil, bundle: nil)
+    private let myPageViewController: UINavigationController = {
+        let viewController = MyPageViewController(viewModel: MyPageViewModel())
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.isNavigationBarHidden = true
+        navigationController.interactivePopGestureRecognizer?.delegate = nil
+        return navigationController
+    }()
+    
+    init(viewModel: MainViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -24,6 +41,9 @@ final class MainTabController: UITabBarController {
             self.tabBar.standardAppearance = appearance
             self.tabBar.scrollEdgeAppearance = appearance
         }
+        
+        bind()
+        viewModel.input.firstLoad.send(())
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -88,10 +108,20 @@ final class MainTabController: UITabBarController {
         }
     }
     
+    private func bind() {
+        viewModel.output.showMessageTooltip
+            .main
+            .withUnretained(self)
+            .sink { (owner: MainTabController, _) in
+                owner.showMessageTooltip()
+            }
+            .store(in: &cancellables)
+    }
+    
     private func setupTabBarController() {
         self.setViewControllers([
             createHomeViewController(),
-            MyPageViewController.instance(),
+            myPageViewController,
             SettingViewController.instance()
         ], animated: true)
         
@@ -110,5 +140,27 @@ final class MainTabController: UITabBarController {
         navigationController.isNavigationBarHidden = true
         navigationController.interactivePopGestureRecognizer?.delegate = nil
         return navigationController
+    }
+    
+    private func showMessageTooltip() {
+        guard let myPageIndex = tabBar.items?.firstIndex(where: { $0.tag ==  TabBarTag.myPage.rawValue }),
+              let tabBarButtons = tabBar.subviews.filter({ $0 is UIControl }) as? [UIControl],
+              myPageIndex < tabBarButtons.count,
+              let myPageTabView = tabBarButtons[safe: myPageIndex] else { return }
+        
+        let tooltipView = TooltipView(emoji: "📢", message: Strings.Main.messageTooltip, tailDirection: .bottomCenter)
+        view.addSubview(tooltipView)
+        tooltipView.snp.makeConstraints {
+            $0.centerX.equalTo(myPageTabView)
+            $0.bottom.equalTo(myPageTabView.snp.top).offset(4)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            UIView.animate(withDuration: 0.3, animations: {
+                tooltipView.alpha = 0
+            }) { _ in
+                tooltipView.removeFromSuperview()
+            }
+        }
     }
 }

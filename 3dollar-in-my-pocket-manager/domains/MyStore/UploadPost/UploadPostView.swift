@@ -31,6 +31,19 @@ final class UploadPostView: BaseView {
         return label
     }()
     
+    let textCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .medium(size: 12)
+        label.textColor = .gray50
+        let text = "0/\(UploadPostViewModel.Constant.maxTextLength)"
+        let attributedString = NSMutableAttributedString(string: text)
+        let coloredRange = (text as NSString).range(of: "0")
+        
+        attributedString.addAttribute(.foregroundColor, value: UIColor.gray80, range: coloredRange)
+        label.attributedText = attributedString
+        return label
+    }()
+    
     lazy var textView: UITextView = {
         let textView = UITextView()
         textView.textColor = .gray100
@@ -93,6 +106,12 @@ final class UploadPostView: BaseView {
             $0.top.equalTo(imageCollectionView.snp.bottom).offset(24)
         }
         
+        addSubview(textCountLabel)
+        textCountLabel.snp.makeConstraints {
+            $0.centerY.equalTo(postLabel)
+            $0.trailing.equalToSuperview().offset(-24)
+        }
+        
         addSubview(textView)
         textView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
@@ -143,6 +162,15 @@ final class UploadPostView: BaseView {
             textView.text = message
             textView.textColor = .gray100
         }
+    }
+    
+    func setTextCount(_ count: Int) {
+        let text = "\(count)/\(UploadPostViewModel.Constant.maxTextLength)"
+        let attributedString = NSMutableAttributedString(string: text)
+        let coloredRange = (text as NSString).range(of: "\(count)")
+        
+        attributedString.addAttribute(.foregroundColor, value: UIColor.gray80, range: coloredRange)
+        textCountLabel.attributedText = attributedString
     }
     
     

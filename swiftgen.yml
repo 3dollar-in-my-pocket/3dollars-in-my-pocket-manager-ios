@@ -1,0 +1,16 @@
+strings:
+  inputs: 3dollar-in-my-pocket-manager/resources/strings/en.lproj/Localizations.strings
+  outputs:
+    - templateName: structured-swift5
+      output: 3dollar-in-my-pocket-manager/Generated/Strings.swift
+      params:
+          enumName: Strings
+
+xcassets:
+  inputs:
+    - 3dollar-in-my-pocket-manager/resources/Assets.xcassets
+  outputs:
+    templateName: swift5
+    output: 3dollar-in-my-pocket-manager/Generated/Assets.swift
+    params:
+        enumName: Assets

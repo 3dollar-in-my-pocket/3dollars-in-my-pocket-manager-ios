@@ -201,6 +201,23 @@ final class HomeViewController: BaseViewController {
         
         tabBarController?.present(viewController, animated: true)
     }
+    
+    override func showErrorAlert(error: any Error) {
+        if error is LocationError {
+            showDenyAlert()
+        } else {
+            super.showErrorAlert(error: error)
+        }
+    }
+    
+    private func showDenyAlert() {
+        AlertUtils.showWithAction(
+            viewController: self,
+            title: Strings.Location.Deny.title,
+            message: Strings.Location.Deny.description
+        ) {
+        }
+    }
 }
 
 extension HomeViewController: NMFMapViewCameraDelegate {
