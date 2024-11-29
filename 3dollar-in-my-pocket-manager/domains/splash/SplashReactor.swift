@@ -45,11 +45,31 @@ final class SplashReactor: BaseReactor, Reactor {
         case .viewDidLoad:
             if self.userDefaultsUtils.userToken.isEmpty {
                 return fetchFeedbackTypes()
+                    .catch { .just(.showErrorAlert($0)) }
             } else {
                 return .merge([
                     self.fetchFeedbackTypes(),
                     self.fetchUserInfo()
                 ])
+                .catch { error in
+                    if let httpError = error as? HTTPError {
+                        switch httpError {
+                        case .unauthorized: // 세션 만료 => 로그인 필요
+                            return .just(.goToSignin)
+                            
+                        case .forbidden: // 신청 대기중
+                            return .just(.goToWaiting)
+                            
+                        case .notFound: // 회원 탈퇴 및 반려
+                            return .just(.goToSignin)
+                            
+                        default:
+                            return .just(.showErrorAlert(error))
+                        }
+                    } else {
+                        return .just(.showErrorAlert(error))
+                    }
+                }
             }
         }
     }
@@ -78,25 +98,6 @@ final class SplashReactor: BaseReactor, Reactor {
     private func fetchUserInfo() -> Observable<Mutation> {
         return self.authService.fetchMyInfo()
             .map{ _ in .goToMain }
-            .catch { error in
-                if let httpError = error as? HTTPError {
-                    switch httpError {
-                    case .unauthorized: // 세션 만료 => 로그인 필요
-                        return .just(.goToSignin)
-                        
-                    case .forbidden: // 신청 대기중
-                        return .just(.goToWaiting)
-                        
-                    case .notFound: // 회원 탈퇴 및 반려
-                        return .just(.goToSignin)
-                        
-                    default:
-                        return .just(.showErrorAlert(error))
-                    }
-                } else {
-                    return .just(.showErrorAlert(error))
-                }
-            }
     }
     
     private func fetchFeedbackTypes() -> Observable<Mutation> {
@@ -106,6 +107,5 @@ final class SplashReactor: BaseReactor, Reactor {
                 
                 return .merge([.just(.setFeedbackTypes(feedbackTypes)), .just(.goToSignin)])
             })
-            .catch { .just(.showErrorAlert($0)) }
     }
 }
