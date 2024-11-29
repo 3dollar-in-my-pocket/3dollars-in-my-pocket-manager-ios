@@ -326,6 +326,14 @@ internal enum Strings {
       internal static let maximumPhoto = Strings.tr("Localizations", "edit_store_info.toast.maximum_photo", fallback: "사진은 최대 10장까지 등록 가능합니다")
     }
   }
+  internal enum Location {
+    internal enum Deny {
+      /// 내 위치를 찾기 위해 위치 권한이 필요합니다. 설정에서 위치 권한을 허용시켜주세요.
+      internal static let description = Strings.tr("Localizations", "location.deny.description", fallback: "내 위치를 찾기 위해 위치 권한이 필요합니다. 설정에서 위치 권한을 허용시켜주세요.")
+      /// 위치 권한 거절
+      internal static let title = Strings.tr("Localizations", "location.deny.title", fallback: "위치 권한 거절")
+    }
+  }
   internal enum Main {
     /// 내 가게를 북마크한 고객님들께
     /// 메세지를 보낼 수 있어요
