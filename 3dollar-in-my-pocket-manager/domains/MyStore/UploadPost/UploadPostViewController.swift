@@ -1,6 +1,7 @@
 import UIKit
 import Combine
 import PhotosUI
+import CombineCocoa
 
 final class UploadPostViewController: BaseViewController {
     private let uploadPostView = UploadPostView()
@@ -44,6 +45,21 @@ final class UploadPostViewController: BaseViewController {
     private func bind() {
         uploadPostView.backButton.addTarget(self, action: #selector(didTapBack), for: .touchUpInside)
         uploadPostView.uploadButton.addTarget(self, action: #selector(didTapUpload), for: .touchUpInside)
+        
+        uploadPostView.textView.textPublisher
+            .main
+            .map {
+                if $0 == "upload_post.contents.placeholder".localizable {
+                    return 0
+                } else {
+                    return $0?.count ?? 0
+                }
+            }
+            .withUnretained(self)
+            .sink { (owner: UploadPostViewController, textCount: Int) in
+                owner.uploadPostView.setTextCount(textCount)
+            }
+            .store(in: &cancellables)
         
         viewModel.output.photos
             .main
@@ -191,5 +207,20 @@ extension UploadPostViewController: UITextViewDelegate {
         } else {
             viewModel.input.inputContents.send(textView.text)
         }
+    }
+    
+    func textView(
+        _ textView: UITextView,
+        shouldChangeTextIn range: NSRange,
+        replacementText text: String
+    ) -> Bool {
+        guard let textFieldText = textView.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+          return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + text.count
+        
+        return count <= UploadPostViewModel.Constant.maxTextLength
     }
 }

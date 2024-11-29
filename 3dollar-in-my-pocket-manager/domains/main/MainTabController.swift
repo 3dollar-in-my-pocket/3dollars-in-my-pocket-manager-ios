@@ -144,7 +144,9 @@ final class MainTabController: UITabBarController {
     
     private func showMessageTooltip() {
         guard let myPageIndex = tabBar.items?.firstIndex(where: { $0.tag ==  TabBarTag.myPage.rawValue }),
-              let myPageTabView = tabBar.subviews[safe: myPageIndex + 1] else { return }
+              let tabBarButtons = tabBar.subviews.filter({ $0 is UIControl }) as? [UIControl],
+              myPageIndex < tabBarButtons.count,
+              let myPageTabView = tabBarButtons[safe: myPageIndex] else { return }
         
         let tooltipView = TooltipView(emoji: "📢", message: Strings.Main.messageTooltip, tailDirection: .bottomCenter)
         view.addSubview(tooltipView)

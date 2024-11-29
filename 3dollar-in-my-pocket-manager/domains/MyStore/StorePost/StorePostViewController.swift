@@ -29,10 +29,14 @@ final class StorePostViewController: BaseViewController {
         button.layer.shadowOpacity = 0.4
         button.backgroundColor = .green
         button.layer.cornerRadius = 22
-        button.titleLabel?.font = .medium(size: 14)
         
         var configuration = UIButton.Configuration.plain()
-        configuration.title = "store_post.upload".localizable
+        configuration.attributedTitle = .init(
+            "store_post.upload".localizable,
+            attributes: .init([
+                .font: UIFont.medium(size: 14) as Any,
+                .foregroundColor: UIColor.white
+            ]))
         configuration.baseForegroundColor = .white
         configuration.image = UIImage(named: "ic_write_solid")
         configuration.imagePadding = 4
