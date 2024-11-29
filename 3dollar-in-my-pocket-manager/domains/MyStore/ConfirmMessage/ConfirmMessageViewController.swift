@@ -2,6 +2,10 @@ import UIKit
 import CombineCocoa
 
 final class ConfirmMessageViewController: BaseViewController {
+    override var screenName: ScreenName {
+        return viewModel.output.screenName
+    }
+    
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white

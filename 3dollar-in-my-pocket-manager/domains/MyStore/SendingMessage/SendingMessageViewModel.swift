@@ -12,6 +12,7 @@ extension SendingMessageViewModel {
     }
     
     struct Output {
+        let screenName: ScreenName = .messageSendingBottomSheet
         let firstMessage: String
         let state = PassthroughSubject<SendingMessageTextView.State, Never>()
         let route = PassthroughSubject<Route, Never>()

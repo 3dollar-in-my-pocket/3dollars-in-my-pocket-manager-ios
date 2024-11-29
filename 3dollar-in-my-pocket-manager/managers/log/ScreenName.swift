@@ -15,4 +15,7 @@ enum ScreenName: String {
     case mainTab
     case storePost
     case uploadPost
+    case message
+    case messageSendingBottomSheet
+    case messageConfirmDialog
 }

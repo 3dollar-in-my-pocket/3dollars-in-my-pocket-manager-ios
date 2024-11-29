@@ -16,6 +16,7 @@ extension MessageViewModel {
     }
     
     struct Output {
+        let screenName: ScreenName = .message
         let buttonState = PassthroughSubject<(StoreMessagePolicyResponse, Int), Never>()
         let datasource = PassthroughSubject<[MessageSection], Never>()
         let showErrorAlert = PassthroughSubject<Error, Never>()
