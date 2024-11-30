@@ -12,16 +12,3 @@
 ![앱스토어 이미지3](https://is5-ssl.mzstatic.com/image/thumb/PurpleSource112/v4/b1/4c/87/b14c87e1-b8d4-8bac-222c-5164ea1e923d/f390ef89-b311-4cc4-b6b4-253d4e0fe2fc_3.jpg/230x0w.webp)
 ![앱스토어 이미지4](https://is3-ssl.mzstatic.com/image/thumb/PurpleSource122/v4/37/01/69/37016990-aecd-3d4f-5710-cbdbed525c32/bab9c9bc-1076-4d07-80a8-d773ebf52c34_4.jpg/230x0w.webp)
 ![앱스토어 이미지5](https://is5-ssl.mzstatic.com/image/thumb/PurpleSource112/v4/02/fe/5e/02fe5e4c-787d-5fba-6de8-6d28a95ed3af/26ea1835-5809-42cf-9ebb-5f1619dd1af5_5.jpg/230x0w.webp)
-
-### 아키텍처 및 디자인 패턴
-- RxSwift + ReactorKit 사용
-- Code base로 UI 구현 (SnapKit 사용)
-- Feature별 디렉토리 구성 (실제 앱 화면 접근 플로우와 동일하게 디렉토리 구성)
-
-### Git-flow 전략 사용
-- https://danielkummer.github.io/git-flow-cheatsheet/index.ko_KR.html
-- 코드 리뷰는 진행하고있지 않습니다. (iOS 개발자가 1명이라 아쉽습니다..)
-
-### Code style guide
-- Frip에서 정의한 [Code style guide](https://github.com/frientrip/swift-style-guide)를 따릅니다.
-- 가이드에 적혀있는대로 가이드에서 정의되지 않은 규칙은 [Swift API design guide](https://swift.org/documentation/api-design-guidelines/)를 따릅니다.
