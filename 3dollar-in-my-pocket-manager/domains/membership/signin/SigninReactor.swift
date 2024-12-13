@@ -131,7 +131,7 @@ final class SigninReactor: BaseReactor, Reactor {
                     return self.signin(socialType: socialType, token: token)
                 }
             
-        case .google:
+        case .google, .unknown:
             return .empty()
         }
     }

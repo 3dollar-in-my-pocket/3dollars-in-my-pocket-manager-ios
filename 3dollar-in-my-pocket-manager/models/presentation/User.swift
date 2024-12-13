@@ -7,11 +7,11 @@ struct User: Equatable {
     let socialType: SocialType
     var isNotificationEnable: Bool
     
-    init(response: BossAccountInfoResponse) {
+    init(response: BossWithSettingsResponse) {
         self.bossId = response.bossId
         self.businessNumber = response.businessNumber
         self.name = response.name
-        self.isNotificationEnable = response.isSetupNotification
+        self.isNotificationEnable = response.settings.enableActivitiesPush
         self.socialType = response.socialType
     }
     

@@ -27,16 +27,22 @@ class BaseViewController: UIViewController {
     func bindEvent() { }
     
     func showErrorAlert(error: Error) {
-        if let httpError = error as? HTTPError,
-           httpError == .unauthorized {
-            AlertUtils.showWithAction(
-                viewController: self,
-                title: nil,
-                message: httpError.description,
-                okbuttonTitle: "common_ok".localized
-            ) {
-                Preference.shared.clear()
-                self.goToSignin()
+        if let httpError = error as? HTTPError {
+            switch httpError {
+            case .unauthorized:
+                AlertUtils.showWithAction(
+                    viewController: self,
+                    title: nil,
+                    message: httpError.description,
+                    okbuttonTitle: "common_ok".localized
+                ) {
+                    Preference.shared.clear()
+                    self.goToSignin()
+                }
+            case .maintenance:
+                showMaintenanceAlert()
+            default:
+                break
             }
         } else if let apiError = error as? ApiError {
             handleApiError(apiError)
@@ -86,6 +92,13 @@ class BaseViewController: UIViewController {
     private func sendPageView() {
         if screenName != .empty {
             LogManager.shared.sendPageView(screen: screenName, type: Self.self)
+        }
+    }
+    
+    private func showMaintenanceAlert() {
+        guard let topViewController = UIUtils.topViewController() else { return }
+        AlertUtils.showWithAction(viewController: topViewController, title: nil, message: HTTPError.maintenance.description) {
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
         }
     }
 }

@@ -64,7 +64,7 @@ final class SocialSigninButton: BaseView {
             self.titleLabel.textColor = UIColor(r: 56, g: 30, b: 31)
             self.backgroundColor = UIColor(r: 247, g: 227, b: 23)
             
-        case .google:
+        case .google, .unknown:
             break
         }
     }

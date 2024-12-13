@@ -12,7 +12,7 @@ final class KakaoSignInManager: KakaoSignInManagerProtocol {
     /// 카카오톡으로 로그인을 하고 성공하면 token을 반환합니다.
     func signIn() -> Observable<String> {
         return .create { observer in
-            if (UserApi.isKakaoTalkLoginAvailable()) {
+            if (KakaoSDKUser.UserApi.isKakaoTalkLoginAvailable()) {
                 self.signInWithKakaoTalk(observer: observer)
             } else {
                 self.signInWithKakaoAccount(observer: observer)
@@ -24,7 +24,7 @@ final class KakaoSignInManager: KakaoSignInManagerProtocol {
     
     /// 카카오톡으로 로그인하기
     private func signInWithKakaoTalk(observer: AnyObserver<String>) {
-        UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+        KakaoSDKUser.UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
             if let sdkError = error as? SdkError {
                 if sdkError.isClientFailed {
                     switch sdkError.getClientError().reason {
@@ -54,7 +54,7 @@ final class KakaoSignInManager: KakaoSignInManagerProtocol {
     
     /// 카카오 웹뷰로 로그인하기
     private func signInWithKakaoAccount(observer: AnyObserver<String>) {
-        UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
+        KakaoSDKUser.UserApi.shared.loginWithKakaoAccount {(oauthToken, error) in
             if let error = error {
                 if let sdkError = error as? SdkError {
                     if sdkError.isClientFailed {
