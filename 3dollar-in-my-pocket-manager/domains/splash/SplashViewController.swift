@@ -1,79 +1,89 @@
 import UIKit
 
-import ReactorKit
-import RxRelay
+import Lottie
 
-final class SplashViewController: BaseViewController, View, SplashCoordinator {
-    private let splashView = SplashView()
-    private let splashReactor = SplashReactor(
-        authService: AuthService(),
-        feedbackService: FeedbackService(),
-        userDefaultsUtils: Preference.shared,
-        context: SharedContext.shared
-    )
-    private weak var coordinator: SplashCoordinator?
-    private let finishLottiePublisher = PublishRelay<Void>()
-    
+final class SplashViewController: BaseViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
     
-    static func instance() -> SplashViewController {
-        return SplashViewController(nibName: nil, bundle: nil)
+    private let animationView: LottieAnimationView = {
+        let animationView = LottieAnimationView(name: "splash")
+        animationView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        animationView.contentMode = .scaleAspectFit
+        return animationView
+    }()
+    
+    private let viewModel: SplashViewModel
+    
+    init(viewModel: SplashViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
     }
     
-    override func loadView() {
-        self.view = self.splashView
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.reactor = self.splashReactor
-        self.coordinator = self
-        self.splashReactor.action.onNext(.viewDidLoad)
-        self.splashView.startLottie { [weak self] in
-            self?.finishLottiePublisher.accept(())
+        setupUI()
+        setupNotification()
+        bind()
+    }
+    
+    private func setupUI() {
+        view.backgroundColor = .gray100
+        view.addSubview(animationView)
+        
+        animationView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.width.equalTo(UIUtils.windowBounds.width)
+            $0.height.equalTo(UIUtils.windowBounds.width)
         }
     }
     
-    override func bindEvent() {
-        Observable.zip([
-            self.splashReactor.goToSigninPublisher,
-            self.finishLottiePublisher
-        ])
-        .asDriver(onErrorJustReturn: [])
-        .drive(onNext: { [weak self] _ in
-            self?.coordinator?.goToSignin()
-        })
-        .disposed(by: self.eventDisposeBag)
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(willEnterForeground),
+            name: UIApplication.willEnterForegroundNotification,
+            object: nil
+        )
+    }
+    
+    @objc private func willEnterForeground() {
+        viewModel.input.load.send(())
+        startAnimation()
+    }
+    
+    private func startAnimation() {
+        animationView.play { [weak self] _ in
+            self?.viewModel.input.finishAnimation.send(())
+        }
+    }
+    
+    private func bind() {
+        viewModel.output.showErrorAlert
+            .main
+            .withUnretained(self)
+            .sink { (owner: SplashViewController, error: any Error) in
+                owner.showErrorAlert(error: error)
+            }
+            .store(in: &cancellables)
         
-        Observable.zip([
-            self.splashReactor.goToWaitingPublisher,
-            self.finishLottiePublisher
-        ])
-        .asDriver(onErrorJustReturn: [])
-        .drive(onNext: { [weak self] _ in
-            self?.coordinator?.goToWaiting()
-        })
-        .disposed(by: self.eventDisposeBag)
-        
-        Observable.zip([
-            self.splashReactor.goToMainPublisher,
-            self.finishLottiePublisher
-        ])
-        .asDriver(onErrorJustReturn: [])
-        .drive(onNext: { [weak self] _ in
-            self?.coordinator?.goToMain()
-        })
-        .disposed(by: self.eventDisposeBag)
-        
-        self.splashReactor.showErrorAlert
-            .asDriver(onErrorJustReturn: BaseError.unknown)
-            .drive(onNext: { [weak self] error in
-                self?.showErrorAlert(error)
-            })
-            .disposed(by: self.eventDisposeBag)
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: SplashViewController, route: SplashViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
     }
     
     func bind(reactor: SplashReactor) { }
@@ -81,19 +91,47 @@ final class SplashViewController: BaseViewController, View, SplashCoordinator {
 
 // MARK: Route
 extension SplashViewController {
-    private func showErrorAlert(_ error: Error) {
-        if let httpError = error as? HTTPError,
-           case .maintenance = httpError {
-            showMaintenanceAlert()
-        } else {
-            self.coordinator?.showErrorAlert(error: error)
+    private func handleRoute(_ route: SplashViewModel.Route) {
+        switch route {
+        case .goToSignIn:
+            goToSignIn()
+        case .goToMain:
+            goToMain()
+        case .goToWaiting:
+            goToWaiting()
         }
     }
     
-    private func showMaintenanceAlert() {
-        guard let topViewController = UIUtils.topViewController() else { return }
-        AlertUtils.showWithAction(viewController: topViewController, title: nil, message: HTTPError.maintenance.description) {
-            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+    private func goToSignIn() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
         }
+        
+        sceneDelegate.goToSignin()
+    }
+    
+    private func goToMain() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
+        }
+        
+        sceneDelegate.goToMain()
+    }
+    
+    private func goToWaiting() {
+        guard let sceneDelegate = UIApplication
+            .shared
+            .connectedScenes
+            .first?.delegate as? SceneDelegate else {
+            return
+        }
+        
+        sceneDelegate.goToWaiting()
     }
 }

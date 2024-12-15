@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         #endif
         window?.windowScene = windowScene
-        window?.rootViewController = SplashViewController.instance()
+        window?.rootViewController = SplashViewController(viewModel: SplashViewModel())
         window?.makeKeyAndVisible()
     }
     

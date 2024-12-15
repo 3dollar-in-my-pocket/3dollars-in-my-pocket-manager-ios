@@ -14,7 +14,7 @@ extension SharedApi: ApiRequest {
     
     var method: HTTPMethod {
         switch self {
-        case .nonce(let input):
+        case .nonce:
             return .post
         }
     }
