@@ -1,9 +1,9 @@
 import UIKit
 import PhotosUI
 
-import SPPermissions
-import SPPermissionsPhotoLibrary
-import SPPermissionsCamera
+import PermissionsKit
+import PhotoLibraryPermission
+import CameraPermission
 import CropViewController
 
 protocol EditStoreInfoCoordinator: AnyObject, BaseCoordinator {
@@ -26,27 +26,27 @@ extension EditStoreInfoCoordinator where Self: BaseViewController {
         let libraryAction = UIAlertAction(
             title: "앨범",
             style: .default
-        ) { _ in
-            if SPPermissions.Permission.photoLibrary.authorized {
+        ) { [weak self] _ in
+            guard let self else { return }
+            if Permission.photoLibrary.authorized {
                 self.showAlbumPicker()
             } else {
-                let controller = SPPermissions.native([.photoLibrary])
-                
-                controller.delegate = self as? SPPermissionsDelegate
-                controller.present(on: self)
+                PermissionManager.requestPhotoLibrary(viewController: self) {
+                    self.showAlbumPicker()
+                }
             }
         }
         let cameraAction = UIAlertAction(
             title: "카메라",
             style: .default
-        ) { _ in
-            if SPPermissions.Permission.camera.authorized {
+        ) { [weak self] _ in
+            guard let self else { return }
+            if Permission.camera.authorized {
                 self.showCamera()
             } else {
-                let controller = SPPermissions.native([.camera])
-                
-                controller.delegate = self as? SPPermissionsDelegate
-                controller.present(on: self)
+                PermissionManager.requestCamera(viewController: self) {
+                    self.showCamera()
+                }
             }
         }
         let cancelAction = UIAlertAction(

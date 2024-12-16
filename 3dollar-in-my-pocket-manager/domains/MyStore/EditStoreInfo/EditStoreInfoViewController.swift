@@ -2,12 +2,11 @@ import UIKit
 import PhotosUI
 
 import CombineCocoa
-import SPPermissions
+import PermissionsKit
 
 final class EditStoreInfoViewController: BaseViewController {
     private let editStoreInfoView = EditStoreInfoView()
     private let viewModel: EditStoreInfoViewModel
-    private var photoLimit: Int?
     
     override var screenName: ScreenName {
         return viewModel.output.screenName
@@ -139,14 +138,12 @@ extension EditStoreInfoViewController {
             style: .default
         ) { [weak self] _ in
             guard let self else { return }
-            if SPPermissions.Permission.photoLibrary.authorized {
+            if Permission.photoLibrary.authorized {
                 showAlbumPicker(limit: limit)
             } else {
-                let controller = SPPermissions.native([.photoLibrary])
-                
-                photoLimit = limit
-                controller.delegate = self
-                controller.present(on: self)
+                PermissionManager.requestPhotoLibrary(viewController: self) {
+                    self.showAlbumPicker(limit: limit)
+                }
             }
         }
         let cameraAction = UIAlertAction(
@@ -154,13 +151,12 @@ extension EditStoreInfoViewController {
             style: .default
         ) { [weak self] _ in
             guard let self else { return }
-            if SPPermissions.Permission.camera.authorized {
+            if Permission.camera.authorized {
                 showCamera()
             } else {
-                let controller = SPPermissions.native([.camera])
-                
-                controller.delegate = self
-                controller.present(on: self)
+                PermissionManager.requestCamera(viewController: self) {
+                    self.showCamera()
+                }
             }
         }
         let cancelAction = UIAlertAction(
@@ -209,31 +205,6 @@ extension EditStoreInfoViewController:
         
         if let photo = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             viewModel.input.addPhotos.send([photo])
-        }
-    }
-}
-
-extension EditStoreInfoViewController: SPPermissionsDelegate {
-    func didAllowPermission(_ permission: SPPermissions.Permission) {
-        if permission == .camera {
-            showCamera()
-        } else if permission == .photoLibrary {
-            let limit = photoLimit ?? EditStoreInfoViewModel.Constant.maxPhotoCount
-            showAlbumPicker(limit: limit)
-        }
-    }
-    
-    func didDeniedPermission(_ permission: SPPermissions.Permission) {
-        AlertUtils.showWithCancel(
-            viewController: self,
-            title: "authorization_denied_title".localized,
-            message: "authorization_denied_description".localized,
-            okButtonTitle: "authorization_setting".localized
-        ) {
-            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-            }
         }
     }
 }
