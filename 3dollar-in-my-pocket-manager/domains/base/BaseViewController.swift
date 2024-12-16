@@ -40,7 +40,7 @@ class BaseViewController: UIViewController {
                     self.goToSignin()
                 }
             case .maintenance:
-                showMaintenanceAlert()
+                showMaintenanceAlert(message: nil)
             default:
                 break
             }
@@ -81,6 +81,9 @@ class BaseViewController: UIViewController {
             message = errorMessage
         case .emptyData:
             message = "error.unknown".localizable
+        case .errorContainer(let container):
+            handleErrorContainer(container)
+            return
         }
         AlertUtils.showWithAction(
             viewController: self,
@@ -95,11 +98,38 @@ class BaseViewController: UIViewController {
         }
     }
     
-    private func showMaintenanceAlert() {
+    private func handleErrorContainer(_ container: ApiErrorContainer) {
+        switch container.error {
+        case .unauthorized:
+            showUnauthorizedAlert(message: container.message)
+        case .serviceUnavailable:
+            showMaintenanceAlert(message: container.message)
+        default:
+            showDefaultAlert(container: container)
+        }
+    }
+    
+    private func showUnauthorizedAlert(message: String?) {
+        AlertUtils.showWithAction(
+            viewController: self,
+            title: nil,
+            message: message ?? "",
+            okbuttonTitle: Strings.commonOk
+        ) {
+            Preference.shared.clear()
+            self.goToSignin()
+        }
+    }
+    
+    private func showMaintenanceAlert(message: String?) {
         guard let topViewController = UIUtils.topViewController() else { return }
-        AlertUtils.showWithAction(viewController: topViewController, title: nil, message: HTTPError.maintenance.description) {
+        AlertUtils.showWithAction(viewController: topViewController, title: nil, message: message ?? HTTPError.maintenance.description) {
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
         }
+    }
+    
+    private func showDefaultAlert(container: ApiErrorContainer) {
+        AlertUtils.showWithAction(viewController: self, message: container.message, onTapOk: nil)
     }
 }
 

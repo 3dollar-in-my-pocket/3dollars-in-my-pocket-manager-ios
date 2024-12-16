@@ -121,7 +121,8 @@ final class ImageService: ImageServiceType {
                 let decoder = JSONDecoder()
                 let apiResponse = try decoder.decode(ApiResponse<ImageUploadResponse>.self, from: data)
                 
-                if let errorMessage = apiResponse.error {
+                if apiResponse.error.isNotNil,
+                    let errorMessage = apiResponse.message {
                     return .failure(ApiError.serverError(errorMessage))
                 }
                 
@@ -175,7 +176,8 @@ final class ImageService: ImageServiceType {
                 let decoder = JSONDecoder()
                 let apiResponse = try decoder.decode(ApiResponse<[ImageUploadResponse]>.self, from: data)
                 
-                if let errorMessage = apiResponse.error {
+                if apiResponse.error.isNotNil,
+                    let errorMessage = apiResponse.message {
                     return .failure(ApiError.serverError(errorMessage))
                 }
                 

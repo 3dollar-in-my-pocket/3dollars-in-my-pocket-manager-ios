@@ -35,10 +35,12 @@ final class WaitingViewController: BaseViewController, View, WaitingCoordinator 
     }
     
     override func bindEvent() {
-        self.waitingReactor.presentMailComposerPublisher
-            .asDriver(onErrorJustReturn: "")
-            .drive(onNext: {[weak self] message in
-                self?.coordinator?.showMailComposer(message: message)
+        self.waitingReactor.goToKakaoChannelPublisher
+            .asDriver(onErrorJustReturn: ())
+            .drive(onNext: { _ in
+                guard let url = URL(string: Bundle.kakaoChannelUrl) else { return }
+                
+                UIApplication.shared.open(url)
             })
             .disposed(by: self.eventDisposeBag)
         
