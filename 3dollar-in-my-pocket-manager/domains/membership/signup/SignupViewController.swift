@@ -5,7 +5,7 @@ import ReactorKit
 import RxSwift
 import RxCocoa
 import RxDataSources
-import SPPermissions
+import PermissionsKit
 import CropViewController
 
 final class SignupViewController: BaseViewController, View, SignupCoordinator {
@@ -188,30 +188,6 @@ extension SignupViewController:
             }
         } else {
             picker.dismiss(animated: true, completion: nil)
-        }
-    }
-}
-
-extension SignupViewController: SPPermissionsDelegate {
-    func didAllowPermission(_ permission: SPPermissions.Permission) {
-        if permission == .camera {
-            self.coordinator?.showCamera()
-        } else if permission == .photoLibrary {
-            self.coordinator?.showAlbumPicker()
-        }
-    }
-    
-    func didDeniedPermission(_ permission: SPPermissions.Permission) {
-        AlertUtils.showWithCancel(
-            viewController: self,
-            title: "authorization_denied_title".localized,
-            message: "authorization_denied_description".localized,
-            okButtonTitle: "authorization_setting".localized
-        ) {
-            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-            }
         }
     }
 }

@@ -1,7 +1,7 @@
 import UIKit
 import PhotosUI
 
-import SPPermissions
+import PermissionsKit
 import CombineCocoa
 
 final class EditMenuViewController: BaseViewController {
@@ -211,27 +211,27 @@ extension EditMenuViewController {
         let libraryAction = UIAlertAction(
             title: "common.album".localized,
             style: .default
-        ) { _ in
-            if SPPermissions.Permission.photoLibrary.authorized {
-                self.showAlbumPicker()
+        ) { [weak self] _ in
+            guard let self else { return }
+            if Permission.photoLibrary.authorized {
+                showAlbumPicker()
             } else {
-                let controller = SPPermissions.native([.photoLibrary])
-                
-                controller.delegate = self
-                controller.present(on: self)
+                PermissionManager.requestPhotoLibrary(viewController: self, onSuccess: {
+                    self.showAlbumPicker()
+                })
             }
         }
         let cameraAction = UIAlertAction(
             title: "common.camera".localized,
             style: .default
-        ) { _ in
-            if SPPermissions.Permission.camera.authorized {
-                self.showCamera()
+        ) { [weak self] _ in
+            guard let self else { return }
+            if Permission.camera.authorized {
+                showCamera()
             } else {
-                let controller = SPPermissions.native([.camera])
-                
-                controller.delegate = self
-                controller.present(on: self)
+                PermissionManager.requestCamera(viewController: self, onSuccess: {
+                    self.showCamera()
+                })
             }
         }
         let cancelAction = UIAlertAction(
@@ -264,6 +264,20 @@ extension EditMenuViewController {
         picker.delegate = self
         present(picker, animated: true, completion: nil)
     }
+    
+    private func showDeniedAlert() {
+        AlertUtils.showWithCancel(
+            viewController: self,
+            title: "authorization_denied_title".localized,
+            message: "authorization_denied_description".localized,
+            okButtonTitle: "authorization_setting".localized
+        ) {
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+            }
+        }
+    }
 }
 
 extension EditMenuViewController:
@@ -279,30 +293,6 @@ extension EditMenuViewController:
             viewModel.input.addPhoto.send((selectedMenuIndex, photo))
         } else {
             picker.dismiss(animated: true, completion: nil)
-        }
-    }
-}
-
-extension EditMenuViewController: SPPermissionsDelegate {
-    func didAllowPermission(_ permission: SPPermissions.Permission) {
-        if permission == .camera {
-            showCamera()
-        } else if permission == .photoLibrary {
-            showAlbumPicker()
-        }
-    }
-    
-    func didDeniedPermission(_ permission: SPPermissions.Permission) {
-        AlertUtils.showWithCancel(
-            viewController: self,
-            title: "authorization_denied_title".localized,
-            message: "authorization_denied_description".localized,
-            okButtonTitle: "authorization_setting".localized
-        ) {
-            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
-            }
         }
     }
 }
