@@ -3,7 +3,6 @@ import Foundation
 enum EventName: String {
     case signin
     case signup
-    case tapEmail
     case logout
     case showOtherBoss
     case tapBottomTab

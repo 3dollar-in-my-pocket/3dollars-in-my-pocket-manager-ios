@@ -12,7 +12,7 @@ final class WaitingReactor: BaseReactor, Reactor {
     }
     
     enum Mutation {
-        case presentMailComposer(message: String)
+        case goToKakaoChanndel
         case goToSignin
         case showLoading(isShow: Bool)
         case showErrorAlert(Error)
@@ -23,7 +23,7 @@ final class WaitingReactor: BaseReactor, Reactor {
     }
     
     let initialState = State()
-    let presentMailComposerPublisher = PublishRelay<String>()
+    let goToKakaoChannelPublisher = PublishRelay<Void>()
     let goToSigninPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
     private let userDefaults: Preference
@@ -42,11 +42,7 @@ final class WaitingReactor: BaseReactor, Reactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .tapQuestionButton:
-            logManager.sendEvent(.init(screen: .waiting, eventName: .tapEmail))
-            let message = "\n\n\n\n----------\n앱 버전: \(self.getAppVersion())\nOS: ios \(self.getiOSVersion())\n"
-            
-            return .just(.presentMailComposer(message: message))
-            
+            return .just(.goToKakaoChanndel)
         case .tapLogout:
             return .concat([
                 .just(.showLoading(isShow: true)),
@@ -58,8 +54,8 @@ final class WaitingReactor: BaseReactor, Reactor {
     
     func reduce(state: State, mutation: Mutation) -> State {
         switch mutation {
-        case .presentMailComposer(let message):
-            self.presentMailComposerPublisher.accept(message)
+        case .goToKakaoChanndel:
+            self.goToKakaoChannelPublisher.accept(())
             
         case .goToSignin:
             self.goToSigninPublisher.accept(())
@@ -71,14 +67,6 @@ final class WaitingReactor: BaseReactor, Reactor {
             self.showErrorAlert.accept(error)
         }
         return state
-    }
-    
-    private func getiOSVersion() -> String {
-      return  UIDevice.current.systemVersion
-    }
-    
-    private func getAppVersion() -> String {
-      return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
     
     private func logout() -> Observable<Mutation> {

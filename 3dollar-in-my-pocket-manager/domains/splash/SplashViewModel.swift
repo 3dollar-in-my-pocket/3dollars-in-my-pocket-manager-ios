@@ -81,20 +81,7 @@ final class SplashViewModel: BaseViewModel {
                 case .success(_):
                     output.route.send(.goToMain)
                 case .failure(let error):
-                    if let httpError = error as? HTTPError {
-                        switch httpError {
-                        case .unauthorized:
-                            output.route.send(.goToSignIn)
-                        case .forbidden:
-                            output.route.send(.goToWaiting)
-                        case .notFound:
-                            output.route.send(.goToSignIn)
-                        default:
-                            output.showErrorAlert.send(error)
-                        }
-                    } else {
-                        output.showErrorAlert.send(error)
-                    }
+                    output.showErrorAlert.send(error)
                 }
             }
             .store(in: &cancellables)

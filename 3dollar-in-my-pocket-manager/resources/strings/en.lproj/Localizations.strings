@@ -83,7 +83,7 @@
 "waiting_title" = "신청 완료!";
 "waiting_description" = "사장님! 소중한 정보를 입력해주셔서 감사합니다.\n심사는 지원한 날로부터 주말을 제외한 평일 기준 약 2-5일 소요될 수 있어요. 최대한 빠르게 처리하여 사장님의 영업을 도와드릴 테니 조금만 기다려주세요 :)";
 "waiting_bottom_description_1" = "사장님이 영업 시작 버튼을 누르면\n근처 고객들에게 홍보 돼요!";
-"waiting_question_button" = "이메일로 문의하기";
+"waiting_question_button" = "문의하기";
 "waiting_logout" = "로그아웃";
 
 // My Page

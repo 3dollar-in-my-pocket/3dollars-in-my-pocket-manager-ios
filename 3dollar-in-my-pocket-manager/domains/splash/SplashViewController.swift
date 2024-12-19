@@ -86,7 +86,20 @@ final class SplashViewController: BaseViewController {
             .store(in: &cancellables)
     }
     
-    func bind(reactor: SplashReactor) { }
+    override func showErrorAlert(error: any Error) {
+        if let apiError = error as? ApiError,
+           case .errorContainer(let errorContainer) = apiError {
+            if errorContainer.error == .notExistsSignupRegistration {
+                goToSignIn()
+            } else if errorContainer.error == .forbiddenWaitingApproveRegistration {
+                goToWaiting()
+            } else {
+                super.showErrorAlert(error: error)
+            }
+        } else {
+            super.showErrorAlert(error: error)
+        }
+    }
 }
 
 // MARK: Route
