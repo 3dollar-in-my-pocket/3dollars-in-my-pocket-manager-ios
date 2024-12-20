@@ -249,8 +249,8 @@ internal enum Strings {
   internal static let waitingDescription = Strings.tr("Localizations", "waiting_description", fallback: "사장님! 소중한 정보를 입력해주셔서 감사합니다.\n심사는 지원한 날로부터 주말을 제외한 평일 기준 약 2-5일 소요될 수 있어요. 최대한 빠르게 처리하여 사장님의 영업을 도와드릴 테니 조금만 기다려주세요 :)")
   /// 로그아웃
   internal static let waitingLogout = Strings.tr("Localizations", "waiting_logout", fallback: "로그아웃")
-  /// 이메일로 문의하기
-  internal static let waitingQuestionButton = Strings.tr("Localizations", "waiting_question_button", fallback: "이메일로 문의하기")
+  /// 문의하기
+  internal static let waitingQuestionButton = Strings.tr("Localizations", "waiting_question_button", fallback: "문의하기")
   /// 신청 완료!
   internal static let waitingTitle = Strings.tr("Localizations", "waiting_title", fallback: "신청 완료!")
   /// 수요일
@@ -265,15 +265,29 @@ internal enum Strings {
     /// 이미지 불러오기
     internal static let loadImage = Strings.tr("Localizations", "common.load_image", fallback: "이미지 불러오기")
   }
+  internal enum DeleteAccount {
+    /// 닫기
+    internal static let cancel = Strings.tr("Localizations", "delete_account.cancel", fallback: "닫기")
+    /// 삭제
+    internal static let delete = Strings.tr("Localizations", "delete_account.delete", fallback: "삭제")
+    /// 삭제 시 고객에게 계좌정보가 보이지 않습니다.
+    internal static let description = Strings.tr("Localizations", "delete_account.description", fallback: "삭제 시 고객에게 계좌정보가 보이지 않습니다.")
+    /// 계좌정보를 삭제할까요?
+    internal static let title = Strings.tr("Localizations", "delete_account.title", fallback: "계좌정보를 삭제할까요?")
+    /// 계좌번호가 삭제되었습니다
+    internal static let toast = Strings.tr("Localizations", "delete_account.toast", fallback: "계좌번호가 삭제되었습니다")
+  }
   internal enum EditAccount {
+    /// 계좌번호
+    internal static let accountNumber = Strings.tr("Localizations", "edit_account.account_number", fallback: "계좌번호")
     /// 계좌번호를 입력해주세요.
     internal static let accountNumberPlaceholder = Strings.tr("Localizations", "edit_account.account_number_placeholder", fallback: "계좌번호를 입력해주세요.")
-    /// 계좌번호
-    internal static let accountNumbuer = Strings.tr("Localizations", "edit_account.account_numbuer", fallback: "계좌번호")
     /// 은행
     internal static let bank = Strings.tr("Localizations", "edit_account.bank", fallback: "은행")
     /// 은행을 선택해주세요.
     internal static let bankPlaceholder = Strings.tr("Localizations", "edit_account.bank_placeholder", fallback: "은행을 선택해주세요.")
+    /// 계좌정보 삭제
+    internal static let deleteAccountNumber = Strings.tr("Localizations", "edit_account.delete_account_number", fallback: "계좌정보 삭제")
     /// 예금주
     internal static let name = Strings.tr("Localizations", "edit_account.name", fallback: "예금주")
     /// 저장하기

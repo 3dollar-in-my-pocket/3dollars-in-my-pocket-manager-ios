@@ -154,8 +154,9 @@
 "edit_account.name" = "예금주";
 "edit_account.title" = "계좌번호 등록";
 "edit_account.title_placeholder" = "예금주를 입력해주세요.";
-"edit_account.account_numbuer" = "계좌번호";
+"edit_account.account_number" = "계좌번호";
 "edit_account.bank_placeholder" = "은행을 선택해주세요.";
+"edit_account.delete_account_number" = "계좌정보 삭제";
 
 // Statistics
 "statistics_filter_total" = "전체";
@@ -221,3 +222,10 @@
 "message_confirm.title" = "정말 아래의 메세지로 전송하시나요?\n다시 한 번 확인해 주세요.";
 "message_confirm.send" = "메세지 전송";
 "message_confirm.rewrite" = "다시 쓰기";
+
+// MARK: DeleteAccount
+"delete_account.title" = "계좌정보를 삭제할까요?";
+"delete_account.description" = "삭제 시 고객에게 계좌정보가 보이지 않습니다.";
+"delete_account.delete" = "삭제";
+"delete_account.cancel" = "닫기";
+"delete_account.toast" = "계좌번호가 삭제되었습니다";
