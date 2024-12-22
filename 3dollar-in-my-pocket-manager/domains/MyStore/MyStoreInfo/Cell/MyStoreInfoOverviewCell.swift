@@ -55,7 +55,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         let label = UILabel()
         label.font = .bold(size: 12)
         label.textColor = .black
-        label.text = "edit_store_info.sns".localized
+        label.text = Strings.EditStoreInfo.sns
         label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return label
     }()
@@ -69,9 +69,27 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         return label
     }()
     
+    private let contactNumberLabel: UILabel = {
+        let label = UILabel()
+        label.font = .bold(size: 12)
+        label.textColor = .black
+        label.text = Strings.EditStoreInfo.contactNumber
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        return label
+    }()
+    
+    private let contactNumberValueLabel: UILabel = {
+        let label = UILabel()
+        label.font = .regular(size: 12)
+        label.textColor = .gray50
+        label.textAlignment = .right
+        label.numberOfLines = 2
+        return label
+    }()
+    
     let editButton: UIButton = {
         let button = UIButton()
-        button.setTitle("edit_store_info.title".localized, for: .normal)
+        button.setTitle(Strings.EditStoreInfo.title, for: .normal)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
         button.backgroundColor = .green
@@ -127,7 +145,8 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             categoryStackView.addArrangedSubview(categoryLagel)
         }
         
-        snsValueLabel.text = store.snsUrl
+        snsValueLabel.text = store.snsUrl ?? Strings.EditStoreInfo.notExist
+        contactNumberValueLabel.text = store.contactsNumbers.first?.number ?? Strings.EditStoreInfo.notExist
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -149,6 +168,8 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             contactContainerView,
             snsLabel,
             snsValueLabel,
+            contactNumberLabel,
+            contactNumberValueLabel,
             editButton
         ])
         
@@ -186,7 +207,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             make.left.equalTo(containerView).offset(16)
             make.right.equalTo(containerView).offset(-16)
             make.top.equalTo(categoryStackView.snp.bottom).offset(16)
-            make.height.equalTo(78)
+            make.height.equalTo(64)
         }
         
         snsLabel.snp.makeConstraints { make in
@@ -198,6 +219,17 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
             make.top.equalTo(snsLabel)
             make.right.equalTo(contactContainerView).offset(-12)
             make.left.equalTo(snsLabel.snp.right).offset(12)
+        }
+        
+        contactNumberLabel.snp.makeConstraints {
+            $0.left.equalTo(snsLabel)
+            $0.top.equalTo(snsLabel.snp.bottom).offset(9)
+        }
+        
+        contactNumberValueLabel.snp.makeConstraints {
+            $0.right.equalTo(snsValueLabel)
+            $0.left.equalTo(snsValueLabel)
+            $0.centerY.equalTo(contactNumberLabel)
         }
         
         editButton.snp.makeConstraints { make in

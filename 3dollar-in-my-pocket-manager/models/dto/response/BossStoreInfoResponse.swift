@@ -11,6 +11,7 @@ struct BossStoreResponse: Decodable, Hashable {
     var appearanceDays: [BossStoreAppearanceDayResponse]
     var categories: [StoreFoodCategoryResponse]
     var accountNumbers: [BossStoreAccountNumber]
+    let contactsNumbers: [BossStoreContactsNumberResponse]
     var openStatus: BossStoreOpenStatusResponse
     let distance: Int
     let favorite: StoreFavoriteResponse
@@ -91,4 +92,9 @@ enum OpenStatus: String, Decodable {
 
 struct StoreFavoriteResponse: Decodable, Hashable {
     let subscriberCount: Int
+}
+
+struct BossStoreContactsNumberResponse: Decodable, Hashable {
+    let number: String
+    let description: String?
 }

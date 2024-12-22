@@ -319,6 +319,10 @@ internal enum Strings {
     internal static let editButton = Strings.tr("Localizations", "edit_introdution.edit_button", fallback: "저장하기")
   }
   internal enum EditStoreInfo {
+    /// 연락처
+    internal static let contactNumber = Strings.tr("Localizations", "edit_store_info.contact_number", fallback: "연락처")
+    /// 없음
+    internal static let notExist = Strings.tr("Localizations", "edit_store_info.not_exist", fallback: "없음")
     /// 가게 사진
     internal static let photoTitle = Strings.tr("Localizations", "edit_store_info.photo_title", fallback: "가게 사진")
     /// 저장하기
