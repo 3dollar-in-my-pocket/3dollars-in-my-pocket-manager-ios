@@ -62,6 +62,12 @@ final class EditStoreInfoViewController: BaseViewController {
             .subscribe(viewModel.input.inputSNS)
             .store(in: &cancellables)
         
+        editStoreInfoView.contactNumberField.textField.textField.textPublisher
+            .compactMap { $0 }
+            .dropFirst()
+            .subscribe(viewModel.input.inputContactNumber)
+            .store(in: &cancellables)
+        
         editStoreInfoView.photoView.didTapDeletePhoto
             .subscribe(viewModel.input.deletePhoto)
             .store(in: &cancellables)

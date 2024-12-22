@@ -48,6 +48,12 @@ final class EditStoreInfoView: BaseView {
         placeholder: "edit_store_info.sns.placeholder".localized
     )
     
+    let contactNumberField = InputField(
+        title: Strings.EditStoreInfo.contactNumber,
+        isRequired: false,
+        placeholder: Strings.EditStoreInfo.ContactNumber.placeholder
+    )
+    
     let saveButton: UIButton = {
         var config = UIButton.Configuration.plain()
         config.title = "edit_store_info.save".localized
@@ -62,6 +68,8 @@ final class EditStoreInfoView: BaseView {
     }()
     
     let buttonBackgroundView = UIView()
+    
+    private var originalBottomInset: CGFloat = 0
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -103,6 +111,8 @@ final class EditStoreInfoView: BaseView {
         stackView.addArrangedSubview(photoView)
         stackView.setCustomSpacing(32, after: photoView)
         stackView.addArrangedSubview(snsField)
+        stackView.setCustomSpacing(32, after: snsField)
+        stackView.addArrangedSubview(contactNumberField)
         
         scrollView.addSubview(stackView)
         stackView.snp.makeConstraints {
@@ -143,6 +153,7 @@ final class EditStoreInfoView: BaseView {
         categoryCollectionView.selectCategories(categories: store.categories)
         photoView.bind(images: store.representativeImages)
         snsField.setText(text: store.snsUrl)
+        contactNumberField.setText(text: store.contactsNumbers.first?.number)
     }
     
     func setSaveButtonEnable(_ isEnable: Bool) {
@@ -176,20 +187,24 @@ final class EditStoreInfoView: BaseView {
         )
     }
     
-    @objc func onShowKeyboard(notification: NSNotification) {
-        let userInfo = notification.userInfo!
-        var keyboardFrame
-        = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.convert(keyboardFrame, from: nil)
-        
-        var contentInset = self.scrollView.contentInset
-        contentInset.bottom = keyboardFrame.size.height + 10
-        self.scrollView.contentInset = contentInset
+    @objc func onShowKeyboard(notification: Notification) {
+        let keyboardHeight = mapNotificationToKeyboardHeight(notification: notification)
+        let inset = keyboardHeight > 0 ? (keyboardHeight - safeAreaInsets.bottom) : 0
+        originalBottomInset = scrollView.contentInset.bottom
+        scrollView.contentInset.bottom += inset
     }
     
-    @objc func onHideKeyboard(notification: NSNotification) {
-        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-        
-        self.scrollView.contentInset = contentInset
+    @objc func onHideKeyboard(notification: Notification) {
+        scrollView.contentInset.bottom = originalBottomInset
+    }
+    
+    private func mapNotificationToKeyboardHeight(notification: Notification) -> CGFloat {
+        if notification.name == UIResponder.keyboardDidShowNotification ||
+            notification.name == UIResponder.keyboardWillShowNotification {
+            let rect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect ?? .zero
+            return rect.height
+        } else {
+            return 0
+        }
     }
 }

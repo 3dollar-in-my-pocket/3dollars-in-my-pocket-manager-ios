@@ -81,7 +81,7 @@ final class EditAccountViewController: BaseViewController {
     }()
     
     fileprivate let buttonBackgroundView = UIView()
-    
+    private var originalBottomInset: CGFloat = 0
     
     private let viewModel: EditAccountViewModel
     
@@ -96,10 +96,15 @@ final class EditAccountViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+        setupKeyboardEvent()
         bind()
     }
     
@@ -261,6 +266,42 @@ final class EditAccountViewController: BaseViewController {
         } else {
             saveButton.backgroundColor = .gray30
             buttonBackgroundView.backgroundColor = .gray30
+        }
+    }
+    
+    private func setupKeyboardEvent() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onShowKeyboard(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onHideKeyboard(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func onShowKeyboard(notification: Notification) {
+        let keyboardHeight = mapNotificationToKeyboardHeight(notification: notification)
+        let inset = keyboardHeight > 0 ? (keyboardHeight - view.safeAreaInsets.bottom) : 0
+        originalBottomInset = scrollView.contentInset.bottom
+        scrollView.contentInset.bottom += inset
+    }
+    
+    @objc func onHideKeyboard(notification: Notification) {
+        scrollView.contentInset.bottom = originalBottomInset
+    }
+    
+    private func mapNotificationToKeyboardHeight(notification: Notification) -> CGFloat {
+        if notification.name == UIResponder.keyboardDidShowNotification ||
+            notification.name == UIResponder.keyboardWillShowNotification {
+            let rect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect ?? .zero
+            return rect.height
+        } else {
+            return 0
         }
     }
 }

@@ -11,7 +11,7 @@ struct BossStoreResponse: Decodable, Hashable {
     var appearanceDays: [BossStoreAppearanceDayResponse]
     var categories: [StoreFoodCategoryResponse]
     var accountNumbers: [BossStoreAccountNumber]
-    let contactsNumbers: [BossStoreContactsNumberResponse]
+    var contactsNumbers: [BossStoreContactsNumberResponse]
     var openStatus: BossStoreOpenStatusResponse
     let distance: Int
     let favorite: StoreFavoriteResponse
@@ -29,7 +29,8 @@ extension BossStoreResponse {
             menus: menus,
             appearanceDays: appearanceDays.map { .init(response: $0) },
             categoriesIds: categories.map { $0.categoryId },
-            accountNumbers: accountNumbers
+            accountNumbers: accountNumbers,
+            contactsNumbers: contactsNumbers.map { .init(number: $0.number) }
         )
     }
 }
