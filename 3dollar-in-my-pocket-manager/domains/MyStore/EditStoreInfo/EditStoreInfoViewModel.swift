@@ -15,6 +15,7 @@ extension EditStoreInfoViewModel {
         let addPhotos = PassthroughSubject<[UIImage], Never>()
         let deletePhoto = PassthroughSubject<Int, Never>()
         let inputSNS = PassthroughSubject<String, Never>()
+        let inputContactNumber = PassthroughSubject<String, Never>()
         let didTapSave = PassthroughSubject<Void, Never>()
     }
     
@@ -141,6 +142,18 @@ final class EditStoreInfoViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: EditStoreInfoViewModel, snsUrl: String) in
                 owner.state.store.snsUrl = snsUrl
+                owner.output.isEnableSaveButton.send(owner.validateStore())
+            }
+            .store(in: &cancellables)
+        
+        input.inputContactNumber
+            .withUnretained(self)
+            .sink { (owner: EditStoreInfoViewModel, contactNumber: String) in
+                if contactNumber.isEmpty {
+                    owner.state.store.contactsNumbers = []
+                } else {
+                    owner.state.store.contactsNumbers = [.init(number: contactNumber, description: nil)]
+                }
                 owner.output.isEnableSaveButton.send(owner.validateStore())
             }
             .store(in: &cancellables)

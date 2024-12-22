@@ -124,6 +124,9 @@
 "edit_store_info.sns.placeholder" = "SNS주소를 적어주세요.";
 "edit_store_info.toast.maximum_photo" = "사진은 최대 10장까지 등록 가능합니다";
 "edit_store_info.photo.representative" = "대표";
+"edit_store_info.contact_number" = "연락처";
+"edit_store_info.not_exist" = "없음";
+"edit_store_info.contact_number.placeholder" = "고객들에게 알리고 싶은 연락처를 적어주세요!";
 
 // Edit Schedule
 "edit_schedule_title" = "일정 관리";

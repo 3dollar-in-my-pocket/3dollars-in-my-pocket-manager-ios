@@ -11,6 +11,7 @@ struct BossStoreResponse: Decodable, Hashable {
     var appearanceDays: [BossStoreAppearanceDayResponse]
     var categories: [StoreFoodCategoryResponse]
     var accountNumbers: [BossStoreAccountNumber]
+    var contactsNumbers: [BossStoreContactsNumberResponse]
     var openStatus: BossStoreOpenStatusResponse
     let distance: Int
     let favorite: StoreFavoriteResponse
@@ -28,7 +29,8 @@ extension BossStoreResponse {
             menus: menus,
             appearanceDays: appearanceDays.map { .init(response: $0) },
             categoriesIds: categories.map { $0.categoryId },
-            accountNumbers: accountNumbers
+            accountNumbers: accountNumbers,
+            contactsNumbers: contactsNumbers.map { .init(number: $0.number) }
         )
     }
 }
@@ -91,4 +93,9 @@ enum OpenStatus: String, Decodable {
 
 struct StoreFavoriteResponse: Decodable, Hashable {
     let subscriberCount: Int
+}
+
+struct BossStoreContactsNumberResponse: Decodable, Hashable {
+    let number: String
+    let description: String?
 }
