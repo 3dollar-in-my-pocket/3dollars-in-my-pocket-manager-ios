@@ -332,8 +332,8 @@ internal enum Strings {
     /// 대표 정보 수정
     internal static let title = Strings.tr("Localizations", "edit_store_info.title", fallback: "대표 정보 수정")
     internal enum ContactNumber {
-      /// 고객들에게 알리고 싶은 연락처를 적어주세요!
-      internal static let placeholder = Strings.tr("Localizations", "edit_store_info.contact_number.placeholder", fallback: "고객들에게 알리고 싶은 연락처를 적어주세요!")
+      /// 고객들에게 알리고 싶은 연락처를 적어주세요! ('-' 포함)
+      internal static let placeholder = Strings.tr("Localizations", "edit_store_info.contact_number.placeholder", fallback: "고객들에게 알리고 싶은 연락처를 적어주세요! ('-' 포함)")
     }
     internal enum Photo {
       /// 대표
