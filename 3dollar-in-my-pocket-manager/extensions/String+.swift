@@ -50,4 +50,20 @@ extension String {
     var isNotEmpty: Bool {
         return !isEmpty
     }
+    
+    var camelCase: String {
+        // Step 1: Snake case를 단어 배열로 나누기
+        let components = self.split(separator: "_")
+        
+        // Step 2: 첫 단어는 소문자로 유지하고, 나머지 단어는 첫 글자를 대문자로 변환
+        let camelCase = components.enumerated().map { index, word in
+            if index == 0 {
+                return word.lowercased() // 첫 단어는 소문자
+            } else {
+                return word.capitalized // 나머지는 첫 글자 대문자
+            }
+        }.joined()
+        
+        return camelCase
+    }
 }

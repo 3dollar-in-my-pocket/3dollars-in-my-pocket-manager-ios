@@ -2,6 +2,7 @@ import Alamofire
 import RxSwift
 import UIKit
 
+@available(*, deprecated, renamed: "UserRepository", message: "UserRepository로 대체됩니다.")
 protocol AuthServiceType {
     func login(socialType: SocialType, token: String) -> Observable<LoginResponse>
     
@@ -19,7 +20,7 @@ protocol AuthServiceType {
     
     func signout() -> Observable<String>
     
-    func fetchMyInfo() -> Observable<BossAccountInfoResponse>
+    func fetchMyInfo() -> Observable<BossWithSettingsResponse>
     
     func signinDemo(code: String) -> Observable<LoginResponse>
 }
@@ -136,7 +137,7 @@ struct AuthService: AuthServiceType {
         }
     }
     
-    func fetchMyInfo() -> Observable<BossAccountInfoResponse> {
+    func fetchMyInfo() -> Observable<BossWithSettingsResponse> {
         return .create { observer in
             let urlString = HTTPUtils.url + "/boss/v1/boss/account/me"
             let headers = HTTPUtils.defaultHeader()
@@ -146,7 +147,7 @@ struct AuthService: AuthServiceType {
                 method: .get,
                 headers: headers
             )
-            .responseDecodable(of: ResponseContainer<BossAccountInfoResponse>.self) { response in
+            .responseDecodable(of: ResponseContainer<BossWithSettingsResponse>.self) { response in
                 if response.isSuccess() {
                     observer.processValue(response: response)
                 } else {

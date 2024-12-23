@@ -7,6 +7,7 @@ extension EditAccountViewModel {
         let inputBank = PassthroughSubject<BossBank, Never>()
         let didTapBank = PassthroughSubject<Void, Never>()
         let didTapSave = PassthroughSubject<Void, Never>()
+        let didTapDeleteAccountNumber = PassthroughSubject<Void, Never>()
     }
     
     struct Output {
@@ -26,6 +27,7 @@ extension EditAccountViewModel {
         case pop
         case showErrorAlert(Error)
         case presentBankBottomSheet(BankListBottomSheetViewModel)
+        case presentDeleteAccountNumberDialog(DeleteAccountViewModel)
     }
     
     struct Config {
@@ -113,6 +115,13 @@ final class EditAccountViewModel: BaseViewModel {
                 owner.updateStore()
             }
             .store(in: &cancellables)
+        
+        input.didTapDeleteAccountNumber
+            .withUnretained(self)
+            .sink { (owner: EditAccountViewModel, _) in
+                owner.presentDeleteAccountNumberDialog()
+            }
+            .store(in: &cancellables)
     }
     
     private func handleName(_ name: String) {
@@ -183,5 +192,19 @@ final class EditAccountViewModel: BaseViewModel {
                 output.route.send(.showErrorAlert(error))
             }
         }
+    }
+    
+    private func presentDeleteAccountNumberDialog() {
+        let viewModel = DeleteAccountViewModel()
+        
+        viewModel.output.successDeleteAccountNumber
+            .withUnretained(self)
+            .sink(receiveValue: { (owner: EditAccountViewModel, _) in
+                owner.state.store.accountNumbers = []
+                owner.output.updatedStore.send(owner.state.store)
+                owner.output.route.send(.pop)
+            })
+            .store(in: &viewModel.cancellables)
+        output.route.send(.presentDeleteAccountNumberDialog(viewModel))
     }
 }

@@ -5,6 +5,7 @@ final class WaitingView: BaseView {
     
     private let scrollView = UIScrollView().then {
         $0.contentInset = .init(top: 0, left: 0, bottom: 100, right: 0)
+        $0.showsVerticalScrollIndicator = false
     }
     
     private let scrollViewContainerView = UIView()
@@ -180,9 +181,10 @@ final class WaitingView: BaseView {
     private func setupGradient() {
         self.gradient.colors = [
             UIColor(r: 25, g: 25, b: 25, a: 0).cgColor,
+            UIColor(r: 25, g: 25, b: 25, a: 1).cgColor,
             UIColor(r: 25, g: 25, b: 25, a: 1).cgColor
         ]
-        self.gradient.locations = [0.0, 1.0]
+        self.gradient.locations = [0.0, 0.5, 1.0]
         self.gradient.startPoint = CGPoint(x: 0.5, y: 0)
         self.gradient.endPoint = CGPoint(x: 0.5, y: 1)
         self.gradient.frame.size = self.gradientationView.frame.size

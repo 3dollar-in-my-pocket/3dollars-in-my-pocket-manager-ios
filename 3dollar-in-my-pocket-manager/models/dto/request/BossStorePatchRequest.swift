@@ -9,6 +9,29 @@ struct BossStorePatchRequest: Encodable {
     let appearanceDays: [BossStoreAppearanceDayRequest]?
     let categoriesIds: [String]?
     let accountNumbers: [BossStoreAccountNumber]?
+    let contactsNumbers: [BossStoreContactsNumberRequest]?
+    
+    init(
+        name: String? = nil,
+        representativeImages: [BossStoreImage]? = nil,
+        introduction: String? = nil,
+        snsUrl: String? = nil,
+        menus: [BossStoreMenu]? = nil,
+        appearanceDays: [BossStoreAppearanceDayRequest]? = nil,
+        categoriesIds: [String]? = nil,
+        accountNumbers: [BossStoreAccountNumber]? = nil,
+        contactsNumbers: [BossStoreContactsNumberRequest]? = nil
+    ) {
+        self.name = name
+        self.representativeImages = representativeImages
+        self.introduction = introduction
+        self.snsUrl = snsUrl
+        self.menus = menus
+        self.appearanceDays = appearanceDays
+        self.categoriesIds = categoriesIds
+        self.accountNumbers = accountNumbers
+        self.contactsNumbers = contactsNumbers
+    }
 }
 
 struct BossStoreAppearanceDayRequest: Encodable {
@@ -34,5 +57,15 @@ struct BossStoreAppearanceDayRequest: Encodable {
         self.startTime = response.openingHours.startTime
         self.endTime = response.openingHours.endTime
         self.locationDescription = response.locationDescription
+    }
+}
+
+struct BossStoreContactsNumberRequest: Encodable {
+    let number: String
+    let description: String?
+    
+    init(number: String, description: String? = nil) {
+        self.number = number
+        self.description = description
     }
 }

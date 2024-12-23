@@ -83,7 +83,7 @@
 "waiting_title" = "신청 완료!";
 "waiting_description" = "사장님! 소중한 정보를 입력해주셔서 감사합니다.\n심사는 지원한 날로부터 주말을 제외한 평일 기준 약 2-5일 소요될 수 있어요. 최대한 빠르게 처리하여 사장님의 영업을 도와드릴 테니 조금만 기다려주세요 :)";
 "waiting_bottom_description_1" = "사장님이 영업 시작 버튼을 누르면\n근처 고객들에게 홍보 돼요!";
-"waiting_question_button" = "이메일로 문의하기";
+"waiting_question_button" = "문의하기";
 "waiting_logout" = "로그아웃";
 
 // My Page
@@ -124,6 +124,9 @@
 "edit_store_info.sns.placeholder" = "SNS주소를 적어주세요.";
 "edit_store_info.toast.maximum_photo" = "사진은 최대 10장까지 등록 가능합니다";
 "edit_store_info.photo.representative" = "대표";
+"edit_store_info.contact_number" = "연락처";
+"edit_store_info.not_exist" = "없음";
+"edit_store_info.contact_number.placeholder" = "고객들에게 알리고 싶은 연락처를 적어주세요! ('-' 포함)";
 
 // Edit Schedule
 "edit_schedule_title" = "일정 관리";
@@ -154,8 +157,9 @@
 "edit_account.name" = "예금주";
 "edit_account.title" = "계좌번호 등록";
 "edit_account.title_placeholder" = "예금주를 입력해주세요.";
-"edit_account.account_numbuer" = "계좌번호";
+"edit_account.account_number" = "계좌번호";
 "edit_account.bank_placeholder" = "은행을 선택해주세요.";
+"edit_account.delete_account_number" = "계좌정보 삭제";
 
 // Statistics
 "statistics_filter_total" = "전체";
@@ -221,3 +225,10 @@
 "message_confirm.title" = "정말 아래의 메세지로 전송하시나요?\n다시 한 번 확인해 주세요.";
 "message_confirm.send" = "메세지 전송";
 "message_confirm.rewrite" = "다시 쓰기";
+
+// MARK: DeleteAccount
+"delete_account.title" = "계좌정보를 삭제할까요?";
+"delete_account.description" = "삭제 시 고객에게 계좌정보가 보이지 않습니다.";
+"delete_account.delete" = "삭제";
+"delete_account.cancel" = "닫기";
+"delete_account.toast" = "계좌번호가 삭제되었습니다";

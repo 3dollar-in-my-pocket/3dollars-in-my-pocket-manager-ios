@@ -27,16 +27,22 @@ class BaseViewController: UIViewController {
     func bindEvent() { }
     
     func showErrorAlert(error: Error) {
-        if let httpError = error as? HTTPError,
-           httpError == .unauthorized {
-            AlertUtils.showWithAction(
-                viewController: self,
-                title: nil,
-                message: httpError.description,
-                okbuttonTitle: "common_ok".localized
-            ) {
-                Preference.shared.clear()
-                self.goToSignin()
+        if let httpError = error as? HTTPError {
+            switch httpError {
+            case .unauthorized:
+                AlertUtils.showWithAction(
+                    viewController: self,
+                    title: nil,
+                    message: httpError.description,
+                    okbuttonTitle: "common_ok".localized
+                ) {
+                    Preference.shared.clear()
+                    self.goToSignin()
+                }
+            case .maintenance:
+                showMaintenanceAlert(message: nil)
+            default:
+                break
             }
         } else if let apiError = error as? ApiError {
             handleApiError(apiError)
@@ -75,6 +81,9 @@ class BaseViewController: UIViewController {
             message = errorMessage
         case .emptyData:
             message = "error.unknown".localizable
+        case .errorContainer(let container):
+            handleErrorContainer(container)
+            return
         }
         AlertUtils.showWithAction(
             viewController: self,
@@ -87,6 +96,40 @@ class BaseViewController: UIViewController {
         if screenName != .empty {
             LogManager.shared.sendPageView(screen: screenName, type: Self.self)
         }
+    }
+    
+    private func handleErrorContainer(_ container: ApiErrorContainer) {
+        switch container.error {
+        case .unauthorized:
+            showUnauthorizedAlert(message: container.message)
+        case .serviceUnavailable:
+            showMaintenanceAlert(message: container.message)
+        default:
+            showDefaultAlert(container: container)
+        }
+    }
+    
+    private func showUnauthorizedAlert(message: String?) {
+        AlertUtils.showWithAction(
+            viewController: self,
+            title: nil,
+            message: message ?? "",
+            okbuttonTitle: Strings.commonOk
+        ) {
+            Preference.shared.clear()
+            self.goToSignin()
+        }
+    }
+    
+    private func showMaintenanceAlert(message: String?) {
+        guard let topViewController = UIUtils.topViewController() else { return }
+        AlertUtils.showWithAction(viewController: topViewController, title: nil, message: message ?? HTTPError.maintenance.description) {
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+        }
+    }
+    
+    private func showDefaultAlert(container: ApiErrorContainer) {
+        AlertUtils.showWithAction(viewController: self, message: container.message, onTapOk: nil)
     }
 }
 

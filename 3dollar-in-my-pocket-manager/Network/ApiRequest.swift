@@ -31,29 +31,37 @@ extension ApiRequest {
     }
     
     func asyncRequest<T: Decodable>() async -> ApiResult<T> {
-        let result = await dataRequest.serializingData().result
+        let response = await dataRequest.serializingData().response
         
-        switch result {
-        case .success(let data):
+        if response.isSuccess().isNot {
+            guard let data = response.data else { return .failure(ApiError.emptyData) }
+            
             do {
                 let decoder = JSONDecoder()
-                let apiResponse = try decoder.decode(ApiResponse<T>.self, from: data)
+                let errorContainer = try decoder.decode(ApiErrorContainer.self, from: data)
                 
-                if let errorMessage = apiResponse.message {
-                    return .failure(ApiError.serverError(errorMessage))
-                }
-                
-                guard let decodableData = apiResponse.data else {
-                    return .failure(ApiError.emptyData)
-                }
-                
-                return .success(decodableData)
+                return .failure(ApiError.errorContainer(errorContainer))
             } catch {
+                return .failure(ApiError.decodingError)
+            }
+        } else {
+            switch response.result {
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    let apiResponse = try decoder.decode(ApiResponse<T>.self, from: data)
+                    
+                    guard let decodableData = apiResponse.data else {
+                        return .failure(ApiError.emptyData)
+                    }
+                    
+                    return .success(decodableData)
+                } catch {
+                    return .failure(error)
+                }
+            case .failure(let error):
                 return .failure(error)
             }
-        case .failure(let error):
-            print("[Error] [\(#function)]: \(error)")
-            return .failure(error)
         }
     }
 }
