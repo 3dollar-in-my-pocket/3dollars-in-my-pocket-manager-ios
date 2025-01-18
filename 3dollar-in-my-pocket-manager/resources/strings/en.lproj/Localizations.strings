@@ -165,6 +165,10 @@
 "statistics_filter_total" = "전체";
 "statistics_filter_day" = "일별";
 "statistics_review_count" = "리뷰가 사장님께 도착했어요 :)";
+"statistics.bookmark_count.title" = "북마크";
+"statistics.bookmark_count.message" = "메세지 보내기";
+"statistics.bookmark_count.description" = "%d명의 고객이 사장님의 가게를\n북마크 했습니다!";
+"statistics.bookmark_count.description.colord" = "%d명";
 
 // Seting
 "setting_title" = "설정";

@@ -4,17 +4,10 @@ import CombineCocoa
 
 final class StatisticsViewController: BaseViewController {
     private let viewModel: StatisticsViewModel
-    private let statisticsView = StatisticsView()
     
-    private let pageViewController = UIPageViewController(
-        transitionStyle: .scroll,
-        navigationOrientation: .horizontal,
-        options: nil
-    )
-    private var pageViewControllers: [UIViewController] = []
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
     
-    private var totalStatisticsViewController: TotalStatisticsViewController?
-    private var dailyStatisticsViewController: DailyStatisticsViewController?
+    private lazy var dataSource = StatisticsDataSource(collectionView: collectionView, viewModel: viewModel)
     
     private var isRefreshing = false
     
@@ -36,169 +29,81 @@ final class StatisticsViewController: BaseViewController {
         return .darkContent
     }
     
-    override func loadView() {
-        view = statisticsView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
         bind()
         
-        statisticsView.scrollView.delegate = self
         viewModel.input.viewDidLoad.send(())
+    }
+    
+    private func setupUI() {
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .gray0
+        collectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     private func bind() {
         // Input
-        statisticsView.refreshControl.isRefreshingPublisher
-            .filter { $0 }
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, _) in
-                owner.isRefreshing = true
-            }
-            .store(in: &cancellables)
-        
-        statisticsView.filterButton.tapPublisher
-            .removeDuplicates()
-            .subscribe(viewModel.input.didTapFilter)
-            .store(in: &cancellables)
+//        statisticsView.refreshControl.isRefreshingPublisher
+//            .filter { $0 }
+//            .withUnretained(self)
+//            .sink { (owner: StatisticsViewController, _) in
+//                owner.isRefreshing = true
+//            }
+//            .store(in: &cancellables)
         
         // Output
         viewModel.output.subscriberCount
             .main
             .withUnretained(self)
             .sink { (owner: StatisticsViewController, subscriberCount: Int) in
-                owner.statisticsView.favoriteCountLabel.bind(subscriberCount)
+//                owner.statisticsView.favoriteCountLabel.bind(subscriberCount)
             }
             .store(in: &cancellables)
         
-        viewModel.output.totalReviewCount
-            .main
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, reviewCount: Int) in
-                owner.statisticsView.reviewCountLabel.bind(reviewCount)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.setPageViewController
-            .main
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, viewModels) in
-                let (totalStatisticsViewModel, dailyStatisticsViewModel) = viewModels
-                let selectedFilter = owner.viewModel.output.filter.value
-                owner.setupPageViewController(
-                    totalStatisticsViewModel: totalStatisticsViewModel,
-                    dailyStatisticsViewModel: dailyStatisticsViewModel,
-                    selectedFilter: selectedFilter
-                )
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.filter
-            .dropFirst()
-            .main
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, filterType: StatisticsFilterButton.FilterType) in
-                owner.setPage(filterType: filterType)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.updateContainerHeight
-            .main
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, height: CGFloat) in
-                owner.statisticsView.updateContainerHeight(height)
-            }
-            .store(in: &cancellables)
     }
     
-    private func setupPageViewController(
-        totalStatisticsViewModel: TotalStatisticsViewModel,
-        dailyStatisticsViewModel: DailyStatisticsViewModel,
-        selectedFilter: StatisticsFilterButton.FilterType
-    ) {
-        let totalStatisticsViewController = TotalStatisticsViewController(viewModel: totalStatisticsViewModel)
-        self.totalStatisticsViewController = totalStatisticsViewController
-        
-        let dailyStatisticsViewController = DailyStatisticsViewController(viewModel: dailyStatisticsViewModel)
-        self.dailyStatisticsViewController = dailyStatisticsViewController
-        
-        pageViewControllers.removeAll()
-        pageViewControllers = [
-            totalStatisticsViewController,
-            dailyStatisticsViewController
-        ]
-        if pageViewController.parent.isNil {
-            addChild(pageViewController)
-            statisticsView.containerView.addSubview(pageViewController.view)
-            pageViewController.view.snp.makeConstraints {
-                $0.edges.equalTo(statisticsView.containerView)
-            }
-        }
-        
-        pageViewController.delegate = self
-        pageViewController.dataSource = self
-        
-        var selectedViewController: UIViewController
-        switch selectedFilter {
-        case .total:
-            selectedViewController = totalStatisticsViewController
-        case .day:
-            selectedViewController = dailyStatisticsViewController
-        }
-        
-        pageViewController.setViewControllers(
-            [selectedViewController],
-            direction: .forward,
-            animated: false,
-            completion: nil
-        )
-    }
     
-    private func setPage(filterType: StatisticsFilterButton.FilterType) {
-        switch filterType {
-        case .total:
-            pageViewController.setViewControllers(
-                [pageViewControllers[0]],
-                direction: .forward,
-                animated: false,
-                completion: nil
-            )
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+            guard let self,
+                  let sectionType = dataSource.sectionIdentifier(section: sectionIndex)?.type else {
+                fatalError("정의되지 않은 섹션입니다.")
+            }
             
-        case .day:
-            pageViewController.setViewControllers(
-                [pageViewControllers[1]],
-                direction: .forward,
-                animated: false,
-                completion: nil
-            )
+            switch sectionType {
+            case .bookmark:
+                let item = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(StatisticsBookmarkCountCell.Layout.height)
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(StatisticsBookmarkCountCell.Layout.height)
+                ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(top: 0, leading: 24, bottom: 0, trailing: 24)
+                
+                return section
+            case .feedback:
+                fatalError("정의되지 않은 섹션입니다.")
+            case .review:
+                fatalError("정의되지 않은 섹션입니다.")
+            }
         }
     }
 }
 
-extension StatisticsViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerBefore viewController: UIViewController
-    ) -> UIViewController? {
-        return nil
-    }
-    
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerAfter viewController: UIViewController
-    ) -> UIViewController? {
-        return nil
-    }
-}
-
-extension StatisticsViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if isRefreshing {
-            viewModel.input.refresh.send(())
-            isRefreshing = false
-            statisticsView.refreshControl.endRefreshing()
-        }
-    }
-}
+//extension StatisticsViewController: UIScrollViewDelegate {
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        if isRefreshing {
+//            viewModel.input.refresh.send(())
+//            isRefreshing = false
+//            statisticsView.refreshControl.endRefreshing()
+//        }
+//    }
+//}

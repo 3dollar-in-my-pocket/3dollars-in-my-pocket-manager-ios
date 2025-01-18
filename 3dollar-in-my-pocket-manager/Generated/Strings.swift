@@ -493,6 +493,25 @@ internal enum Strings {
       internal static let colored = Strings.tr("Localizations", "sending_message.description.colored", fallback: "취소가 불가능")
     }
   }
+  internal enum Statistics {
+    internal enum BookmarkCount {
+      /// %d명의 고객이 사장님의 가게를
+      /// 북마크 했습니다!
+      internal static func description(_ p1: Int) -> String {
+        return Strings.tr("Localizations", "statistics.bookmark_count.description", p1, fallback: "%d명의 고객이 사장님의 가게를\n북마크 했습니다!")
+      }
+      /// 메세지 보내기
+      internal static let message = Strings.tr("Localizations", "statistics.bookmark_count.message", fallback: "메세지 보내기")
+      /// 북마크
+      internal static let title = Strings.tr("Localizations", "statistics.bookmark_count.title", fallback: "북마크")
+      internal enum Description {
+        /// %d명
+        internal static func colord(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.bookmark_count.description.colord", p1, fallback: "%d명")
+        }
+      }
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name vertical_whitespace_opening_braces
