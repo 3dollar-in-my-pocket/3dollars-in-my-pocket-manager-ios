@@ -232,3 +232,6 @@
 "delete_account.delete" = "삭제";
 "delete_account.cancel" = "닫기";
 "delete_account.toast" = "계좌번호가 삭제되었습니다";
+
+// MARK: FeedbackDetail
+"feedback_detail.title" = "피드백 평가";
