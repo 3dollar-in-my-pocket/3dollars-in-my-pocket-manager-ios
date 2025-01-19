@@ -5,28 +5,27 @@ extension StatisticsViewModel {
     struct Input {
         let viewDidLoad = PassthroughSubject<Void, Never>()
         let refresh = PassthroughSubject<Void, Never>()
-        let totalReviewCount = PassthroughSubject<Int, Never>()
-        let didTapFilter = PassthroughSubject<StatisticsFilterButton.FilterType, Never>()
-        let updateContainerHeight = PassthroughSubject<CGFloat, Never>()
     }
     
     struct Output {
         let screenName: ScreenName = .statistics
-        let subscriberCount = PassthroughSubject<Int, Never>()
-        let totalReviewCount = PassthroughSubject<Int, Never>()
-        let setPageViewController = PassthroughSubject<(TotalStatisticsViewModel, DailyStatisticsViewModel), Never>()
-        let filter = CurrentValueSubject<StatisticsFilterButton.FilterType, Never>(.total)
-        let updateContainerHeight = PassthroughSubject<CGFloat, Never>()
+        let sections = CurrentValueSubject<[StatisticsSection], Never>([])
         let route = PassthroughSubject<Route, Never>()
     }
     
+    struct Relay {
+        let didTapMessage = PassthroughSubject<Void, Never>()
+        let didTapSeeMore = PassthroughSubject<Void, Never>()
+    }
+    
     struct State {
-        var feedbackTypes: [FeedbackTypeResponse] = []
         var store: BossStoreResponse? = nil
-        var selectedFilter: StatisticsFilterButton.FilterType = .total
+        var feedbackTypes: [FeedbackTypeResponse] = []
+        var feedbacks: [FeedbackCountWithRatioResponse] = []
     }
     
     enum Route {
+        case pushFeedbackDetail(FeedbackDetailViewModel)
         case showErrorAlert(Error)
     }
     
@@ -34,15 +33,18 @@ extension StatisticsViewModel {
         let feedbackRepository: FeedbackRepository
         let storeRepository: StoreRepository
         let logManager: LogManagerProtocol
+        let preference: Preference
         
         init(
             feedbackRepository: FeedbackRepository = FeedbackRepositoryImpl(),
             storeRepository: StoreRepository = StoreRepositoryImpl(),
-            logManager: LogManagerProtocol = LogManager.shared
+            logManager: LogManagerProtocol = LogManager.shared,
+            preference: Preference = .shared
         ) {
             self.feedbackRepository = feedbackRepository
             self.storeRepository = storeRepository
             self.logManager = logManager
+            self.preference = preference
         }
     }
 }
@@ -50,11 +52,9 @@ extension StatisticsViewModel {
 final class StatisticsViewModel: BaseViewModel {
     let input = Input()
     let output = Output()
+    private let relay = Relay()
     private var state = State()
     private let dependency: Dependency
-    
-    var totalStatisticsViewModel: TotalStatisticsViewModel?
-    var dailyStatisticsViewModel: DailyStatisticsViewModel?
     
     init(dependency: Dependency = Dependency()) {
         self.dependency = dependency
@@ -62,6 +62,7 @@ final class StatisticsViewModel: BaseViewModel {
         super.init()
         
         bind()
+        bindRelay()
     }
     
     private func bind() {
@@ -71,90 +72,67 @@ final class StatisticsViewModel: BaseViewModel {
                 owner.fetchDatas()
             }
             .store(in: &cancellables)
+    }
+    
+    private func bindRelay() {
+        // TODO: message 탭 선택 로직 처리 필요
         
-        input.totalReviewCount
-            .subscribe(output.totalReviewCount)
-            .store(in: &cancellables)
-        
-        input.didTapFilter
+        relay.didTapSeeMore
             .withUnretained(self)
-            .sink { (owner: StatisticsViewModel, filterType: StatisticsFilterButton.FilterType) in
-                owner.state.selectedFilter = filterType
-                owner.sendClickFilterLog(filterType: filterType)
-                owner.output.filter.send(filterType)
+            .sink { (owner: StatisticsViewModel, _) in
+                let viewModel = FeedbackDetailViewModel()
+                owner.output.route.send(.pushFeedbackDetail(viewModel))
             }
-            .store(in: &cancellables)
-        
-        input.updateContainerHeight
-            .subscribe(output.updateContainerHeight)
             .store(in: &cancellables)
     }
     
     private func fetchDatas() {
         Task {
-            let fetchFeedbackTypes = await dependency.feedbackRepository.fetchFeedbackType()
-            switch fetchFeedbackTypes {
-            case .success(let feedbackTypes):
+            do {
+                let feedbackTypes = try await dependency.feedbackRepository.fetchFeedbackType().get()
                 state.feedbackTypes = feedbackTypes
-            case .failure(let error):
+                
+                let myStore = try await dependency.storeRepository.fetchMyStore().get()
+                state.store = myStore
+                
+                let feedbacks = try await dependency.feedbackRepository.fetchTotalStatistics(storeId: dependency.preference.storeId).get()
+                state.feedbacks = feedbacks
+                output.sections.send(createSections())
+            } catch {
                 output.route.send(.showErrorAlert(error))
-                return
             }
-            
-            let fetchMyStore = await dependency.storeRepository.fetchMyStore()
-            switch fetchMyStore {
-            case .success(let store):
-                state.store = store
-                output.subscriberCount.send(store.favorite.subscriberCount)
-            case .failure(let error):
-                output.route.send(.showErrorAlert(error))
-                return
-            }
-            
-            let totalStatisticsViewModel = createTotalStatisticsViewModel()
-            self.totalStatisticsViewModel = totalStatisticsViewModel
-            
-            let dailyStatisticsViewModel = createDailyStatisticsViewModel()
-            self.dailyStatisticsViewModel = dailyStatisticsViewModel
-            
-            output.setPageViewController.send((totalStatisticsViewModel, dailyStatisticsViewModel))
         }
     }
     
-    private func createTotalStatisticsViewModel() -> TotalStatisticsViewModel {
-        let config = TotalStatisticsViewModel.Config(feedbackTypes: state.feedbackTypes)
-        let viewModel = TotalStatisticsViewModel(config: config)
+    private func createSections() -> [StatisticsSection] {
+        var sections: [StatisticsSection] = []
+        if let store = state.store {
+            let config = StatisticsBookmarkCountCellViewModel.Config(bookmarkCount: store.favorite.subscriberCount)
+            let viewModel = StatisticsBookmarkCountCellViewModel(config: config)
+            
+            viewModel.output.didTapSendMessage
+                .subscribe(relay.didTapMessage)
+                .store(in: &viewModel.cancellables)
+            sections.append(.init(type: .bookmark, items: [.bookmarkCount(viewModel)]))
+        }
         
-        viewModel.output.reviewTotalCount
-            .subscribe(input.totalReviewCount)
-            .store(in: &viewModel.cancellables)
+        if state.feedbacks.isNotEmpty {
+            let top3Feedbacks = state.feedbacks
+                .filter { $0.count > 0 }
+                .sorted(by: { $0.count > $1.count })
+                .prefix(3)
+            let config = StatisticsFeedbackCountCellViewModel.Config(
+                feedbackTypes: state.feedbackTypes,
+                statistics: Array(top3Feedbacks)
+            )
+            let viewModel = StatisticsFeedbackCountCellViewModel(config: config)
+            
+            viewModel.output.didTapSeeMore
+                .subscribe(relay.didTapSeeMore)
+                .store(in: &viewModel.cancellables)
+            sections.append(.init(type: .feedback, items: [.feedback(viewModel)]))
+        }
         
-        viewModel.output.updateContainerHeight
-            .subscribe(input.updateContainerHeight)
-            .store(in: &viewModel.cancellables)
-        
-        return viewModel
-    }
-    
-    private func createDailyStatisticsViewModel() -> DailyStatisticsViewModel {
-        let config = DailyStatisticsViewModel.Config(feedbackTypes: state.feedbackTypes)
-        let viewModel = DailyStatisticsViewModel(config: config)
-        
-        viewModel.output.updateContainerHeight
-            .subscribe(input.updateContainerHeight)
-            .store(in: &viewModel.cancellables)
-        
-        return viewModel
-    }
-}
-
-// MARK: Log
-extension StatisticsViewModel {
-    func sendClickFilterLog(filterType: StatisticsFilterButton.FilterType) {
-        dependency.logManager.sendEvent(.init(
-            screen: output.screenName,
-            eventName: .tapStatisticTab,
-            extraParameters: [.filterType: filterType])
-        )
+        return sections
     }
 }

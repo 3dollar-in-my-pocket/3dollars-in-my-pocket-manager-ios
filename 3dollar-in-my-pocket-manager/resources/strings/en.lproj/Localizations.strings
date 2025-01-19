@@ -169,6 +169,11 @@
 "statistics.bookmark_count.message" = "메세지 보내기";
 "statistics.bookmark_count.description" = "%d명의 고객이 사장님의 가게를\n북마크 했습니다!";
 "statistics.bookmark_count.description.colord" = "%d명";
+"statistics.feedback_count.title" = "피드백 평가";
+"statistics.feedback_count.see_more" = "전체보기";
+"statistics.feedback_count.description" = "%d개의 피드백 평가";
+"statistics.feedback_count.description.colored" = "%d개";
+"statistics.feedback_count.item.count_format" = "%d개";
 
 // Seting
 "setting_title" = "설정";

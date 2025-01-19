@@ -511,6 +511,28 @@ internal enum Strings {
         }
       }
     }
+    internal enum FeedbackCount {
+      /// %d개의 피드백 평가
+      internal static func description(_ p1: Int) -> String {
+        return Strings.tr("Localizations", "statistics.feedback_count.description", p1, fallback: "%d개의 피드백 평가")
+      }
+      /// 전체보기
+      internal static let seeMore = Strings.tr("Localizations", "statistics.feedback_count.see_more", fallback: "전체보기")
+      /// 피드백 평가
+      internal static let title = Strings.tr("Localizations", "statistics.feedback_count.title", fallback: "피드백 평가")
+      internal enum Description {
+        /// %d개
+        internal static func colored(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.feedback_count.description.colored", p1, fallback: "%d개")
+        }
+      }
+      internal enum Item {
+        /// %d개
+        internal static func countFormat(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.feedback_count.item.count_format", p1, fallback: "%d개")
+        }
+      }
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

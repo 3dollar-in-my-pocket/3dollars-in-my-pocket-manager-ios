@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 extension String {
     var localized: String {
@@ -65,5 +66,15 @@ extension String {
         }.joined()
         
         return camelCase
+    }
+    
+    func width(font: UIFont, height: CGFloat) -> CGFloat {
+        return NSAttributedString(string: self, attributes: [NSAttributedString.Key.font: font])
+            .width(height: height)
+    }
+    
+    func height(font: UIFont, width: CGFloat) -> CGFloat {
+        return NSAttributedString(string: self, attributes: [NSAttributedString.Key.font: font])
+            .height(width: width)
     }
 }

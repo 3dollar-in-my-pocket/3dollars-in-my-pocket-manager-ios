@@ -13,6 +13,7 @@ enum StatisticsSectionType: Hashable {
 
 enum StatisticsSectionItem: Hashable {
     case bookmarkCount(StatisticsBookmarkCountCellViewModel)
+    case feedback(StatisticsFeedbackCountCellViewModel)
 }
 
 
@@ -26,11 +27,16 @@ final class StatisticsDataSource: UICollectionViewDiffableDataSource<StatisticsS
                 let cell: StatisticsBookmarkCountCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 cell.bind(viewModel: viewModel)
                 return cell
+            case .feedback(let viewModel):
+                let cell: StatisticsFeedbackCountCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                cell.bind(viewModel: viewModel)
+                return cell
             }
         }
         
         collectionView.register([
-            StatisticsBookmarkCountCell.self
+            StatisticsBookmarkCountCell.self,
+            StatisticsFeedbackCountCell.self
         ])
     }
     
