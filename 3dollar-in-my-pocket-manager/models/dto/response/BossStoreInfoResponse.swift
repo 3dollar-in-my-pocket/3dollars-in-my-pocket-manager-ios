@@ -2,6 +2,7 @@ struct BossStoreResponse: Decodable, Hashable {
     let bossStoreId: String
     let isOwner: Bool
     var name: String
+    let rating: Double
     var location: LocationResponse?
     let address: AddressResponse
     var representativeImages: [BossStoreImage]
@@ -15,6 +16,8 @@ struct BossStoreResponse: Decodable, Hashable {
     var openStatus: BossStoreOpenStatusResponse
     let distance: Int
     let favorite: StoreFavoriteResponse
+    let feedbacks: [FeedbackCountWithRatioResponse]
+    let reviews: ContentListWithCursorAndCount<StoreReviewResponse>
     let createdAt: String?
     let updatedAt: String?
 }

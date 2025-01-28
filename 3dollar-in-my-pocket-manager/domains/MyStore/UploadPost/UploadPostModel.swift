@@ -52,7 +52,7 @@ struct PostSectionCreateApiRequest: Encodable {
     let ratio: Double
 }
 
-struct StickerResponse: Decodable {
+struct StickerResponse: Decodable, Hashable {
     let stickerId: String
     let emoji: String
     let count: Int

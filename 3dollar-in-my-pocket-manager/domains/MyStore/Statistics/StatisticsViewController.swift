@@ -41,6 +41,7 @@ final class StatisticsViewController: BaseViewController {
     private func setupUI() {
         collectionView.refreshControl = refreshControl
         collectionView.delegate = self
+        collectionView.showsVerticalScrollIndicator = false
         view.addSubview(collectionView)
         collectionView.backgroundColor = .gray0
         collectionView.snp.makeConstraints {
@@ -115,7 +116,56 @@ final class StatisticsViewController: BaseViewController {
                 
                 return section
             case .review:
-                fatalError("정의되지 않은 섹션입니다.")
+                guard let sectionIdentifier = dataSource.sectionIdentifier(section: sectionIndex) else { fatalError() }
+                let item: NSCollectionLayoutItem
+                let group: NSCollectionLayoutGroup
+                let section: NSCollectionLayoutSection
+                
+                if sectionIdentifier.items.isEmpty {
+                    item = NSCollectionLayoutItem(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(StatisticsReviewEmptyCell.Layout.height)
+                    ))
+                    group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(StatisticsReviewEmptyCell.Layout.height)
+                    ), subitems: [item])
+                    section = NSCollectionLayoutSection(group: group)
+                } else {
+                    item = NSCollectionLayoutItem(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(StatisticsReviewCell.Layout.estimatedHeight)
+                    ))
+                    group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(StatisticsReviewCell.Layout.estimatedHeight)
+                    ), subitems: [item])
+                    section = NSCollectionLayoutSection(group: group)
+                }
+                
+                section.boundarySupplementaryItems = [.init(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(StatisticsReviewHeaderView.Layout.height)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )]
+                
+                if sectionIdentifier.items.isNotEmpty {
+                    section.boundarySupplementaryItems.append(.init(
+                        layoutSize: .init(
+                            widthDimension: .fractionalWidth(1),
+                            heightDimension: .absolute(StatisticsReviewFooterView.Layout.height)
+                        ),
+                        elementKind: UICollectionView.elementKindSectionFooter,
+                        alignment: .bottom
+                    ))
+                }
+                
+                section.contentInsets = .init(top: 20, leading: 0, bottom: 0, trailing: 0)
+                
+                return section
             }
         }
     }

@@ -46,8 +46,17 @@ extension UIColor {
     /// r: 255, g: 161, b: 170
     static let pink = UIColor(r: 255, g: 161, b: 170)
     
+    /// r: 255, g: 243, b: 244
+    static let pink100 = UIColor(r: 255, g: 243, b: 244)
+    
+    /// r: 255 g: 218 b: 221
+    static let pink200 = UIColor(r: 255, g: 218, b: 221)
+    
     /// r: 0, g: 198, b: 103
     static let green = UIColor(r: 0, g: 198, b: 103)
+    
+    /// r: 241, g: 255, b: 248
+    static let green100 = UIColor(r: 241, g: 255, b: 248)
     
     /// r:255 g: 92, b: 67
     static let red = UIColor(r: 255, g: 92, b: 67)

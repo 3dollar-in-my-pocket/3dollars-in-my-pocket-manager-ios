@@ -533,6 +533,22 @@ internal enum Strings {
         }
       }
     }
+    internal enum Review {
+      /// 리뷰 전체 보기
+      internal static let totalReview = Strings.tr("Localizations", "statistics.review.total_review", fallback: "리뷰 전체 보기")
+      internal enum Empty {
+        /// 등록된 리뷰가 없어요
+        internal static let title = Strings.tr("Localizations", "statistics.review.empty.title", fallback: "등록된 리뷰가 없어요")
+      }
+      internal enum Header {
+        /// %d개
+        internal static func countFormat(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.review.header.count_format", p1, fallback: "%d개")
+        }
+        /// 리뷰
+        internal static let title = Strings.tr("Localizations", "statistics.review.header.title", fallback: "리뷰")
+      }
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
