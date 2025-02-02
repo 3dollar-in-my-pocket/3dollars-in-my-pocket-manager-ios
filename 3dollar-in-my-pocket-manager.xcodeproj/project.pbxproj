@@ -691,6 +691,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6E1036A22CE89C2E000994D3 /* Message */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Message; sourceTree = "<group>"; };
 		6E2A04FC2D3941C6001A1074 /* FeedbackDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeedbackDetail; sourceTree = "<group>"; };
+		6E9DDF212D4DE113006D6599 /* PhotoDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PhotoDetail; sourceTree = "<group>"; };
 		6EA1B6FF2D1552130000D28E /* DeleteAccount */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DeleteAccount; sourceTree = "<group>"; };
 		6EB5E58B2CE5DC420057993E /* Generated */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Generated; sourceTree = "<group>"; };
 		6EDEA7852CF1F2110057869A /* SendingMessage */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SendingMessage; sourceTree = "<group>"; };
@@ -973,6 +974,7 @@
 		6E473BA027D872E000232139 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				6E9DDF212D4DE113006D6599 /* PhotoDetail */,
 				6E473B9C27D870B900232139 /* CategoryViewCell.swift */,
 				6E64B28327D836920055354B /* TextField.swift */,
 				6E473B9327D85D1C00232139 /* InputField.swift */,
@@ -1630,6 +1632,7 @@
 			fileSystemSynchronizedGroups = (
 				6E1036A22CE89C2E000994D3 /* Message */,
 				6E2A04FC2D3941C6001A1074 /* FeedbackDetail */,
+				6E9DDF212D4DE113006D6599 /* PhotoDetail */,
 				6EA1B6FF2D1552130000D28E /* DeleteAccount */,
 				6EB5E58B2CE5DC420057993E /* Generated */,
 				6EDEA7852CF1F2110057869A /* SendingMessage */,

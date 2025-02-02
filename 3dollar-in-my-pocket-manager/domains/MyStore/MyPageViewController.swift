@@ -129,6 +129,14 @@ final class MyPageViewController: BaseViewController {
                 }
             }
             .store(in: &cancellables)
+        
+        viewModel.output.selectSubTab
+            .main
+            .withUnretained(self)
+            .sink { (owner: MyPageViewController, subTab: MyPageSubTabType) in
+                owner.subTabView.selectButton(subTab)
+            }
+            .store(in: &cancellables)
     }
     
     private func createMyStoreInfoViewController() -> UIViewController {
@@ -141,8 +149,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     private func createStatisticsViewController() -> UIViewController {
-        let viewModel = StatisticsViewModel()
-        let viewController = StatisticsViewController(viewModel: viewModel)
+        let viewController = StatisticsViewController(viewModel: viewModel.statisticsViewModel)
         
         return viewController
     }

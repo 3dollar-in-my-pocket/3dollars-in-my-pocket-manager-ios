@@ -14,12 +14,14 @@ extension StatisticsViewModel {
     struct Output {
         let screenName: ScreenName = .statistics
         let sections = CurrentValueSubject<[StatisticsSection], Never>([])
+        let didTapMessage = PassthroughSubject<Void, Never>()
         let route = PassthroughSubject<Route, Never>()
     }
     
     struct Relay {
         let didTapMessage = PassthroughSubject<Void, Never>()
         let didTapSeeMore = PassthroughSubject<Void, Never>()
+        let didTapPhoto = PassthroughSubject<(review: StoreReviewResponse, index: Int), Never>()
     }
     
     struct State {
@@ -31,6 +33,7 @@ extension StatisticsViewModel {
     
     enum Route {
         case pushFeedbackDetail(FeedbackDetailViewModel)
+        case presentPhotoDetail(PhotoDetailViewModel)
         case showErrorAlert(Error)
     }
     
@@ -83,7 +86,9 @@ final class StatisticsViewModel: BaseViewModel {
     }
     
     private func bindRelay() {
-        // TODO: message 탭 선택 로직 처리 필요
+        relay.didTapMessage
+            .subscribe(output.didTapMessage)
+            .store(in: &cancellables)
         
         relay.didTapSeeMore
             .withUnretained(self)
@@ -92,12 +97,19 @@ final class StatisticsViewModel: BaseViewModel {
                 owner.output.route.send(.pushFeedbackDetail(viewModel))
             }
             .store(in: &cancellables)
+        
+        relay.didTapPhoto
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewModel, data) in
+                let (review, index) = data
+                owner.presentPhotoDetail(review: review, index: index)
+            }
+            .store(in: &cancellables)
     }
     
     private func fetchDatas() {
         Task {
             do {
-                let storeId = dependency.preference.storeId
                 let feedbackTypes = try await dependency.feedbackRepository.fetchFeedbackType().get()
                 state.feedbackTypes = feedbackTypes
                 
@@ -149,17 +161,28 @@ final class StatisticsViewModel: BaseViewModel {
             if reviews.contents.isEmpty {
                 sections.append(.init(type: headerType, items: [.emptyReview]))
             } else {
-                let cellViewModels = reviews.contents.map {
-                    let config = StatisticsReviewCellViewModel.Config(review: $0)
-                    let viewModel = StatisticsReviewCellViewModel(config: config)
-                    return viewModel
-                }
-                
+                let cellViewModels = reviews.contents.map { createStatisticsReviewCellViewModel(review: $0) }
                 let items: [StatisticsSectionItem] = cellViewModels.map { .review($0) }
                 sections.append(.init(type: headerType, items: items))
             }
         }
         
         return sections
+    }
+    
+    private func createStatisticsReviewCellViewModel(review: StoreReviewResponse) ->  StatisticsReviewCellViewModel {
+        let config = StatisticsReviewCellViewModel.Config(review: review)
+        let viewModel = StatisticsReviewCellViewModel(config: config)
+        
+        viewModel.output.didTapPhoto
+            .subscribe(relay.didTapPhoto)
+            .store(in: &viewModel.cancellables)
+        return viewModel
+    }
+    
+    private func presentPhotoDetail(review: StoreReviewResponse, index: Int) {
+        let config = PhotoDetailViewModel.Config(images: review.images, currentIndex: index)
+        let viewModel = PhotoDetailViewModel(config: config)
+        output.route.send(.presentPhotoDetail(viewModel))
     }
 }

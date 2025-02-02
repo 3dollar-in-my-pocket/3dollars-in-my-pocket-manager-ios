@@ -7,7 +7,7 @@ extension StatisticsReviewCellViewModel {
     
     struct Output {
         let review: StoreReviewResponse
-        let didTapPhoto = PassthroughSubject<Int, Never>()
+        let didTapPhoto = PassthroughSubject<(review: StoreReviewResponse, index: Int), Never>()
     }
     
     struct Config {
@@ -29,6 +29,10 @@ final class StatisticsReviewCellViewModel: BaseViewModel {
     
     private func bind() {
         input.didTapPhoto
+            .withUnretained(self)
+            .map { (owner: StatisticsReviewCellViewModel, index: Int) in
+                return (review: owner.output.review, index: index)
+            }
             .subscribe(output.didTapPhoto)
             .store(in: &cancellables)
     }

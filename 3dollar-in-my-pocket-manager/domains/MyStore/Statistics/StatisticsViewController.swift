@@ -179,6 +179,8 @@ extension StatisticsViewController {
             showErrorAlert(error: error)
         case .pushFeedbackDetail(let viewModel):
             pushFeedbackDetail(viewModel: viewModel)
+        case .presentPhotoDetail(let viewModel):
+            presentPhotoDetail(viewModel: viewModel)
         }
     }
     
@@ -186,6 +188,12 @@ extension StatisticsViewController {
         let viewController = FeedbackDetailViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    private func presentPhotoDetail(viewModel: PhotoDetailViewModel) {
+        let viewController = PhotoDetailViewController(viewModel: viewModel)
+        present(viewController, animated: true, completion: nil)
+    }
+
 }
 
 extension StatisticsViewController: UICollectionViewDelegate {

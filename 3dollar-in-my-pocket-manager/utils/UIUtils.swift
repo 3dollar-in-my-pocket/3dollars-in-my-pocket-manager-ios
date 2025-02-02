@@ -16,6 +16,15 @@ struct UIUtils {
         }
     }
     
+    static var topSafeAreaInset: CGFloat {
+        if #available(iOS 15.0, *) {
+            let window = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            return window?.keyWindow?.safeAreaInsets.top ?? .zero
+        } else {
+            return UIApplication.shared.windows.first?.safeAreaInsets.top ?? .zero
+        }
+    }
+    
     static func topViewController(base: UIViewController? = UIApplication.shared.connectedScenes
         .filter({ $0.activationState == .foregroundActive })
         .compactMap({ $0 as? UIWindowScene })
