@@ -9,6 +9,7 @@ extension StatisticsViewModel {
     struct Input {
         let viewDidLoad = PassthroughSubject<Void, Never>()
         let refresh = PassthroughSubject<Void, Never>()
+        let didTapMoreReview = PassthroughSubject<Void, Never>()
     }
     
     struct Output {
@@ -34,6 +35,7 @@ extension StatisticsViewModel {
     enum Route {
         case pushFeedbackDetail(FeedbackDetailViewModel)
         case presentPhotoDetail(PhotoDetailViewModel)
+        case pushReviewList(ReviewListViewModel)
         case showErrorAlert(Error)
     }
     
@@ -81,6 +83,13 @@ final class StatisticsViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: StatisticsViewModel, _) in
                 owner.fetchDatas()
+            }
+            .store(in: &cancellables)
+        
+        input.didTapMoreReview
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewModel, _) in
+                owner.pushReviewList()
             }
             .store(in: &cancellables)
     }
@@ -184,5 +193,10 @@ final class StatisticsViewModel: BaseViewModel {
         let config = PhotoDetailViewModel.Config(images: review.images, currentIndex: index)
         let viewModel = PhotoDetailViewModel(config: config)
         output.route.send(.presentPhotoDetail(viewModel))
+    }
+    
+    private func pushReviewList() {
+        let viewModel = ReviewListViewModel()
+        output.route.send(.pushReviewList(viewModel))
     }
 }

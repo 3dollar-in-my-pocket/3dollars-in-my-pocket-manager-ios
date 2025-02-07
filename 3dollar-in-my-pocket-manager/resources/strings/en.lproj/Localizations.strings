@@ -179,6 +179,13 @@
 "statistics.review.header.title" = "리뷰";
 "statistics.review.header.count_format" = "%d개";
 
+// Review List
+"review_list.like" = "좋아요";
+"review_list.like_count_format" = "좋아요 %d";
+"review_list.sort_type.latest" = "최신순";
+"review_list.sort_type.higher_rating" = "별점 높은순";
+"review_list.sort_type.lower_rating" = "별점 낮은순";
+
 // Seting
 "setting_title" = "설정";
 "setting_name_description" = "오늘도 적게 일하고 많이 버세요!";

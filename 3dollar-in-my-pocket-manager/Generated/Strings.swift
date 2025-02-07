@@ -478,6 +478,22 @@ internal enum Strings {
       internal static let title = Strings.tr("Localizations", "preference.remove_location_on_close.title", fallback: "영업 종료 시 위치 노출")
     }
   }
+  internal enum ReviewList {
+    /// 좋아요
+    internal static let like = Strings.tr("Localizations", "review_list.like", fallback: "좋아요")
+    /// 좋아요 %d
+    internal static func likeCountFormat(_ p1: Int) -> String {
+      return Strings.tr("Localizations", "review_list.like_count_format", p1, fallback: "좋아요 %d")
+    }
+    internal enum SortType {
+      /// 별점 높은순
+      internal static let higherRating = Strings.tr("Localizations", "review_list.sort_type.higher_rating", fallback: "별점 높은순")
+      /// 최신순
+      internal static let latest = Strings.tr("Localizations", "review_list.sort_type.latest", fallback: "최신순")
+      /// 별점 낮은순
+      internal static let lowerRating = Strings.tr("Localizations", "review_list.sort_type.lower_rating", fallback: "별점 낮은순")
+    }
+  }
   internal enum SendingMessage {
     /// 한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!
     internal static let description = Strings.tr("Localizations", "sending_message.description", fallback: "한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!")

@@ -53,6 +53,7 @@ final class StatisticsReviewCell: BaseCollectionViewCell {
             ImageItemCell.self,
             BaseCollectionViewCell.self
         ])
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
     

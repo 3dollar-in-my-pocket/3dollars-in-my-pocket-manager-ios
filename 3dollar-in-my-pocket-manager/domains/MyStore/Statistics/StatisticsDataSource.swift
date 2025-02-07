@@ -56,6 +56,10 @@ final class StatisticsDataSource: UICollectionViewDiffableDataSource<StatisticsS
                 return headerView
             } else if kind == UICollectionView.elementKindSectionFooter && section.items.isNotEmpty {
                 let footerView: StatisticsReviewFooterView = collectionView.dequeueReusableFooter(indexPath: indexPath)
+                footerView.totalReviewButton.tapPublisher
+                    .throttleClick()
+                    .subscribe(viewModel.input.didTapMoreReview)
+                    .store(in: &footerView.cancellables)
                 return footerView
             }
             

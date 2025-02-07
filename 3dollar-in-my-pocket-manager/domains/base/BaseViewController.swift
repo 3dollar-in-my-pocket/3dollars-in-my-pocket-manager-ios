@@ -66,6 +66,8 @@ class BaseViewController: UIViewController {
         
         navigationController.isNavigationBarHidden = false
         navigationController.navigationBar.shadowImage = UIImage() // 스크롤 시 나타나는 그림자 제거
+        navigationController.navigationBar.barTintColor = .white
+        navigationController.navigationBar.tintColor = .gray100
         addBackButtonIfNeeded()
         setupTitle()
     }

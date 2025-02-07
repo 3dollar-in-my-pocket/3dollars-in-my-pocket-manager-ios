@@ -85,6 +85,7 @@ final class StatisticsFeedbackCountCell: BaseCollectionViewCell {
         ])
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
     

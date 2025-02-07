@@ -181,6 +181,8 @@ extension StatisticsViewController {
             pushFeedbackDetail(viewModel: viewModel)
         case .presentPhotoDetail(let viewModel):
             presentPhotoDetail(viewModel: viewModel)
+        case .pushReviewList(let viewModel):
+            pushReviewList(viewModel: viewModel)
         }
     }
     
@@ -193,7 +195,11 @@ extension StatisticsViewController {
         let viewController = PhotoDetailViewController(viewModel: viewModel)
         present(viewController, animated: true, completion: nil)
     }
-
+    
+    private func pushReviewList(viewModel: ReviewListViewModel) {
+        let viewController = ReviewListViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension StatisticsViewController: UICollectionViewDelegate {

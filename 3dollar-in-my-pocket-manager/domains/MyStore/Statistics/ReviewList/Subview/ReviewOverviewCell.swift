@@ -1,6 +1,6 @@
 import UIKit
 
-final class StatisticsReviewHeaderView: UICollectionReusableView {
+final class ReviewOverviewCell: BaseCollectionViewCell {
     enum Layout {
         static let height: CGFloat = 48
     }
@@ -32,7 +32,7 @@ final class StatisticsReviewHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setup() {
+    override func setup() {
         backgroundColor = .white
         addSubview(titleLabel)
         addSubview(countLabel)

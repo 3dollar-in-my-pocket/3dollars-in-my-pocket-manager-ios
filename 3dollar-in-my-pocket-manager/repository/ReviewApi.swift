@@ -13,6 +13,7 @@ enum ReviewApi {
         cursor: String?,
         size: Int?
     )
+    case toggleLikeReview(storeId: String, reviewId: String, input: StickersReplaceRequest)
 }
 
 extension ReviewApi: ApiRequest {
@@ -20,6 +21,8 @@ extension ReviewApi: ApiRequest {
         switch self {
         case .fetchReviews(let storeId, _, _, _):
             return "/v1/store/\(storeId)/reviews"
+        case .toggleLikeReview(let storeId, let reviewId, _):
+            return "/v1/store/\(storeId)/review/\(reviewId)/stickers"
         }
     }
     
@@ -27,6 +30,8 @@ extension ReviewApi: ApiRequest {
         switch self {
         case .fetchReviews:
             return .get
+        case .toggleLikeReview:
+            return .put
         }
     }
     
@@ -48,6 +53,8 @@ extension ReviewApi: ApiRequest {
             }
             
             return parameters
+        case .toggleLikeReview(_, _, let input):
+            return input.toDictionary
         }
     }
 }

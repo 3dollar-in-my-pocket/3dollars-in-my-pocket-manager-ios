@@ -1,4 +1,5 @@
 import UIKit
+import Combine
 
 final class StatisticsReviewFooterView: UICollectionReusableView {
     enum Layout {
@@ -21,6 +22,8 @@ final class StatisticsReviewFooterView: UICollectionReusableView {
         return button
     }()
     
+    var cancellables = Set<AnyCancellable>()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -29,6 +32,11 @@ final class StatisticsReviewFooterView: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellables.removeAll()
     }
     
     private func setup() {
