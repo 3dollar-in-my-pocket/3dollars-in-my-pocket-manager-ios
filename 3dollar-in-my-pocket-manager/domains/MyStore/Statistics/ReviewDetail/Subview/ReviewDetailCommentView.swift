@@ -40,7 +40,7 @@ final class ReviewDetailCommentView: BaseView {
         var config = UIButton.Configuration.plain()
         config.image = Assets.icTrash.image.resizeImage(scaledTo: 16).withRenderingMode(.alwaysTemplate)
         config.imagePadding = 4
-        config.attributedTitle = AttributedString("답글 삭제하기", attributes: .init([
+        config.attributedTitle = AttributedString(Strings.ReviewDetail.Comment.deleteComment, attributes: .init([
             .font: UIFont.regular(size: 12) as Any,
             .foregroundColor: UIColor.gray80
         ]))

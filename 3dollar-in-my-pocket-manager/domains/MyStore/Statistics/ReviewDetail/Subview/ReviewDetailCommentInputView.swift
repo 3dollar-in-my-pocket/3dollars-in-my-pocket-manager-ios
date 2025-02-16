@@ -8,7 +8,7 @@ final class ReviewDetailCommentInputView: BaseView {
     
     enum Constant {
         static let maxInputLength = 300
-        static let placeHolder = "소중한 리뷰 감사드립니다!"
+        static let placeHolder = Strings.ReviewDetail.CommentInput.placeholder
     }
     
     private let stackView: UIStackView = {
@@ -29,7 +29,7 @@ final class ReviewDetailCommentInputView: BaseView {
         let label = UILabel()
         label.font = .semiBold(size: 20)
         label.textColor = .gray100
-        label.text = "리뷰에 답글을 달아주세요!"
+        label.text = Strings.ReviewDetail.CommentInput.title
         label.textAlignment = .left
         return label
     }()
@@ -38,7 +38,7 @@ final class ReviewDetailCommentInputView: BaseView {
         let label = UILabel()
         label.font = .regular(size: 14)
         label.textColor = .gray50
-        label.text = "부적절한 내용의 답글일 경우 삭제될 수 있습니다."
+        label.text = Strings.ReviewDetail.CommentInput.description
         return label
     }()
     
@@ -73,13 +73,13 @@ final class ReviewDetailCommentInputView: BaseView {
         let label = UILabel()
         label.font = .medium(size: 12)
         label.textColor = .gray50
-        label.text = "*최소 10자에서 최대 300자 이내로 입력해 주세요."
+        label.text = Strings.ReviewDetail.CommentInput.warning
         return label
     }()
     
     private let macroButton: UIButton = {
         let button = UIButton()
-        button.setTitle("자주 쓰는 문구", for: .normal)
+        button.setTitle(Strings.ReviewDetail.CommentInput.macro, for: .normal)
         button.backgroundColor = .gray5
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true

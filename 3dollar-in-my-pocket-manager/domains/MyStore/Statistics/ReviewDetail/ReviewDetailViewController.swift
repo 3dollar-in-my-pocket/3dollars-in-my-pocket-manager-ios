@@ -17,7 +17,7 @@ final class ReviewDetailViewController: BaseViewController {
     
     private let commentButton: UIButton = {
         let button = UIButton()
-        button.setTitle("답글 등록하기", for: .normal)
+        button.setTitle(Strings.ReviewDetail.comment, for: .normal)
         button.setTitleColor(.gray0, for: .normal)
         button.titleLabel?.font = .medium(size: 16)
         return button
@@ -130,7 +130,7 @@ final class ReviewDetailViewController: BaseViewController {
     private func setupNavigationBar() {
         var buttonConfig = UIButton.Configuration.plain()
         buttonConfig.attributedTitle = AttributedString(
-            "리뷰 신고하기",
+            Strings.ReviewDetail.report,
             attributes: AttributeContainer([
                 .foregroundColor: UIColor.red,
                 .font: UIFont.semiBold(size: 14) as Any

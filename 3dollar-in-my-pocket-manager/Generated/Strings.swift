@@ -478,6 +478,28 @@ internal enum Strings {
       internal static let title = Strings.tr("Localizations", "preference.remove_location_on_close.title", fallback: "영업 종료 시 위치 노출")
     }
   }
+  internal enum ReviewDetail {
+    /// 답글 등록하기
+    internal static let comment = Strings.tr("Localizations", "review_detail.comment", fallback: "답글 등록하기")
+    /// 신고하기
+    internal static let report = Strings.tr("Localizations", "review_detail.report", fallback: "신고하기")
+    internal enum Comment {
+      /// 답글 삭제하기
+      internal static let deleteComment = Strings.tr("Localizations", "review_detail.comment.delete_comment", fallback: "답글 삭제하기")
+    }
+    internal enum CommentInput {
+      /// 부적절한 내용의 답글일 경우 삭제될 수 있습니다.
+      internal static let description = Strings.tr("Localizations", "review_detail.comment_input.description", fallback: "부적절한 내용의 답글일 경우 삭제될 수 있습니다.")
+      /// 자주 쓰는 문구
+      internal static let macro = Strings.tr("Localizations", "review_detail.comment_input.macro", fallback: "자주 쓰는 문구")
+      /// 소중한 리뷰 감사드립니다!
+      internal static let placeholder = Strings.tr("Localizations", "review_detail.comment_input.placeholder", fallback: "소중한 리뷰 감사드립니다!")
+      /// 리뷰에 답글을 달아주세요!
+      internal static let title = Strings.tr("Localizations", "review_detail.comment_input.title", fallback: "리뷰에 답글을 달아주세요!")
+      /// *최소 10자에서 최대 300자 이내로 입력해 주세요.
+      internal static let warning = Strings.tr("Localizations", "review_detail.comment_input.warning", fallback: "*최소 10자에서 최대 300자 이내로 입력해 주세요.")
+    }
+  }
   internal enum ReviewList {
     /// 좋아요
     internal static let like = Strings.tr("Localizations", "review_list.like", fallback: "좋아요")
@@ -485,6 +507,8 @@ internal enum Strings {
     internal static func likeCountFormat(_ p1: Int) -> String {
       return Strings.tr("Localizations", "review_list.like_count_format", p1, fallback: "좋아요 %d")
     }
+    /// 리뷰
+    internal static let title = Strings.tr("Localizations", "review_list.title", fallback: "리뷰")
     internal enum SortType {
       /// 별점 높은순
       internal static let higherRating = Strings.tr("Localizations", "review_list.sort_type.higher_rating", fallback: "별점 높은순")

@@ -255,3 +255,16 @@
 
 // MARK: FeedbackDetail
 "feedback_detail.title" = "피드백 평가";
+
+// MARK: ReviewDetail
+"review_detail.comment_input.placeholder" = "소중한 리뷰 감사드립니다!";
+"review_detail.comment_input.title" = "리뷰에 답글을 달아주세요!";
+"review_detail.comment_input.description" = "부적절한 내용의 답글일 경우 삭제될 수 있습니다.";
+"review_detail.comment_input.warning" = "*최소 10자에서 최대 300자 이내로 입력해 주세요.";
+"review_detail.comment_input.macro" = "자주 쓰는 문구";
+"review_detail.comment.delete_comment" = "답글 삭제하기";
+"review_detail.comment" = "답글 등록하기";
+"review_detail.report" = "신고하기";
+
+// MARK: ReviewList
+"review_list.title" = "리뷰";

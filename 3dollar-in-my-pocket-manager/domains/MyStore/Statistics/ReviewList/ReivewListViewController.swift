@@ -41,7 +41,7 @@ final class ReviewListViewController: BaseViewController {
     
     private func setupUI() {
         view.backgroundColor = .white
-        title = "리뷰"
+        title = Strings.ReviewList.title
         collectionView.dataSource = dataSource
         
         view.addSubview(collectionView)
