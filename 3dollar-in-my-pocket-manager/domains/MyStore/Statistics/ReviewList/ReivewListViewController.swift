@@ -92,6 +92,8 @@ extension ReviewListViewController {
         switch route {
         case .presentPhotoDetail(let viewModel):
             presentPhotoDetail(viewModel: viewModel)
+        case .pushReviewDetail(let viewModel):
+            pushReviewDetail(viewModel: viewModel)
         case .showErrorAlert(let error):
             showErrorAlert(error: error)
         }
@@ -100,6 +102,11 @@ extension ReviewListViewController {
     private func presentPhotoDetail(viewModel: PhotoDetailViewModel) {
         let viewController = PhotoDetailViewController(viewModel: viewModel)
         present(viewController, animated: true, completion: nil)
+    }
+    
+    private func pushReviewDetail(viewModel: ReviewDetailViewModel) {
+        let viewController = ReviewDetailViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -157,5 +164,9 @@ extension ReviewListViewController: UICollectionViewDelegateFlowLayout {
             isRefreshing = false
             refreshControl.endRefreshing()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.input.didTapReview.send(indexPath.item)
     }
 }

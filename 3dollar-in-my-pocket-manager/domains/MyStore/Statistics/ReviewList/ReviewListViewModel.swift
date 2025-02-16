@@ -10,6 +10,7 @@ extension ReviewListViewModel {
         let refresh = PassthroughSubject<Void, Never>()
         let cellWillDisplay = PassthroughSubject<Int, Never>()
         let didTapSortType = PassthroughSubject<ReviewSortType, Never>()
+        let didTapReview = PassthroughSubject<Int, Never>()
     }
     
     struct Output {
@@ -27,6 +28,7 @@ extension ReviewListViewModel {
     enum Route {
         case showErrorAlert(Error)
         case presentPhotoDetail(PhotoDetailViewModel)
+        case pushReviewDetail(ReviewDetailViewModel)
     }
     
     struct Dependency {
@@ -84,6 +86,15 @@ final class ReviewListViewModel: BaseViewModel {
                 owner.state.sortType = sortType
                 owner.clearPage()
                 owner.loadMoreReviews()
+            }
+            .store(in: &cancellables)
+        
+        input.didTapReview
+            .withUnretained(self)
+            .sink { (owner: ReviewListViewModel, index: Int) in
+                guard let review = owner.state.reviews[safe: index] else { return }
+                
+                owner.pushReviewDetail(review: review)
             }
             .store(in: &cancellables)
     }
@@ -178,5 +189,12 @@ final class ReviewListViewModel: BaseViewModel {
         let config = PhotoDetailViewModel.Config(images: review.images, currentIndex: index)
         let viewModel = PhotoDetailViewModel(config: config)
         output.route.send(.presentPhotoDetail(viewModel))
+    }
+    
+    private func pushReviewDetail(review: StoreReviewResponse) {
+        let config = ReviewDetailViewModel.Config(reviewId: review.reviewId)
+        let viewModel = ReviewDetailViewModel(config: config)
+        
+        output.route.send(.pushReviewDetail(viewModel))
     }
 }
