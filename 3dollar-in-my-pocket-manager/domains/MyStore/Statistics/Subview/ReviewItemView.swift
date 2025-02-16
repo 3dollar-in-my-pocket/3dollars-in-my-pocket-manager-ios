@@ -30,8 +30,8 @@ final class ReviewItemView: BaseView {
     
     private let headerView = HeaderView()
     
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+    private lazy var collectionView: BackgroundTouchCollectionView = {
+        let collectionView = BackgroundTouchCollectionView(frame: .zero, collectionViewLayout: createLayout())
         collectionView.contentInset = .init(top: 0, left: 24, bottom: 0, right: 24)
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -156,6 +156,22 @@ final class ReviewItemView: BaseView {
 }
 
 extension ReviewItemView {
+    final class BackgroundTouchCollectionView: UICollectionView {
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            let hitView = super.hitTest(point, with: event)
+            
+            var superview = hitView
+            while superview != nil {
+                if let cell = superview as? UICollectionViewCell {
+                    return cell // 셀을 찾았으면 정상적으로 리턴
+                }
+                superview = superview?.superview
+            }
+            
+            return nil
+        }
+    }
+    
     final class HeaderView: BaseView {
         enum Layout {
             static let height: CGFloat = 40
