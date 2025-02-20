@@ -38,6 +38,7 @@ extension ReviewDetailViewModel {
     enum Route {
         case back
         case presentPhotoDetail(PhotoDetailViewModel)
+        case presentReport
         case showErrorAlert(Error)
     }
     
@@ -96,6 +97,13 @@ final class ReviewDetailViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: ReviewDetailViewModel, _) in
                 owner.createCommentToReply()
+            }
+            .store(in: &cancellables)
+        
+        input.didTapReport
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, _) in
+                owner.presentReportBottomSheet()
             }
             .store(in: &cancellables)
     }
@@ -174,5 +182,9 @@ final class ReviewDetailViewModel: BaseViewModel {
                 output.route.send(.showErrorAlert(error))
             }
         }
+    }
+    
+    private func presentReportBottomSheet() {
+        output.route.send(.presentReport)
     }
 }

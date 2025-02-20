@@ -253,6 +253,8 @@ extension ReviewDetailViewController {
             navigationController?.popViewController(animated: true)
         case .presentPhotoDetail(let viewModel):
             presentPhotoDetail(viewModel: viewModel)
+        case .presentReport:
+            presentReportBottomSheet()
         case .showErrorAlert(let error):
             showErrorAlert(error: error)
         }
@@ -261,5 +263,10 @@ extension ReviewDetailViewController {
     private func presentPhotoDetail(viewModel: PhotoDetailViewModel) {
         let viewController = PhotoDetailViewController(viewModel: viewModel)
         present(viewController, animated: true)
+    }
+    
+    private func presentReportBottomSheet() {
+        let viewController = ReviewReportBottomSheet(nibName: nil, bundle: nil)
+        presentPanModal(viewController)
     }
 }
