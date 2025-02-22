@@ -34,6 +34,7 @@ final class ReviewDetailViewController: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+        hidesBottomBarWhenPushed = true
         bind()
     }
     
@@ -88,6 +89,14 @@ final class ReviewDetailViewController: BaseViewController {
             .subscribe(viewModel.input.didTapComment)
             .store(in: &cancellables)
         
+        commentView.deleteCommentButton.tapPublisher
+            .main
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewController, _) in
+                owner.presentDeleteAlert()
+            }
+            .store(in: &cancellables)
+        
         // Output
         viewModel.output.review
             .main
@@ -100,10 +109,11 @@ final class ReviewDetailViewController: BaseViewController {
         viewModel.output.comment
             .main
             .withUnretained(self)
-            .sink { (owner: ReviewDetailViewController, comment: String?) in
+            .sink { (owner: ReviewDetailViewController, data) in
+                let (comment, name) = data
                 owner.clearCommentView()
                 if let comment {
-                    owner.setupComment(comment)
+                    owner.setupComment(comment, name: name)
                 } else {
                     owner.setupCommentInput()
                 }
@@ -190,10 +200,12 @@ final class ReviewDetailViewController: BaseViewController {
         bottomButtonBackground.removeFromSuperview()
         bottomButtonBackground.snp.removeConstraints()
         commentInputView.removeFromSuperview()
+        commentView.removeFromSuperview()
     }
     
-    private func setupComment(_ comment: String) {
+    private func setupComment(_ comment: CommentResponse, name: String) {
         stackView.addArrangedSubview(commentView)
+        commentView.bind(comment: comment, name: name)
     }
     
     @objc private func didTapReport() {
@@ -241,6 +253,16 @@ final class ReviewDetailViewController: BaseViewController {
         } else {
             return 0
         }
+    }
+    
+    private func presentDeleteAlert() {
+        AlertUtils.showWithCancel(
+            viewController: self,
+            message: Strings.ReviewDetail.Alert.delete,
+            onTapOk: { [weak self] in
+                self?.viewModel.input.didTapDeleteComment.send(())
+            }
+        )
     }
 }
 

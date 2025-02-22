@@ -265,6 +265,7 @@
 "review_detail.comment.delete_comment" = "답글 삭제하기";
 "review_detail.comment" = "답글 등록하기";
 "review_detail.report" = "신고하기";
+"review_detail.alert.delete" = "리뷰 댓글을 삭제하시겠습니까?\n삭제 후 댓글을 다시 작성할 수 있습니다.";
 
 // MARK: ReviewList
 "review_list.title" = "리뷰";

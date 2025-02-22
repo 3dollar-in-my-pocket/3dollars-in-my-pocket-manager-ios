@@ -483,6 +483,11 @@ internal enum Strings {
     internal static let comment = Strings.tr("Localizations", "review_detail.comment", fallback: "답글 등록하기")
     /// 신고하기
     internal static let report = Strings.tr("Localizations", "review_detail.report", fallback: "신고하기")
+    internal enum Alert {
+      /// 리뷰 댓글을 삭제하시겠습니까?
+      /// 삭제 후 댓글을 다시 작성할 수 있습니다.
+      internal static let delete = Strings.tr("Localizations", "review_detail.alert.delete", fallback: "리뷰 댓글을 삭제하시겠습니까?\n삭제 후 댓글을 다시 작성할 수 있습니다.")
+    }
     internal enum Comment {
       /// 답글 삭제하기
       internal static let deleteComment = Strings.tr("Localizations", "review_detail.comment.delete_comment", fallback: "답글 삭제하기")

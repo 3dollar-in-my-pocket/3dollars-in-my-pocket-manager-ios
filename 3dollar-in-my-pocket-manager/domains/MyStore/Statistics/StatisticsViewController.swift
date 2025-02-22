@@ -183,6 +183,8 @@ extension StatisticsViewController {
             presentPhotoDetail(viewModel: viewModel)
         case .pushReviewList(let viewModel):
             pushReviewList(viewModel: viewModel)
+        case .pushReviewDetail(let viewModel):
+            pushReviewDetail(viewModel: viewModel)
         }
     }
     
@@ -200,6 +202,11 @@ extension StatisticsViewController {
         let viewController = ReviewListViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
     }
+    
+    private func pushReviewDetail(viewModel: ReviewDetailViewModel) {
+        let viewController = ReviewDetailViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension StatisticsViewController: UICollectionViewDelegate {
@@ -209,5 +216,12 @@ extension StatisticsViewController: UICollectionViewDelegate {
             isRefreshing = false
             refreshControl.endRefreshing()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let sectionType = dataSource.sectionIdentifier(section: indexPath.section)?.type,
+              case .review = sectionType else { return }
+        
+        viewModel.input.didTapReview.send(indexPath.item)
     }
 }

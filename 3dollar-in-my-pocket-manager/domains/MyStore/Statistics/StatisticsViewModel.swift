@@ -9,6 +9,7 @@ extension StatisticsViewModel {
     struct Input {
         let viewDidLoad = PassthroughSubject<Void, Never>()
         let refresh = PassthroughSubject<Void, Never>()
+        let didTapReview = PassthroughSubject<Int, Never>()
         let didTapMoreReview = PassthroughSubject<Void, Never>()
     }
     
@@ -36,6 +37,7 @@ extension StatisticsViewModel {
         case pushFeedbackDetail(FeedbackDetailViewModel)
         case presentPhotoDetail(PhotoDetailViewModel)
         case pushReviewList(ReviewListViewModel)
+        case pushReviewDetail(ReviewDetailViewModel)
         case showErrorAlert(Error)
     }
     
@@ -90,6 +92,13 @@ final class StatisticsViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: StatisticsViewModel, _) in
                 owner.pushReviewList()
+            }
+            .store(in: &cancellables)
+        
+        input.didTapReview
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewModel, index: Int) in
+                owner.pushReviewDetail(index: index)
             }
             .store(in: &cancellables)
     }
@@ -170,7 +179,7 @@ final class StatisticsViewModel: BaseViewModel {
             if reviews.contents.isEmpty {
                 sections.append(.init(type: headerType, items: [.emptyReview]))
             } else {
-                let cellViewModels = reviews.contents.map { createStatisticsReviewCellViewModel(review: $0) }
+                let cellViewModels = reviews.contents.map { createReviewItemViewModel(review: $0) }
                 let items: [StatisticsSectionItem] = cellViewModels.map { .review($0) }
                 sections.append(.init(type: headerType, items: items))
             }
@@ -179,9 +188,9 @@ final class StatisticsViewModel: BaseViewModel {
         return sections
     }
     
-    private func createStatisticsReviewCellViewModel(review: StoreReviewResponse) ->  StatisticsReviewCellViewModel {
-        let config = StatisticsReviewCellViewModel.Config(review: review)
-        let viewModel = StatisticsReviewCellViewModel(config: config)
+    private func createReviewItemViewModel(review: StoreReviewResponse) ->  ReviewItemViewModel {
+        let config = ReviewItemViewModel.Config(review: review)
+        let viewModel = ReviewItemViewModel(config: config)
         
         viewModel.output.didTapPhoto
             .subscribe(relay.didTapPhoto)
@@ -198,5 +207,13 @@ final class StatisticsViewModel: BaseViewModel {
     private func pushReviewList() {
         let viewModel = ReviewListViewModel()
         output.route.send(.pushReviewList(viewModel))
+    }
+    
+    private func pushReviewDetail(index: Int) {
+        guard let review = state.reviews?.contents[safe: index] else { return }
+        let config = ReviewDetailViewModel.Config(reviewId: review.reviewId)
+        let viewModel = ReviewDetailViewModel(config: config)
+        
+        output.route.send(.pushReviewDetail(viewModel))
     }
 }

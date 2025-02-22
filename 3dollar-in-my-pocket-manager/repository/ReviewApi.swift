@@ -15,8 +15,9 @@ enum ReviewApi {
     )
     case toggleLikeReview(storeId: String, reviewId: String, input: StickersReplaceRequest)
     case fetchReview(storeId: String, reviewId: String)
-    case createCommentToReview(storeId: String, reviewId: String, input: CommentCreateRequest)
+    case createCommentToReview(nonceToken: String, storeId: String, reviewId: String, input: CommentCreateRequest)
     case reportReview(storeId: String, reviewId: String, input: ReportCreateRequest)
+    case deleteReviewComment(storeId: String, reviewId: String, commentId: String)
 }
 
 extension ReviewApi: ApiRequest {
@@ -28,10 +29,12 @@ extension ReviewApi: ApiRequest {
             return "/v1/store/\(storeId)/review/\(reviewId)/stickers"
         case .fetchReview(let storeId, let reviewId):
             return "/v1/store/\(storeId)/review/\(reviewId)"
-        case .createCommentToReview(let storeId, let reviewId, _):
+        case .createCommentToReview(_, let storeId, let reviewId, _):
             return "/v1/store/\(storeId)/review/\(reviewId)/comment"
         case .reportReview(let storeId, let reviewId, _):
             return "/v1/store/\(storeId)/review/\(reviewId)/report"
+        case .deleteReviewComment(let storeId, let reviewId, let commentId):
+            return "/v1/store/\(storeId)/review/\(reviewId)/comment/\(commentId)"
         }
     }
     
@@ -47,6 +50,8 @@ extension ReviewApi: ApiRequest {
             return .post
         case .reportReview:
             return .post
+        case .deleteReviewComment:
+            return .delete
         }
     }
     
@@ -72,10 +77,22 @@ extension ReviewApi: ApiRequest {
             return input.toDictionary
         case .fetchReview:
             return nil
-        case .createCommentToReview(_, _, let input):
+        case .createCommentToReview(_, _, _, let input):
             return input.toDictionary
         case .reportReview(_, _, let input):
             return input.toDictionary
+        case .deleteReviewComment:
+            return nil
+        }
+    }
+    
+    var headers: HTTPHeaders {
+        if case .createCommentToReview(let nonceToken, _, _, _) = self {
+            var header = HTTPUtils.defaultHeader()
+            header.add(HTTPHeader(name: "X-Nonce-Token", value: nonceToken))
+            return header
+        } else {
+            return HTTPUtils.defaultHeader()
         }
     }
 }

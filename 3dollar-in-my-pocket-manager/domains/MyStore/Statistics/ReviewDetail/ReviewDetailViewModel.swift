@@ -13,11 +13,12 @@ extension ReviewDetailViewModel {
         let inputReply = PassthroughSubject<String, Never>()
         let didTapMacro = PassthroughSubject<Void, Never>()
         let didTapComment = PassthroughSubject<Void, Never>()
+        let didTapDeleteComment = PassthroughSubject<Void, Never>()
     }
     
     struct Output {
         let review = PassthroughSubject<ReviewItemViewModel, Never>()
-        let comment = PassthroughSubject<String?, Never>()
+        let comment = PassthroughSubject<(CommentResponse?, String), Never>()
         let enableComment = PassthroughSubject<Bool, Never>()
         let route = PassthroughSubject<Route, Never>()
     }
@@ -44,13 +45,16 @@ extension ReviewDetailViewModel {
     
     struct Dependency {
         let reviewRepository: ReviewRepository
+        let sharedRepository: SharedRepository
         let preference: Preference
         
         init(
             reviewRepository: ReviewRepository = ReviewRepositoryImpl(),
+            sharedRepository: SharedRepository = SharedRepositoryImpl(),
             preference: Preference = .shared
         ) {
             self.reviewRepository = reviewRepository
+            self.sharedRepository = sharedRepository
             self.preference = preference
         }
     }
@@ -106,6 +110,13 @@ final class ReviewDetailViewModel: BaseViewModel {
                 owner.presentReportBottomSheet()
             }
             .store(in: &cancellables)
+        
+        input.didTapDeleteComment
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, _) in
+                owner.deleteReviewComment()
+            }
+            .store(in: &cancellables)
     }
     
     private func bindRelay() {
@@ -136,7 +147,13 @@ final class ReviewDetailViewModel: BaseViewModel {
                 let viewModel = ReviewItemViewModel(config: config)
                 bindReviewItemViewModel(viewModel)
                 output.review.send(viewModel)
-                output.comment.send(response.comments.contents.first?.content)
+                
+                let comment = response.comments.contents.first(where: { comment in
+                    return comment.isOwner && comment.status == .active
+                })
+                let name = dependency.preference.storeName
+                output.comment.send((comment, name))
+                state.commentId = comment?.commentId
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))
             }
@@ -169,15 +186,40 @@ final class ReviewDetailViewModel: BaseViewModel {
         guard let comment = state.comment else { return }
         
         Task {
-            let input = CommentCreateRequest(content: comment)
-            let storeId = dependency.preference.storeId
-            
-            let result = await dependency.reviewRepository.createCommentToReview(storeId: storeId, reviewId: state.reviewId, input: input)
+            do {
+                let token = try await dependency.sharedRepository.createNonce(input: NonceCreateRequest()).get().nonce
+                let input = CommentCreateRequest(content: comment)
+                let storeId = dependency.preference.storeId
+                
+                let comment = try await dependency.reviewRepository.createCommentToReview(
+                    nonceToken: token,
+                    storeId: storeId,
+                    reviewId: state.reviewId,
+                    input: input
+                ).get()
+                
+                state.commentId = comment.commentId
+                output.comment.send((comment, dependency.preference.storeName))
+            } catch {
+                output.route.send(.showErrorAlert(error))
+            }
+        }
+    }
+    
+    private func deleteReviewComment() {
+        guard let commentId = state.commentId else { return }
+        
+        let storeId = dependency.preference.storeId
+        Task {
+            let result = await dependency.reviewRepository.deleteReviewComment(
+                storeId: storeId,
+                reviewId: state.reviewId,
+                commentId: commentId
+            )
             
             switch result {
-            case .success(let response):
-                state.commentId = response.commentId
-                output.comment.send(comment)
+            case .success:
+                output.comment.send((nil, dependency.preference.storeName))
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))
             }

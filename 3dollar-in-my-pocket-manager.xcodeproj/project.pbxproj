@@ -149,7 +149,6 @@
 		6E64B28427D836920055354B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64B28327D836920055354B /* TextField.swift */; };
 		6E6575CD2BE1CC4600FA3B79 /* SignInResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6575CC2BE1CC4600FA3B79 /* SignInResult.swift */; };
 		6E66AED72D616C8F00396604 /* CommentCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E66AED62D616C8F00396604 /* CommentCreateRequest.swift */; };
-		6E66AED92D616D2300396604 /* CommentCreateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E66AED82D616D2300396604 /* CommentCreateResponse.swift */; };
 		6E69C0442D3C8A310026CAAF /* StatisticsFeedbackCountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E69C0432D3C8A310026CAAF /* StatisticsFeedbackCountCell.swift */; };
 		6E69C0462D3C8A660026CAAF /* StatisticsFeedbackCountCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E69C0452D3C8A660026CAAF /* StatisticsFeedbackCountCellViewModel.swift */; };
 		6E69C0482D3C91E00026CAAF /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E69C0472D3C91E00026CAAF /* NSAttributedString+.swift */; };
@@ -193,7 +192,6 @@
 		6E80E6EC2D47115D008E1B3F /* StatisticsReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80E6EB2D47115D008E1B3F /* StatisticsReviewCell.swift */; };
 		6E80E6EE2D4773A6008E1B3F /* TitleBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80E6ED2D4773A6008E1B3F /* TitleBadgeView.swift */; };
 		6E80E6F02D4774F6008E1B3F /* StarBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80E6EF2D4774F6008E1B3F /* StarBadgeView.swift */; };
-		6E80E6F22D478BAE008E1B3F /* StatisticsReviewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80E6F12D478BAE008E1B3F /* StatisticsReviewCellViewModel.swift */; };
 		6E80E6F42D47AD3A008E1B3F /* StatisticsReviewFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E80E6F32D47AD3A008E1B3F /* StatisticsReviewFooterView.swift */; };
 		6E81503627EEEA110032C518 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E81503527EEEA110032C518 /* HomeViewController.swift */; };
 		6E8474BC2C54B3200064DE0A /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8474BB2C54B3200064DE0A /* CombineCocoa */; };
@@ -510,7 +508,6 @@
 		6E64B28327D836920055354B /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		6E6575CC2BE1CC4600FA3B79 /* SignInResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResult.swift; sourceTree = "<group>"; };
 		6E66AED62D616C8F00396604 /* CommentCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCreateRequest.swift; sourceTree = "<group>"; };
-		6E66AED82D616D2300396604 /* CommentCreateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCreateResponse.swift; sourceTree = "<group>"; };
 		6E69C0432D3C8A310026CAAF /* StatisticsFeedbackCountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFeedbackCountCell.swift; sourceTree = "<group>"; };
 		6E69C0452D3C8A660026CAAF /* StatisticsFeedbackCountCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFeedbackCountCellViewModel.swift; sourceTree = "<group>"; };
 		6E69C0472D3C91E00026CAAF /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
@@ -553,7 +550,6 @@
 		6E80E6EB2D47115D008E1B3F /* StatisticsReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsReviewCell.swift; sourceTree = "<group>"; };
 		6E80E6ED2D4773A6008E1B3F /* TitleBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleBadgeView.swift; sourceTree = "<group>"; };
 		6E80E6EF2D4774F6008E1B3F /* StarBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarBadgeView.swift; sourceTree = "<group>"; };
-		6E80E6F12D478BAE008E1B3F /* StatisticsReviewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsReviewCellViewModel.swift; sourceTree = "<group>"; };
 		6E80E6F32D47AD3A008E1B3F /* StatisticsReviewFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsReviewFooterView.swift; sourceTree = "<group>"; };
 		6E81503527EEEA110032C518 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6E873EC72C72278E00751811 /* AddMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMenuButton.swift; sourceTree = "<group>"; };
@@ -928,7 +924,6 @@
 				6E6FD9E12D46637900359CB4 /* UserResponse.swift */,
 				6E6FD9E52D46654500359CB4 /* CommentResponse.swift */,
 				6E6FD9E32D4663D800359CB4 /* MedalResponse.swift */,
-				6E66AED82D616D2300396604 /* CommentCreateResponse.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -1362,7 +1357,6 @@
 				6E80E6F32D47AD3A008E1B3F /* StatisticsReviewFooterView.swift */,
 				6EDA01E92D449C8300A3C882 /* StatisticsReviewEmptyCell.swift */,
 				6E80E6EB2D47115D008E1B3F /* StatisticsReviewCell.swift */,
-				6E80E6F12D478BAE008E1B3F /* StatisticsReviewCellViewModel.swift */,
 				6E5770DB2D5A3B5A00702115 /* ReviewItemView.swift */,
 				6E5640582D5CCB6700E7D88D /* ReviewItemViewModel.swift */,
 			);
@@ -1925,7 +1919,6 @@
 				6EC803252B2C8C2800DA4F5E /* UIUtils.swift in Sources */,
 				6E1E5BA82827EB33003A1B51 /* SettingView.swift in Sources */,
 				6EBF1AE727FE65950011268B /* StoreService.swift in Sources */,
-				6E80E6F22D478BAE008E1B3F /* StatisticsReviewCellViewModel.swift in Sources */,
 				6E5F3DD5281D5F39002282B6 /* EditScheduleView.swift in Sources */,
 				6E5F2132281976CD00922A99 /* MyStoreInfoSectionModel.swift in Sources */,
 				6EF2C3C22C650E13005BEE17 /* CategoryApi.swift in Sources */,
@@ -1964,7 +1957,6 @@
 				6E360F212C27F89F008A4868 /* UploadPhotoCell.swift in Sources */,
 				6E2D40722C5DB5330074489E /* MapRepository.swift in Sources */,
 				6EA53BA0284DD766007A3839 /* SettingReactor.swift in Sources */,
-				6E66AED92D616D2300396604 /* CommentCreateResponse.swift in Sources */,
 				6EF676B127EEC91E00D43E99 /* BossWithSettingsResponse.swift in Sources */,
 				6EFB2F08285A098D006E37F9 /* FeedbackTypeResponse.swift in Sources */,
 				6EFB2F08285A098D006E37F9 /* FeedbackTypeResponse.swift in Sources */,

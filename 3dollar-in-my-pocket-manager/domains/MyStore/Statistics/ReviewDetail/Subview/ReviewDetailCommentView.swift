@@ -5,7 +5,7 @@ final class ReviewDetailCommentView: BaseView {
     
     private let containerStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.backgroundColor = .gray10
+        stackView.backgroundColor = .gray5
         stackView.layer.cornerRadius = 12
         stackView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
         stackView.axis = .vertical
@@ -36,7 +36,7 @@ final class ReviewDetailCommentView: BaseView {
         return label
     }()
     
-    private let deleteCommentButton: UIButton = {
+    let deleteCommentButton: UIButton = {
         var config = UIButton.Configuration.plain()
         config.image = Assets.icTrash.image.resizeImage(scaledTo: 16).withRenderingMode(.alwaysTemplate)
         config.imagePadding = 4
@@ -100,14 +100,23 @@ final class ReviewDetailCommentView: BaseView {
 
 extension ReviewDetailCommentView {
     final class TriangleView: UIView {
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            backgroundColor = .clear
+        }
+        
+        @MainActor required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
         override func draw(_ rect: CGRect) {
             let path = UIBezierPath()
             path.move(to: CGPoint(x: rect.minX, y: rect.minY)) // 좌측 상단
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY)) // 우측 하단
-            path.addLine(to: CGPoint(x: rect.midX, y: rect.maxY)) // 중앙 삼각형 꼭짓점
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY)) // 중앙 삼각형 꼭짓점
             path.close()
             
-            UIColor.gray10.setFill()
+            UIColor.gray5.setFill()
             path.fill()
         }
     }

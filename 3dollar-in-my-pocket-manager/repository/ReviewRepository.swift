@@ -16,9 +16,16 @@ protocol ReviewRepository {
     
     func fetchReview(storeId: String, reviewId: String) async -> ApiResult<StoreReviewResponse>
     
-    func createCommentToReview(storeId: String, reviewId: String, input: CommentCreateRequest) async -> ApiResult<CommentCreateResponse>
+    func createCommentToReview(
+        nonceToken: String,
+        storeId: String,
+        reviewId: String,
+        input: CommentCreateRequest
+    ) async -> ApiResult<CommentResponse>
     
     func reportReview(storeId: String, reviewId: String, input: ReportCreateRequest) async -> ApiResult<String>
+    
+    func deleteReviewComment(storeId: String, reviewId: String, commentId: String) async -> ApiResult<String>
 }
 
 final class ReviewRepositoryImpl: ReviewRepository {
@@ -43,11 +50,20 @@ final class ReviewRepositoryImpl: ReviewRepository {
         return await ReviewApi.fetchReview(storeId: storeId, reviewId: reviewId).asyncRequest()
     }
     
-    func createCommentToReview(storeId: String, reviewId: String, input: CommentCreateRequest) async -> ApiResult<CommentCreateResponse> {
-        return await ReviewApi.createCommentToReview(storeId: storeId, reviewId: reviewId, input: input).asyncRequest()
+    func createCommentToReview(
+        nonceToken: String,
+        storeId: String,
+        reviewId: String,
+        input: CommentCreateRequest
+    ) async -> ApiResult<CommentResponse> {
+        return await ReviewApi.createCommentToReview(nonceToken: nonceToken, storeId: storeId, reviewId: reviewId, input: input).asyncRequest()
     }
     
     func reportReview(storeId: String, reviewId: String, input: ReportCreateRequest) async -> ApiResult<String> {
         return await ReviewApi.reportReview(storeId: storeId, reviewId: reviewId, input: input).asyncRequest()
+    }
+    
+    func deleteReviewComment(storeId: String, reviewId: String, commentId: String) async -> ApiResult<String> {
+        return await ReviewApi.deleteReviewComment(storeId: storeId, reviewId: reviewId, commentId: commentId).asyncRequest()
     }
 }

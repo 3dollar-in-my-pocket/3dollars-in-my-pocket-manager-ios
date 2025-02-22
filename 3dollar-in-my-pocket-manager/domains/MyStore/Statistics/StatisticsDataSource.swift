@@ -15,7 +15,7 @@ enum StatisticsSectionItem: Hashable {
     case bookmarkCount(StatisticsBookmarkCountCellViewModel)
     case feedback(StatisticsFeedbackCountCellViewModel)
     case emptyReview
-    case review(StatisticsReviewCellViewModel)
+    case review(ReviewItemViewModel)
 }
 
 

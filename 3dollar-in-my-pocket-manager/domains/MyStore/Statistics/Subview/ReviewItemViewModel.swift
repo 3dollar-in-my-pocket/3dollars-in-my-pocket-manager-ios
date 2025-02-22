@@ -32,7 +32,8 @@ extension ReviewItemViewModel {
     }
 }
 
-final class ReviewItemViewModel: BaseViewModel {
+final class ReviewItemViewModel: BaseViewModel, Identifiable {
+    lazy var id = ObjectIdentifier(self)
     let input = Input()
     let output: Output
     private let dependency: Dependency
@@ -97,5 +98,15 @@ final class ReviewItemViewModel: BaseViewModel {
                 output.showErrorAlert.send(error)
             }
         }
+    }
+}
+
+extension ReviewItemViewModel: Hashable {
+    static func == (lhs: ReviewItemViewModel, rhs: ReviewItemViewModel) -> Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }
