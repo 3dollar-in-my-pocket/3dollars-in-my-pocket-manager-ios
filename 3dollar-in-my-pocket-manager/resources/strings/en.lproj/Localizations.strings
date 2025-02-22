@@ -268,3 +268,11 @@
 
 // MARK: ReviewList
 "review_list.title" = "리뷰";
+
+// MARK: ReviewReportBottomSheet
+"review_report_bottom_sheet.placeholder" = "신고사유 입력";
+"review_report_bottom_sheet.title" = "신고사유를 입력해주세요.";
+"review_report_bottom_sheet.subtitle" = "관리자 판단 후 리뷰를 삭제해드립니다.";
+"review_report_bottom_sheet.info" = "*최소 10자에서 최대 300자 이내로 입력해 주세요.";
+"review_report_bottom_sheet.report" = "신고하기";
+"review_report_bottom_sheet.toast.report" = "리뷰를 신고했습니다.";

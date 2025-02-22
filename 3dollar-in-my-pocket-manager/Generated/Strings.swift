@@ -518,6 +518,22 @@ internal enum Strings {
       internal static let lowerRating = Strings.tr("Localizations", "review_list.sort_type.lower_rating", fallback: "별점 낮은순")
     }
   }
+  internal enum ReviewReportBottomSheet {
+    /// *최소 10자에서 최대 300자 이내로 입력해 주세요.
+    internal static let info = Strings.tr("Localizations", "review_report_bottom_sheet.info", fallback: "*최소 10자에서 최대 300자 이내로 입력해 주세요.")
+    /// 신고사유 입력
+    internal static let placeholder = Strings.tr("Localizations", "review_report_bottom_sheet.placeholder", fallback: "신고사유 입력")
+    /// 신고하기
+    internal static let report = Strings.tr("Localizations", "review_report_bottom_sheet.report", fallback: "신고하기")
+    /// 관리자 판단 후 리뷰를 삭제해드립니다.
+    internal static let subtitle = Strings.tr("Localizations", "review_report_bottom_sheet.subtitle", fallback: "관리자 판단 후 리뷰를 삭제해드립니다.")
+    /// 신고사유를 입력해주세요.
+    internal static let title = Strings.tr("Localizations", "review_report_bottom_sheet.title", fallback: "신고사유를 입력해주세요.")
+    internal enum Toast {
+      /// 리뷰를 신고했습니다.
+      internal static let report = Strings.tr("Localizations", "review_report_bottom_sheet.toast.report", fallback: "리뷰를 신고했습니다.")
+    }
+  }
   internal enum SendingMessage {
     /// 한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!
     internal static let description = Strings.tr("Localizations", "sending_message.description", fallback: "한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!")

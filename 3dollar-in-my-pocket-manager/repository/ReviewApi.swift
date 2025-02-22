@@ -16,6 +16,7 @@ enum ReviewApi {
     case toggleLikeReview(storeId: String, reviewId: String, input: StickersReplaceRequest)
     case fetchReview(storeId: String, reviewId: String)
     case createCommentToReview(storeId: String, reviewId: String, input: CommentCreateRequest)
+    case reportReview(storeId: String, reviewId: String, input: ReportCreateRequest)
 }
 
 extension ReviewApi: ApiRequest {
@@ -27,8 +28,10 @@ extension ReviewApi: ApiRequest {
             return "/v1/store/\(storeId)/review/\(reviewId)/stickers"
         case .fetchReview(let storeId, let reviewId):
             return "/v1/store/\(storeId)/review/\(reviewId)"
-        case .createCommentToReview(let storeId, let reviewId, let input):
+        case .createCommentToReview(let storeId, let reviewId, _):
             return "/v1/store/\(storeId)/review/\(reviewId)/comment"
+        case .reportReview(let storeId, let reviewId, _):
+            return "/v1/store/\(storeId)/review/\(reviewId)/report"
         }
     }
     
@@ -41,6 +44,8 @@ extension ReviewApi: ApiRequest {
         case .fetchReview:
             return .get
         case .createCommentToReview:
+            return .post
+        case .reportReview:
             return .post
         }
     }
@@ -68,6 +73,8 @@ extension ReviewApi: ApiRequest {
         case .fetchReview:
             return nil
         case .createCommentToReview(_, _, let input):
+            return input.toDictionary
+        case .reportReview(_, _, let input):
             return input.toDictionary
         }
     }

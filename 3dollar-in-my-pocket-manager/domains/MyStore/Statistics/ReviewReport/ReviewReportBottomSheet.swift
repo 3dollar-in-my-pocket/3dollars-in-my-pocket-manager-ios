@@ -1,12 +1,18 @@
 import UIKit
+
 import PanModal
+import CombineCocoa
 
 final class ReviewReportBottomSheet: BaseViewController {
+    enum Constants {
+        static let placeHolder: String = Strings.ReviewReportBottomSheet.placeholder
+    }
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray100
         label.font = .semiBold(size: 20)
-        label.text = "신고사유를 입력해주세요."
+        label.text = Strings.ReviewReportBottomSheet.title
         return label
     }()
     
@@ -20,7 +26,7 @@ final class ReviewReportBottomSheet: BaseViewController {
         let label = UILabel()
         label.font = .regular(size: 14)
         label.textColor = .gray50
-        label.text = "관리자 판단 후 리뷰를 삭제해드립니다."
+        label.text = Strings.ReviewReportBottomSheet.subtitle
         return label
     }()
     
@@ -32,11 +38,13 @@ final class ReviewReportBottomSheet: BaseViewController {
         return view
     }()
     
-    private let textView: UITextView = {
+    private lazy var textView: UITextView = {
         let textView = UITextView()
         textView.font = .regular(size: 14)
-        textView.textColor = .gray95
+        textView.textColor = .gray40
         textView.backgroundColor = .clear
+        textView.delegate = self
+        textView.text = Constants.placeHolder
         return textView
     }()
     
@@ -49,7 +57,7 @@ final class ReviewReportBottomSheet: BaseViewController {
     
     private let infoLabel: UILabel = {
         let label = UILabel()
-        label.text = "*최소 10자에서 최대 300자 이내로 입력해 주세요."
+        label.text = Strings.ReviewReportBottomSheet.info
         label.font = .medium(size: 12)
         label.textColor = .gray50
         return label
@@ -59,7 +67,7 @@ final class ReviewReportBottomSheet: BaseViewController {
         let button = UIButton()
         button.setBackgroundColor(color: .gray30, forState: .disabled)
         button.setBackgroundColor(color: .red, forState: .normal)
-        button.setTitle("신고하기", for: .normal)
+        button.setTitle(Strings.ReviewReportBottomSheet.report, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 12
@@ -67,11 +75,36 @@ final class ReviewReportBottomSheet: BaseViewController {
         return button
     }()
     
+    private let viewModel: ReviewReportBottomSheetViewModel
+    private let tapGesture = UITapGestureRecognizer()
+    private var keyboardInset: CGFloat = 0
+    
+    init(viewModel: ReviewReportBottomSheetViewModel) {
+        self.viewModel = viewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+        setupAttributes()
+        setupKeyboardEvent()
+        bind()
+    }
+    
+    private func setupAttributes() {
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.addTarget(self, action: #selector(didTapBackground))
     }
     
     private func setupUI() {
@@ -133,6 +166,110 @@ final class ReviewReportBottomSheet: BaseViewController {
             $0.height.equalTo(48)
         }
     }
+    
+    private func bind() {
+        // Input
+        closeButton.tapPublisher
+            .main
+            .withUnretained(self)
+            .sink { (owner: ReviewReportBottomSheet, _) in
+                owner.dismiss(animated: true)
+            }
+            .store(in: &cancellables)
+        
+        reportButton.tapPublisher
+            .throttleClick()
+            .subscribe(viewModel.input.didTapReport)
+            .store(in: &cancellables)
+        
+        // Output
+        viewModel.output.isEnableReportButton
+            .main
+            .withUnretained(self)
+            .sink { (owner: ReviewReportBottomSheet, isEnable: Bool) in
+                owner.reportButton.isEnabled = isEnable
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.toast
+            .main
+            .sink { message in
+                ToastManager.shared.show(message: message)
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: ReviewReportBottomSheet, route: ReviewReportBottomSheetViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func setupTextCount(count: Int) {
+        let string = "\(count)/\(ReviewReportBottomSheetViewModel.Constants.maxLength)"
+        let attributedString = NSMutableAttributedString(string: string)
+        let boldRange = NSString(string: string).range(of: "\(count)")
+        
+        attributedString.addAttribute(.font, value: UIFont.semiBold(size: 12) as Any, range: boldRange)
+        countLabel.attributedText = attributedString
+    }
+    
+    private func setupKeyboardEvent() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onShowKeyboard(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onHideKeyboard(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    @objc func onShowKeyboard(notification: Notification) {
+        let keyboardHeight = mapNotificationToKeyboardHeight(notification: notification)
+        let inset = keyboardHeight > 0 ? (keyboardHeight - view.safeAreaInsets.bottom) : 0
+        keyboardInset = inset
+        panModalSetNeedsLayoutUpdate()
+        panModalTransition(to: .shortForm)
+    }
+    
+    @objc func onHideKeyboard(notification: Notification) {
+        keyboardInset = 0
+        panModalSetNeedsLayoutUpdate()
+        panModalTransition(to: .shortForm)
+    }
+    
+    private func mapNotificationToKeyboardHeight(notification: Notification) -> CGFloat {
+        if notification.name == UIResponder.keyboardDidShowNotification ||
+            notification.name == UIResponder.keyboardWillShowNotification {
+            let rect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect ?? .zero
+            return rect.height
+        } else {
+            return 0
+        }
+    }
+    
+    @objc private func didTapBackground() {
+        view.endEditing(true)
+    }
+}
+
+// MARK: Route
+extension ReviewReportBottomSheet {
+    private func handleRoute(_ route: ReviewReportBottomSheetViewModel.Route) {
+        switch route {
+        case .dismiss:
+            dismiss(animated: true)
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        }
+    }
 }
 
 extension ReviewReportBottomSheet: PanModalPresentable {
@@ -141,7 +278,7 @@ extension ReviewReportBottomSheet: PanModalPresentable {
     }
     
     var shortFormHeight: PanModalHeight {
-        return .contentHeight(516)
+        return .contentHeight(516 + keyboardInset)
     }
     
     var longFormHeight: PanModalHeight {
@@ -150,5 +287,60 @@ extension ReviewReportBottomSheet: PanModalPresentable {
     
     var showDragIndicator: Bool {
         return false
+    }
+    
+    var cornerRadius: CGFloat {
+        return 16
+    }
+}
+
+extension ReviewReportBottomSheet: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.textColor = .gray95
+        
+        if textView.text == Constants.placeHolder {
+            textView.text = nil
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        viewModel.input.inputText.send(textView.text)
+        
+        if textView.text != Constants.placeHolder {
+            setupTextCount(count: textView.text.count)
+        }
+    }
+    
+    func textView(
+        _ textView: UITextView,
+        shouldChangeTextIn range: NSRange,
+        replacementText text: String
+    ) -> Bool {
+        guard let textFieldText = textView.text,
+              let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+          return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + text.count
+        
+        return count <= ReviewReportBottomSheetViewModel.Constants.maxLength
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        textView.layer.borderColor = UIColor.clear.cgColor
+
+        if textView.text.isEmpty {
+            textView.text = Constants.placeHolder
+            textView.textColor = .gray40
+        }
+
+        return true
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = Constants.placeHolder
+            textView.textColor = .gray40
+        }
     }
 }

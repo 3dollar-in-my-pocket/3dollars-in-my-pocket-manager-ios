@@ -38,7 +38,7 @@ extension ReviewDetailViewModel {
     enum Route {
         case back
         case presentPhotoDetail(PhotoDetailViewModel)
-        case presentReport
+        case presentReportBottomSheet(ReviewReportBottomSheetViewModel)
         case showErrorAlert(Error)
     }
     
@@ -185,6 +185,9 @@ final class ReviewDetailViewModel: BaseViewModel {
     }
     
     private func presentReportBottomSheet() {
-        output.route.send(.presentReport)
+        let config = ReviewReportBottomSheetViewModel.Config(reviewId: state.reviewId)
+        let viewModel = ReviewReportBottomSheetViewModel(config: config)
+        
+        output.route.send(.presentReportBottomSheet(viewModel))
     }
 }

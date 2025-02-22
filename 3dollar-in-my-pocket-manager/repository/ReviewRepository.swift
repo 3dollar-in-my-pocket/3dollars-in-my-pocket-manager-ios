@@ -17,6 +17,8 @@ protocol ReviewRepository {
     func fetchReview(storeId: String, reviewId: String) async -> ApiResult<StoreReviewResponse>
     
     func createCommentToReview(storeId: String, reviewId: String, input: CommentCreateRequest) async -> ApiResult<CommentCreateResponse>
+    
+    func reportReview(storeId: String, reviewId: String, input: ReportCreateRequest) async -> ApiResult<String>
 }
 
 final class ReviewRepositoryImpl: ReviewRepository {
@@ -43,5 +45,9 @@ final class ReviewRepositoryImpl: ReviewRepository {
     
     func createCommentToReview(storeId: String, reviewId: String, input: CommentCreateRequest) async -> ApiResult<CommentCreateResponse> {
         return await ReviewApi.createCommentToReview(storeId: storeId, reviewId: reviewId, input: input).asyncRequest()
+    }
+    
+    func reportReview(storeId: String, reviewId: String, input: ReportCreateRequest) async -> ApiResult<String> {
+        return await ReviewApi.reportReview(storeId: storeId, reviewId: reviewId, input: input).asyncRequest()
     }
 }
