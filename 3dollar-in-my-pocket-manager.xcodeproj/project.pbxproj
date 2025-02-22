@@ -322,6 +322,7 @@
 		6EE0CFC327CB65320027A426 /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0CFC227CB65320027A426 /* BundleExtensions.swift */; };
 		6EE0CFC527CB65C80027A426 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0CFC427CB65C80027A426 /* Preference.swift */; };
 		6EE2624727DDB9F2008B3531 /* SignupCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE2624627DDB9F2008B3531 /* SignupCoordinator.swift */; };
+		6EE910AF2D69C7E80004F17A /* CommentPresetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE910AE2D69C7E80004F17A /* CommentPresetResponse.swift */; };
 		6EE9AC6A2D4F3E89004AC135 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE9AC692D4F3E89004AC135 /* RatingView.swift */; };
 		6EEA3D6B27F1E74C00BC5F31 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EEA3D6A27F1E74C00BC5F31 /* MainTabController.swift */; };
 		6EEBC7BF28731F7700CBA0F0 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6EEBC7BE28731F7700CBA0F0 /* Lottie */; };
@@ -671,6 +672,7 @@
 		6EE0CFC227CB65320027A426 /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		6EE0CFC427CB65C80027A426 /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		6EE2624627DDB9F2008B3531 /* SignupCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupCoordinator.swift; sourceTree = "<group>"; };
+		6EE910AE2D69C7E80004F17A /* CommentPresetResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPresetResponse.swift; sourceTree = "<group>"; };
 		6EE9AC692D4F3E89004AC135 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		6EEA3D6A27F1E74C00BC5F31 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		6EF1F6632D69584E00BF099D /* ReportCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportCreateRequest.swift; sourceTree = "<group>"; };
@@ -707,6 +709,7 @@
 		6EA1B6FF2D1552130000D28E /* DeleteAccount */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DeleteAccount; sourceTree = "<group>"; };
 		6EB5E58B2CE5DC420057993E /* Generated */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Generated; sourceTree = "<group>"; };
 		6EDEA7852CF1F2110057869A /* SendingMessage */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SendingMessage; sourceTree = "<group>"; };
+		6EE910AB2D69BBD10004F17A /* CommentPreset */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CommentPreset; sourceTree = "<group>"; };
 		6EE9AC632D4F3BCC004AC135 /* ReviewList */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReviewList; sourceTree = "<group>"; };
 		6EF698382CF4B9BA00DC9698 /* ConfirmMessage */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConfirmMessage; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -924,6 +927,7 @@
 				6E6FD9E12D46637900359CB4 /* UserResponse.swift */,
 				6E6FD9E52D46654500359CB4 /* CommentResponse.swift */,
 				6E6FD9E32D4663D800359CB4 /* MedalResponse.swift */,
+				6EE910AE2D69C7E80004F17A /* CommentPresetResponse.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -1329,6 +1333,7 @@
 		6EC5E42A282BD73900AD571C /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				6EE910AB2D69BBD10004F17A /* CommentPreset */,
 				6E1AB1CA2D675EFB009EE0D2 /* ReviewReport */,
 				6E3B65262D5A3696009205EE /* ReviewDetail */,
 				6EE9AC632D4F3BCC004AC135 /* ReviewList */,
@@ -1659,6 +1664,7 @@
 				6EA1B6FF2D1552130000D28E /* DeleteAccount */,
 				6EB5E58B2CE5DC420057993E /* Generated */,
 				6EDEA7852CF1F2110057869A /* SendingMessage */,
+				6EE910AB2D69BBD10004F17A /* CommentPreset */,
 				6EE9AC632D4F3BCC004AC135 /* ReviewList */,
 				6EF698382CF4B9BA00DC9698 /* ConfirmMessage */,
 			);
@@ -2094,6 +2100,7 @@
 				6E473BA427D874C500232139 /* PhotoUploadView.swift in Sources */,
 				6E360F252C28039E008A4868 /* Publisher+.swift in Sources */,
 				6EC5E430282BD7E200AD571C /* ReviewCountLabel.swift in Sources */,
+				6EE910AF2D69C7E80004F17A /* CommentPresetResponse.swift in Sources */,
 				6EE0CFA927CB5B6C0027A426 /* BaseError.swift in Sources */,
 				6EB5CA882935C93400B6653C /* BaseView.swift in Sources */,
 				6E69C0482D3C91E00026CAAF /* NSAttributedString+.swift in Sources */,

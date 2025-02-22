@@ -18,6 +18,7 @@ enum ReviewApi {
     case createCommentToReview(nonceToken: String, storeId: String, reviewId: String, input: CommentCreateRequest)
     case reportReview(storeId: String, reviewId: String, input: ReportCreateRequest)
     case deleteReviewComment(storeId: String, reviewId: String, commentId: String)
+    case fetchCommentPreset(storeId: String)
 }
 
 extension ReviewApi: ApiRequest {
@@ -35,6 +36,8 @@ extension ReviewApi: ApiRequest {
             return "/v1/store/\(storeId)/review/\(reviewId)/report"
         case .deleteReviewComment(let storeId, let reviewId, let commentId):
             return "/v1/store/\(storeId)/review/\(reviewId)/comment/\(commentId)"
+        case .fetchCommentPreset(let storeId):
+            return "/v1/store/\(storeId)/comment-preset"
         }
     }
     
@@ -52,6 +55,8 @@ extension ReviewApi: ApiRequest {
             return .post
         case .deleteReviewComment:
             return .delete
+        case .fetchCommentPreset:
+            return .get
         }
     }
     
@@ -83,6 +88,8 @@ extension ReviewApi: ApiRequest {
             return input.toDictionary
         case .deleteReviewComment:
             return nil
+        case .fetchCommentPreset:
+            return ["size": 20]
         }
     }
     
