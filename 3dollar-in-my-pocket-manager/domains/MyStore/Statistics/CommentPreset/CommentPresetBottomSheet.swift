@@ -1,11 +1,17 @@
 import UIKit
 
+import PanModal
+
 final class CommentPresetBottomSheet: BaseViewController {
+    enum Layout {
+        static let itemSpace: CGFloat = 24
+    }
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .semiBold(size: 20)
         label.textColor = .gray100
-        label.text = "자주 쓰는 문구"
+        label.text = Strings.CommentPresetBottomSheet.title
         return label
     }()
     
@@ -21,14 +27,16 @@ final class CommentPresetBottomSheet: BaseViewController {
         collectionView.dataSource = self
         collectionView.register([
             BaseCollectionViewCell.self,
-            CommentPresetCell.self
+            CommentPresetCell.self,
+            CommentPresetEmptyCell.self
         ])
+        collectionView.delegate = self
         return collectionView
     }()
     
     private let addPresetButton: UIButton = {
         let button = UIButton()
-        button.setTitle("문구 추가", for: .normal)
+        button.setTitle(Strings.CommentPresetBottomSheet.addPreset, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = .semiBold(size: 14)
         button.backgroundColor = .green
@@ -52,6 +60,12 @@ final class CommentPresetBottomSheet: BaseViewController {
         super.viewDidLoad()
         
         setupUI()
+        setupAttributes()
+        bind()
+    }
+    
+    private func setupAttributes() {
+        view.backgroundColor = .white
     }
     
     private func setupUI() {
@@ -97,29 +111,77 @@ final class CommentPresetBottomSheet: BaseViewController {
         // Output
         
     }
-
     
     private func createLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 24
-        layout.minimumInteritemSpacing = 24
+        layout.minimumLineSpacing = Layout.itemSpace
+        layout.minimumInteritemSpacing = Layout.itemSpace
         return layout
+    }
+    
+    private func getHeight() -> CGFloat {
+        let cellHeights = viewModel.output.dataSource.map {
+            return CommentPresetCell.Layout.calculateHeight(preset: $0.output.preset)
+        }
+        
+        let space = CGFloat(cellHeights.count - 1) * Layout.itemSpace
+        let collectionViewHeight = cellHeights.reduce(0, +) + space
+        
+        return 178 + min(max(collectionViewHeight, 160), 336)
     }
 }
 
 extension CommentPresetBottomSheet: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.output.dataSource.count
+        return max(viewModel.output.dataSource.count, 1)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cellViewModel = viewModel.output.dataSource[safe: indexPath.item] else {
-            return BaseCollectionViewCell()
+        if viewModel.output.dataSource.isEmpty {
+            let cell: CommentPresetEmptyCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+            return cell
+        } else {
+            guard let cellViewModel = viewModel.output.dataSource[safe: indexPath.item] else {
+                return BaseCollectionViewCell()
+            }
+            let cell: CommentPresetCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+            cell.bind(viewModel: cellViewModel)
+            return cell
         }
-        let cell: CommentPresetCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.bind(viewModel: cellViewModel)
-        return cell
     }
 }
 
+extension CommentPresetBottomSheet: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if viewModel.output.dataSource.isEmpty {
+            return CGSize(width: UIUtils.windowBounds.width, height: CommentPresetEmptyCell.Layout.height)
+        } else {
+            guard let cellViewModel = viewModel.output.dataSource[safe: indexPath.item] else { return .zero }
+            let height = CommentPresetCell.Layout.calculateHeight(preset: cellViewModel.output.preset)
+            return CGSize(width: UIUtils.windowBounds.width, height: height)
+        }
+    }
+}
+
+extension CommentPresetBottomSheet: PanModalPresentable {
+    var panScrollable: UIScrollView? {
+        return nil
+    }
+    
+    var shortFormHeight: PanModalHeight {
+        return .contentHeight(getHeight())
+    }
+    
+    var longFormHeight: PanModalHeight {
+        return shortFormHeight
+    }
+    
+    var cornerRadius: CGFloat {
+        return 16
+    }
+    
+    var showDragIndicator: Bool {
+        return false
+    }
+}

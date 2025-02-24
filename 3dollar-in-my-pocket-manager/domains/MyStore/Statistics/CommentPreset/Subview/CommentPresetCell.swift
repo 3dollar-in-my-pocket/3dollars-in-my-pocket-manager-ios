@@ -26,7 +26,7 @@ final class CommentPresetCell: BaseCollectionViewCell {
     private let moreButton: UIButton = {
         let button = UIButton()
         button.setImage(Assets.icMore.image, for: .normal)
-        button.showsMenuAsPrimaryAction = true  // 길게 눌러야 메뉴가 아닌, 바로 뜨도록 설정
+        button.showsMenuAsPrimaryAction = true
         return button
     }()
     

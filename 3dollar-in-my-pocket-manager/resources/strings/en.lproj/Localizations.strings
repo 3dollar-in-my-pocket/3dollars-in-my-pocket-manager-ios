@@ -277,3 +277,8 @@
 "review_report_bottom_sheet.info" = "*최소 10자에서 최대 300자 이내로 입력해 주세요.";
 "review_report_bottom_sheet.report" = "신고하기";
 "review_report_bottom_sheet.toast.report" = "리뷰를 신고했습니다.";
+
+// MARK: CommentPresetBottomSheet
+"comment_preset_bottom_sheet.empty.title" = "자주 사용하는 문구를 등록하면\n편리하고 빠르게 답글을 달 수 있어요!";
+"comment_preset_bottom_sheet.title" = "자주 쓰는 문구";
+"comment_preset_bottom_sheet.add_preset" = "문구 추가";

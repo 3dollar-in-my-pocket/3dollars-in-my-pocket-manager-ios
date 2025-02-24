@@ -7,7 +7,7 @@ extension CommentPresetBottomSheetViewModel {
     }
     
     struct Output {
-        var dataSource: [CommentPresetCellViewModel]
+        let dataSource: [CommentPresetCellViewModel]
         let didTapPreset = PassthroughSubject<CommentPresetResponse, Never>()
         let didTapAddPreset = PassthroughSubject<Void, Never>()
     }
@@ -15,6 +15,10 @@ extension CommentPresetBottomSheetViewModel {
     struct Relay {
         let didTapEditPreset = PassthroughSubject<CommentPresetResponse, Never>()
         let didTapDeletePreset = PassthroughSubject<CommentPresetResponse, Never>()
+    }
+    
+    struct State {
+        var presets: [CommentPresetResponse] = []
     }
     
     struct Config {
@@ -26,16 +30,19 @@ final class CommentPresetBottomSheetViewModel: BaseViewModel {
     let input = Input()
     let output: Output
     let relay = Relay()
+    private var state: State
     
     
     init(config: Config) {
-        let cellViewModels = config.presets.map { preset -> CommentPresetCellViewModel in
+        let cellViewModels = config.presets.map { preset in
             let config = CommentPresetCellViewModel.Config(preset: preset)
             let viewModel = CommentPresetCellViewModel(config: config)
             return viewModel
         }
         
         self.output = Output(dataSource: cellViewModels)
+        self.state = State(presets: config.presets)
+        
         super.init()
         
         bind()
@@ -46,7 +53,7 @@ final class CommentPresetBottomSheetViewModel: BaseViewModel {
         input.didTapPreset
             .withUnretained(self)
             .sink { (owner: CommentPresetBottomSheetViewModel, index: Int) in
-                guard let preset = owner.output.dataSource[safe: index]?.output.preset else { return }
+                guard let preset = owner.state.presets[safe: index] else { return }
                 
                 owner.output.didTapPreset.send(preset)
             }

@@ -255,6 +255,17 @@ internal enum Strings {
   internal static let waitingTitle = Strings.tr("Localizations", "waiting_title", fallback: "신청 완료!")
   /// 수요일
   internal static let wednesdayFull = Strings.tr("Localizations", "wednesday_full", fallback: "수요일")
+  internal enum CommentPresetBottomSheet {
+    /// 문구 추가
+    internal static let addPreset = Strings.tr("Localizations", "comment_preset_bottom_sheet.add_preset", fallback: "문구 추가")
+    /// 자주 쓰는 문구
+    internal static let title = Strings.tr("Localizations", "comment_preset_bottom_sheet.title", fallback: "자주 쓰는 문구")
+    internal enum Empty {
+      /// 자주 사용하는 문구를 등록하면
+      /// 편리하고 빠르게 답글을 달 수 있어요!
+      internal static let title = Strings.tr("Localizations", "comment_preset_bottom_sheet.empty.title", fallback: "자주 사용하는 문구를 등록하면\n편리하고 빠르게 답글을 달 수 있어요!")
+    }
+  }
   internal enum Common {
     /// 앨범
     internal static let album = Strings.tr("Localizations", "common.album", fallback: "앨범")

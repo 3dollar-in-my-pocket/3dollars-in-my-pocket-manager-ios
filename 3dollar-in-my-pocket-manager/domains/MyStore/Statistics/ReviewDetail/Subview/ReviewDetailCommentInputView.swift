@@ -77,7 +77,7 @@ final class ReviewDetailCommentInputView: BaseView {
         return label
     }()
     
-    private let macroButton: UIButton = {
+    let macroButton: UIButton = {
         let button = UIButton()
         button.setTitle(Strings.ReviewDetail.CommentInput.macro, for: .normal)
         button.backgroundColor = .gray5

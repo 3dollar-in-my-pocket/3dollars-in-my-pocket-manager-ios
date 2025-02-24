@@ -37,7 +37,7 @@ extension ReviewApi: ApiRequest {
         case .deleteReviewComment(let storeId, let reviewId, let commentId):
             return "/v1/store/\(storeId)/review/\(reviewId)/comment/\(commentId)"
         case .fetchCommentPreset(let storeId):
-            return "/v1/store/\(storeId)/comment-preset"
+            return "/v1/store/\(storeId)/comment-presets"
         }
     }
     

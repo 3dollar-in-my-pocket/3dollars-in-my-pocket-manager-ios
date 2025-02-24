@@ -97,6 +97,11 @@ final class ReviewDetailViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        commentInputView.macroButton.tapPublisher
+            .throttleClick()
+            .subscribe(viewModel.input.didTapCommentPreset)
+            .store(in: &cancellables)
+        
         // Output
         viewModel.output.review
             .main
@@ -277,6 +282,8 @@ extension ReviewDetailViewController {
             presentPhotoDetail(viewModel: viewModel)
         case .presentReportBottomSheet(let viewModel):
             presentReportBottomSheet(viewModel: viewModel)
+        case .presentCommentPreset(let viewModel):
+            presentCommentPresetBottomSheet(viewModel: viewModel)
         case .showErrorAlert(let error):
             showErrorAlert(error: error)
         }
@@ -289,6 +296,11 @@ extension ReviewDetailViewController {
     
     private func presentReportBottomSheet(viewModel: ReviewReportBottomSheetViewModel) {
         let viewController = ReviewReportBottomSheet(viewModel: viewModel)
+        presentPanModal(viewController)
+    }
+    
+    private func presentCommentPresetBottomSheet(viewModel: CommentPresetBottomSheetViewModel) {
+        let viewController = CommentPresetBottomSheet(viewModel: viewModel)
         presentPanModal(viewController)
     }
 }

@@ -11,7 +11,7 @@ extension ReviewDetailViewModel {
         let didTapPhoto = PassthroughSubject<Int, Never>()
         let didTapLike = PassthroughSubject<Void, Never>()
         let inputReply = PassthroughSubject<String, Never>()
-        let didTapMacro = PassthroughSubject<Void, Never>()
+        let didTapCommentPreset = PassthroughSubject<Void, Never>()
         let didTapComment = PassthroughSubject<Void, Never>()
         let didTapDeleteComment = PassthroughSubject<Void, Never>()
     }
@@ -40,6 +40,7 @@ extension ReviewDetailViewModel {
         case back
         case presentPhotoDetail(PhotoDetailViewModel)
         case presentReportBottomSheet(ReviewReportBottomSheetViewModel)
+        case presentCommentPreset(CommentPresetBottomSheetViewModel)
         case showErrorAlert(Error)
     }
     
@@ -115,6 +116,13 @@ final class ReviewDetailViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: ReviewDetailViewModel, _) in
                 owner.deleteReviewComment()
+            }
+            .store(in: &cancellables)
+        
+        input.didTapCommentPreset
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, _) in
+                owner.presentCommentPresetBottomSheet()
             }
             .store(in: &cancellables)
     }
@@ -231,5 +239,22 @@ final class ReviewDetailViewModel: BaseViewModel {
         let viewModel = ReviewReportBottomSheetViewModel(config: config)
         
         output.route.send(.presentReportBottomSheet(viewModel))
+    }
+    
+    private func presentCommentPresetBottomSheet() {
+        Task {
+            let storeId = dependency.preference.storeId
+            let result = await dependency.reviewRepository.fetchCommentPresets(storeId: storeId)
+            
+            switch result {
+            case .success(let response):
+                let config = CommentPresetBottomSheetViewModel.Config(presets: response.contents)
+                let viewModel = CommentPresetBottomSheetViewModel(config: config)
+                
+                output.route.send(.presentCommentPreset(viewModel))
+            case .failure(let error):
+                output.route.send(.showErrorAlert(error))
+            }
+        }
     }
 }
