@@ -28,6 +28,8 @@ protocol ReviewRepository {
     func deleteReviewComment(storeId: String, reviewId: String, commentId: String) async -> ApiResult<String>
     
     func fetchCommentPresets(storeId: String) async -> ApiResult<ContentListWithCursorAndCount<CommentPresetResponse>>
+    
+    func addCommentPreset(nonceToken: String, storeId: String, input: CommentPresetCreateRequest) async -> ApiResult<CommentPresetResponse>
 }
 
 final class ReviewRepositoryImpl: ReviewRepository {
@@ -71,5 +73,9 @@ final class ReviewRepositoryImpl: ReviewRepository {
     
     func fetchCommentPresets(storeId: String) async -> ApiResult<ContentListWithCursorAndCount<CommentPresetResponse>> {
         return await ReviewApi.fetchCommentPreset(storeId: storeId).asyncRequest()
+    }
+    
+    func addCommentPreset(nonceToken: String, storeId: String, input: CommentPresetCreateRequest) async -> ApiResult<CommentPresetResponse> {
+        return await ReviewApi.addCommentPreset(nonceToken: nonceToken, storeId: storeId, input: input).asyncRequest()
     }
 }

@@ -27,6 +27,8 @@ final class ReviewDetailViewController: BaseViewController {
     
     
     private let viewModel: ReviewDetailViewModel
+    private var commentPresetBottomSheet: CommentPresetBottomSheet?
+    private var addCommentPresetBottomSheet: AddCommentPresetBottomSheet?
     private var originalBottomInset: CGFloat = 0
     private let tapGesture = UITapGestureRecognizer()
     
@@ -284,6 +286,8 @@ extension ReviewDetailViewController {
             presentReportBottomSheet(viewModel: viewModel)
         case .presentCommentPreset(let viewModel):
             presentCommentPresetBottomSheet(viewModel: viewModel)
+        case .presentAddCommentPreset(let viewModel):
+            presentAddCommentBottomSheet(viewModel: viewModel)
         case .showErrorAlert(let error):
             showErrorAlert(error: error)
         }
@@ -300,7 +304,30 @@ extension ReviewDetailViewController {
     }
     
     private func presentCommentPresetBottomSheet(viewModel: CommentPresetBottomSheetViewModel) {
-        let viewController = CommentPresetBottomSheet(viewModel: viewModel)
-        presentPanModal(viewController)
+        if let addCommentPresetBottomSheet {
+            addCommentPresetBottomSheet.dismiss(animated: true) { [weak self] in
+                let viewController = CommentPresetBottomSheet(viewModel: viewModel)
+                self?.commentPresetBottomSheet = viewController
+                self?.presentPanModal(viewController)
+            }
+        } else {
+            let viewController = CommentPresetBottomSheet(viewModel: viewModel)
+            self.commentPresetBottomSheet = viewController
+            presentPanModal(viewController)
+        }
+    }
+    
+    private func presentAddCommentBottomSheet(viewModel: AddCommentPresetBottomSheetViewModel) {
+        if let commentPresetBottomSheet {
+            commentPresetBottomSheet.dismiss(animated: true) { [weak self] in
+                let viewController = AddCommentPresetBottomSheet(viewModel: viewModel)
+                self?.presentPanModal(viewController)
+                self?.addCommentPresetBottomSheet = viewController
+            }
+        } else {
+            let viewController = AddCommentPresetBottomSheet(viewModel: viewModel)
+            presentPanModal(viewController)
+            self.addCommentPresetBottomSheet = viewController
+        }
     }
 }

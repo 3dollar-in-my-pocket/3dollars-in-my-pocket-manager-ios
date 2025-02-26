@@ -25,6 +25,8 @@ extension ReviewDetailViewModel {
     
     struct Relay {
         let didTapPhoto = PassthroughSubject<(review: StoreReviewResponse, index: Int), Never>()
+        let didTapAddPreset = PassthroughSubject<Void, Never>()
+        let finishAddCommentPreset = PassthroughSubject<CommentPresetResponse, Never>()
         let showErrorAlert = PassthroughSubject<Error, Never>()
     }
     
@@ -41,6 +43,7 @@ extension ReviewDetailViewModel {
         case presentPhotoDetail(PhotoDetailViewModel)
         case presentReportBottomSheet(ReviewReportBottomSheetViewModel)
         case presentCommentPreset(CommentPresetBottomSheetViewModel)
+        case presentAddCommentPreset(AddCommentPresetBottomSheetViewModel)
         case showErrorAlert(Error)
     }
     
@@ -139,6 +142,20 @@ final class ReviewDetailViewModel: BaseViewModel {
         relay.showErrorAlert
             .map { Route.showErrorAlert($0) }
             .subscribe(output.route)
+            .store(in: &cancellables)
+        
+        relay.didTapAddPreset
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, _) in
+                owner.presentAddCommentPresetBottomSheet()
+            }
+            .store(in: &cancellables)
+        
+        relay.finishAddCommentPreset
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, response: CommentPresetResponse) in
+                owner.presentCommentPresetBottomSheet()
+            }
             .store(in: &cancellables)
     }
     
@@ -251,10 +268,23 @@ final class ReviewDetailViewModel: BaseViewModel {
                 let config = CommentPresetBottomSheetViewModel.Config(presets: response.contents)
                 let viewModel = CommentPresetBottomSheetViewModel(config: config)
                 
+                viewModel.output.didTapAddPreset
+                    .subscribe(relay.didTapAddPreset)
+                    .store(in: &viewModel.cancellables)
+                
                 output.route.send(.presentCommentPreset(viewModel))
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))
             }
         }
+    }
+    
+    private func presentAddCommentPresetBottomSheet() {
+        let viewModel = AddCommentPresetBottomSheetViewModel()
+        viewModel.output.finishAddCommentPreset
+            .subscribe(relay.finishAddCommentPreset)
+            .store(in: &viewModel.cancellables)
+        
+        output.route.send(.presentAddCommentPreset(viewModel))
     }
 }

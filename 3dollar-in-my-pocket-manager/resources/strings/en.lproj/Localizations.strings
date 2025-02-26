@@ -282,3 +282,8 @@
 "comment_preset_bottom_sheet.empty.title" = "자주 사용하는 문구를 등록하면\n편리하고 빠르게 답글을 달 수 있어요!";
 "comment_preset_bottom_sheet.title" = "자주 쓰는 문구";
 "comment_preset_bottom_sheet.add_preset" = "문구 추가";
+
+// MARK: AddCommentPresetBottomSheet
+"add_comment_preset_bottom_sheet.title" = "자주 쓰는 문구 추가";
+"add_comment_preset_bottom_sheet.placeholder" = "자주 쓰는 문구를 입력해주세요!";
+"add_comment_preset_bottom_sheet.add" = "문구 추가";

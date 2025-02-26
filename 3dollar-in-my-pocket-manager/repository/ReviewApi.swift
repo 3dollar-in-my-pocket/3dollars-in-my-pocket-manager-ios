@@ -19,6 +19,7 @@ enum ReviewApi {
     case reportReview(storeId: String, reviewId: String, input: ReportCreateRequest)
     case deleteReviewComment(storeId: String, reviewId: String, commentId: String)
     case fetchCommentPreset(storeId: String)
+    case addCommentPreset(nonceToken: String, storeId: String, input: CommentPresetCreateRequest)
 }
 
 extension ReviewApi: ApiRequest {
@@ -38,6 +39,8 @@ extension ReviewApi: ApiRequest {
             return "/v1/store/\(storeId)/review/\(reviewId)/comment/\(commentId)"
         case .fetchCommentPreset(let storeId):
             return "/v1/store/\(storeId)/comment-presets"
+        case .addCommentPreset(_, let storeId, _):
+            return "/v1/store/\(storeId)/comment-preset"
         }
     }
     
@@ -57,6 +60,8 @@ extension ReviewApi: ApiRequest {
             return .delete
         case .fetchCommentPreset:
             return .get
+        case .addCommentPreset:
+            return .post
         }
     }
     
@@ -90,15 +95,22 @@ extension ReviewApi: ApiRequest {
             return nil
         case .fetchCommentPreset:
             return ["size": 20]
+        case .addCommentPreset(_, _, let input):
+            return input.toDictionary
         }
     }
     
     var headers: HTTPHeaders {
-        if case .createCommentToReview(let nonceToken, _, _, _) = self {
+        switch self {
+        case .createCommentToReview(let nonceToken, _, _, _):
             var header = HTTPUtils.defaultHeader()
             header.add(HTTPHeader(name: "X-Nonce-Token", value: nonceToken))
             return header
-        } else {
+        case .addCommentPreset(let nonceToken, _, _):
+            var header = HTTPUtils.defaultHeader()
+            header.add(HTTPHeader(name: "X-Nonce-Token", value: nonceToken))
+            return header
+        default:
             return HTTPUtils.defaultHeader()
         }
     }
