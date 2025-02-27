@@ -5,6 +5,8 @@ import PanModal
 final class CommentPresetBottomSheet: BaseViewController {
     enum Layout {
         static let itemSpace: CGFloat = 24
+        static let minimumCollectionViewHeight: CGFloat = 160
+        static let maximumCollectionViewHeight: CGFloat = 336
     }
     
     private let titleLabel: UILabel = {
@@ -58,10 +60,13 @@ final class CommentPresetBottomSheet: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .light
         
         setupUI()
         setupAttributes()
         bind()
+        
+        updateCollectionViewHeight()
     }
     
     private func setupAttributes() {
@@ -109,7 +114,23 @@ final class CommentPresetBottomSheet: BaseViewController {
             .store(in: &cancellables)
         
         // Output
+        viewModel.output.reload
+            .main
+            .withUnretained(self)
+            .sink { (owner: CommentPresetBottomSheet, _) in
+                owner.updateCollectionViewHeight()
+                owner.collectionView.reloadData()
+                owner.panModalSetNeedsLayoutUpdate()
+            }
+            .store(in: &cancellables)
         
+        viewModel.output.route
+            .main
+            .withUnretained(self)
+            .sink { (owner: CommentPresetBottomSheet, route: CommentPresetBottomSheetViewModel.Route) in
+                owner.handleRoute(route)
+            }
+            .store(in: &cancellables)
     }
     
     private func createLayout() -> UICollectionViewLayout {
@@ -128,7 +149,36 @@ final class CommentPresetBottomSheet: BaseViewController {
         let space = CGFloat(cellHeights.count - 1) * Layout.itemSpace
         let collectionViewHeight = cellHeights.reduce(0, +) + space
         
-        return 178 + min(max(collectionViewHeight, 160), 336)
+        return 178 + min(max(collectionViewHeight, Layout.minimumCollectionViewHeight), Layout.maximumCollectionViewHeight)
+    }
+    
+    private func updateCollectionViewHeight() {
+        let cellHeights = viewModel.output.dataSource.map {
+            return CommentPresetCell.Layout.calculateHeight(preset: $0.output.preset)
+        }
+        
+        let space = CGFloat(cellHeights.count - 1) * Layout.itemSpace
+        let collectionViewHeight = cellHeights.reduce(0, +) + space
+        
+        collectionView.snp.updateConstraints {
+            $0.height.equalTo(min(max(collectionViewHeight, Layout.minimumCollectionViewHeight), Layout.maximumCollectionViewHeight))
+        }
+    }
+}
+
+// MARK: Route
+extension CommentPresetBottomSheet {
+    private func handleRoute(_ route: CommentPresetBottomSheetViewModel.Route) {
+        switch route {
+        case .dismiss:
+            dismiss(animated: true)
+        case .presetDeleteAlert(let commentPreset):
+            AlertUtils.showWithCancel(viewController: self, message: Strings.CommentPresetBottomSheet.deleteAlert) { [weak self] in
+                self?.viewModel.input.deleteCommentPreset.send(commentPreset)
+            }
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        }
     }
 }
 
@@ -161,6 +211,10 @@ extension CommentPresetBottomSheet: UICollectionViewDelegateFlowLayout {
             let height = CommentPresetCell.Layout.calculateHeight(preset: cellViewModel.output.preset)
             return CGSize(width: UIUtils.windowBounds.width, height: height)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.input.didTapPreset.send(indexPath.item)
     }
 }
 

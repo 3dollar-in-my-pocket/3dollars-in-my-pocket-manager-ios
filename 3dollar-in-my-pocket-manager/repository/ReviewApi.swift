@@ -20,6 +20,8 @@ enum ReviewApi {
     case deleteReviewComment(storeId: String, reviewId: String, commentId: String)
     case fetchCommentPreset(storeId: String)
     case addCommentPreset(nonceToken: String, storeId: String, input: CommentPresetCreateRequest)
+    case editCommentPreset(storeId: String, presetId: String, input: CommentPresetPatchRequest)
+    case deleteCommentPreset(storeId: String, presetId: String)
 }
 
 extension ReviewApi: ApiRequest {
@@ -41,6 +43,10 @@ extension ReviewApi: ApiRequest {
             return "/v1/store/\(storeId)/comment-presets"
         case .addCommentPreset(_, let storeId, _):
             return "/v1/store/\(storeId)/comment-preset"
+        case .editCommentPreset(let storeId, let presetId, _):
+            return "/v1/store/\(storeId)/comment-preset/\(presetId)"
+        case .deleteCommentPreset(let storeId, let presetId):
+            return "/v1/store/\(storeId)/comment-preset/\(presetId)"
         }
     }
     
@@ -62,6 +68,10 @@ extension ReviewApi: ApiRequest {
             return .get
         case .addCommentPreset:
             return .post
+        case .editCommentPreset:
+            return .patch
+        case .deleteCommentPreset:
+            return .delete
         }
     }
     
@@ -97,6 +107,10 @@ extension ReviewApi: ApiRequest {
             return ["size": 20]
         case .addCommentPreset(_, _, let input):
             return input.toDictionary
+        case .editCommentPreset(_, _, let input):
+            return input.toDictionary
+        case .deleteCommentPreset:
+            return nil
         }
     }
     

@@ -19,6 +19,7 @@ extension ReviewDetailViewModel {
     struct Output {
         let review = PassthroughSubject<ReviewItemViewModel, Never>()
         let comment = PassthroughSubject<(CommentResponse?, String), Never>()
+        let setCommentPreset = PassthroughSubject<CommentPresetResponse, Never>()
         let enableComment = PassthroughSubject<Bool, Never>()
         let route = PassthroughSubject<Route, Never>()
     }
@@ -27,6 +28,9 @@ extension ReviewDetailViewModel {
         let didTapPhoto = PassthroughSubject<(review: StoreReviewResponse, index: Int), Never>()
         let didTapAddPreset = PassthroughSubject<Void, Never>()
         let finishAddCommentPreset = PassthroughSubject<CommentPresetResponse, Never>()
+        let finishEditCommentPreset = PassthroughSubject<Void, Never>()
+        let didTapEditPreset = PassthroughSubject<CommentPresetResponse, Never>()
+        let didTapPreset = PassthroughSubject<CommentPresetResponse, Never>()
         let showErrorAlert = PassthroughSubject<Error, Never>()
     }
     
@@ -157,6 +161,28 @@ final class ReviewDetailViewModel: BaseViewModel {
                 owner.presentCommentPresetBottomSheet()
             }
             .store(in: &cancellables)
+        
+        relay.didTapEditPreset
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, commentPreset: CommentPresetResponse) in
+                owner.presentAddCommentPresetBottomSheet(commentPreset: commentPreset)
+            }
+            .store(in: &cancellables)
+        relay.finishEditCommentPreset
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, _) in
+                owner.presentCommentPresetBottomSheet()
+            }
+            .store(in: &cancellables)
+        
+        relay.didTapPreset
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewModel, commentPreset: CommentPresetResponse) in
+                owner.state.comment = commentPreset.body
+                owner.validateComment()
+                owner.output.setCommentPreset.send(commentPreset)
+            }
+            .store(in: &cancellables)
     }
     
     private func fetchReview() {
@@ -272,6 +298,14 @@ final class ReviewDetailViewModel: BaseViewModel {
                     .subscribe(relay.didTapAddPreset)
                     .store(in: &viewModel.cancellables)
                 
+                viewModel.output.didTapPreset
+                    .subscribe(relay.didTapPreset)
+                    .store(in: &viewModel.cancellables)
+                
+                viewModel.relay.didTapEditPreset
+                    .subscribe(relay.didTapEditPreset)
+                    .store(in: &viewModel.cancellables)
+
                 output.route.send(.presentCommentPreset(viewModel))
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))
@@ -279,10 +313,15 @@ final class ReviewDetailViewModel: BaseViewModel {
         }
     }
     
-    private func presentAddCommentPresetBottomSheet() {
-        let viewModel = AddCommentPresetBottomSheetViewModel()
+    private func presentAddCommentPresetBottomSheet(commentPreset: CommentPresetResponse? = nil) {
+        let config = AddCommentPresetBottomSheetViewModel.Config(commentPreset: commentPreset)
+        let viewModel = AddCommentPresetBottomSheetViewModel(config: config)
         viewModel.output.finishAddCommentPreset
             .subscribe(relay.finishAddCommentPreset)
+            .store(in: &viewModel.cancellables)
+        
+        viewModel.output.finishEditCommentPreset
+            .subscribe(relay.finishEditCommentPreset)
             .store(in: &viewModel.cancellables)
         
         output.route.send(.presentAddCommentPreset(viewModel))

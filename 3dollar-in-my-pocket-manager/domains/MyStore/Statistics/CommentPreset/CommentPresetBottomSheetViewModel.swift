@@ -4,12 +4,15 @@ extension CommentPresetBottomSheetViewModel {
     struct Input {
         let didTapPreset = PassthroughSubject<Int, Never>()
         let didTapAddPreset = PassthroughSubject<Void, Never>()
+        let deleteCommentPreset = PassthroughSubject<CommentPresetResponse, Never>()
     }
     
     struct Output {
-        let dataSource: [CommentPresetCellViewModel]
+        var dataSource: [CommentPresetCellViewModel]
+        let reload = PassthroughSubject<Void, Never>()
         let didTapPreset = PassthroughSubject<CommentPresetResponse, Never>()
         let didTapAddPreset = PassthroughSubject<Void, Never>()
+        let route = PassthroughSubject<Route, Never>()
     }
     
     struct Relay {
@@ -21,19 +24,39 @@ extension CommentPresetBottomSheetViewModel {
         var presets: [CommentPresetResponse] = []
     }
     
+    enum Route {
+        case presetDeleteAlert(CommentPresetResponse)
+        case showErrorAlert(Error)
+        case dismiss
+    }
+    
     struct Config {
         var presets: [CommentPresetResponse] = []
+    }
+    
+    struct Dependency {
+        let reviewRepository: ReviewRepository
+        let preference: Preference
+        
+        init(
+            reviewRepository: ReviewRepository = ReviewRepositoryImpl(),
+            preference: Preference = .shared
+        ) {
+            self.reviewRepository = reviewRepository
+            self.preference = preference
+        }
     }
 }
 
 final class CommentPresetBottomSheetViewModel: BaseViewModel {
     let input = Input()
-    let output: Output
+    var output: Output
     let relay = Relay()
     private var state: State
+    private let dependency: Dependency
     
     
-    init(config: Config) {
+    init(config: Config, dependency: Dependency = Dependency()) {
         let cellViewModels = config.presets.map { preset in
             let config = CommentPresetCellViewModel.Config(preset: preset)
             let viewModel = CommentPresetCellViewModel(config: config)
@@ -41,12 +64,14 @@ final class CommentPresetBottomSheetViewModel: BaseViewModel {
         }
         
         self.output = Output(dataSource: cellViewModels)
+        self.dependency = dependency
         self.state = State(presets: config.presets)
         
         super.init()
         
         bind()
         bindCellViewModels()
+        bindRelay()
     }
     
     private func bind() {
@@ -56,11 +81,28 @@ final class CommentPresetBottomSheetViewModel: BaseViewModel {
                 guard let preset = owner.state.presets[safe: index] else { return }
                 
                 owner.output.didTapPreset.send(preset)
+                owner.output.route.send(.dismiss)
             }
             .store(in: &cancellables)
         
         input.didTapAddPreset
             .subscribe(output.didTapAddPreset)
+            .store(in: &cancellables)
+        
+        input.deleteCommentPreset
+            .withUnretained(self)
+            .sink { (owner: CommentPresetBottomSheetViewModel, commentPreset: CommentPresetResponse) in
+                owner.deleteCommentPreset(commentPreset: commentPreset)
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func bindRelay() {
+        relay.didTapDeletePreset
+            .withUnretained(self)
+            .sink { (owner: CommentPresetBottomSheetViewModel, commentPreset: CommentPresetResponse) in
+                owner.output.route.send(.presetDeleteAlert(commentPreset))
+            }
             .store(in: &cancellables)
     }
     
@@ -73,6 +115,23 @@ final class CommentPresetBottomSheetViewModel: BaseViewModel {
             cellViewModel.output.didTapDelete
                 .subscribe(relay.didTapDeletePreset)
                 .store(in: &cellViewModel.cancellables)
+        }
+    }
+    
+    private func deleteCommentPreset(commentPreset: CommentPresetResponse) {
+        Task {
+            let storeId = dependency.preference.storeId
+            let result = await dependency.reviewRepository.deleteCommentPreset(storeId: storeId, commentPresetId: commentPreset.presetId)
+            
+            switch result {
+            case .success:
+                if let targetIndex = output.dataSource.firstIndex(where: { $0.output.preset == commentPreset }) {
+                    output.dataSource.remove(at: targetIndex)
+                }
+                output.reload.send(())
+            case .failure(let error):
+                output.route.send(.showErrorAlert(error))
+            }
         }
     }
 }

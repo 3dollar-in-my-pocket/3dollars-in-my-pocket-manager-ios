@@ -59,13 +59,17 @@ final class CommentPresetCell: BaseCollectionViewCell {
     func bind(viewModel: CommentPresetCellViewModel) {
         titleLabel.text = viewModel.output.preset.body
         
-        let editAction = UIAction(title: "수정하기", image: UIImage(systemName: "pencil")) { [weak self] _ in
-            print("수정하기 선택됨")
+        let editAction = UIAction(
+            title: Strings.CommentPresetBottomSheet.edit,
+            image: Assets.icWriteLine.image.resizeImage(scaledTo: 16)
+        ) { [weak self] _ in
             self?.viewModel?.input.didTapEdit.send(())
         }
-        let deleteAction = UIAction(title: "삭제하기", image: UIImage(systemName: "trash"), attributes: .destructive) { [weak self] _ in
-            print("삭제하기 선택됨")
-            self?.viewModel?.input.didTapEdit.send(())
+        let deleteAction = UIAction(
+            title: Strings.CommentPresetBottomSheet.delete,
+            image: Assets.icTrash.image.resizeImage(scaledTo: 16)
+        ) { [weak self] _ in
+            self?.viewModel?.input.didTapDelete.send(())
         }
         moreButton.menu = UIMenu(children: [editAction, deleteAction])
         

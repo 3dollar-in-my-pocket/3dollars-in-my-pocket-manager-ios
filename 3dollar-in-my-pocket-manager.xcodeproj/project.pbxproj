@@ -11,7 +11,6 @@
 		6E0149D72CF8572900A755C6 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0149D62CF8572900A755C6 /* MainViewModel.swift */; };
 		6E01964A2C648FB900164FCA /* MyStoreInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0196492C648FB900164FCA /* MyStoreInfoDataSource.swift */; };
 		6E01964C2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E01964B2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift */; };
-		6E053BFE2D6F5FC400C46715 /* CommentPresetCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E053BFD2D6F5FC400C46715 /* CommentPresetCreateRequest.swift */; };
 		6E0795172D485C6F001C1F8B /* ContentListWithCursorAndCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0795162D485C6F001C1F8B /* ContentListWithCursorAndCount.swift */; };
 		6E07F9B9284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */; };
 		6E089AF52C66653F009D13A2 /* ImageRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E089AF42C66653F009D13A2 /* ImageRequestable.swift */; };
@@ -149,7 +148,7 @@
 		6E63FF70281C203000EC49DE /* EditStoreInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E63FF6F281C203000EC49DE /* EditStoreInfoCoordinator.swift */; };
 		6E64B28427D836920055354B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E64B28327D836920055354B /* TextField.swift */; };
 		6E6575CD2BE1CC4600FA3B79 /* SignInResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6575CC2BE1CC4600FA3B79 /* SignInResult.swift */; };
-		6E66AED72D616C8F00396604 /* CommentCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E66AED62D616C8F00396604 /* CommentCreateRequest.swift */; };
+		6E66AED72D616C8F00396604 /* CommentRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E66AED62D616C8F00396604 /* CommentRequest.swift */; };
 		6E69C0442D3C8A310026CAAF /* StatisticsFeedbackCountCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E69C0432D3C8A310026CAAF /* StatisticsFeedbackCountCell.swift */; };
 		6E69C0462D3C8A660026CAAF /* StatisticsFeedbackCountCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E69C0452D3C8A660026CAAF /* StatisticsFeedbackCountCellViewModel.swift */; };
 		6E69C0482D3C91E00026CAAF /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E69C0472D3C91E00026CAAF /* NSAttributedString+.swift */; };
@@ -377,7 +376,6 @@
 		6E0149D62CF8572900A755C6 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		6E0196492C648FB900164FCA /* MyStoreInfoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoDataSource.swift; sourceTree = "<group>"; };
 		6E01964B2C64E89800164FCA /* UICollectionViewDiffableDataSource+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewDiffableDataSource+.swift"; sourceTree = "<group>"; };
-		6E053BFD2D6F5FC400C46715 /* CommentPresetCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPresetCreateRequest.swift; sourceTree = "<group>"; };
 		6E0795162D485C6F001C1F8B /* ContentListWithCursorAndCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListWithCursorAndCount.swift; sourceTree = "<group>"; };
 		6E07F9B8284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoMenuMoreCell.swift; sourceTree = "<group>"; };
 		6E089AF42C66653F009D13A2 /* ImageRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequestable.swift; sourceTree = "<group>"; };
@@ -510,7 +508,7 @@
 		6E63FF6F281C203000EC49DE /* EditStoreInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStoreInfoCoordinator.swift; sourceTree = "<group>"; };
 		6E64B28327D836920055354B /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		6E6575CC2BE1CC4600FA3B79 /* SignInResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResult.swift; sourceTree = "<group>"; };
-		6E66AED62D616C8F00396604 /* CommentCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCreateRequest.swift; sourceTree = "<group>"; };
+		6E66AED62D616C8F00396604 /* CommentRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRequest.swift; sourceTree = "<group>"; };
 		6E69C0432D3C8A310026CAAF /* StatisticsFeedbackCountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFeedbackCountCell.swift; sourceTree = "<group>"; };
 		6E69C0452D3C8A660026CAAF /* StatisticsFeedbackCountCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFeedbackCountCellViewModel.swift; sourceTree = "<group>"; };
 		6E69C0472D3C91E00026CAAF /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
@@ -952,9 +950,8 @@
 				6E974DA52CF2B52600338FF5 /* StoreMessageCreateRequest.swift */,
 				6E2BD52C2CF8A0B100EA89A8 /* NonceCreateRequest.swift */,
 				6EA7DB7F2D587D25009314A2 /* StickersReplaceRequest.swift */,
-				6E66AED62D616C8F00396604 /* CommentCreateRequest.swift */,
+				6E66AED62D616C8F00396604 /* CommentRequest.swift */,
 				6EF1F6632D69584E00BF099D /* ReportCreateRequest.swift */,
-				6E053BFD2D6F5FC400C46715 /* CommentPresetCreateRequest.swift */,
 			);
 			path = request;
 			sourceTree = "<group>";
@@ -1800,7 +1797,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E1AB7AD280D966D0059DCF4 /* MenuRequest.swift in Sources */,
-				6E66AED72D616C8F00396604 /* CommentCreateRequest.swift in Sources */,
+				6E66AED72D616C8F00396604 /* CommentRequest.swift in Sources */,
 				6EC1BF8E2C6BA3FA00DBEFCF /* EditStoreInfoPhotoCountCell.swift in Sources */,
 				6ED8839C27CB3A7A00278E14 /* SocialSigninButton.swift in Sources */,
 				6E5DCE7027FDC97200CA58EE /* DayOfTheWeek.swift in Sources */,
@@ -1932,7 +1929,6 @@
 				6E1E5BA82827EB33003A1B51 /* SettingView.swift in Sources */,
 				6EBF1AE727FE65950011268B /* StoreService.swift in Sources */,
 				6E5F3DD5281D5F39002282B6 /* EditScheduleView.swift in Sources */,
-				6E053BFE2D6F5FC400C46715 /* CommentPresetCreateRequest.swift in Sources */,
 				6E5F2132281976CD00922A99 /* MyStoreInfoSectionModel.swift in Sources */,
 				6EF2C3C22C650E13005BEE17 /* CategoryApi.swift in Sources */,
 				6EE0CFC527CB65C80027A426 /* Preference.swift in Sources */,

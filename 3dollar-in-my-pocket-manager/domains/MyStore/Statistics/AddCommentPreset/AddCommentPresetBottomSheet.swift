@@ -12,7 +12,7 @@ final class AddCommentPresetBottomSheet: BaseViewController {
         let label = UILabel()
         label.textColor = .gray100
         label.font = .semiBold(size: 20)
-        label.text = Strings.AddCommentPresetBottomSheet.title
+        label.text = Strings.AddCommentPresetBottomSheet.addTitle
         return label
     }()
     
@@ -87,6 +87,7 @@ final class AddCommentPresetBottomSheet: BaseViewController {
         setupUI()
         setupKeyboardEvent()
         bind()
+        setupCommentPresetIfExisted()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -171,6 +172,11 @@ final class AddCommentPresetBottomSheet: BaseViewController {
             .subscribe(viewModel.input.didTapAdd)
             .store(in: &cancellables)
         
+        closeButton.tapPublisher
+            .throttleClick()
+            .subscribe(viewModel.input.didTapClose)
+            .store(in: &cancellables)
+        
         // Output
         viewModel.output.isEnableAddButton
             .main
@@ -187,6 +193,15 @@ final class AddCommentPresetBottomSheet: BaseViewController {
                 owner.handleRoute(route)
             }
             .store(in: &cancellables)
+    }
+    
+    private func setupCommentPresetIfExisted() {
+        guard let commentPreset = viewModel.output.commentPreset else { return }
+        
+        titleLabel.text = Strings.AddCommentPresetBottomSheet.editTitle
+        addButton.setTitle(Strings.AddCommentPresetBottomSheet.edit, for: .normal)
+        textView.text = commentPreset.body
+        setupTextCount(count: commentPreset.body.count)
     }
     
     @objc func onShowKeyboard(notification: Notification) {

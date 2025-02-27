@@ -4,16 +4,23 @@ extension AddCommentPresetBottomSheetViewModel {
     struct Input {
         let inputText = PassthroughSubject<String?, Never>()
         let didTapAdd = PassthroughSubject<Void, Never>()
+        let didTapClose = PassthroughSubject<Void, Never>()
     }
     
     struct Output {
-        let isEnableAddButton = CurrentValueSubject<Bool, Never>(false)
+        let commentPreset: CommentPresetResponse?
+        let isEnableAddButton: CurrentValueSubject<Bool, Never>
         let finishAddCommentPreset = PassthroughSubject<CommentPresetResponse, Never>()
+        let finishEditCommentPreset = PassthroughSubject<Void, Never>()
         let route = PassthroughSubject<Route, Never>()
     }
     
     struct State {
         var text: String?
+    }
+    
+    struct Config {
+        let commentPreset: CommentPresetResponse?
     }
     
     enum Route {
@@ -39,11 +46,14 @@ extension AddCommentPresetBottomSheetViewModel {
 
 final class AddCommentPresetBottomSheetViewModel: BaseViewModel {
     let input = Input()
-    let output = Output()
-    private var state = State()
+    let output: Output
+    private var state: State
     private let dependency: Dependency
     
-    init(dependency: Dependency = Dependency()) {
+    init(config: Config, dependency: Dependency = Dependency()) {
+        let isEnableAddButton = config.commentPreset?.body.isEmpty.isNot ?? false
+        self.output = Output(commentPreset: config.commentPreset, isEnableAddButton: .init(isEnableAddButton))
+        self.state = State(text: config.commentPreset?.body)
         self.dependency = dependency
         
         super.init()
@@ -63,8 +73,16 @@ final class AddCommentPresetBottomSheetViewModel: BaseViewModel {
         input.didTapAdd
             .withUnretained(self)
             .sink { (owner: AddCommentPresetBottomSheetViewModel, _) in
-                owner.addCommentPreset()
+                if let commentPreset = owner.output.commentPreset {
+                    owner.editCommentPreset(commentPreset: commentPreset)
+                } else {
+                    owner.addCommentPreset()
+                }
             }
+            .store(in: &cancellables)
+        
+        input.didTapClose
+            .subscribe(output.finishEditCommentPreset)
             .store(in: &cancellables)
     }
     
@@ -88,6 +106,23 @@ final class AddCommentPresetBottomSheetViewModel: BaseViewModel {
                 
                 output.finishAddCommentPreset.send(response)
             } catch {
+                output.route.send(.showErrorAlert(error))
+            }
+        }
+    }
+    
+    private func editCommentPreset(commentPreset: CommentPresetResponse) {
+        guard let text = state.text, !text.isEmpty else { return }
+        let input = CommentPresetPatchRequest(body: text)
+
+        Task {
+            let storeId = dependency.preference.storeId
+            let result = await dependency.reviewRepository.editCommentPreset(storeId: storeId, commentPresetId: commentPreset.presetId, input: input)
+            
+            switch result {
+            case .success:
+                output.finishEditCommentPreset.send(())
+            case .failure(let error):
                 output.route.send(.showErrorAlert(error))
             }
         }

@@ -258,14 +258,24 @@ internal enum Strings {
   internal enum AddCommentPresetBottomSheet {
     /// 문구 추가
     internal static let add = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.add", fallback: "문구 추가")
+    /// 자주 쓰는 문구 추가
+    internal static let addTitle = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.add_title", fallback: "자주 쓰는 문구 추가")
+    /// 문구 수정
+    internal static let edit = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.edit", fallback: "문구 수정")
+    /// 자주 쓰는 문구 수정
+    internal static let editTitle = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.edit_title", fallback: "자주 쓰는 문구 수정")
     /// 자주 쓰는 문구를 입력해주세요!
     internal static let placeholder = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.placeholder", fallback: "자주 쓰는 문구를 입력해주세요!")
-    /// 자주 쓰는 문구 추가
-    internal static let title = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.title", fallback: "자주 쓰는 문구 추가")
   }
   internal enum CommentPresetBottomSheet {
     /// 문구 추가
     internal static let addPreset = Strings.tr("Localizations", "comment_preset_bottom_sheet.add_preset", fallback: "문구 추가")
+    /// 삭제하기
+    internal static let delete = Strings.tr("Localizations", "comment_preset_bottom_sheet.delete", fallback: "삭제하기")
+    /// 문구를 삭제하시겠습니까?
+    internal static let deleteAlert = Strings.tr("Localizations", "comment_preset_bottom_sheet.delete_alert", fallback: "문구를 삭제하시겠습니까?")
+    /// 수정하기
+    internal static let edit = Strings.tr("Localizations", "comment_preset_bottom_sheet.edit", fallback: "수정하기")
     /// 자주 쓰는 문구
     internal static let title = Strings.tr("Localizations", "comment_preset_bottom_sheet.title", fallback: "자주 쓰는 문구")
     internal enum Empty {

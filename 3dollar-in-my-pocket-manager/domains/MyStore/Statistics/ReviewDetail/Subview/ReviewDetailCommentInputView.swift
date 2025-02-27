@@ -95,6 +95,12 @@ final class ReviewDetailCommentInputView: BaseView {
         setupUI()
     }
     
+    func setText(_ text: String) {
+        textView.text = text
+        setupTextCount(count: text.count)
+        textView.textColor = .gray95
+    }
+    
     private func setupUI() {
         addSubview(stackView)
         stackView.snp.makeConstraints {

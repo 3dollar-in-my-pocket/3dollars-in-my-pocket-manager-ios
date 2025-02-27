@@ -135,6 +135,14 @@ final class ReviewDetailViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.output.setCommentPreset
+            .main
+            .withUnretained(self)
+            .sink { (owner: ReviewDetailViewController, commentPreset: CommentPresetResponse) in
+                owner.commentInputView.setText(commentPreset.body)
+            }
+            .store(in: &cancellables)
+        
         viewModel.output.route
             .main
             .withUnretained(self)

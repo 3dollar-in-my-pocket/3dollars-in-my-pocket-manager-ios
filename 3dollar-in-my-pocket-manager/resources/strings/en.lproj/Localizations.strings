@@ -282,8 +282,13 @@
 "comment_preset_bottom_sheet.empty.title" = "자주 사용하는 문구를 등록하면\n편리하고 빠르게 답글을 달 수 있어요!";
 "comment_preset_bottom_sheet.title" = "자주 쓰는 문구";
 "comment_preset_bottom_sheet.add_preset" = "문구 추가";
+"comment_preset_bottom_sheet.delete" = "삭제하기";
+"comment_preset_bottom_sheet.edit" = "수정하기";
+"comment_preset_bottom_sheet.delete_alert" = "문구를 삭제하시겠습니까?";
 
 // MARK: AddCommentPresetBottomSheet
-"add_comment_preset_bottom_sheet.title" = "자주 쓰는 문구 추가";
+"add_comment_preset_bottom_sheet.add_title" = "자주 쓰는 문구 추가";
+"add_comment_preset_bottom_sheet.edit_title" = "자주 쓰는 문구 수정";
 "add_comment_preset_bottom_sheet.placeholder" = "자주 쓰는 문구를 입력해주세요!";
 "add_comment_preset_bottom_sheet.add" = "문구 추가";
+"add_comment_preset_bottom_sheet.edit" = "문구 수정";
