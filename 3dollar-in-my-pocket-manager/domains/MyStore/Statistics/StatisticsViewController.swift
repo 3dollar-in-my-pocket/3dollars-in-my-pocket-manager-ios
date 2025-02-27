@@ -112,7 +112,7 @@ final class StatisticsViewController: BaseViewController {
                     heightDimension: .absolute(StatisticsFeedbackCountCell.Layout.calculateHeight(viewModel: viewModel))
                 ), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
-                section.contentInsets = .init(top: 10, leading: 24, bottom: 0, trailing: 24)
+                section.contentInsets = .init(top: 10, leading: 24, bottom: 20, trailing: 24)
                 
                 return section
             case .review:
@@ -162,8 +162,6 @@ final class StatisticsViewController: BaseViewController {
                         alignment: .bottom
                     ))
                 }
-                
-                section.contentInsets = .init(top: 20, leading: 0, bottom: 0, trailing: 0)
                 
                 return section
             }
