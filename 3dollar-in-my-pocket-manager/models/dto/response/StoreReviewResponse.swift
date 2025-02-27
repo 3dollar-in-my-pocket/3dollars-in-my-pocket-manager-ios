@@ -7,7 +7,7 @@ struct StoreReviewResponse: Decodable, Hashable {
     let images: [ImageResponse]
     let status: StoreReviewStatus
     let writer: UserResponse
-    let stickers: [StickerResponse]
+    var stickers: [StickerResponse]
     let comments: ContentListCommentResponse
     let createdAt: String
     let updatedAt: String

@@ -703,6 +703,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		6E1036A22CE89C2E000994D3 /* Message */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Message; sourceTree = "<group>"; };
 		6E1AB1CA2D675EFB009EE0D2 /* ReviewReport */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReviewReport; sourceTree = "<group>"; };
+		6E24470E2D70275A0005DD7F /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
 		6E2A04FC2D3941C6001A1074 /* FeedbackDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = FeedbackDetail; sourceTree = "<group>"; };
 		6E3B65262D5A3696009205EE /* ReviewDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReviewDetail; sourceTree = "<group>"; };
 		6E9DDF212D4DE113006D6599 /* PhotoDetail */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = PhotoDetail; sourceTree = "<group>"; };
@@ -1265,6 +1266,7 @@
 		6EB94EA227CB208F00609E77 /* 3dollar-in-my-pocket-manager */ = {
 			isa = PBXGroup;
 			children = (
+				6E24470E2D70275A0005DD7F /* Service */,
 				6EB5E58B2CE5DC420057993E /* Generated */,
 				6EBC21112C1C878B00C08EE0 /* PreviewMock */,
 				6EBC21062C1C64C700C08EE0 /* Network */,
@@ -1660,6 +1662,7 @@
 			fileSystemSynchronizedGroups = (
 				6E1036A22CE89C2E000994D3 /* Message */,
 				6E1AB1CA2D675EFB009EE0D2 /* ReviewReport */,
+				6E24470E2D70275A0005DD7F /* Service */,
 				6E2A04FC2D3941C6001A1074 /* FeedbackDetail */,
 				6E3B65262D5A3696009205EE /* ReviewDetail */,
 				6E9DDF212D4DE113006D6599 /* PhotoDetail */,

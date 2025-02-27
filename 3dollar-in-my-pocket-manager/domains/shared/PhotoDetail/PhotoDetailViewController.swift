@@ -17,6 +17,7 @@ final class PhotoDetailViewController: BaseViewController {
         collectionView.dataSource = self
         collectionView.register([BaseCollectionViewCell.self, PhotoDetailCell.self])
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     

@@ -55,6 +55,6 @@ struct PostSectionCreateApiRequest: Encodable {
 struct StickerResponse: Decodable, Hashable {
     let stickerId: String
     let emoji: String
-    let count: Int
-    let reactedByMe: Bool
+    var count: Int
+    var reactedByMe: Bool
 }
