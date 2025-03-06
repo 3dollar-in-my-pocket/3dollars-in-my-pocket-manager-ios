@@ -9,11 +9,11 @@ final class StatisticsFeedbackCountCell: BaseCollectionViewCell {
         }
         
         static func calculateCollectionViewHeight(viewModel: StatisticsFeedbackCountCellViewModel) -> CGFloat {
-            var numberOfLines: CGFloat = viewModel.output.statistics.isEmpty ? 0 : 1
+            var numberOfLines: CGFloat = viewModel.output.top3Feedbacks.isEmpty ? 0 : 1
             let screenWidth = UIUtils.windowBounds.width - 80
             var currentWidth: CGFloat = 0
             
-            for feedback in viewModel.output.statistics {
+            for feedback in viewModel.output.top3Feedbacks {
                 guard let feedbackType = viewModel.output.feedbackTypes[feedback.feedbackType] else { continue }
                 let itemWidth = FeedbackCell.Layout.calculateItemSize(feedback, feedbackType: feedbackType).width
                 
@@ -67,7 +67,6 @@ final class StatisticsFeedbackCountCell: BaseCollectionViewCell {
         config.imagePadding = 2
         config.contentInsets = .zero
         let button = UIButton(configuration: config)
-        button.tintColor = .gray50
         return button
     }()
     
@@ -128,8 +127,8 @@ final class StatisticsFeedbackCountCell: BaseCollectionViewCell {
     func bind(viewModel: StatisticsFeedbackCountCellViewModel) {
         self.viewModel = viewModel
         
-        let description = Strings.Statistics.FeedbackCount.description(viewModel.output.reviewCount)
-        let coloredRange = NSString(string: description).range(of: Strings.Statistics.FeedbackCount.Description.colored(viewModel.output.reviewCount))
+        let description = Strings.Statistics.FeedbackCount.description(viewModel.output.feedbackCount)
+        let coloredRange = NSString(string: description).range(of: Strings.Statistics.FeedbackCount.Description.colored(viewModel.output.feedbackCount))
         let style = NSMutableParagraphStyle()
         style.maximumLineHeight = 28
         style.minimumLineHeight = 28
@@ -223,11 +222,11 @@ extension StatisticsFeedbackCountCell {
 
 extension StatisticsFeedbackCountCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel?.output.statistics.count ?? 0
+        return viewModel?.output.top3Feedbacks.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let feedback = viewModel?.output.statistics[safe: indexPath.item],
+        guard let feedback = viewModel?.output.top3Feedbacks[safe: indexPath.item],
               let feedbackType = viewModel?.output.feedbackTypes[feedback.feedbackType] else { return BaseCollectionViewCell() }
         
         let cell: FeedbackCell = collectionView.dequeueReusableCell(indexPath: indexPath)
@@ -238,7 +237,7 @@ extension StatisticsFeedbackCountCell: UICollectionViewDataSource {
 
 extension StatisticsFeedbackCountCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let feedback = viewModel?.output.statistics[safe: indexPath.item],
+        guard let feedback = viewModel?.output.top3Feedbacks[safe: indexPath.item],
               let feedbackType = viewModel?.output.feedbackTypes[feedback.feedbackType] else { return .zero }
         
         return FeedbackCell.Layout.calculateItemSize(feedback, feedbackType: feedbackType)

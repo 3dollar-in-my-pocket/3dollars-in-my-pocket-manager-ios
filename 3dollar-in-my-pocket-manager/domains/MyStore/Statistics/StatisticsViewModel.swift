@@ -47,19 +47,22 @@ extension StatisticsViewModel {
         let reviewRepository: ReviewRepository
         let logManager: LogManagerProtocol
         let preference: Preference
+        let globalEventService: GlobalEventServiceType
         
         init(
             feedbackRepository: FeedbackRepository = FeedbackRepositoryImpl(),
             storeRepository: StoreRepository = StoreRepositoryImpl(),
             reviewRepository: ReviewRepository = ReviewRepositoryImpl(),
             logManager: LogManagerProtocol = LogManager.shared,
-            preference: Preference = .shared
+            preference: Preference = .shared,
+            globalEventService: GlobalEventServiceType = GlobalEventService.shared
         ) {
             self.feedbackRepository = feedbackRepository
             self.storeRepository = storeRepository
             self.reviewRepository = reviewRepository
             self.logManager = logManager
             self.preference = preference
+            self.globalEventService = globalEventService
         }
     }
 }
@@ -78,6 +81,7 @@ final class StatisticsViewModel: BaseViewModel {
         
         bind()
         bindRelay()
+        bindGlobalEvent()
     }
     
     private func bind() {
@@ -125,6 +129,17 @@ final class StatisticsViewModel: BaseViewModel {
             .store(in: &cancellables)
     }
     
+    private func bindGlobalEvent() {
+        dependency.globalEventService.didUpdateReview
+            .withUnretained(self)
+            .sink { (owner: StatisticsViewModel, review: StoreReviewResponse) in
+                guard let targetIndex = owner.state.reviews?.contents.firstIndex(where: { $0.reviewId == review.reviewId }) else { return }
+                owner.state.reviews?.contents[targetIndex] = review
+                owner.output.sections.send(owner.createSections())
+            }
+            .store(in: &cancellables)
+    }
+    
     private func fetchDatas() {
         Task {
             do {
@@ -134,6 +149,7 @@ final class StatisticsViewModel: BaseViewModel {
                 let myStore = try await dependency.storeRepository.fetchMyStore().get()
                 state.store = myStore
                 state.reviews = myStore.reviews
+                state.feedbacks = myStore.feedbacks
                 
                 output.sections.send(createSections())
             } catch {
@@ -158,9 +174,11 @@ final class StatisticsViewModel: BaseViewModel {
             .filter { $0.count > 0 }
             .sorted(by: { $0.count > $1.count })
             .prefix(3)
+        
         let config = StatisticsFeedbackCountCellViewModel.Config(
+            totalFeedbackCount: state.feedbacks.map { $0.count }.reduce(0, +),
             feedbackTypes: state.feedbackTypes,
-            statistics: Array(top3Feedbacks)
+            top3Feedbacks: Array(top3Feedbacks)
         )
         let viewModel = StatisticsFeedbackCountCellViewModel(config: config)
         

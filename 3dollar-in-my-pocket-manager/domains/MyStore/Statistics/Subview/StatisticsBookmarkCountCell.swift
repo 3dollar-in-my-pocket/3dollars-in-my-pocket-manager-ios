@@ -45,7 +45,6 @@ final class StatisticsBookmarkCountCell: BaseCollectionViewCell {
         config.imagePlacement = .trailing
         config.imagePadding = 2
         let button = UIButton(configuration: config)
-        button.tintColor = .gray50
         return button
     }()
     

@@ -1,6 +1,10 @@
 import Combine
 
 extension CommentPresetBottomSheetViewModel {
+    enum Constants {
+        static let maxPresetCount = 5
+    }
+    
     struct Input {
         let didTapPreset = PassthroughSubject<Int, Never>()
         let didTapAddPreset = PassthroughSubject<Void, Never>()
@@ -12,6 +16,7 @@ extension CommentPresetBottomSheetViewModel {
         let reload = PassthroughSubject<Void, Never>()
         let didTapPreset = PassthroughSubject<CommentPresetResponse, Never>()
         let didTapAddPreset = PassthroughSubject<Void, Never>()
+        let enableAddPresetButton: CurrentValueSubject<Bool, Never>
         let route = PassthroughSubject<Route, Never>()
     }
     
@@ -63,7 +68,10 @@ final class CommentPresetBottomSheetViewModel: BaseViewModel {
             return viewModel
         }
         
-        self.output = Output(dataSource: cellViewModels)
+        self.output = Output(
+            dataSource: cellViewModels,
+            enableAddPresetButton: .init(config.presets.count < Constants.maxPresetCount)
+        )
         self.dependency = dependency
         self.state = State(presets: config.presets)
         

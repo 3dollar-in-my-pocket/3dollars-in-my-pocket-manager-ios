@@ -7,14 +7,15 @@ extension StatisticsFeedbackCountCellViewModel {
     
     struct Output {
         let didTapSeeMore = PassthroughSubject<Void, Never>()
-        let reviewCount: Int
+        let feedbackCount: Int
         let feedbackTypes: [FeedbackTypeResponse]
-        let statistics: [FeedbackCountWithRatioResponse]
+        let top3Feedbacks: [FeedbackCountWithRatioResponse]
     }
     
     struct Config {
+        let totalFeedbackCount: Int
         let feedbackTypes: [FeedbackTypeResponse]
-        let statistics: [FeedbackCountWithRatioResponse]
+        let top3Feedbacks: [FeedbackCountWithRatioResponse]
     }
 }
 
@@ -24,11 +25,10 @@ final class StatisticsFeedbackCountCellViewModel: BaseViewModel, Identifiable {
     let output: Output
     
     init(config: Config) {
-        let reviewCount = config.statistics.map { $0.count }.reduce(0, +)
         self.output = Output(
-            reviewCount: reviewCount,
+            feedbackCount: config.totalFeedbackCount,
             feedbackTypes: config.feedbackTypes,
-            statistics: config.statistics
+            top3Feedbacks: config.top3Feedbacks
         )
         
         super.init()

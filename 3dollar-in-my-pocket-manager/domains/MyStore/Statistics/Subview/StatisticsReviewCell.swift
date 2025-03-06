@@ -17,6 +17,12 @@ final class StatisticsReviewCell: BaseCollectionViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        reviewItemView.prepareForReuse()
+    }
+    
     func bind(viewModel: ReviewItemViewModel) {
         self.viewModel = viewModel
         reviewItemView.bind(viewModel: viewModel)

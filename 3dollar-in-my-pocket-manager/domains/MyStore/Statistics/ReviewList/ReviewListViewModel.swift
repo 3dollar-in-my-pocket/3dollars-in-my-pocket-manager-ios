@@ -35,15 +35,18 @@ extension ReviewListViewModel {
         let reviewRepository: ReviewRepository
         let storeRepository: StoreRepository
         let preference: Preference
+        let globalEventService: GlobalEventServiceType
         
         init(
             reviewRepository: ReviewRepository = ReviewRepositoryImpl(),
             storeRepository: StoreRepository = StoreRepositoryImpl(),
-            preference: Preference = .shared
+            preference: Preference = .shared,
+            globalEventService: GlobalEventServiceType = GlobalEventService.shared
         ) {
             self.reviewRepository = reviewRepository
             self.storeRepository = storeRepository
             self.preference = preference
+            self.globalEventService = globalEventService
         }
     }
 }
@@ -53,6 +56,7 @@ final class ReviewListViewModel: BaseViewModel {
     let output = Output()
     private var state = State()
     private let dependency: Dependency
+    private var cancelTaskBag = AnyCancelTaskBag()
     
     init(dependency: Dependency = Dependency()) {
         self.dependency = dependency
@@ -60,6 +64,7 @@ final class ReviewListViewModel: BaseViewModel {
         super.init()
         
         bind()
+        bindGlobalEvent()
     }
     
     private func bind() {
@@ -99,6 +104,17 @@ final class ReviewListViewModel: BaseViewModel {
             .store(in: &cancellables)
     }
     
+    private func bindGlobalEvent() {
+        dependency.globalEventService.didUpdateReview
+            .withUnretained(self)
+            .sink { (owner: ReviewListViewModel, review: StoreReviewResponse) in
+                guard let targetIndex = owner.state.reviews.firstIndex(where: { $0.reviewId == review.reviewId }) else { return }
+                owner.state.reviews[targetIndex] = review
+                owner.output.dataSource.send(owner.createSections())
+            }
+            .store(in: &cancellables)
+    }
+    
     private func loadFirstDatas() {
         Task {
             let storeId = dependency.preference.storeId
@@ -114,7 +130,7 @@ final class ReviewListViewModel: BaseViewModel {
                 
                 state.bossStore = storeResponse
                 state.cursor = reviewResponse.cursor
-                state.reviews += reviewResponse.contents
+                state.reviews += reviewResponse.contents.filter { $0.status != .deleted }
                 output.dataSource.send(createSections())
             } catch {
                 output.route.send(.showErrorAlert(error))
@@ -135,7 +151,7 @@ final class ReviewListViewModel: BaseViewModel {
             switch result {
             case .success(let response):
                 state.cursor = response.cursor
-                state.reviews += response.contents
+                state.reviews += response.contents.filter { $0.status != .deleted }
                 output.dataSource.send(createSections())
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))

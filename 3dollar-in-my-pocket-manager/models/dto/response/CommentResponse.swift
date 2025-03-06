@@ -10,7 +10,7 @@ struct CommentResponse: Decodable, Hashable {
 }
 
 struct ContentListCommentResponse: Decodable, Hashable {
-    let contents: [CommentResponse]
+    var contents: [CommentResponse]
 }
 
 enum CommentStatus: String, Decodable {

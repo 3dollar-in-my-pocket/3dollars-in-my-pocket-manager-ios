@@ -124,6 +124,16 @@ final class CommentPresetBottomSheet: BaseViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.output.enableAddPresetButton
+            .main
+            .withUnretained(self)
+            .sink { (owner: CommentPresetBottomSheet, isEnable: Bool) in
+                owner.addPresetButton.isEnabled = isEnable
+                let backGroundColor = isEnable ? UIColor.green : UIColor.gray30
+                owner.addPresetButton.backgroundColor = backGroundColor
+            }
+            .store(in: &cancellables)
+        
         viewModel.output.route
             .main
             .withUnretained(self)

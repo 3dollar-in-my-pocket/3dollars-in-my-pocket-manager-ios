@@ -1,7 +1,7 @@
 import Foundation
 
 struct ContentListWithCursorAndCount<T: Decodable & Hashable>: Decodable, Hashable {
-    let contents: [T]
+    var contents: [T]
     let cursor: CursorAndCountString
 }
 

@@ -47,11 +47,16 @@ final class ReviewListHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         
         setupUI()
-        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        cancellables.removeAll()
     }
     
     private func setupUI() {
@@ -67,7 +72,11 @@ final class ReviewListHeaderView: UICollectionReusableView {
         }
     }
     
-    private func bind() {
+    func bind(sortType: ReviewSortType) {
+        latestOrderButton.isSelected = sortType == .latest
+        higherRatingOrderButton.isSelected = sortType == .highestRating
+        lowerRatingOrderButton.isSelected = sortType == .lowestRating
+        
         latestOrderButton.tapPublisher
             .map { ReviewSortType.latest }
             .subscribe(didTapSortButton)
@@ -82,12 +91,6 @@ final class ReviewListHeaderView: UICollectionReusableView {
             .map { ReviewSortType.lowestRating }
             .subscribe(didTapSortButton)
             .store(in: &cancellables)
-    }
-    
-    func bind(sortType: ReviewSortType) {
-        latestOrderButton.isSelected = sortType == .latest
-        higherRatingOrderButton.isSelected = sortType == .highestRating
-        lowerRatingOrderButton.isSelected = sortType == .lowestRating
     }
 }
 

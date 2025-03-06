@@ -280,6 +280,7 @@ extension ReviewItemView {
             ]))
             self.configuration = config
             tintColor = .clear
+            backgroundColor = .clear
         }
         
         func bind(count: Int) {

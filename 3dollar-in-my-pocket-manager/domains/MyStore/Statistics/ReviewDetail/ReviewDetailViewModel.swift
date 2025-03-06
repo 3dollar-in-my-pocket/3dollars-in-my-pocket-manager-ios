@@ -54,15 +54,18 @@ extension ReviewDetailViewModel {
     struct Dependency {
         let reviewRepository: ReviewRepository
         let sharedRepository: SharedRepository
+        let globalEventService: GlobalEventServiceType
         let preference: Preference
         
         init(
             reviewRepository: ReviewRepository = ReviewRepositoryImpl(),
             sharedRepository: SharedRepository = SharedRepositoryImpl(),
+            globalEventService: GlobalEventServiceType = GlobalEventService.shared,
             preference: Preference = .shared
         ) {
             self.reviewRepository = reviewRepository
             self.sharedRepository = sharedRepository
+            self.globalEventService = globalEventService
             self.preference = preference
         }
     }
@@ -250,6 +253,11 @@ final class ReviewDetailViewModel: BaseViewModel {
                 ).get()
                 
                 state.commentId = comment.commentId
+                state.review?.comments.contents.append(comment)
+                
+                if let review = state.review {
+                    dependency.globalEventService.didUpdateReview.send(review)
+                }
                 output.comment.send((comment, dependency.preference.storeName))
             } catch {
                 output.route.send(.showErrorAlert(error))
@@ -270,6 +278,10 @@ final class ReviewDetailViewModel: BaseViewModel {
             
             switch result {
             case .success:
+                state.review?.comments.contents.removeAll(where: { $0.commentId == commentId })
+                if let review = state.review {
+                    dependency.globalEventService.didUpdateReview.send(review)
+                }
                 output.comment.send((nil, dependency.preference.storeName))
             case .failure(let error):
                 output.route.send(.showErrorAlert(error))

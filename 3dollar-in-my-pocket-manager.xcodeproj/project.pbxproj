@@ -208,6 +208,7 @@
 		6E8D01342843361700FAB49E /* EditMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01332843361700FAB49E /* EditMenuViewController.swift */; };
 		6E8D013A2843396800FAB49E /* EditMenuItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D01392843396800FAB49E /* EditMenuItemView.swift */; };
 		6E8D013C2843415900FAB49E /* EditMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8D013B2843415900FAB49E /* EditMenuViewModel.swift */; };
+		6E8E746B2D795D77001377A6 /* AnyCancelTaskBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8E746A2D795D77001377A6 /* AnyCancelTaskBag.swift */; };
 		6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F2E27EEBDB7005345BB /* CropViewController */; };
 		6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8E7F3027EEBDB7005345BB /* TOCropViewController */; };
 		6E91A9852841D4B30090361F /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E91A9842841D4B30090361F /* StatisticsViewModel.swift */; };
@@ -565,6 +566,7 @@
 		6E8D01332843361700FAB49E /* EditMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuViewController.swift; sourceTree = "<group>"; };
 		6E8D01392843396800FAB49E /* EditMenuItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuItemView.swift; sourceTree = "<group>"; };
 		6E8D013B2843415900FAB49E /* EditMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMenuViewModel.swift; sourceTree = "<group>"; };
+		6E8E746A2D795D77001377A6 /* AnyCancelTaskBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyCancelTaskBag.swift; sourceTree = "<group>"; };
 		6E91A9842841D4B30090361F /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 		6E91A9922841ED370090361F /* FeedbackGroupingDateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackGroupingDateResponse.swift; sourceTree = "<group>"; };
 		6E974DA52CF2B52600338FF5 /* StoreMessageCreateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreMessageCreateRequest.swift; sourceTree = "<group>"; };
@@ -1599,6 +1601,7 @@
 				6EB5CA932935CB0500B6653C /* JsonUtils.swift */,
 				6EC803242B2C8C2800DA4F5E /* UIUtils.swift */,
 				6E4E9D902C707D2A00C28ACD /* ImageUtil.swift */,
+				6E8E746A2D795D77001377A6 /* AnyCancelTaskBag.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -1902,6 +1905,7 @@
 				6E1C3A102C79992800921337 /* FavoritCountLabel.swift in Sources */,
 				6E408D4027EF2A8D00322365 /* HomeViewModel.swift in Sources */,
 				6EE0CFA527CB573E0027A426 /* KakaoSignInManager.swift in Sources */,
+				6E8E746B2D795D77001377A6 /* AnyCancelTaskBag.swift in Sources */,
 				6E6F98F527DE0BAE001302A6 /* FileType.swift in Sources */,
 				6E1F54A627CB7A130050BBBA /* AuthService.swift in Sources */,
 				6E9FF9032CE83835002DE4E7 /* LogCategory.swift in Sources */,
@@ -2278,7 +2282,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				KAKAO_APP_KEY = b623fd2160694c4c2cb08e64df491d1c;
 				KAKAO_CHANNEL_URL = "http://pf.kakao.com/_RxghUb/chat";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2324,7 +2328,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				KAKAO_APP_KEY = a009e78756eb528bc0e9897b8409a2e4;
 				KAKAO_CHANNEL_URL = "http://pf.kakao.com/_RxghUb/chat";
 				LD_RUNPATH_SEARCH_PATHS = (

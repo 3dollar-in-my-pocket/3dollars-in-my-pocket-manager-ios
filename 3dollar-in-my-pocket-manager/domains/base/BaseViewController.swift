@@ -106,11 +106,11 @@ class BaseViewController: UIViewController {
         var message: String
         switch error {
         case .decodingError:
-            message = "error.unknown".localizable
+            message = "error.unknown".localized
         case .serverError(let errorMessage):
             message = errorMessage
         case .emptyData:
-            message = "error.unknown".localizable
+            message = "error.unknown".localized
         case .errorContainer(let container):
             handleErrorContainer(container)
             return
