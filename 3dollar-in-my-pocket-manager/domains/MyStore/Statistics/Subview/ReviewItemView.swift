@@ -40,6 +40,7 @@ final class ReviewItemView: BaseView {
             ImageItemCell.self,
             BaseCollectionViewCell.self
         ])
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     

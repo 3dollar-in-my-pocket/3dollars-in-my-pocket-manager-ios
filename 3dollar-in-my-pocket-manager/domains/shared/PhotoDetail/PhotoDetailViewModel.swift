@@ -5,12 +5,13 @@ extension PhotoDetailViewModel {
         let didTapPrevious = PassthroughSubject<Void, Never>()
         let didTapNext = PassthroughSubject<Void, Never>()
         let didScroll = PassthroughSubject<Int, Never>()
+        let viewDidAppear = PassthroughSubject<Void, Never>()
     }
     
     struct Output {
         let images: [ImageResponse]
         let currentIndex: CurrentValueSubject<Int, Never>
-        let scrollToIndex: CurrentValueSubject<Int, Never>
+        let scrollToIndex = PassthroughSubject<Int, Never>()
         let isHiddenPrevious: CurrentValueSubject<Bool, Never>
         let isHiddenNext: CurrentValueSubject<Bool, Never>
     }
@@ -29,7 +30,6 @@ final class PhotoDetailViewModel: BaseViewModel {
         self.output = Output(
             images: config.images,
             currentIndex: .init(config.currentIndex),
-            scrollToIndex: .init(config.currentIndex),
             isHiddenPrevious: .init(config.currentIndex == 0),
             isHiddenNext: .init(config.currentIndex == config.images.count - 1)
         )
@@ -81,6 +81,14 @@ final class PhotoDetailViewModel: BaseViewModel {
                 }
                 
                 owner.output.currentIndex.send(index)
+            }
+            .store(in: &cancellables)
+        
+        input.viewDidAppear
+            .withUnretained(self)
+            .sink { (owner: PhotoDetailViewModel, _) in
+                let currentIndex = owner.output.currentIndex.value
+                owner.output.scrollToIndex.send(currentIndex)
             }
             .store(in: &cancellables)
     }

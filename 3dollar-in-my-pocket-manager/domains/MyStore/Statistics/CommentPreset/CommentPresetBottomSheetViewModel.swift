@@ -135,6 +135,8 @@ final class CommentPresetBottomSheetViewModel: BaseViewModel {
             case .success:
                 if let targetIndex = output.dataSource.firstIndex(where: { $0.output.preset == commentPreset }) {
                     output.dataSource.remove(at: targetIndex)
+                    state.presets.remove(at: targetIndex)
+                    output.enableAddPresetButton.send(state.presets.count < Constants.maxPresetCount)
                 }
                 output.reload.send(())
             case .failure(let error):

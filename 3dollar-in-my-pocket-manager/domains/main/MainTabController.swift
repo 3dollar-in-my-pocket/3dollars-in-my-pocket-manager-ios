@@ -46,6 +46,12 @@ final class MainTabController: UITabBarController {
         viewModel.input.firstLoad.send(())
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DeepLinkHandler.shared.handleReservedDeepLink()
+    }
+    
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         self.feedbackGenerator.selectionChanged()
         

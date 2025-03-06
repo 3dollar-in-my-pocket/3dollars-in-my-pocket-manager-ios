@@ -69,6 +69,12 @@ final class PhotoDetailViewController: BaseViewController {
         bind()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.input.viewDidAppear.send(())
+    }
+    
     private func setupUI() {
         view.backgroundColor = .gray100
         view.addSubview(closeButton)
@@ -145,7 +151,6 @@ final class PhotoDetailViewController: BaseViewController {
             .store(in: &cancellables)
         
         viewModel.output.scrollToIndex
-            .first()
             .main
             .withUnretained(self)
             .sink { (owner: PhotoDetailViewController, index: Int) in
@@ -157,21 +162,7 @@ final class PhotoDetailViewController: BaseViewController {
                 }
             }
             .store(in: &cancellables)
-        
-        viewModel.output.scrollToIndex
-            .dropFirst()
-            .main
-            .withUnretained(self)
-            .sink { (owner: PhotoDetailViewController, index: Int) in
-                guard index >= 0, index < owner.viewModel.output.images.count else { return }
                 
-                DispatchQueue.main.async {
-                    let xOffset = CGFloat(index) * PhotoDetailCell.Layout.size.width
-                    owner.collectionView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: true)
-                }
-            }
-            .store(in: &cancellables)
-        
         viewModel.output.isHiddenPrevious
             .main
             .withUnretained(self)

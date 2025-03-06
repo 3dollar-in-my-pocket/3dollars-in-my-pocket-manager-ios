@@ -6,6 +6,10 @@ import netfox
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    static var shared: SceneDelegate? {
+        UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+    }
 
     func scene(
         _ scene: UIScene,
@@ -22,6 +26,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.rootViewController = SplashViewController(viewModel: SplashViewModel())
         window?.makeKeyAndVisible()
+        
+        reserveDeepLinkIfExisted(connectionOptions: connectionOptions)
+        reserveNotificationDeepLinkIfExisted(connectionOptions: connectionOptions)
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -29,6 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if (AuthApi.isKakaoTalkLoginUrl(url)) {
                 _ = AuthController.handleOpenUrl(url: url)
             }
+            DeepLinkHandler.shared.handle(url.absoluteString)
         }
     }
 
@@ -71,8 +79,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func goToMain() {
-        self.window?.rootViewController = MainTabController(viewModel: MainViewModel())
+        let mainTabViewController = MainTabController(viewModel: MainViewModel())
+        let navigationController = UINavigationController(rootViewController: mainTabViewController)
+        navigationController.isNavigationBarHidden = true
+        self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
+    }
+    
+    private func reserveDeepLinkIfExisted(connectionOptions: UIScene.ConnectionOptions) {
+        guard let url = connectionOptions.urlContexts.first?.url else { return }
+        
+        DeepLinkHandler.shared.handle(url.absoluteString)
+    }
+    
+    private func reserveNotificationDeepLinkIfExisted(connectionOptions: UIScene.ConnectionOptions) {
+        guard let userInfo = connectionOptions.notificationResponse?.notification.request.content.userInfo,
+              let deepLink = userInfo["link"] as? String else { return }
+        DeepLinkHandler.shared.handle(deepLink)
     }
 }
 

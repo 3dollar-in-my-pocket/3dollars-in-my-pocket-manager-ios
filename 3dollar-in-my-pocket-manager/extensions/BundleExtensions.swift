@@ -40,4 +40,8 @@ extension Bundle {
         
         return identifier
     }
+    
+    static var deeplinkScheme: String {
+        return Bundle.main.infoDictionary?["DEEP_LINK_SCHEME"] as? String ?? ""
+    }
 }

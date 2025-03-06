@@ -715,6 +715,7 @@
 		6EDEA7852CF1F2110057869A /* SendingMessage */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SendingMessage; sourceTree = "<group>"; };
 		6EE910AB2D69BBD10004F17A /* CommentPreset */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CommentPreset; sourceTree = "<group>"; };
 		6EE9AC632D4F3BCC004AC135 /* ReviewList */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReviewList; sourceTree = "<group>"; };
+		6EF115C42D79E436007187BF /* DeepLink */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DeepLink; sourceTree = "<group>"; };
 		6EF698382CF4B9BA00DC9698 /* ConfirmMessage */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ConfirmMessage; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -1512,6 +1513,7 @@
 		6EE0CF9B27CB54A70027A426 /* managers */ = {
 			isa = PBXGroup;
 			children = (
+				6EF115C42D79E436007187BF /* DeepLink */,
 				6E37EA602C6F7BC000BDCDE8 /* Toast */,
 				6E0EB1F02C55126B008A5766 /* log */,
 				6E25FED427F5362A00BE2941 /* location */,
@@ -1675,6 +1677,7 @@
 				6EDEA7852CF1F2110057869A /* SendingMessage */,
 				6EE910AB2D69BBD10004F17A /* CommentPreset */,
 				6EE9AC632D4F3BCC004AC135 /* ReviewList */,
+				6EF115C42D79E436007187BF /* DeepLink */,
 				6EF698382CF4B9BA00DC9698 /* ConfirmMessage */,
 			);
 			name = "3dollar-in-my-pocket-manager";
@@ -2265,6 +2268,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEEP_LINK_SCHEME = "dollars-manager-dev";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
@@ -2311,13 +2315,14 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEEP_LINK_SCHEME = "dollars-manager";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = X975A2HM62;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "3dollar-in-my-pocket-manager/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님";
+				INFOPLIST_KEY_CFBundleDisplayName = "가슴속3천원 사장님-Dev";
 				INFOPLIST_KEY_NSCameraUsageDescription = "가게 인증 사진을 촬영하기 위해 카메라를 허용해주세요.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "주변 가게 조회와 사장님 위치 조회 및 저장을 위하여 위치 권한이 필요합니다😄";

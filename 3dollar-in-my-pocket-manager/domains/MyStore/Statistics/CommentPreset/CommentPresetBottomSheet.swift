@@ -113,6 +113,15 @@ final class CommentPresetBottomSheet: BaseViewController {
             .subscribe(viewModel.input.didTapAddPreset)
             .store(in: &cancellables)
         
+        closeButton.tapPublisher
+            .main
+            .throttleClick()
+            .withUnretained(self)
+            .sink { (owner: CommentPresetBottomSheet, _) in
+                owner.dismiss(animated: true)
+            }
+            .store(in: &cancellables)
+        
         // Output
         viewModel.output.reload
             .main

@@ -97,25 +97,18 @@ final class StatisticsFilterButton: BaseView {
     }
     
     private func bind() {
-        totalButton.tapPublisher
-            .main
-            .map { FilterType.total }
-            .withUnretained(self)
-            .sink(receiveValue: { (owner: StatisticsFilterButton, filterType: FilterType) in
-                owner.selectButton(type: filterType)
-                owner.tapPublisher.send(filterType)
-            })
-            .store(in: &cancellables)
-        
-        dayButton.tapPublisher
-            .main
-            .map { FilterType.day }
-            .withUnretained(self)
-            .sink(receiveValue: { (owner: StatisticsFilterButton, filterType: FilterType) in
-                owner.selectButton(type: filterType)
-                owner.tapPublisher.send(filterType)
-            })
-            .store(in: &cancellables)
+        Publishers.Merge(
+            totalButton.tapPublisher.map { FilterType.total },
+            dayButton.tapPublisher.map { FilterType.day }
+        )
+        .throttle(for: .milliseconds(500), scheduler: DispatchQueue.main, latest: false)
+        .main
+        .withUnretained(self)
+        .sink(receiveValue: { (owner: StatisticsFilterButton, filterType: FilterType) in
+            owner.selectButton(type: filterType)
+            owner.tapPublisher.send(filterType)
+        })
+        .store(in: &cancellables)
     }
     
     private func selectButton(type: FilterType) {
