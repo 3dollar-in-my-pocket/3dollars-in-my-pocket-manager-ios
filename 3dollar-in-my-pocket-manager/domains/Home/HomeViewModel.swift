@@ -11,8 +11,7 @@ extension HomeViewModel {
     }
     
     struct Input {
-        let firstLoad = PassthroughSubject<Void, Never>()
-        let viewWillAppear = PassthroughSubject<Void, Never>()
+        let load = PassthroughSubject<Void, Never>()
         let didTapShowOtherStore = PassthroughSubject<Void, Never>()
         let didTapCurrentLocation = PassthroughSubject<Void, Never>()
         let didTapSalesToggle = PassthroughSubject<Void, Never>()
@@ -42,6 +41,7 @@ extension HomeViewModel {
         let locationManager: CLLocationManager
         var preference: Preference
         let logManager: LogManagerProtocol
+        let globalEventService: GlobalEventServiceType
         
         init(
             mapRepository: MapRepository = MapRepositoryImpl(),
@@ -49,7 +49,8 @@ extension HomeViewModel {
             preferenceRepository: PreferenceRepository = PreferenceRepositoryImpl(),
             locationManager: CLLocationManager = CLLocationManager(),
             preference: Preference = Preference.shared,
-            logManager: LogManagerProtocol = LogManager.shared
+            logManager: LogManagerProtocol = LogManager.shared,
+            globalEventService: GlobalEventServiceType = GlobalEventService.shared
         ) {
             self.mapRepository = mapRepository
             self.storeRepository = storeRepository
@@ -57,6 +58,7 @@ extension HomeViewModel {
             self.locationManager = locationManager
             self.preference = preference
             self.logManager = logManager
+            self.globalEventService = globalEventService
         }
     }
     
@@ -81,11 +83,12 @@ final class HomeViewModel: BaseViewModel {
     }
     
     private func bind() {
-        input.firstLoad
+        input.load
             .withUnretained(self)
             .sink { (owner: HomeViewModel, _) in
                 owner.fetchCurrentLocation()
                 owner.fetchMyStoreInfo()
+                owner.fetchPreference()
             }
             .store(in: &cancellables)
         
@@ -145,14 +148,6 @@ final class HomeViewModel: BaseViewModel {
         input.didTapOperationSetting
             .map { Route.pushOperationSetting }
             .subscribe(output.route)
-            .store(in: &cancellables)
-        
-        input.viewWillAppear
-            .dropFirst()
-            .withUnretained(self)
-            .sink { (owner: HomeViewModel, _) in
-                owner.fetchPreference()
-            }
             .store(in: &cancellables)
     }
     

@@ -44,13 +44,12 @@ final class HomeViewController: BaseViewController {
         
         bind()
         homeView.mapView.addCameraDelegate(delegate: self)
-        viewModel.input.firstLoad.send(())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        viewModel.input.viewWillAppear.send(())
+        viewModel.input.load.send(())
     }
     
     private func bind() {

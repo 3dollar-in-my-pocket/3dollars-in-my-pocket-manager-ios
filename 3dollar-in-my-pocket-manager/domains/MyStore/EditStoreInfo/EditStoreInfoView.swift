@@ -70,6 +70,7 @@ final class EditStoreInfoView: BaseView {
     let buttonBackgroundView = UIView()
     
     private var originalBottomInset: CGFloat = 0
+    private var isKeyboardShown = false
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -78,18 +79,17 @@ final class EditStoreInfoView: BaseView {
     override func setup() {
         setupKeyboardEvent()
         setupLayout()
-        
-        self.tapBackground.rx.event
-            .map { _ in Void() }
-            .asDriver(onErrorJustReturn: ())
-            .drive(onNext: { [weak self] in
-                self?.endEditing(true)
-            })
-            .disposed(by: self.disposeBag)
+        bindEvent()
+    }
+    
+    private func bindEvent() {
+        tapBackground.addTarget(self, action: #selector(didTapBackground))
+        tapBackground.cancelsTouchesInView = false
     }
     
     private func setupLayout() {
         backgroundColor = .gray0
+        addGestureRecognizer(tapBackground)
         
         addSubview(backButton)
         backButton.snp.makeConstraints {
@@ -188,14 +188,17 @@ final class EditStoreInfoView: BaseView {
     }
     
     @objc func onShowKeyboard(notification: Notification) {
+        guard isKeyboardShown.isNot else { return }
         let keyboardHeight = mapNotificationToKeyboardHeight(notification: notification)
         let inset = keyboardHeight > 0 ? (keyboardHeight - safeAreaInsets.bottom) : 0
         originalBottomInset = scrollView.contentInset.bottom
         scrollView.contentInset.bottom += inset
+        isKeyboardShown = true
     }
     
     @objc func onHideKeyboard(notification: Notification) {
         scrollView.contentInset.bottom = originalBottomInset
+        isKeyboardShown = false
     }
     
     private func mapNotificationToKeyboardHeight(notification: Notification) -> CGFloat {
@@ -206,5 +209,9 @@ final class EditStoreInfoView: BaseView {
         } else {
             return 0
         }
+    }
+    
+    @objc func didTapBackground() {
+        endEditing(true)
     }
 }
