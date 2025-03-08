@@ -115,6 +115,7 @@
 		6E5640592D5CCB6700E7D88D /* ReviewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5640582D5CCB6700E7D88D /* ReviewItemViewModel.swift */; };
 		6E5678C1285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5678C0285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift */; };
 		6E5770DC2D5A3B5A00702115 /* ReviewItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5770DB2D5A3B5A00702115 /* ReviewItemView.swift */; };
+		6E5A5F012D7BD2C00007A819 /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5A5F002D7BD2C00007A819 /* CommentView.swift */; };
 		6E5D8895288B7A2400DE811A /* splash.json in Resources */ = {isa = PBXBuildFile; fileRef = 6E5D8894288B7A2400DE811A /* splash.json */; };
 		6E5DCE5D27FDAE0000CA58EE /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DCE5C27FDAE0000CA58EE /* MapService.swift */; };
 		6E5DCE5F27FDB00200CA58EE /* NaverMapResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5DCE5E27FDB00200CA58EE /* NaverMapResponse.swift */; };
@@ -476,6 +477,7 @@
 		6E5640582D5CCB6700E7D88D /* ReviewItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewItemViewModel.swift; sourceTree = "<group>"; };
 		6E5678C0285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStoreInfoMenuEmptyCell.swift; sourceTree = "<group>"; };
 		6E5770DB2D5A3B5A00702115 /* ReviewItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewItemView.swift; sourceTree = "<group>"; };
+		6E5A5F002D7BD2C00007A819 /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
 		6E5D8894288B7A2400DE811A /* splash.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash.json; sourceTree = "<group>"; };
 		6E5DCE5C27FDAE0000CA58EE /* MapService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapService.swift; sourceTree = "<group>"; };
 		6E5DCE5E27FDB00200CA58EE /* NaverMapResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverMapResponse.swift; sourceTree = "<group>"; };
@@ -1371,6 +1373,7 @@
 				6E80E6EB2D47115D008E1B3F /* StatisticsReviewCell.swift */,
 				6E5770DB2D5A3B5A00702115 /* ReviewItemView.swift */,
 				6E5640582D5CCB6700E7D88D /* ReviewItemViewModel.swift */,
+				6E5A5F002D7BD2C00007A819 /* CommentView.swift */,
 			);
 			path = Subview;
 			sourceTree = "<group>";
@@ -1975,6 +1978,7 @@
 				6EE2624727DDB9F2008B3531 /* SignupCoordinator.swift in Sources */,
 				6E360F212C27F89F008A4868 /* UploadPhotoCell.swift in Sources */,
 				6E2D40722C5DB5330074489E /* MapRepository.swift in Sources */,
+				6E5A5F012D7BD2C00007A819 /* CommentView.swift in Sources */,
 				6EA53BA0284DD766007A3839 /* SettingReactor.swift in Sources */,
 				6EF676B127EEC91E00D43E99 /* BossWithSettingsResponse.swift in Sources */,
 				6EFB2F08285A098D006E37F9 /* FeedbackTypeResponse.swift in Sources */,
