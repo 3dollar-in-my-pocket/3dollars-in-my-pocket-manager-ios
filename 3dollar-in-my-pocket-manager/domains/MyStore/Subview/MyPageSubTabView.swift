@@ -90,14 +90,11 @@ final class MyPageSubTabView: BaseView {
             .map { MyPageSubTabType.message }
         
         Publishers.Merge4(didTapInfo, didTapStatistics, didTapStoreNotice, didTapMessage)
-            .handleEvents(receiveOutput: { [weak self] tabType in
-                self?.selectButton(tabType)
-            })
             .subscribe(didTapPublisher)
             .store(in: &cancellables)
     }
     
-    private func selectButton(_ tabType: MyPageSubTabType) {
+    func selectButton(_ tabType: MyPageSubTabType) {
         infoButton.isSelected = tabType == .info
         statisticsButton.isSelected = tabType == .statistics
         storeNoticeButton.isSelected = tabType == .notice

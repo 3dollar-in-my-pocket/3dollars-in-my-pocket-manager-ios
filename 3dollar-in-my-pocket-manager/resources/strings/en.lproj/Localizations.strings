@@ -165,6 +165,26 @@
 "statistics_filter_total" = "전체";
 "statistics_filter_day" = "일별";
 "statistics_review_count" = "리뷰가 사장님께 도착했어요 :)";
+"statistics.bookmark_count.title" = "북마크";
+"statistics.bookmark_count.message" = "메세지 보내기";
+"statistics.bookmark_count.description" = "%d명의 고객이 사장님의 가게를\n북마크 했습니다!";
+"statistics.bookmark_count.description.colord" = "%d명";
+"statistics.feedback_count.title" = "피드백 평가";
+"statistics.feedback_count.see_more" = "전체보기";
+"statistics.feedback_count.description" = "%d개의 피드백 평가";
+"statistics.feedback_count.description.colored" = "%d개";
+"statistics.feedback_count.item.count_format" = "%d개";
+"statistics.review.empty.title" = "등록된 리뷰가 없어요";
+"statistics.review.total_review" = "리뷰 전체 보기";
+"statistics.review.header.title" = "리뷰";
+"statistics.review.header.count_format" = "%d개";
+
+// Review List
+"review_list.like" = "좋아요";
+"review_list.like_count_format" = "좋아요 %d";
+"review_list.sort_type.latest" = "최신순";
+"review_list.sort_type.higher_rating" = "별점 높은순";
+"review_list.sort_type.lower_rating" = "별점 낮은순";
 
 // Seting
 "setting_title" = "설정";
@@ -232,3 +252,43 @@
 "delete_account.delete" = "삭제";
 "delete_account.cancel" = "닫기";
 "delete_account.toast" = "계좌번호가 삭제되었습니다";
+
+// MARK: FeedbackDetail
+"feedback_detail.title" = "피드백 평가";
+
+// MARK: ReviewDetail
+"review_detail.comment_input.placeholder" = "소중한 리뷰 감사드립니다!";
+"review_detail.comment_input.title" = "리뷰에 답글을 달아주세요!";
+"review_detail.comment_input.description" = "부적절한 내용의 답글일 경우 삭제될 수 있습니다.";
+"review_detail.comment_input.warning" = "*최소 10자에서 최대 300자 이내로 입력해 주세요.";
+"review_detail.comment_input.macro" = "자주 쓰는 문구";
+"review_detail.comment.delete_comment" = "답글 삭제하기";
+"review_detail.comment" = "답글 등록하기";
+"review_detail.report" = "신고하기";
+"review_detail.alert.delete" = "리뷰 댓글을 삭제하시겠습니까?\n삭제 후 댓글을 다시 작성할 수 있습니다.";
+
+// MARK: ReviewList
+"review_list.title" = "리뷰";
+
+// MARK: ReviewReportBottomSheet
+"review_report_bottom_sheet.placeholder" = "신고사유 입력";
+"review_report_bottom_sheet.title" = "신고사유를 입력해주세요.";
+"review_report_bottom_sheet.subtitle" = "관리자 판단 후 리뷰를 삭제해드립니다.";
+"review_report_bottom_sheet.info" = "*최소 10자에서 최대 300자 이내로 입력해 주세요.";
+"review_report_bottom_sheet.report" = "신고하기";
+"review_report_bottom_sheet.toast.report" = "리뷰를 신고했습니다.";
+
+// MARK: CommentPresetBottomSheet
+"comment_preset_bottom_sheet.empty.title" = "자주 사용하는 문구를 등록하면\n편리하고 빠르게 답글을 달 수 있어요!";
+"comment_preset_bottom_sheet.title" = "자주 쓰는 문구";
+"comment_preset_bottom_sheet.add_preset" = "문구 추가";
+"comment_preset_bottom_sheet.delete" = "삭제하기";
+"comment_preset_bottom_sheet.edit" = "수정하기";
+"comment_preset_bottom_sheet.delete_alert" = "문구를 삭제하시겠습니까?";
+
+// MARK: AddCommentPresetBottomSheet
+"add_comment_preset_bottom_sheet.add_title" = "자주 쓰는 문구 추가";
+"add_comment_preset_bottom_sheet.edit_title" = "자주 쓰는 문구 수정";
+"add_comment_preset_bottom_sheet.placeholder" = "자주 쓰는 문구를 입력해주세요!";
+"add_comment_preset_bottom_sheet.add" = "문구 추가";
+"add_comment_preset_bottom_sheet.edit" = "문구 수정";

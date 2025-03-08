@@ -131,6 +131,14 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler(UIBackgroundFetchResult.newData)
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let deepLink = userInfo["link"] as? String {
+            DeepLinkHandler.shared.handle(deepLink)
+        }
+    }
+    
     private func renewStore() {
         let storeId = Preference.shared.storeId
         guard !storeId.isEmpty else {
