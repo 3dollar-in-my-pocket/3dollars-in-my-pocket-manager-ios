@@ -12,6 +12,7 @@ extension MyPageViewModel {
         let showNewBadge = PassthroughSubject<Void, Never>()
         let showMessageTooptip = PassthroughSubject<Bool, Never>()
         let pageViewControllerIndex = CurrentValueSubject<Int, Never>(0)
+        let selectSubTab = PassthroughSubject<MyPageSubTabType, Never>()
     }
     
     struct State {
@@ -32,6 +33,7 @@ extension MyPageViewModel {
 final class MyPageViewModel: BaseViewModel {
     let input = Input()
     let output = Output()
+    let statisticsViewModel = StatisticsViewModel()
     private var state: State
     private var dependency: Dependency
     
@@ -40,6 +42,7 @@ final class MyPageViewModel: BaseViewModel {
         self.dependency = dependency
         super.init()
         bind()
+        bindStatisticsViewModel()
     }
     
     private func bind() {
@@ -62,6 +65,7 @@ final class MyPageViewModel: BaseViewModel {
             .sink { (owner: MyPageViewModel, subTab: MyPageSubTabType) in
                 guard let selectedIndex = owner.state.subTabs.firstIndex(of: subTab) else { return }
                 owner.output.pageViewControllerIndex.send(selectedIndex)
+                owner.output.selectSubTab.send(subTab)
                 owner.sendClickSubTabLog(subTab)
                 
                 if subTab == .message {
@@ -70,6 +74,13 @@ final class MyPageViewModel: BaseViewModel {
                 }
             }
             .store(in: &cancellables)
+    }
+    
+    private func bindStatisticsViewModel() {
+        statisticsViewModel.output.didTapMessage
+            .map { MyPageSubTabType.message }
+            .subscribe(input.didTapSubTab)
+            .store(in: &statisticsViewModel.cancellables)
     }
     
     private func showMessageBadgeIfNeeded() {

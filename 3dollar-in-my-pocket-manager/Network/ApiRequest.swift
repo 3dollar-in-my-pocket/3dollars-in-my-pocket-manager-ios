@@ -25,7 +25,7 @@ extension ApiRequest {
             baseUrl + path,
             method: method,
             parameters: parameters,
-            encoding: (method == .post) || (method == .patch) ? JSONEncoding.default : URLEncoding.default,
+            encoding: (method == .post) || (method == .patch) || (method == .put) ? JSONEncoding.default : URLEncoding.default,
             headers: headers
         )
     }

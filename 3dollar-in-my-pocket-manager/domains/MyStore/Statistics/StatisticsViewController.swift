@@ -3,19 +3,12 @@ import UIKit
 import CombineCocoa
 
 final class StatisticsViewController: BaseViewController {
+    private let refreshControl = UIRefreshControl()
+    
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+
     private let viewModel: StatisticsViewModel
-    private let statisticsView = StatisticsView()
-    
-    private let pageViewController = UIPageViewController(
-        transitionStyle: .scroll,
-        navigationOrientation: .horizontal,
-        options: nil
-    )
-    private var pageViewControllers: [UIViewController] = []
-    
-    private var totalStatisticsViewController: TotalStatisticsViewController?
-    private var dailyStatisticsViewController: DailyStatisticsViewController?
-    
+    private lazy var dataSource = StatisticsDataSource(collectionView: collectionView, viewModel: viewModel)
     private var isRefreshing = false
     
     init(viewModel: StatisticsViewModel) {
@@ -36,22 +29,29 @@ final class StatisticsViewController: BaseViewController {
         return .darkContent
     }
     
-    override func loadView() {
-        view = statisticsView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
         bind()
         
-        statisticsView.scrollView.delegate = self
         viewModel.input.viewDidLoad.send(())
+    }
+    
+    private func setupUI() {
+        collectionView.refreshControl = refreshControl
+        collectionView.delegate = self
+        collectionView.showsVerticalScrollIndicator = false
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .gray0
+        collectionView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     private func bind() {
         // Input
-        statisticsView.refreshControl.isRefreshingPublisher
+        refreshControl.isRefreshingPublisher
             .filter { $0 }
             .withUnretained(self)
             .sink { (owner: StatisticsViewController, _) in
@@ -59,146 +59,167 @@ final class StatisticsViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
-        statisticsView.filterButton.tapPublisher
-            .removeDuplicates()
-            .subscribe(viewModel.input.didTapFilter)
-            .store(in: &cancellables)
-        
         // Output
-        viewModel.output.subscriberCount
+        viewModel.output.sections
             .main
             .withUnretained(self)
-            .sink { (owner: StatisticsViewController, subscriberCount: Int) in
-                owner.statisticsView.favoriteCountLabel.bind(subscriberCount)
+            .sink { (owner: StatisticsViewController, sections: [StatisticsSection]) in
+                owner.dataSource.reload(sections)
             }
             .store(in: &cancellables)
         
-        viewModel.output.totalReviewCount
+        viewModel.output.route
             .main
             .withUnretained(self)
-            .sink { (owner: StatisticsViewController, reviewCount: Int) in
-                owner.statisticsView.reviewCountLabel.bind(reviewCount)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.setPageViewController
-            .main
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, viewModels) in
-                let (totalStatisticsViewModel, dailyStatisticsViewModel) = viewModels
-                let selectedFilter = owner.viewModel.output.filter.value
-                owner.setupPageViewController(
-                    totalStatisticsViewModel: totalStatisticsViewModel,
-                    dailyStatisticsViewModel: dailyStatisticsViewModel,
-                    selectedFilter: selectedFilter
-                )
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.filter
-            .dropFirst()
-            .main
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, filterType: StatisticsFilterButton.FilterType) in
-                owner.setPage(filterType: filterType)
-            }
-            .store(in: &cancellables)
-        
-        viewModel.output.updateContainerHeight
-            .main
-            .withUnretained(self)
-            .sink { (owner: StatisticsViewController, height: CGFloat) in
-                owner.statisticsView.updateContainerHeight(height)
+            .sink { (owner: StatisticsViewController, route: StatisticsViewModel.Route) in
+                owner.handleRoute(route)
             }
             .store(in: &cancellables)
     }
     
-    private func setupPageViewController(
-        totalStatisticsViewModel: TotalStatisticsViewModel,
-        dailyStatisticsViewModel: DailyStatisticsViewModel,
-        selectedFilter: StatisticsFilterButton.FilterType
-    ) {
-        let totalStatisticsViewController = TotalStatisticsViewController(viewModel: totalStatisticsViewModel)
-        self.totalStatisticsViewController = totalStatisticsViewController
-        
-        let dailyStatisticsViewController = DailyStatisticsViewController(viewModel: dailyStatisticsViewModel)
-        self.dailyStatisticsViewController = dailyStatisticsViewController
-        
-        pageViewControllers.removeAll()
-        pageViewControllers = [
-            totalStatisticsViewController,
-            dailyStatisticsViewController
-        ]
-        if pageViewController.parent.isNil {
-            addChild(pageViewController)
-            statisticsView.containerView.addSubview(pageViewController.view)
-            pageViewController.view.snp.makeConstraints {
-                $0.edges.equalTo(statisticsView.containerView)
-            }
-        }
-        
-        pageViewController.delegate = self
-        pageViewController.dataSource = self
-        
-        var selectedViewController: UIViewController
-        switch selectedFilter {
-        case .total:
-            selectedViewController = totalStatisticsViewController
-        case .day:
-            selectedViewController = dailyStatisticsViewController
-        }
-        
-        pageViewController.setViewControllers(
-            [selectedViewController],
-            direction: .forward,
-            animated: false,
-            completion: nil
-        )
-    }
     
-    private func setPage(filterType: StatisticsFilterButton.FilterType) {
-        switch filterType {
-        case .total:
-            pageViewController.setViewControllers(
-                [pageViewControllers[0]],
-                direction: .forward,
-                animated: false,
-                completion: nil
-            )
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
+        return UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
+            guard let self,
+                  let sectionType = dataSource.sectionIdentifier(section: sectionIndex)?.type else {
+                fatalError("정의되지 않은 섹션입니다.")
+            }
             
-        case .day:
-            pageViewController.setViewControllers(
-                [pageViewControllers[1]],
-                direction: .forward,
-                animated: false,
-                completion: nil
-            )
+            switch sectionType {
+            case .bookmark:
+                let item = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(StatisticsBookmarkCountCell.Layout.height)
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(StatisticsBookmarkCountCell.Layout.height)
+                ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(top: 0, leading: 24, bottom: 0, trailing: 24)
+                
+                return section
+            case .feedback:
+                let indexPath = IndexPath(item: 0, section: sectionIndex)
+                guard case .feedback(let viewModel) = dataSource[indexPath] else { fatalError() }
+                
+                let item = NSCollectionLayoutItem(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(StatisticsFeedbackCountCell.Layout.calculateHeight(viewModel: viewModel))
+                ))
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .absolute(StatisticsFeedbackCountCell.Layout.calculateHeight(viewModel: viewModel))
+                ), subitems: [item])
+                let section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(top: 10, leading: 24, bottom: 20, trailing: 24)
+                
+                return section
+            case .review:
+                guard let sectionIdentifier = dataSource.sectionIdentifier(section: sectionIndex) else { fatalError() }
+                let item: NSCollectionLayoutItem
+                let group: NSCollectionLayoutGroup
+                let section: NSCollectionLayoutSection
+                
+                if sectionIdentifier.items.isEmpty {
+                    item = NSCollectionLayoutItem(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(StatisticsReviewEmptyCell.Layout.height)
+                    ))
+                    group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(StatisticsReviewEmptyCell.Layout.height)
+                    ), subitems: [item])
+                    section = NSCollectionLayoutSection(group: group)
+                } else {
+                    item = NSCollectionLayoutItem(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(StatisticsReviewCell.Layout.estimatedHeight)
+                    ))
+                    group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(StatisticsReviewCell.Layout.estimatedHeight)
+                    ), subitems: [item])
+                    section = NSCollectionLayoutSection(group: group)
+                }
+                
+                section.boundarySupplementaryItems = [.init(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .absolute(StatisticsReviewHeaderView.Layout.height)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )]
+                
+                if sectionIdentifier.items.isNotEmpty {
+                    section.boundarySupplementaryItems.append(.init(
+                        layoutSize: .init(
+                            widthDimension: .fractionalWidth(1),
+                            heightDimension: .absolute(StatisticsReviewFooterView.Layout.height)
+                        ),
+                        elementKind: UICollectionView.elementKindSectionFooter,
+                        alignment: .bottom
+                    ))
+                }
+                
+                return section
+            }
         }
     }
 }
 
-extension StatisticsViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerBefore viewController: UIViewController
-    ) -> UIViewController? {
-        return nil
+// MARK: Route
+extension StatisticsViewController {
+    private func handleRoute(_ route: StatisticsViewModel.Route) {
+        switch route {
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        case .pushFeedbackDetail(let viewModel):
+            pushFeedbackDetail(viewModel: viewModel)
+        case .presentPhotoDetail(let viewModel):
+            presentPhotoDetail(viewModel: viewModel)
+        case .pushReviewList(let viewModel):
+            pushReviewList(viewModel: viewModel)
+        case .pushReviewDetail(let viewModel):
+            pushReviewDetail(viewModel: viewModel)
+        }
     }
     
-    func pageViewController(
-        _ pageViewController: UIPageViewController,
-        viewControllerAfter viewController: UIViewController
-    ) -> UIViewController? {
-        return nil
+    private func pushFeedbackDetail(viewModel: FeedbackDetailViewModel) {
+        let viewController = FeedbackDetailViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func presentPhotoDetail(viewModel: PhotoDetailViewModel) {
+        let viewController = PhotoDetailViewController(viewModel: viewModel)
+        present(viewController, animated: true, completion: nil)
+    }
+    
+    private func pushReviewList(viewModel: ReviewListViewModel) {
+        let viewController = ReviewListViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func pushReviewDetail(viewModel: ReviewDetailViewModel) {
+        let viewController = ReviewDetailViewController(viewModel: viewModel)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
-extension StatisticsViewController: UIScrollViewDelegate {
+extension StatisticsViewController: UICollectionViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if isRefreshing {
             viewModel.input.refresh.send(())
             isRefreshing = false
-            statisticsView.refreshControl.endRefreshing()
+            refreshControl.endRefreshing()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let sectionType = dataSource.sectionIdentifier(section: indexPath.section)?.type,
+              case .review = sectionType else { return }
+        
+        viewModel.input.didTapReview.send(indexPath.item)
     }
 }

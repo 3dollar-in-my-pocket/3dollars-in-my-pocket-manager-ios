@@ -255,6 +255,35 @@ internal enum Strings {
   internal static let waitingTitle = Strings.tr("Localizations", "waiting_title", fallback: "신청 완료!")
   /// 수요일
   internal static let wednesdayFull = Strings.tr("Localizations", "wednesday_full", fallback: "수요일")
+  internal enum AddCommentPresetBottomSheet {
+    /// 문구 추가
+    internal static let add = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.add", fallback: "문구 추가")
+    /// 자주 쓰는 문구 추가
+    internal static let addTitle = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.add_title", fallback: "자주 쓰는 문구 추가")
+    /// 문구 수정
+    internal static let edit = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.edit", fallback: "문구 수정")
+    /// 자주 쓰는 문구 수정
+    internal static let editTitle = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.edit_title", fallback: "자주 쓰는 문구 수정")
+    /// 자주 쓰는 문구를 입력해주세요!
+    internal static let placeholder = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.placeholder", fallback: "자주 쓰는 문구를 입력해주세요!")
+  }
+  internal enum CommentPresetBottomSheet {
+    /// 문구 추가
+    internal static let addPreset = Strings.tr("Localizations", "comment_preset_bottom_sheet.add_preset", fallback: "문구 추가")
+    /// 삭제하기
+    internal static let delete = Strings.tr("Localizations", "comment_preset_bottom_sheet.delete", fallback: "삭제하기")
+    /// 문구를 삭제하시겠습니까?
+    internal static let deleteAlert = Strings.tr("Localizations", "comment_preset_bottom_sheet.delete_alert", fallback: "문구를 삭제하시겠습니까?")
+    /// 수정하기
+    internal static let edit = Strings.tr("Localizations", "comment_preset_bottom_sheet.edit", fallback: "수정하기")
+    /// 자주 쓰는 문구
+    internal static let title = Strings.tr("Localizations", "comment_preset_bottom_sheet.title", fallback: "자주 쓰는 문구")
+    internal enum Empty {
+      /// 자주 사용하는 문구를 등록하면
+      /// 편리하고 빠르게 답글을 달 수 있어요!
+      internal static let title = Strings.tr("Localizations", "comment_preset_bottom_sheet.empty.title", fallback: "자주 사용하는 문구를 등록하면\n편리하고 빠르게 답글을 달 수 있어요!")
+    }
+  }
   internal enum Common {
     /// 앨범
     internal static let album = Strings.tr("Localizations", "common.album", fallback: "앨범")
@@ -347,6 +376,10 @@ internal enum Strings {
       /// 사진은 최대 10장까지 등록 가능합니다
       internal static let maximumPhoto = Strings.tr("Localizations", "edit_store_info.toast.maximum_photo", fallback: "사진은 최대 10장까지 등록 가능합니다")
     }
+  }
+  internal enum FeedbackDetail {
+    /// 피드백 평가
+    internal static let title = Strings.tr("Localizations", "feedback_detail.title", fallback: "피드백 평가")
   }
   internal enum Location {
     internal enum Deny {
@@ -474,6 +507,67 @@ internal enum Strings {
       internal static let title = Strings.tr("Localizations", "preference.remove_location_on_close.title", fallback: "영업 종료 시 위치 노출")
     }
   }
+  internal enum ReviewDetail {
+    /// 답글 등록하기
+    internal static let comment = Strings.tr("Localizations", "review_detail.comment", fallback: "답글 등록하기")
+    /// 신고하기
+    internal static let report = Strings.tr("Localizations", "review_detail.report", fallback: "신고하기")
+    internal enum Alert {
+      /// 리뷰 댓글을 삭제하시겠습니까?
+      /// 삭제 후 댓글을 다시 작성할 수 있습니다.
+      internal static let delete = Strings.tr("Localizations", "review_detail.alert.delete", fallback: "리뷰 댓글을 삭제하시겠습니까?\n삭제 후 댓글을 다시 작성할 수 있습니다.")
+    }
+    internal enum Comment {
+      /// 답글 삭제하기
+      internal static let deleteComment = Strings.tr("Localizations", "review_detail.comment.delete_comment", fallback: "답글 삭제하기")
+    }
+    internal enum CommentInput {
+      /// 부적절한 내용의 답글일 경우 삭제될 수 있습니다.
+      internal static let description = Strings.tr("Localizations", "review_detail.comment_input.description", fallback: "부적절한 내용의 답글일 경우 삭제될 수 있습니다.")
+      /// 자주 쓰는 문구
+      internal static let macro = Strings.tr("Localizations", "review_detail.comment_input.macro", fallback: "자주 쓰는 문구")
+      /// 소중한 리뷰 감사드립니다!
+      internal static let placeholder = Strings.tr("Localizations", "review_detail.comment_input.placeholder", fallback: "소중한 리뷰 감사드립니다!")
+      /// 리뷰에 답글을 달아주세요!
+      internal static let title = Strings.tr("Localizations", "review_detail.comment_input.title", fallback: "리뷰에 답글을 달아주세요!")
+      /// *최소 10자에서 최대 300자 이내로 입력해 주세요.
+      internal static let warning = Strings.tr("Localizations", "review_detail.comment_input.warning", fallback: "*최소 10자에서 최대 300자 이내로 입력해 주세요.")
+    }
+  }
+  internal enum ReviewList {
+    /// 좋아요
+    internal static let like = Strings.tr("Localizations", "review_list.like", fallback: "좋아요")
+    /// 좋아요 %d
+    internal static func likeCountFormat(_ p1: Int) -> String {
+      return Strings.tr("Localizations", "review_list.like_count_format", p1, fallback: "좋아요 %d")
+    }
+    /// 리뷰
+    internal static let title = Strings.tr("Localizations", "review_list.title", fallback: "리뷰")
+    internal enum SortType {
+      /// 별점 높은순
+      internal static let higherRating = Strings.tr("Localizations", "review_list.sort_type.higher_rating", fallback: "별점 높은순")
+      /// 최신순
+      internal static let latest = Strings.tr("Localizations", "review_list.sort_type.latest", fallback: "최신순")
+      /// 별점 낮은순
+      internal static let lowerRating = Strings.tr("Localizations", "review_list.sort_type.lower_rating", fallback: "별점 낮은순")
+    }
+  }
+  internal enum ReviewReportBottomSheet {
+    /// *최소 10자에서 최대 300자 이내로 입력해 주세요.
+    internal static let info = Strings.tr("Localizations", "review_report_bottom_sheet.info", fallback: "*최소 10자에서 최대 300자 이내로 입력해 주세요.")
+    /// 신고사유 입력
+    internal static let placeholder = Strings.tr("Localizations", "review_report_bottom_sheet.placeholder", fallback: "신고사유 입력")
+    /// 신고하기
+    internal static let report = Strings.tr("Localizations", "review_report_bottom_sheet.report", fallback: "신고하기")
+    /// 관리자 판단 후 리뷰를 삭제해드립니다.
+    internal static let subtitle = Strings.tr("Localizations", "review_report_bottom_sheet.subtitle", fallback: "관리자 판단 후 리뷰를 삭제해드립니다.")
+    /// 신고사유를 입력해주세요.
+    internal static let title = Strings.tr("Localizations", "review_report_bottom_sheet.title", fallback: "신고사유를 입력해주세요.")
+    internal enum Toast {
+      /// 리뷰를 신고했습니다.
+      internal static let report = Strings.tr("Localizations", "review_report_bottom_sheet.toast.report", fallback: "리뷰를 신고했습니다.")
+    }
+  }
   internal enum SendingMessage {
     /// 한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!
     internal static let description = Strings.tr("Localizations", "sending_message.description", fallback: "한 번 전송 후 취소가 불가능하니 신중하게 작성해 주세요!")
@@ -487,6 +581,63 @@ internal enum Strings {
     internal enum Description {
       /// 취소가 불가능
       internal static let colored = Strings.tr("Localizations", "sending_message.description.colored", fallback: "취소가 불가능")
+    }
+  }
+  internal enum Statistics {
+    internal enum BookmarkCount {
+      /// %d명의 고객이 사장님의 가게를
+      /// 북마크 했습니다!
+      internal static func description(_ p1: Int) -> String {
+        return Strings.tr("Localizations", "statistics.bookmark_count.description", p1, fallback: "%d명의 고객이 사장님의 가게를\n북마크 했습니다!")
+      }
+      /// 메세지 보내기
+      internal static let message = Strings.tr("Localizations", "statistics.bookmark_count.message", fallback: "메세지 보내기")
+      /// 북마크
+      internal static let title = Strings.tr("Localizations", "statistics.bookmark_count.title", fallback: "북마크")
+      internal enum Description {
+        /// %d명
+        internal static func colord(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.bookmark_count.description.colord", p1, fallback: "%d명")
+        }
+      }
+    }
+    internal enum FeedbackCount {
+      /// %d개의 피드백 평가
+      internal static func description(_ p1: Int) -> String {
+        return Strings.tr("Localizations", "statistics.feedback_count.description", p1, fallback: "%d개의 피드백 평가")
+      }
+      /// 전체보기
+      internal static let seeMore = Strings.tr("Localizations", "statistics.feedback_count.see_more", fallback: "전체보기")
+      /// 피드백 평가
+      internal static let title = Strings.tr("Localizations", "statistics.feedback_count.title", fallback: "피드백 평가")
+      internal enum Description {
+        /// %d개
+        internal static func colored(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.feedback_count.description.colored", p1, fallback: "%d개")
+        }
+      }
+      internal enum Item {
+        /// %d개
+        internal static func countFormat(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.feedback_count.item.count_format", p1, fallback: "%d개")
+        }
+      }
+    }
+    internal enum Review {
+      /// 리뷰 전체 보기
+      internal static let totalReview = Strings.tr("Localizations", "statistics.review.total_review", fallback: "리뷰 전체 보기")
+      internal enum Empty {
+        /// 등록된 리뷰가 없어요
+        internal static let title = Strings.tr("Localizations", "statistics.review.empty.title", fallback: "등록된 리뷰가 없어요")
+      }
+      internal enum Header {
+        /// %d개
+        internal static func countFormat(_ p1: Int) -> String {
+          return Strings.tr("Localizations", "statistics.review.header.count_format", p1, fallback: "%d개")
+        }
+        /// 리뷰
+        internal static let title = Strings.tr("Localizations", "statistics.review.header.title", fallback: "리뷰")
+      }
     }
   }
 }

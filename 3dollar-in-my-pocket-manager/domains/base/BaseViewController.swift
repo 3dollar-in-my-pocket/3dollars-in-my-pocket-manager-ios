@@ -61,6 +61,36 @@ class BaseViewController: UIViewController {
         }
     }
     
+    func addNavigationBar() {
+        guard let navigationController = navigationController else { return }
+        
+        navigationController.isNavigationBarHidden = false
+        navigationController.navigationBar.shadowImage = UIImage() // 스크롤 시 나타나는 그림자 제거
+        navigationController.navigationBar.barTintColor = .white
+        navigationController.navigationBar.tintColor = .gray100
+        addBackButtonIfNeeded()
+        setupTitle()
+    }
+    
+    private func addBackButtonIfNeeded() {
+        guard navigationController?.viewControllers.count != 0 else { return }
+        var buttonConfig = UIButton.Configuration.plain()
+        buttonConfig.image = Assets.icBack.image.withRenderingMode(.alwaysTemplate)
+        let backButton = UIButton(configuration: buttonConfig)
+        backButton.tintColor = .gray100
+        backButton.addTarget(self, action: #selector(back), for: .touchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
+    }
+    
+    private func setupTitle() {
+        guard let navigationController = navigationController else { return }
+        
+        navigationController.navigationBar.titleTextAttributes = [
+            .font: UIFont.bold(size: 16) as Any,
+            .foregroundColor: UIColor.gray100
+        ]
+    }
+    
     private func goToSignin() {
         guard let sceneDelegate = UIApplication
             .shared
@@ -76,11 +106,11 @@ class BaseViewController: UIViewController {
         var message: String
         switch error {
         case .decodingError:
-            message = "error.unknown".localizable
+            message = "error.unknown".localized
         case .serverError(let errorMessage):
             message = errorMessage
         case .emptyData:
-            message = "error.unknown".localizable
+            message = "error.unknown".localized
         case .errorContainer(let container):
             handleErrorContainer(container)
             return
@@ -130,6 +160,10 @@ class BaseViewController: UIViewController {
     
     private func showDefaultAlert(container: ApiErrorContainer) {
         AlertUtils.showWithAction(viewController: self, message: container.message, onTapOk: nil)
+    }
+    
+    @objc private func back() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

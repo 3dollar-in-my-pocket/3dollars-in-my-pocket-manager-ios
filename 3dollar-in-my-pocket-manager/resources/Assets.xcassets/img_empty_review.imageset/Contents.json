@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "img_empty_review.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
