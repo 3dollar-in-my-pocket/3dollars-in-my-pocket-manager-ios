@@ -39,6 +39,18 @@ final class ReviewListViewController: BaseViewController {
         viewModel.input.firstLoad.send(())
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     private func setupUI() {
         view.backgroundColor = .white
         title = Strings.ReviewList.title
