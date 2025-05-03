@@ -65,7 +65,7 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         label.font = .regular(size: 12)
         label.textColor = .gray50
         label.textAlignment = .right
-        label.numberOfLines = 2
+        label.numberOfLines = 1
         return label
     }()
     
