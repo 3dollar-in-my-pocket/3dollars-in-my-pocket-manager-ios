@@ -178,6 +178,7 @@
 "statistics.review.total_review" = "리뷰 전체 보기";
 "statistics.review.header.title" = "리뷰";
 "statistics.review.header.count_format" = "%d개";
+"statistics.review.reported" = "규정 위반으로 블라인드 처리되었습니다.";
 
 // Review List
 "review_list.like" = "좋아요";
