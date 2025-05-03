@@ -624,6 +624,8 @@ internal enum Strings {
       }
     }
     internal enum Review {
+      /// 규정 위반으로 블라인드 처리되었습니다.
+      internal static let reported = Strings.tr("Localizations", "statistics.review.reported", fallback: "규정 위반으로 블라인드 처리되었습니다.")
       /// 리뷰 전체 보기
       internal static let totalReview = Strings.tr("Localizations", "statistics.review.total_review", fallback: "리뷰 전체 보기")
       internal enum Empty {
