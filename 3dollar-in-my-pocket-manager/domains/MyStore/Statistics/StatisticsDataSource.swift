@@ -37,9 +37,15 @@ final class StatisticsDataSource: UICollectionViewDiffableDataSource<StatisticsS
                 let cell: StatisticsReviewEmptyCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 return cell
             case .review(let viewModel):
-                let cell: StatisticsReviewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-                cell.bind(viewModel: viewModel)
-                return cell
+                if viewModel.output.review.status == .filtered {
+                    let cell: StatisticsReviewReportedCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                    cell.bind(viewModel.output.review)
+                    return cell
+                } else {
+                    let cell: StatisticsReviewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                    cell.bind(viewModel: viewModel)
+                    return cell
+                }
             }
         }
         
@@ -70,7 +76,8 @@ final class StatisticsDataSource: UICollectionViewDiffableDataSource<StatisticsS
             StatisticsBookmarkCountCell.self,
             StatisticsFeedbackCountCell.self,
             StatisticsReviewEmptyCell.self,
-            StatisticsReviewCell.self
+            StatisticsReviewCell.self,
+            StatisticsReviewReportedCell.self
         ])
         collectionView.registerHeader(StatisticsReviewHeaderView.self)
         collectionView.registerHeader(UICollectionReusableView.self)

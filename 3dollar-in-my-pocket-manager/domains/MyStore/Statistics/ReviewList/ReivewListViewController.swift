@@ -39,6 +39,18 @@ final class ReviewListViewController: BaseViewController {
         viewModel.input.firstLoad.send(())
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     private func setupUI() {
         view.backgroundColor = .white
         title = Strings.ReviewList.title
@@ -118,10 +130,14 @@ extension ReviewListViewController: UICollectionViewDelegateFlowLayout {
         case .overview:
             return CGSize(width: UIUtils.windowBounds.width, height: ReviewOverviewCell.Layout.height)
         case .review(let viewModel):
-            return CGSize(
-                width: UIUtils.windowBounds.width,
-                height: ReviewListItemCell.Layout.calculateHeight(review: viewModel.output.review)
-            )
+            if viewModel.output.review.status == .filtered {
+                return CGSize(width: UIUtils.windowBounds.width, height: 86)
+            } else {
+                return CGSize(
+                    width: UIUtils.windowBounds.width,
+                    height: ReviewListItemCell.Layout.calculateHeight(review: viewModel.output.review)
+                )
+            }
         }
     }
     

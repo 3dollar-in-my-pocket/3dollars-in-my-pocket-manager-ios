@@ -26,9 +26,15 @@ final class ReviewListDataSource: UICollectionViewDiffableDataSource<ReviewListS
                 cell.bind(count: count, rating: rating)
                 return cell
             case .review(let viewModel):
-                let cell: ReviewListItemCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-                cell.bind(viewModel: viewModel)
-                return cell
+                if viewModel.output.review.status == .filtered {
+                    let cell: ReviewListReportedCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                    cell.bind(viewModel.output.review)
+                    return cell
+                } else {
+                    let cell: ReviewListItemCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                    cell.bind(viewModel: viewModel)
+                    return cell
+                }
             }
         }
         
@@ -49,7 +55,8 @@ final class ReviewListDataSource: UICollectionViewDiffableDataSource<ReviewListS
         
         collectionView.register([
             ReviewOverviewCell.self,
-            ReviewListItemCell.self
+            ReviewListItemCell.self,
+            ReviewListReportedCell.self
         ])
         collectionView.registerHeader(ReviewListHeaderView.self)
     }
