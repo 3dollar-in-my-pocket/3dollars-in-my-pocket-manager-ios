@@ -8,7 +8,7 @@ extension MapApi: ApiRequest {
     var baseUrl: String {
         switch self {
         case .searchAddress:
-            return "https://naveropenapi.apigw.ntruss.com"
+            return "https://maps.apigw.ntruss.com"
         }
     }
     
@@ -40,8 +40,8 @@ extension MapApi: ApiRequest {
     
     var headers: HTTPHeaders {
         return [
-            "X-NCP-APIGW-API-KEY-ID": "hqqqtcv85g",
-            "X-NCP-APIGW-API-KEY": "Nk7L8VvCq9YkDuGPjvGDN8FW5ELfWTt23AgcS9ie"
+            "x-ncp-apigw-api-key-id": "8px0ex5ba7",
+            "x-ncp-apigw-api-key": "ixIeT10RhEF4HC25C7WDXkR6GE28L8rFxpWJRGs8"
         ]
     }
 }

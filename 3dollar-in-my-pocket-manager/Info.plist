@@ -50,8 +50,8 @@
 		<string>kakaokompassauth</string>
 		<string>kakaolink</string>
 	</array>
-	<key>NMFClientId</key>
-	<string>h14485sw4a</string>
+	<key>NMFNcpKeyId</key>
+	<string>8px0ex5ba7</string>
 	<key>PRIVACY_URL</key>
 	<string>$(PRIVACY_URL)</string>
 	<key>UIAppFonts</key>
