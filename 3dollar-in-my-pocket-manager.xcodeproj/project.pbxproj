@@ -222,6 +222,10 @@
 		6E9C99382C60F6E100EE47FD /* PreferenceItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9C99372C60F6E100EE47FD /* PreferenceItemView.swift */; };
 		6E9F995427E7019700C95C41 /* WaitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9F995327E7019700C95C41 /* WaitingView.swift */; };
 		6E9FF9032CE83835002DE4E7 /* LogCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9FF9022CE83835002DE4E7 /* LogCategory.swift */; };
+		6EA28D252DF2719C00B73DC3 /* NMapsGeometry.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03B2CAFDBE000D97E3F /* NMapsGeometry.xcframework */; };
+		6EA28D262DF2719C00B73DC3 /* NMapsGeometry.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03B2CAFDBE000D97E3F /* NMapsGeometry.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		6EA28D272DF2719C00B73DC3 /* NMapsMap.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03C2CAFDBE000D97E3F /* NMapsMap.xcframework */; };
+		6EA28D282DF2719C00B73DC3 /* NMapsMap.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6EFCE03C2CAFDBE000D97E3F /* NMapsMap.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6EA338022C26F40500464026 /* UploadPostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA338012C26F40500464026 /* UploadPostViewModel.swift */; };
 		6EA458342C760B66005E9B72 /* BankApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA458332C760B66005E9B72 /* BankApi.swift */; };
 		6EA53B99284DCDD5007A3839 /* SettingCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA53B98284DCDD5007A3839 /* SettingCellType.swift */; };
@@ -309,7 +313,6 @@
 		6EDA01F02D44AEAA00A3C882 /* StoreReviewResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA01EF2D44AEAA00A3C882 /* StoreReviewResponse.swift */; };
 		6EDA01F22D44B09E00A3C882 /* ImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA01F12D44B09E00A3C882 /* ImageResponse.swift */; };
 		6EDA7D0F2C2CEAC100457D63 /* MyPageSubTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA7D0E2C2CEAC100457D63 /* MyPageSubTab.swift */; };
-		6EDB97152DF1DA5400B43382 /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 6EDB97142DF1DA5400B43382 /* NMapsMap */; };
 		6EE041D8288ADAD300E17D5B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE041D7288ADAD300E17D5B /* Lottie */; };
 		6EE0CF9F27CB567B0027A426 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */; };
 		6EE0CFA127CB567B0027A426 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CFA027CB567B0027A426 /* KakaoSDKCommon */; };
@@ -355,6 +358,21 @@
 		8EFA87C82D0BAB8E008FE917 /* UserApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA87C72D0BAB8E008FE917 /* UserApi.swift */; };
 		8EFA87CA2D0BAC48008FE917 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA87C92D0BAC48008FE917 /* UserRepository.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6EA28D292DF2719C00B73DC3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6EA28D282DF2719C00B73DC3 /* NMapsMap.xcframework in Embed Frameworks */,
+				6EA28D262DF2719C00B73DC3 /* NMapsGeometry.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6E0149D42CF8499700A755C6 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
@@ -722,12 +740,13 @@
 				8E2947DA2D0FA7BC00790CFD /* PhotoLibraryPermission in Frameworks */,
 				6E37A2E42860AFE4008C046F /* FirebaseAnalytics in Frameworks */,
 				6E893CBA2C3A65F100357F66 /* netfox in Frameworks */,
-				6EDB97152DF1DA5400B43382 /* NMapsMap in Frameworks */,
 				6E8E7F3127EEBDB7005345BB /* TOCropViewController in Frameworks */,
 				6EE0CFC127CB64E40027A426 /* Alamofire in Frameworks */,
 				6E8E7F2F27EEBDB7005345BB /* CropViewController in Frameworks */,
 				6ED8838A27CB395B00278E14 /* SnapKit in Frameworks */,
+				6EA28D272DF2719C00B73DC3 /* NMapsMap.xcframework in Frameworks */,
 				6EEBC7BF28731F7700CBA0F0 /* Lottie in Frameworks */,
+				6EA28D252DF2719C00B73DC3 /* NMapsGeometry.xcframework in Frameworks */,
 				6EE041D8288ADAD300E17D5B /* Lottie in Frameworks */,
 				6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */,
 				6E37A2E62860AFE4008C046F /* FirebaseCrashlytics in Frameworks */,
@@ -1645,6 +1664,7 @@
 				6EB94E9C27CB208F00609E77 /* Sources */,
 				6EB94E9D27CB208F00609E77 /* Frameworks */,
 				6EB94E9E27CB208F00609E77 /* Resources */,
+				6EA28D292DF2719C00B73DC3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1691,7 +1711,6 @@
 				8E2947D52D0FA7BC00790CFD /* CameraPermission */,
 				8E2947D72D0FA7BC00790CFD /* NotificationPermission */,
 				8E2947D92D0FA7BC00790CFD /* PhotoLibraryPermission */,
-				6EDB97142DF1DA5400B43382 /* NMapsMap */,
 			);
 			productName = "3dollar-in-my-pocket-manager";
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
@@ -1737,7 +1756,6 @@
 				6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */,
 				6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */,
-				6EDB97132DF1DA5400B43382 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */,
 			);
 			productRefGroup = 6EB94EA127CB208F00609E77 /* Products */;
 			projectDirPath = "";
@@ -2283,7 +2301,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.0;
+				MARKETING_VERSION = 1.9.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2330,7 +2348,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.0;
+				MARKETING_VERSION = 1.9.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2446,14 +2464,6 @@
 				version = 5.7.1;
 			};
 		};
-		6EDB97132DF1DA5400B43382 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/navermaps/SPM-NMapsMap";
-			requirement = {
-				kind = exactVersion;
-				version = 3.21.0;
-			};
-		};
 		6EE041D6288ADAD300E17D5B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -2566,11 +2576,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		6EDB97142DF1DA5400B43382 /* NMapsMap */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6EDB97132DF1DA5400B43382 /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
-			productName = NMapsMap;
 		};
 		6EE041D7288ADAD300E17D5B /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
