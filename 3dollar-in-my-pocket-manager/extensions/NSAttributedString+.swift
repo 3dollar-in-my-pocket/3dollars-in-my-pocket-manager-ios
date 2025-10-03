@@ -12,4 +12,11 @@ extension NSAttributedString {
     func width(height: CGFloat) -> CGFloat {
         size(CGSize(width: .greatestFiniteMagnitude, height: height)).width
     }
+    
+    func size(maxWidth: CGFloat) -> CGSize {
+        let constrainedSize = size(CGSize(width: maxWidth, height: .greatestFiniteMagnitude))
+        let actualWidth = width(height: .greatestFiniteMagnitude) + 3
+        
+        return CGSize(width: min(actualWidth, maxWidth), height: constrainedSize.height)
+    }
 }

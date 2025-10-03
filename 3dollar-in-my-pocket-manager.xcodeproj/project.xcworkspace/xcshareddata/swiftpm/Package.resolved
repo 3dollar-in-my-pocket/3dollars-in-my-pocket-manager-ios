@@ -1,5 +1,5 @@
 {
-  "originHash" : "690d8674fa95db1c2741d94b465ea44defde404aa4decaf6e41a59bb9003d9c7",
+  "originHash" : "0ffcc88047801bda668e4b0f3cdb066ce4d67645d681a6fb37e327a44ea0c014",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -35,6 +35,15 @@
       "state" : {
         "revision" : "7300c75ff9e072aa7fd0fccefcc88f74aae9bf56",
         "version" : "0.4.1"
+      }
+    },
+    {
+      "identity" : "down",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/johnxnguyen/Down.git",
+      "state" : {
+        "revision" : "f34b166be1f1db4aa8f573067e901d72f2a6be57",
+        "version" : "0.11.0"
       }
     },
     {
