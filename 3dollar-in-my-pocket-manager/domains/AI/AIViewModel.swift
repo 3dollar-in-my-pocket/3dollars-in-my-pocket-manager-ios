@@ -9,6 +9,7 @@ extension AIViewModel {
     }
     
     struct Output {
+        let screen: ScreenName = .ai
         let datasource = CurrentValueSubject<[AISection], Never>([])
         let route = PassthroughSubject<Route, Never>()
     }

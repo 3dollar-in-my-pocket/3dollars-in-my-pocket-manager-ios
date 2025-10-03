@@ -69,6 +69,11 @@ final class MainTabController: UITabBarController {
             
         case .ai:
             self.tabBar.overrideUserInterfaceStyle = .light
+            LogManager.shared.sendEvent(.init(
+                screen: .mainTab,
+                eventName: .tapBottomTab,
+                extraParameters: [.tab: "ai"]
+            ))
             
         case .setting:
             LogManager.shared.sendEvent(.init(
@@ -98,15 +103,15 @@ final class MainTabController: UITabBarController {
         if Preference.shared.enableAIRecommendation {
             setViewControllers([
                 homeViewController,
-                AIViewController(viewModel: AIViewModel()),
                 myPageViewController,
-                SettingViewController.instance()
+                AIViewController(viewModel: AIViewModel()),
+                settingViewController
             ], animated: true)
         } else {
             setViewControllers([
                 homeViewController,
                 myPageViewController,
-                SettingViewController.instance()
+                settingViewController
             ], animated: true)
         }
         

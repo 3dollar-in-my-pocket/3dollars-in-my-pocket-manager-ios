@@ -7,6 +7,10 @@ final class AIViewController: BaseViewController {
     private lazy var datasource = AIDatasource(collectionView: collectionView)
     private var isRefreshing = false
     
+    override var screenName: ScreenName {
+        return viewModel.output.screen
+    }
+    
     init(viewModel: AIViewModel) {
         self.viewModel = viewModel
         
