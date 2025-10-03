@@ -77,6 +77,7 @@ final class HomeView: BaseView {
     private var otherStoreMarkers: [NMFMarker] = []
     
     override func setup() {
+        backgroundColor = .white
         addSubViews([
             mapView,
             centerMarker,

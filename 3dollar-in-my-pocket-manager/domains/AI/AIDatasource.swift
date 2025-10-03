@@ -8,6 +8,7 @@ enum AISectionItem: Hashable {
     case speechBubble(SpeechBubbleCellViewModel)
     case recommendation(AIResponseCellViewModel)
     case loading
+    case error(AIErrorCellViewModel)
 }
 
 final class AIDatasource: UICollectionViewDiffableDataSource<AISection, AISectionItem> {
@@ -27,6 +28,10 @@ final class AIDatasource: UICollectionViewDiffableDataSource<AISection, AISectio
             case .loading:
                 let cell: LoadingCell = collectionView.dequeueReusableCell(indexPath: indexPath)
                 return cell
+            case .error(let viewModel):
+                let cell: AIErrorCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+                cell.bind(viewModel: viewModel)
+                return cell
             }
         }
         
@@ -34,6 +39,7 @@ final class AIDatasource: UICollectionViewDiffableDataSource<AISection, AISectio
             SpeechBubbleCell.self,
             AIResponseCell.self,
             LoadingCell.self,
+            AIErrorCell.self,
             BaseCollectionViewCell.self
         ])
     }

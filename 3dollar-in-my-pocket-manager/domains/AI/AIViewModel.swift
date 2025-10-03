@@ -5,7 +5,7 @@ extension AIViewModel {
     struct Input {
         let load = PassthroughSubject<Void, Never>()
         let afterDefaultMessage = PassthroughSubject<Void, Never>()
-        let didReceivedResponse = PassthroughSubject<String, Never>()
+        let didReceivedResponse = PassthroughSubject<Result<String, Error>, Never>()
     }
     
     struct Output {
@@ -54,8 +54,13 @@ final class AIViewModel: BaseViewModel {
             .store(in: &cancellables)
         
         Publishers.Zip(input.afterDefaultMessage, input.didReceivedResponse)
-            .sink { [weak self] (_, markdown: String) in
-                self?.addRecommendation(markdown: markdown)
+            .sink { [weak self] (_, result: Result<String, Error>) in
+                switch result {
+                case .success(let markdown):
+                    self?.addRecommendation(markdown: markdown)
+                case .failure(let error):
+                    self?.handleError(error)
+                }
             }
             .store(in: &cancellables)
     }
@@ -69,9 +74,9 @@ final class AIViewModel: BaseViewModel {
                     date: Date().toString(format: "yyyy-MM-dd")
                 ).get()
                 
-                input.didReceivedResponse.send(response.text)
+                input.didReceivedResponse.send(.success(response.text))
             } catch {
-                output.route.send(.showErrorAlert(error))
+                input.didReceivedResponse.send(.failure(error))
             }
         }
     }
@@ -102,6 +107,20 @@ final class AIViewModel: BaseViewModel {
         }
     }
     
+    private func handleError(_ error: Error) {
+        let sections = output.datasource.value
+        
+        guard var items = sections.first?.items else { return }
+        if let loadingIndex = items.firstIndex(of: .loading) {
+            items.remove(at: loadingIndex)
+        }
+        
+        let errorCellViewModel = AIErrorCellViewModel(config: .init(error: error))
+        bindErrorCellViewModel(errorCellViewModel)
+        items.append(.error(errorCellViewModel))
+        output.datasource.send([.init(items: items)])
+    }
+    
     private func addRecommendation(markdown: String) {
         var sections = output.datasource.value
         
@@ -122,6 +141,12 @@ final class AIViewModel: BaseViewModel {
             .sink { [weak self] error in
                 self?.output.route.send(.showErrorAlert(error))
             }
+            .store(in: &viewModel.cancellables)
+    }
+    
+    private func bindErrorCellViewModel(_ viewModel: AIErrorCellViewModel) {
+        viewModel.output.didTapRetry
+            .subscribe(input.load)
             .store(in: &viewModel.cancellables)
     }
 }

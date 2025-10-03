@@ -8,6 +8,7 @@ final class LoadingCell: BaseCollectionViewCell {
     private let indicator = UIActivityIndicatorView(style: .medium)
     
     override func setup() {
+        overrideUserInterfaceStyle = .light
         contentView.addSubview(indicator)
         indicator.startAnimating()
     }

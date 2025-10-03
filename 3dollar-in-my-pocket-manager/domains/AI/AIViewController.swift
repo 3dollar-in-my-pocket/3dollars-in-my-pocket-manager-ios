@@ -33,6 +33,7 @@ final class AIViewController: BaseViewController {
     }
     
     private func setupUI() {
+        view.backgroundColor = .white
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
@@ -65,6 +66,7 @@ final class AIViewController: BaseViewController {
     }
     
     private func setupCollectionView() {
+        collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = datasource
         collectionView.refreshControl = refreshControl
