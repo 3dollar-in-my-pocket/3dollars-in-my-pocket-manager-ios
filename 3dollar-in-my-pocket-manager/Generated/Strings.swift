@@ -267,6 +267,20 @@ internal enum Strings {
     /// 자주 쓰는 문구를 입력해주세요!
     internal static let placeholder = Strings.tr("Localizations", "add_comment_preset_bottom_sheet.placeholder", fallback: "자주 쓰는 문구를 입력해주세요!")
   }
+  internal enum Ai {
+    /// yyyy년 M월 d일 EEEE
+    internal static let dateFormat = Strings.tr("Localizations", "ai.date_format", fallback: "yyyy년 M월 d일 EEEE")
+    /// 안녕하세요!
+    /// %@ 사장님,
+    internal static func firstSpeechBubble(_ p1: Any) -> String {
+      return Strings.tr("Localizations", "ai.first_speech_bubble", String(describing: p1), fallback: "안녕하세요!\n%@ 사장님,")
+    }
+    /// %@
+    /// 오늘의 영업을 도와드릴게요!
+    internal static func secondSpeechBubble(_ p1: Any) -> String {
+      return Strings.tr("Localizations", "ai.second_speech_bubble", String(describing: p1), fallback: "%@\n오늘의 영업을 도와드릴게요!")
+    }
+  }
   internal enum CommentPresetBottomSheet {
     /// 문구 추가
     internal static let addPreset = Strings.tr("Localizations", "comment_preset_bottom_sheet.add_preset", fallback: "문구 추가")

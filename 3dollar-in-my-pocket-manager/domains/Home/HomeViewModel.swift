@@ -88,7 +88,6 @@ final class HomeViewModel: BaseViewModel {
             .sink { (owner: HomeViewModel, _) in
                 owner.fetchCurrentLocation()
                 owner.fetchMyStoreInfo()
-                owner.fetchPreference()
             }
             .store(in: &cancellables)
         

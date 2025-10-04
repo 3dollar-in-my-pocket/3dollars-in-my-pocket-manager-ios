@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.initializeKakaoSDK()
         self.initializeLogger()
         self.initializeFirebase()
-        self.initializeNotification()
+        self.initializeNotification(application: application)
         application.registerForRemoteNotifications()
         return true
     }
@@ -46,6 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+    
     private func initializeKakaoSDK() {
         KakaoSDK.initSDK(appKey: Bundle.kakaoAppKey)
     }
@@ -65,17 +69,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
     }
     
-    private func initializeNotification() {
+    private func initializeNotification(application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
-        
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        
         UNUserNotificationCenter.current().requestAuthorization(
-            options: authOptions,
-            completionHandler: { _, _ in
-            }
+            options: [.alert, .badge, .sound],
+            completionHandler: { _, _ in }
         )
-        
+        application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
     }
 }

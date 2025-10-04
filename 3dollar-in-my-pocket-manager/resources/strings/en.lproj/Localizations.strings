@@ -293,3 +293,8 @@
 "add_comment_preset_bottom_sheet.placeholder" = "자주 쓰는 문구를 입력해주세요!";
 "add_comment_preset_bottom_sheet.add" = "문구 추가";
 "add_comment_preset_bottom_sheet.edit" = "문구 수정";
+
+// MARK: AIViewController
+"ai.first_speech_bubble" = "안녕하세요!\n%@ 사장님,";
+"ai.second_speech_bubble" = "%@\n오늘의 영업을 도와드릴게요!";
+"ai.date_format" = "yyyy년 M월 d일 EEEE";

@@ -6,7 +6,6 @@ import RxSwift
 final class MainTabController: UITabBarController {
     private let feedbackGenerator = UISelectionFeedbackGenerator()
     private let disposeBag = DisposeBag()
-    private let borderLayer = CALayer()
     private let viewModel: MainViewModel
     private var cancellables = Set<AnyCancellable>()
     
@@ -31,16 +30,8 @@ final class MainTabController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setupTabBarController()
-        self.feedbackGenerator.prepare()
-        if #available(iOS 15, *) {
-            let appearance = UITabBarAppearance()
-            
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
-            self.tabBar.standardAppearance = appearance
-            self.tabBar.scrollEdgeAppearance = appearance
-        }
+        setupTabBarController()
+        feedbackGenerator.prepare()
         
         bind()
         viewModel.input.firstLoad.send(())
@@ -53,7 +44,7 @@ final class MainTabController: UITabBarController {
     }
     
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        self.feedbackGenerator.selectionChanged()
+        feedbackGenerator.selectionChanged()
         
         guard let tabBarTag = TabBarTag(rawValue: item.tag) else { return }
         
@@ -64,17 +55,8 @@ final class MainTabController: UITabBarController {
                 eventName: .tapBottomTab,
                 extraParameters: [.tab: "home"]
             ))
-            if #available(iOS 15, *) {
-                let appearance = UITabBarAppearance()
-                appearance.configureWithOpaqueBackground()
-                appearance.backgroundColor = .white
-                self.tabBar.standardAppearance = appearance
-                self.tabBar.scrollEdgeAppearance = appearance
-            } else {
-                self.tabBar.barTintColor = .white
-                self.tabBar.backgroundColor = .white
-            }
-            self.borderLayer.backgroundColor = UIColor.gray5.cgColor
+            
+            self.tabBar.overrideUserInterfaceStyle = .light
             
         case .myPage:
             LogManager.shared.sendEvent(.init(
@@ -82,17 +64,16 @@ final class MainTabController: UITabBarController {
                 eventName: .tapBottomTab,
                 extraParameters: [.tab: "my"]
             ))
-            if #available(iOS 15, *) {
-                let appearance = UITabBarAppearance()
-                appearance.configureWithOpaqueBackground()
-                appearance.backgroundColor = .white
-                self.tabBar.standardAppearance = appearance
-                self.tabBar.scrollEdgeAppearance = appearance
-            } else {
-                self.tabBar.barTintColor = .white
-                self.tabBar.backgroundColor = .white
-            }
-            self.borderLayer.backgroundColor = UIColor.gray5.cgColor
+            
+            self.tabBar.overrideUserInterfaceStyle = .light
+            
+        case .ai:
+            self.tabBar.overrideUserInterfaceStyle = .light
+            LogManager.shared.sendEvent(.init(
+                screen: .mainTab,
+                eventName: .tapBottomTab,
+                extraParameters: [.tab: "ai"]
+            ))
             
         case .setting:
             LogManager.shared.sendEvent(.init(
@@ -100,17 +81,8 @@ final class MainTabController: UITabBarController {
                 eventName: .tapBottomTab,
                 extraParameters: [.tab: "setting"]
             ))
-            if #available(iOS 15, *) {
-                let appearance = UITabBarAppearance()
-                appearance.configureWithOpaqueBackground()
-                appearance.backgroundColor = .gray100
-                self.tabBar.standardAppearance = appearance
-                self.tabBar.scrollEdgeAppearance = appearance
-            } else {
-                self.tabBar.barTintColor = .gray100
-                self.tabBar.backgroundColor = .gray100
-            }
-            self.borderLayer.backgroundColor = UIColor.gray90.cgColor
+            
+            self.tabBar.overrideUserInterfaceStyle = .dark
         }
     }
     
@@ -125,19 +97,26 @@ final class MainTabController: UITabBarController {
     }
     
     private func setupTabBarController() {
-        self.setViewControllers([
-            createHomeViewController(),
-            myPageViewController,
-            SettingViewController.instance()
-        ], animated: true)
+        let homeViewController = createHomeViewController()
+        let settingViewController = SettingViewController.instance()
         
-        self.borderLayer.backgroundColor = UIColor.gray5.cgColor
-        self.borderLayer.frame = .init(x: 0, y: 0, width: self.tabBar.frame.size.width, height: 1)
+        if Preference.shared.enableAIRecommendation {
+            setViewControllers([
+                homeViewController,
+                myPageViewController,
+                AIViewController(viewModel: AIViewModel()),
+                settingViewController
+            ], animated: true)
+        } else {
+            setViewControllers([
+                homeViewController,
+                myPageViewController,
+                settingViewController
+            ], animated: true)
+        }
         
         self.tabBar.tintColor = .green
         self.tabBar.barTintColor = .white
-        self.tabBar.backgroundColor = .white
-        self.tabBar.layer.addSublayer(self.borderLayer)
     }
     
     private func createHomeViewController() -> UINavigationController {

@@ -19,4 +19,5 @@ enum ScreenName: String {
     case messageSendingBottomSheet
     case messageConfirmDialog
     case feedbackDetail
+    case ai
 }

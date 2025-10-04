@@ -17,4 +17,14 @@ extension Date {
         let calendar = Calendar.current
         return calendar.isDateInToday(self)
     }
+    
+    public func toString(format: String = "yyyy-MM-dd") -> String {
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone.current
+
+        return dateFormatter.string(from: self)
+    }
 }
