@@ -12,4 +12,5 @@ struct BossWithSettingsResponse: Decodable {
 
 struct BossSettingResponse: Decodable {
     let enableActivitiesPush: Bool
+    let enableSalesAIRecommendation: Bool
 }

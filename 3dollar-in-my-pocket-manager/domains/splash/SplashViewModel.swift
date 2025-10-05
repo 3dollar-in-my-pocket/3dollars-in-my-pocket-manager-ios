@@ -78,7 +78,8 @@ final class SplashViewModel: BaseViewModel {
                 guard let self = self else { return }
                 
                 switch userResult {
-                case .success(_):
+                case .success(let response):
+                    dependency.preference.enableAIRecommendation = response.settings.enableSalesAIRecommendation
                     output.route.send(.goToMain)
                 case .failure(let error):
                     output.showErrorAlert.send(error)

@@ -183,6 +183,9 @@ final class SigninReactor: BaseReactor, Reactor {
     
     private func fetchUserInfo() -> Observable<Mutation> {
         return self.authService.fetchMyInfo()
+            .do(onNext: { [weak self] response in
+                self?.userDefaultsUtils.enableAIRecommendation = response.settings.enableSalesAIRecommendation
+            })
             .map{ _ in .goToMain }
             .catch { error in
                 if let httpError = error as? HTTPError {
@@ -218,9 +221,7 @@ final class SigninReactor: BaseReactor, Reactor {
             .flatMap { [weak self] _ -> Observable<Mutation> in
                 guard let self = self else { return .error(BaseError.unknown) }
                 
-                return .zip(self.fetchUserInfo(), self.registerDevice()) { mutation, _ in
-                    return mutation
-                }
+                return fetchUserInfo()
             }
             .catch { error -> Observable<Mutation> in
                 return .merge([

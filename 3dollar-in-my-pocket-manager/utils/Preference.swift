@@ -86,6 +86,11 @@ final class Preference {
         }
     }
     
+    var enableAIRecommendation: Bool {
+        set { instance.set(newValue, forKey: "ENABLE_AI_RECOMMENDATION") }
+        get { return instance.bool(forKey: "ENABLE_AI_RECOMMENDATION") }
+    }
+    
     func clear() {
         instance.removeObject(forKey: "KEY_TOKEN")
         instance.removeObject(forKey: "KEY_USER_ID")

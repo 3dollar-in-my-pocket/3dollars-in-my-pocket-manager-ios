@@ -11,6 +11,12 @@ protocol DeviceServiceType {
 struct DeviceService: DeviceServiceType {
     func registerDevice() -> Observable<Void> {
         return .create { observer in
+            #if targetEnvironment(simulator)
+            // 시뮬레이터에서는 푸시 알림을 지원하지 않으므로 바로 성공 처리
+            observer.onNext(())
+            observer.onCompleted()
+            #else
+            // 실제 디바이스에서는 FCM 토큰 사용
             Messaging.messaging().token { token, error in
                 if let error = error {
                     observer.onError(error)
@@ -38,6 +44,7 @@ struct DeviceService: DeviceServiceType {
                     }
                 }
             }
+            #endif
             
             return Disposables.create()
         }
