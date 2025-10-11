@@ -131,6 +131,19 @@ final class MyPageViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
+        viewModel.output.showCouponTooltip
+            .removeDuplicates()
+            .main
+            .withUnretained(self)
+            .sink { (owner: MyPageViewController, isShow: Bool) in
+                if isShow {
+                    owner.showCouponTooltip()
+                } else {
+                    owner.tooltipView?.removeFromSuperview()
+                }
+            }
+            .store(in: &cancellables)
+        
         viewModel.output.selectSubTab
             .main
             .withUnretained(self)
@@ -161,6 +174,16 @@ final class MyPageViewController: BaseViewController {
         tooltipView.snp.makeConstraints {
             $0.trailing.equalTo(subTabView.messageButton.snp.centerX).offset(26)
             $0.top.equalTo(subTabView.messageButton.snp.bottom).offset(4)
+        }
+        self.tooltipView = tooltipView
+    }
+    
+    private func showCouponTooltip() {
+        let tooltipView = TooltipView(emoji: "🎟️", message: Strings.MyPage.Coupon.toolTip, tailDirection: .topRight)
+        view.addSubview(tooltipView)
+        tooltipView.snp.makeConstraints {
+            $0.trailing.equalTo(subTabView.couponButton.snp.centerX).offset(26)
+            $0.top.equalTo(subTabView.couponButton.snp.bottom).offset(4)
         }
         self.tooltipView = tooltipView
     }

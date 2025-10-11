@@ -86,6 +86,15 @@ final class Preference {
         }
     }
     
+    var shownMyPageCouponTooltip: Bool {
+        set {
+            instance.set(newValue, forKey: "KEY_SHOWN_MYPAGE_COUPON_TOOLTIP")
+        }
+        get {
+            return instance.bool(forKey: "KEY_SHOWN_MYPAGE_COUPON_TOOLTIP")
+        }
+    }
+    
     var enableAIRecommendation: Bool {
         set { instance.set(newValue, forKey: "ENABLE_AI_RECOMMENDATION") }
         get { return instance.bool(forKey: "ENABLE_AI_RECOMMENDATION") }

@@ -83,9 +83,17 @@ final class CouponTabViewModel: BaseViewModel {
         input.didTapRegisterButton
             .withUnretained(self)
             .sink { (owner: CouponTabViewModel, _) in
-                owner.output.route.send(.pushCouponRegister(CouponRegisterViewModel()))
+                owner.output.route.send(.pushCouponRegister(owner.bindCouponRegisterViewModel()))
             }
             .store(in: &cancellables)
+    }
+    
+    private func bindCouponRegisterViewModel() -> CouponRegisterViewModel {
+        let viewModel = CouponRegisterViewModel()
+        viewModel.output.registerCompleted
+            .subscribe(input.refresh)
+            .store(in: &cancellables)
+        return viewModel
     }
     
     private func bindRelay() {        

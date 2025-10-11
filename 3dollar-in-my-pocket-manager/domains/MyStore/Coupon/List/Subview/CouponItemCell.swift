@@ -95,7 +95,8 @@ final class CouponItemCell: BaseCollectionViewCell {
     override func setup() {
         contentView.addSubview(container)
         container.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(24)
+            make.top.leading.trailing.equalToSuperview().inset(24)
+            make.bottom.equalToSuperview().inset(12)
         }
 
         let topRow = UIView()

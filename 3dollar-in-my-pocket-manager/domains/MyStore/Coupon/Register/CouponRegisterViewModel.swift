@@ -19,6 +19,7 @@ extension CouponRegisterViewModel {
         let route = PassthroughSubject<Route, Never>()
         let toast = PassthroughSubject<String, Never>()
         let showLoading = PassthroughSubject<Bool, Never>()
+        let registerCompleted = PassthroughSubject<Void, Never>()
     }
     
     enum Route {
@@ -169,6 +170,7 @@ final class CouponRegisterViewModel: BaseViewModel {
             
             switch result {
             case .success(_):
+                output.registerCompleted.send()
                 output.showLoading.send(false)
                 output.toast.send("쿠폰이 발급되었어요.")
                 output.route.send(.pop)

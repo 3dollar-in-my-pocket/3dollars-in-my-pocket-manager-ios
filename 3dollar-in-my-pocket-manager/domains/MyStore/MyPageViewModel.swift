@@ -11,6 +11,7 @@ extension MyPageViewModel {
         let screenName: ScreenName = .myStoreInfo
         let showNewBadge = PassthroughSubject<Void, Never>()
         let showMessageTooptip = PassthroughSubject<Bool, Never>()
+        let showCouponTooltip = PassthroughSubject<Bool, Never>()
         let pageViewControllerIndex = CurrentValueSubject<Int, Never>(0)
         let selectSubTab = PassthroughSubject<MyPageSubTabType, Never>()
     }
@@ -57,6 +58,7 @@ final class MyPageViewModel: BaseViewModel {
             .withUnretained(self)
             .sink { (owner: MyPageViewModel, _) in
                 owner.showMessageTooltipIfNeeded()
+                owner.showCouponTooltipIfNeeded()
             }
             .store(in: &cancellables)
         
@@ -71,6 +73,11 @@ final class MyPageViewModel: BaseViewModel {
                 if subTab == .message {
                     owner.dependency.preference.shownMyPageMessageTooltip = true
                     owner.output.showMessageTooptip.send(false)
+                }
+                
+                if subTab == .coupon {
+                    owner.dependency.preference.shownMyPageCouponTooltip = true
+                    owner.output.showCouponTooltip.send(false)
                 }
             }
             .store(in: &cancellables)
@@ -92,6 +99,13 @@ final class MyPageViewModel: BaseViewModel {
     private func showMessageTooltipIfNeeded() {
         let shownMessageTooptip = dependency.preference.shownMyPageMessageTooltip
         output.showMessageTooptip.send(!shownMessageTooptip)
+    }
+    
+    private func showCouponTooltipIfNeeded() {
+        guard dependency.preference.shownMyPageMessageTooltip else { return }
+        
+        let shownCouponTooltip = dependency.preference.shownMyPageCouponTooltip
+        output.showCouponTooltip.send(!shownCouponTooltip)
     }
 }
 

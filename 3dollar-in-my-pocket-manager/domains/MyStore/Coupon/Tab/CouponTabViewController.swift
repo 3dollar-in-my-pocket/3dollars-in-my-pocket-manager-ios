@@ -29,9 +29,9 @@ final class CouponTabViewController: BaseViewController {
         config.image = Assets.couponSolid.image.resizeImage(scaledTo: 20)
         config.imagePadding = 4
         config.baseForegroundColor = .white
+        config.background.cornerRadius = 22
         let button = UIButton(configuration: config)
         button.backgroundColor = .green
-        button.layer.cornerRadius = 22
         button.layer.masksToBounds = true
         return button
     }()
