@@ -407,7 +407,7 @@ private final class DatePickerSheetViewController: UIViewController {
 }
 
 // MARK: - Helpers
-private extension NSRange {
+extension NSRange {
     func toOptional() -> NSRange? { self.location != NSNotFound ? self : nil }
 }
 

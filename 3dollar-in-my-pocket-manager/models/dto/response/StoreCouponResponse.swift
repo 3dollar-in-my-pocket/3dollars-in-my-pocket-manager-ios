@@ -1,4 +1,4 @@
-struct StoreCouponResponse: Decodable {
+struct StoreCouponResponse: Decodable, Hashable {
     let couponId: String
     let name: String
     let maxIssuableCount: Int
@@ -10,7 +10,7 @@ struct StoreCouponResponse: Decodable {
     let updatedAt: String
 }
 
-struct DateTimeIntervalResponse: Decodable {
+struct DateTimeIntervalResponse: Decodable, Hashable {
     let startDateTime: String
     let endDateTime: String
 }
