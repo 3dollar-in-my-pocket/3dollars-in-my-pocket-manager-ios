@@ -490,11 +490,17 @@ internal enum Strings {
     }
   }
   internal enum MyPage {
+    internal enum Coupon {
+      /// 쿠폰으로 단골을 만들어보세요!
+      internal static let toolTip = Strings.tr("Localizations", "my_page.coupon.tool_tip", fallback: "쿠폰으로 단골을 만들어보세요!")
+    }
     internal enum Message {
       /// 고객님들께 첫 인사를 보내보세요!
       internal static let toolTip = Strings.tr("Localizations", "my_page.message.tool_tip", fallback: "고객님들께 첫 인사를 보내보세요!")
     }
     internal enum SubTab {
+      /// 쿠폰 관리
+      internal static let coupon = Strings.tr("Localizations", "my_page.sub_tab.coupon", fallback: "쿠폰 관리")
       /// 메세지
       internal static let message = Strings.tr("Localizations", "my_page.sub_tab.message", fallback: "메세지")
       /// 가게소식
