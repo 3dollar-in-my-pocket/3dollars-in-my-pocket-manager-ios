@@ -200,6 +200,10 @@ final class CouponItemCell: BaseCollectionViewCell {
             applyActiveStyle()
             closeCouponButton.isHidden = false
             footerTipLabel.isHidden = false
+        case .stopped:
+            applyPausedUsableStyle()
+            closeCouponButton.isHidden = true
+            footerTipLabel.isHidden = true
         }
     }
 
@@ -236,8 +240,13 @@ final class CouponItemCell: BaseCollectionViewCell {
     }
 
     private func applyEndedStyle() {
-        applyBaseAppearance(borderColor: .gray40, shadow: false,
-                            badgeText: "사용 종료", badgeBG: .gray50, badgeFG: .white)
+        applyBaseAppearance(
+            borderColor: .gray40,
+            shadow: false,
+            badgeText: "사용 종료",
+            badgeBG: .gray50,
+            badgeFG: .white
+        )
         possibleCountLabel.textColor = .gray60
         issuedCountLabel.textColor = .gray60
         usedCountLabel.textColor = .gray60
@@ -246,15 +255,25 @@ final class CouponItemCell: BaseCollectionViewCell {
     }
 
     private func applyPausedUsableStyle() {
-        applyBaseAppearance(borderColor: .green100, shadow: false,
-                            badgeText: "발급 중지 / 사용 가능", badgeBG: .green100, badgeFG: .green)
+        applyBaseAppearance(
+            borderColor: .green.withAlphaComponent(0.5),
+            shadow: false,
+            badgeText: "발급 중지 / 사용 가능",
+            badgeBG: .green100,
+            badgeFG: .green
+        )
         issuedCountLabel.textColor = UIColor.green
         gridContainer.backgroundColor = .green100
     }
 
     private func applyActiveStyle() {
-        applyBaseAppearance(borderColor: .green, shadow: true,
-                            badgeText: "발급 중", badgeBG: .green, badgeFG: .white)
+        applyBaseAppearance(
+            borderColor: .green,
+            shadow: true,
+            badgeText: "발급 중",
+            badgeBG: .green,
+            badgeFG: .white
+        )
         issuedCountLabel.textColor = UIColor.green
         gridContainer.backgroundColor = .green100
     }
@@ -293,6 +312,8 @@ final class CouponItemCell: BaseCollectionViewCell {
             layer.strokeColor = UIColor.gray50.cgColor
         case .active:
             layer.strokeColor = UIColor.green.cgColor
+        case .stopped:
+            layer.strokeColor = UIColor.green.withAlphaComponent(0.5).cgColor
         }
         
         layer.lineDashPattern = [4, 4]

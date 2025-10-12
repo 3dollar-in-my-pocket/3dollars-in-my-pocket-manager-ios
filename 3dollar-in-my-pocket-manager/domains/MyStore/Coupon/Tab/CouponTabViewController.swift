@@ -135,14 +135,6 @@ final class CouponTabViewController: BaseViewController {
             }
             .store(in: &cancellables)
         
-        viewModel.output.updateContainerHeight
-            .main
-            .withUnretained(self)
-            .sink { (owner: CouponTabViewController, height: CGFloat) in
-                owner.updateContainerHeight(height)
-            }
-            .store(in: &cancellables)
-        
         viewModel.output.route
             .main
             .withUnretained(self)
@@ -153,6 +145,15 @@ final class CouponTabViewController: BaseViewController {
                 case .showErrorAlert:
                     break
                 }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.isEnabledRegisterButton
+            .main
+            .withUnretained(self)
+            .sink { (owner: CouponTabViewController, isEnabled: Bool) in
+                owner.couponRegisterButton.isEnabled = isEnabled
+                owner.couponRegisterButton.backgroundColor = isEnabled ? .green : .gray40
             }
             .store(in: &cancellables)
     }
@@ -217,15 +218,6 @@ final class CouponTabViewController: BaseViewController {
                 animated: false,
                 completion: nil
             )
-        }
-    }
-    
-    private func updateContainerHeight(_ height: CGFloat) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            containerView.snp.updateConstraints {
-                $0.height.equalTo(height)
-            }
         }
     }
 }

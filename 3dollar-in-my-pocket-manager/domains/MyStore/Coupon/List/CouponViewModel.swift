@@ -2,6 +2,7 @@ import Combine
 
 extension CouponViewModel {
     struct Input {
+        let pinnedCoupon = PassthroughSubject<StoreCouponResponse?, Never>()
         let firstLoad = PassthroughSubject<Void, Never>()
         let willDisplay = PassthroughSubject<Int, Never>()
         let refresh = PassthroughSubject<Void, Never>()
@@ -20,6 +21,7 @@ extension CouponViewModel {
     }
     
     struct State {
+        var pinnedCoupon: StoreCouponResponse?
         var coupons: [StoreCouponResponse] = []
         var cursor: String?
         var hasMore: Bool = true
@@ -89,6 +91,14 @@ final class CouponViewModel: BaseViewModel {
                 owner.closeCoupon(couponId: couponId)
             }
             .store(in: &cancellables)
+        
+        input.pinnedCoupon
+            .withUnretained(self)
+            .sink { (owner: CouponViewModel, coupon: StoreCouponResponse?) in
+                owner.state.pinnedCoupon = coupon
+                owner.updateDataSource()
+            }
+            .store(in: &cancellables)
     }
     
     private func firstLoadDatas() {
@@ -129,7 +139,12 @@ final class CouponViewModel: BaseViewModel {
     }
     
     private func updateDataSource() {
-        if state.coupons.isEmpty {
+        if let pinnedCoupon = state.pinnedCoupon {
+            let sectionItems = ([pinnedCoupon] + state.coupons).map {
+                CouponSectionItem.coupon(bindCouponItemCellViewModel(with: $0))
+            }
+            output.datasource.send([.init(type: .coupon, items: sectionItems)])
+        } else if state.coupons.isEmpty {
             output.datasource.send([.init(type: .empty, items: [.empty])])
         } else {
             let sectionItems = state.coupons.map {

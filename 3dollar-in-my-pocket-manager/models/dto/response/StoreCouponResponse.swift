@@ -18,4 +18,5 @@ struct DateTimeIntervalResponse: Decodable, Hashable {
 enum StoreCouponStatus: String, Decodable {
     case active = "ACTIVE"
     case ended = "ENDED"
+    case stopped = "STOPPED"
 }
