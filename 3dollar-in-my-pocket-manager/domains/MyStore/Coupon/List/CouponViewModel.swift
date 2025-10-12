@@ -16,6 +16,7 @@ extension CouponViewModel {
         let isRefreshing = CurrentValueSubject<Bool, Never>(false)
         let toast = PassthroughSubject<String, Never>()
         let showLoading = PassthroughSubject<Bool, Never>()
+        let closeCouponCompleted = PassthroughSubject<Void, Never>()
     }
     
     struct State {
@@ -163,10 +164,11 @@ final class CouponViewModel: BaseViewModel {
             )
             
             switch couponResult {
-            case .success(let response):
+            case .success:
                 input.refresh.send()
                 output.showLoading.send(false)
                 output.toast.send("쿠폰 발급을 중지했어요.")
+                output.closeCouponCompleted.send()
             case .failure(let error):
                 output.showLoading.send(false)
                 output.showErrorAlert.send(error)

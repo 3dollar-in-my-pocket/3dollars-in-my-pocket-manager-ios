@@ -2,8 +2,6 @@ import UIKit
 import CombineCocoa
 
 final class CouponTabViewController: BaseViewController {
-    private let refreshControl = UIRefreshControl()
-    
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .gray0
@@ -48,8 +46,6 @@ final class CouponTabViewController: BaseViewController {
     private var activeCouponViewController: CouponViewController?
     private var nonActiveCouponViewController: CouponViewController?
     
-    private var isRefreshing = false
-    
     override var screenName: ScreenName {
         return viewModel.output.screenName
     }
@@ -71,22 +67,19 @@ final class CouponTabViewController: BaseViewController {
         setupUI()
         bind()
         
-        scrollView.delegate = self
         viewModel.input.viewDidLoad.send(())
     }
     
     private func setupUI() {
         view.backgroundColor = UIColor(r: 251, g: 251, b: 251)
 
-        scrollView.refreshControl = refreshControl
-        
         scrollView.addSubview(stackView)
         
         stackView.addArrangedSubview(tabButton)
         
         stackView.addArrangedSubview(containerView)
         containerView.snp.makeConstraints {
-            $0.height.equalTo(800)
+            $0.height.equalTo(UIUtils.windowBounds.height - 200)
         }
         view.addSubview(scrollView)
         
@@ -113,15 +106,6 @@ final class CouponTabViewController: BaseViewController {
     }
     
     private func bind() {
-        // Input
-        refreshControl.isRefreshingPublisher
-            .filter { $0 }
-            .withUnretained(self)
-            .sink { (owner: CouponTabViewController, _) in
-                owner.isRefreshing = true
-            }
-            .store(in: &cancellables)
-        
         tabButton.tapPublisher
             .removeDuplicates()
             .subscribe(viewModel.input.didTapTabButton)
@@ -259,15 +243,5 @@ extension CouponTabViewController: UIPageViewControllerDelegate, UIPageViewContr
         viewControllerAfter viewController: UIViewController
     ) -> UIViewController? {
         return nil
-    }
-}
-
-extension CouponTabViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if isRefreshing {
-            viewModel.input.refresh.send(())
-            isRefreshing = false
-            refreshControl.endRefreshing()
-        }
     }
 }

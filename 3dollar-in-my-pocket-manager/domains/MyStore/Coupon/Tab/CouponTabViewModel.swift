@@ -4,7 +4,6 @@ import Combine
 extension CouponTabViewModel {
     struct Input {
         let viewDidLoad = PassthroughSubject<Void, Never>()
-        let refresh = PassthroughSubject<Void, Never>()
         let didTapTabButton = PassthroughSubject<CouponTabButton.CouponTabType, Never>()
         let didTapRegisterButton = PassthroughSubject<Void, Never>()
     }
@@ -15,11 +14,6 @@ extension CouponTabViewModel {
         let tab = CurrentValueSubject<CouponTabButton.CouponTabType, Never>(.active)
         let updateContainerHeight = PassthroughSubject<CGFloat, Never>()
         let route = PassthroughSubject<Route, Never>()
-    }
-    
-    struct Relay {
-        let didTapTabButton = PassthroughSubject<CouponTabButton.CouponTabType, Never>()
-        let updateContainerHeight = PassthroughSubject<CGFloat, Never>()
     }
     
     enum Route {
@@ -48,12 +42,11 @@ extension CouponTabViewModel {
 final class CouponTabViewModel: BaseViewModel {
     let input = Input()
     let output = Output()
-    private let relay = Relay()
     private var state = State()
     private let dependency: Dependency
     
-    var activeCouponViewModel: CouponViewModel?
-    var nonActiveCouponViewModel: CouponViewModel?
+    let activeCouponViewModel = CouponViewModel(statuses: [.active])
+    let nonActiveCouponViewModel = CouponViewModel(statuses: [.ended])
     
     init(dependency: Dependency = Dependency()) {
         self.dependency = dependency
@@ -61,14 +54,14 @@ final class CouponTabViewModel: BaseViewModel {
         super.init()
         
         bind()
-        bindRelay()
     }
     
     private func bind() {
-        Publishers.Merge(input.viewDidLoad, input.refresh)
+        input.viewDidLoad
             .withUnretained(self)
             .sink { (owner: CouponTabViewModel, _) in
-                owner.fetchDatas()
+                owner.output.setPageViewController.send((owner.activeCouponViewModel, owner.nonActiveCouponViewModel))
+                
             }
             .store(in: &cancellables)
         
@@ -91,32 +84,19 @@ final class CouponTabViewModel: BaseViewModel {
     private func bindCouponRegisterViewModel() -> CouponRegisterViewModel {
         let viewModel = CouponRegisterViewModel()
         viewModel.output.registerCompleted
-            .subscribe(input.refresh)
+            .subscribe(activeCouponViewModel.input.refresh)
             .store(in: &cancellables)
         return viewModel
     }
     
-    private func bindRelay() {        
-        relay.updateContainerHeight
-            .subscribe(output.updateContainerHeight)
-            .store(in: &cancellables)
+    private func bindActiveCouponViewModel() {
+        activeCouponViewModel.output.closeCouponCompleted
+            .subscribe(nonActiveCouponViewModel.input.refresh)
+            .store(in: &activeCouponViewModel.cancellables)
     }
     
-    private func fetchDatas() {
-        let activeCouponViewModel = bindCouponViewModel(statuses: [.active])
-        self.activeCouponViewModel = activeCouponViewModel
+    private func bindNonActiveCouponViewModel() {
         
-        let nonActiveCouponViewModel = bindCouponViewModel(statuses: [.ended])
-        self.nonActiveCouponViewModel = nonActiveCouponViewModel
-        
-        output.setPageViewController.send((activeCouponViewModel, nonActiveCouponViewModel))
-        
-    }
-    
-    private func bindCouponViewModel(statuses: [StoreCouponStatus]) -> CouponViewModel {
-        let viewModel = CouponViewModel(statuses: statuses)
-        
-        return viewModel
     }
 }
 

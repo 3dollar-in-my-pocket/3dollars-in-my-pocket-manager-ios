@@ -40,9 +40,7 @@ final class CouponViewController: BaseViewController {
         view.addSubview(collectionView)
         collectionView.refreshControl = refreshControl
         collectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(200)
+            $0.edges.equalToSuperview()
         }
     }
     
