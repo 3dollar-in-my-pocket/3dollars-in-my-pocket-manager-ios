@@ -30,7 +30,8 @@ final class MyPageSubTabView: BaseView {
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
