@@ -105,7 +105,7 @@ final class MyPageViewController: BaseViewController {
             .main
             .withUnretained(self)
             .sink { (owner: MyPageViewController, _) in
-                owner.subTabView.messageButton.isNew = true
+                owner.subTabView.couponButton.isNew = true
             }
             .store(in: &cancellables)
         
