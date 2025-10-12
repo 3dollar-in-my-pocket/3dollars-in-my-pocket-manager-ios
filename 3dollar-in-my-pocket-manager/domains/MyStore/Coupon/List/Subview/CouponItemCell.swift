@@ -213,7 +213,7 @@ final class CouponItemCell: BaseCollectionViewCell {
 
     // MARK: - Styles
     private func applyBaseAppearance(borderColor: UIColor, shadow: Bool, badgeText: String, badgeBG: UIColor, badgeFG: UIColor) {
-        container.backgroundColor = .systemBackground
+        container.backgroundColor = .white
         container.layer.cornerRadius = 16
         container.layer.borderWidth = 1
         container.layer.borderColor = borderColor.cgColor

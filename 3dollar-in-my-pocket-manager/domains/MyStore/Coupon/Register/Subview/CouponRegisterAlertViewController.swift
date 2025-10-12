@@ -16,7 +16,7 @@ final class CouponRegisterAlertViewController: UIViewController {
 
     private let container: UIView = {
         let v = UIView()
-        v.backgroundColor = .systemBackground
+        v.backgroundColor = .white
         v.layer.cornerRadius = 20
         v.layer.masksToBounds = false
         v.layer.shadowColor = UIColor.black.cgColor

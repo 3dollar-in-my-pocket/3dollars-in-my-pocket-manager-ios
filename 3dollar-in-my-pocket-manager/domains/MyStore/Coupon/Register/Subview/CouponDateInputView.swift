@@ -345,7 +345,7 @@ private final class DatePickerSheetViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         titleLabel.text = titleText
         if let initialDate = initialDate {
             datePicker.date = initialDate
