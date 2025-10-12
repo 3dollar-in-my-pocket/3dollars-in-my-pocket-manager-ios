@@ -21,18 +21,19 @@ final class CouponTabViewController: BaseViewController {
     private let containerView = UIView()
     
     private let couponRegisterButton: UIButton = {
-        var config = UIButton.Configuration.plain()
-        config.attributedTitle = AttributedString("쿠폰 만들기", attributes: .init([
-            .font: UIFont.medium(size: 14) as Any,
-            .foregroundColor: UIColor.white
-        ]))
-        config.image = Assets.couponSolid.image.resizeImage(scaledTo: 20)
-        config.imagePadding = 4
-        config.baseForegroundColor = .white
-        config.background.cornerRadius = 22
-        let button = UIButton(configuration: config)
+        let button = UIButton()
+        button.setTitle("쿠폰 만들기", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .medium(size: 14)
         button.backgroundColor = .green
+        button.setImage(Assets.couponSolid.image, for: .normal)
+        button.layer.cornerRadius = 22
+        button.layer.shadowColor = UIColor.green.cgColor
+        button.layer.shadowOpacity = 0.4
+        button.adjustsImageWhenHighlighted = false
+        button.layer.shadowOffset = CGSize(width: 0, height: 4)
         button.layer.masksToBounds = true
+        button.imageEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 4)
         return button
     }()
     
