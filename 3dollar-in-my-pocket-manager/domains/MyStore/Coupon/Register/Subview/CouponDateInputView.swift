@@ -299,7 +299,7 @@ private final class DatePickerSheetViewController: UIViewController {
         let label = UILabel()
         label.font = .bold(size: 17)
         label.textAlignment = .center
-        label.textColor = .gray95
+        label.textColor = .label
         label.numberOfLines = 1
         return label
     }()
@@ -309,13 +309,14 @@ private final class DatePickerSheetViewController: UIViewController {
         picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .inline
         picker.locale = Locale(identifier: "ko_KR")
+        picker.backgroundColor = .systemBackground
         return picker
     }()
 
     private let cancelButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("취소", for: .normal)
-        button.setTitleColor(.gray95, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 17)
         return button
     }()
@@ -323,7 +324,7 @@ private final class DatePickerSheetViewController: UIViewController {
     private let confirmButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("확인", for: .normal)
-        button.setTitleColor(.gray95, for: .normal)
+        button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 17)
         return button
     }()
@@ -337,6 +338,7 @@ private final class DatePickerSheetViewController: UIViewController {
         if #available(iOS 13.0, *) {
             isModalInPresentation = false
         }
+        view.backgroundColor = .systemBackground
     }
 
     required init?(coder: NSCoder) {
