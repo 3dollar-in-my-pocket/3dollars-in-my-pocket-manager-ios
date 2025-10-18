@@ -18,7 +18,8 @@ final class MyPageViewController: BaseViewController {
         createMyStoreInfoViewController(),
         createStatisticsViewController(),
         StorePostViewController(),
-        MessageViewController(viewModel: MessageViewModel())
+        MessageViewController(viewModel: MessageViewModel()),
+        CouponTabViewController(viewModel: CouponTabViewModel())
     ]
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -104,7 +105,7 @@ final class MyPageViewController: BaseViewController {
             .main
             .withUnretained(self)
             .sink { (owner: MyPageViewController, _) in
-                owner.subTabView.messageButton.isNew = true
+                owner.subTabView.couponButton.isNew = true
             }
             .store(in: &cancellables)
         
@@ -124,6 +125,19 @@ final class MyPageViewController: BaseViewController {
             .sink { (owner: MyPageViewController, isShow: Bool) in
                 if isShow {
                     owner.showMessageTooltip()
+                } else {
+                    owner.tooltipView?.removeFromSuperview()
+                }
+            }
+            .store(in: &cancellables)
+        
+        viewModel.output.showCouponTooltip
+            .removeDuplicates()
+            .main
+            .withUnretained(self)
+            .sink { (owner: MyPageViewController, isShow: Bool) in
+                if isShow {
+                    owner.showCouponTooltip()
                 } else {
                     owner.tooltipView?.removeFromSuperview()
                 }
@@ -160,6 +174,16 @@ final class MyPageViewController: BaseViewController {
         tooltipView.snp.makeConstraints {
             $0.trailing.equalTo(subTabView.messageButton.snp.centerX).offset(26)
             $0.top.equalTo(subTabView.messageButton.snp.bottom).offset(4)
+        }
+        self.tooltipView = tooltipView
+    }
+    
+    private func showCouponTooltip() {
+        let tooltipView = TooltipView(emoji: "🎟️", message: Strings.MyPage.Coupon.toolTip, tailDirection: .topRight)
+        view.addSubview(tooltipView)
+        tooltipView.snp.makeConstraints {
+            $0.trailing.equalTo(subTabView.couponButton.snp.centerX).offset(26)
+            $0.top.equalTo(subTabView.couponButton.snp.bottom).offset(4)
         }
         self.tooltipView = tooltipView
     }

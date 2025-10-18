@@ -20,4 +20,7 @@ enum ScreenName: String {
     case messageConfirmDialog
     case feedbackDetail
     case ai
+    case registerCoupon
+    case coupon
+    case couponTab
 }

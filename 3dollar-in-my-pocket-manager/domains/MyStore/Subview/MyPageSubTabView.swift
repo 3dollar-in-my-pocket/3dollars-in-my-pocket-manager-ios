@@ -7,6 +7,7 @@ enum MyPageSubTabType: CaseIterable {
     case statistics
     case notice
     case message
+    case coupon
     
     var tabName: String {
         switch self {
@@ -18,6 +19,8 @@ enum MyPageSubTabType: CaseIterable {
             return "storePost"
         case .message:
             return "message"
+        case .coupon:
+            return "coupon"
         }
     }
 }
@@ -27,7 +30,8 @@ final class MyPageSubTabView: BaseView {
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
     
@@ -49,6 +53,8 @@ final class MyPageSubTabView: BaseView {
     
     let messageButton = MyPageSubTab(title: Strings.MyPage.SubTab.message, isSelected: false)
     
+    let couponButton = MyPageSubTab(title: Strings.MyPage.SubTab.coupon, isSelected: false)
+    
     override func setup() {
         setupUI()
         bind()
@@ -59,6 +65,7 @@ final class MyPageSubTabView: BaseView {
         stackView.addArrangedSubview(statisticsButton)
         stackView.addArrangedSubview(storeNoticeButton)
         stackView.addArrangedSubview(messageButton)
+        stackView.addArrangedSubview(couponButton)
         scrollView.addSubview(stackView)
         addSubview(scrollView)
         
@@ -88,8 +95,10 @@ final class MyPageSubTabView: BaseView {
             .map { MyPageSubTabType.notice }
         let didTapMessage = messageButton.tapPublisher
             .map { MyPageSubTabType.message }
+        let didTapCoupon = couponButton.tapPublisher
+            .map { MyPageSubTabType.coupon }
         
-        Publishers.Merge4(didTapInfo, didTapStatistics, didTapStoreNotice, didTapMessage)
+        Publishers.Merge4(didTapInfo, didTapStatistics, didTapStoreNotice, didTapMessage.merge(with: didTapCoupon))
             .subscribe(didTapPublisher)
             .store(in: &cancellables)
     }
@@ -99,5 +108,6 @@ final class MyPageSubTabView: BaseView {
         statisticsButton.isSelected = tabType == .statistics
         storeNoticeButton.isSelected = tabType == .notice
         messageButton.isSelected = tabType == .message
+        couponButton.isSelected = tabType == .coupon
     }
 }
