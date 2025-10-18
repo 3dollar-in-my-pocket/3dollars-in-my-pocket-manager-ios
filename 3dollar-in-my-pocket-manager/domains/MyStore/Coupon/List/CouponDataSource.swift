@@ -3,6 +3,7 @@ import UIKit
 struct CouponSection: Hashable {
     enum SectionType {
         case empty
+        case pinnedCoupon
         case coupon
     }
     

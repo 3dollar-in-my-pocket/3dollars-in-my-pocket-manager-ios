@@ -95,7 +95,8 @@ final class CouponItemCell: BaseCollectionViewCell {
     override func setup() {
         contentView.addSubview(container)
         container.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview().inset(24)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(24)
             make.bottom.equalToSuperview().inset(12)
         }
 
@@ -190,18 +191,17 @@ final class CouponItemCell: BaseCollectionViewCell {
         issuedCountLabel.text = "\(model.currentIssuedCount)"
         usedCountLabel.text = "\(model.currentUsedCount)"
 
-        // 상태 스타일 및 UI
         switch model.status {
-        case .ended:
-            applyEndedStyle()
-            closeCouponButton.isHidden = true
-            footerTipLabel.isHidden = true
         case .active:
             applyActiveStyle()
             closeCouponButton.isHidden = false
             footerTipLabel.isHidden = false
         case .stopped:
             applyPausedUsableStyle()
+            closeCouponButton.isHidden = true
+            footerTipLabel.isHidden = true
+        case .ended:
+            applyEndedStyle()
             closeCouponButton.isHidden = true
             footerTipLabel.isHidden = true
         }

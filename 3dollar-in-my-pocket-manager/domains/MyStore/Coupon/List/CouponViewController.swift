@@ -105,8 +105,8 @@ final class CouponViewController: BaseViewController {
     
     private func createLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 12
+        layout.minimumLineSpacing = 12
         layout.scrollDirection = .vertical
         return layout
     }
@@ -122,6 +122,17 @@ extension CouponViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: width, height: CouponEmptyCell.Layout.height)
         case .coupon(let viewModel):
             return CouponItemCell.Layout.size(width: width, viewModel: viewModel)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        switch dataSource.sectionIdentifier(section: section)?.type {
+        case .pinnedCoupon:
+            return .init(top: 24, left: 0, bottom: 20, right: 0)
+        case .coupon:
+            return .init(top: 24, left: 0, bottom: 0, right: 0)
+        default:
+            return .zero
         }
     }
 }

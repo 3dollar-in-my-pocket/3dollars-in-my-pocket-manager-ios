@@ -140,10 +140,11 @@ final class CouponViewModel: BaseViewModel {
     
     private func updateDataSource() {
         if let pinnedCoupon = state.pinnedCoupon {
-            let sectionItems = ([pinnedCoupon] + state.coupons).map {
+            let pinnedCouponSectionItem = CouponSectionItem.coupon(bindCouponItemCellViewModel(with: pinnedCoupon))
+            let couponSectionItems = state.coupons.map {
                 CouponSectionItem.coupon(bindCouponItemCellViewModel(with: $0))
             }
-            output.datasource.send([.init(type: .coupon, items: sectionItems)])
+            output.datasource.send([.init(type: .pinnedCoupon, items: [pinnedCouponSectionItem])] + [.init(type: .coupon, items: couponSectionItems)])
         } else if state.coupons.isEmpty {
             output.datasource.send([.init(type: .empty, items: [.empty])])
         } else {

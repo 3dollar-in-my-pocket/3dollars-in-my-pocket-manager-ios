@@ -85,10 +85,10 @@ private extension CouponDateInputView {
         }
 
         let today = Date()
-        let startAPI = formatAPIDate(today)
+        let startAPI = formatAPIDate(today, isEndDate: false)
         startDatePublisher.send(startAPI)
         if let endDate = Calendar.current.date(byAdding: .day, value: 30, to: today) {
-            let endAPI = formatAPIDate(endDate)
+            let endAPI = formatAPIDate(endDate, isEndDate: true)
             endDatePublisher.send(endAPI)
         }
 
@@ -107,7 +107,7 @@ private extension CouponDateInputView {
             guard let self = self else { return }
             let formatted = self.formatDate(selectedDate)
             self.startRow.setDateText(formatted)
-            let apiString = self.formatAPIDate(selectedDate)
+            let apiString = self.formatAPIDate(selectedDate, isEndDate: false)
             self.startDatePublisher.send(apiString)
         }
     }
@@ -119,7 +119,7 @@ private extension CouponDateInputView {
             guard let self = self else { return }
             let formatted = self.formatDate(selectedDate)
             self.endRow.setDateText(formatted)
-            let apiString = self.formatAPIDate(selectedDate)
+            let apiString = self.formatAPIDate(selectedDate, isEndDate: true)
             self.endDatePublisher.send(apiString)
         }
     }
@@ -150,13 +150,22 @@ private extension CouponDateInputView {
     }
     
     /// Formats a date as API string in "yyyy-MM-dd'T'HH:mm:ss" at start of the day.
-    private func formatAPIDate(_ date: Date) -> String {
-        let startOfDay = Calendar.current.startOfDay(for: date)
+    private func formatAPIDate(_ date: Date, isEndDate: Bool) -> String {
+        
+        var comps = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        if isEndDate {
+            comps.hour = 23
+            comps.minute = 59
+            comps.second = 59
+        }
+        
+        guard let endOfDay = Calendar.current.date(from: comps) else { return "" }
+        
         let f = DateFormatter()
         f.locale = Locale(identifier: "en_US_POSIX")
         f.timeZone = TimeZone.current
         f.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        return f.string(from: startOfDay)
+        return f.string(from: endOfDay)
     }
 
     /// Finds the top-most view controller in the window hierarchy.
