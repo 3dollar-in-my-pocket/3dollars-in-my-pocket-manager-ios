@@ -50,12 +50,12 @@ final class Preference {
         }
     }
     
-    var shownMessageNewBadge: Bool {
+    var shownCouponNewBadge: Bool {
         set {
-            instance.set(newValue, forKey: "KEY_SHOWN_MESSAGE_NEW_BADGE")
+            instance.set(newValue, forKey: "KEY_SHOWN_COUPON_NEW_BADGE")
         }
         get {
-            return instance.bool(forKey: "KEY_SHOWN_MESSAGE_NEW_BADGE")
+            return instance.bool(forKey: "KEY_SHOWN_COUPON_NEW_BADGE")
         }
     }
     
@@ -77,12 +77,12 @@ final class Preference {
         }
     }
     
-    var shownMyPageMessageTooltip: Bool {
+    var shownMyPageCouponTooltip: Bool {
         set {
-            instance.set(newValue, forKey: "KEY_SHOWN_MYPAGE_MESSAGE_TOOLTIP")
+            instance.set(newValue, forKey: "KEY_SHOWN_MYPAGE_COUPON_TOOLTIP")
         }
         get {
-            return instance.bool(forKey: "KEY_SHOWN_MYPAGE_MESSAGE_TOOLTIP")
+            return instance.bool(forKey: "KEY_SHOWN_MYPAGE_COUPON_TOOLTIP")
         }
     }
     

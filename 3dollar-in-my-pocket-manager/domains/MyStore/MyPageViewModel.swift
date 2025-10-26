@@ -11,6 +11,7 @@ extension MyPageViewModel {
         let screenName: ScreenName = .myStoreInfo
         let showNewBadge = PassthroughSubject<Void, Never>()
         let showMessageTooptip = PassthroughSubject<Bool, Never>()
+        let showCouponTooltip = PassthroughSubject<Bool, Never>()
         let pageViewControllerIndex = CurrentValueSubject<Int, Never>(0)
         let selectSubTab = PassthroughSubject<MyPageSubTabType, Never>()
     }
@@ -49,14 +50,14 @@ final class MyPageViewModel: BaseViewModel {
         input.load
             .withUnretained(self)
             .sink { (owner: MyPageViewModel, _) in
-                owner.showMessageBadgeIfNeeded()
+                owner.showCouponBadgeIfNeeded()
             }
             .store(in: &cancellables)
         
         input.willAppear
             .withUnretained(self)
             .sink { (owner: MyPageViewModel, _) in
-                owner.showMessageTooltipIfNeeded()
+                owner.showCouponTooltipIfNeeded()
             }
             .store(in: &cancellables)
         
@@ -68,9 +69,9 @@ final class MyPageViewModel: BaseViewModel {
                 owner.output.selectSubTab.send(subTab)
                 owner.sendClickSubTabLog(subTab)
                 
-                if subTab == .message {
-                    owner.dependency.preference.shownMyPageMessageTooltip = true
-                    owner.output.showMessageTooptip.send(false)
+                if subTab == .coupon {
+                    owner.dependency.preference.shownMyPageCouponTooltip = true
+                    owner.output.showCouponTooltip.send(false)
                 }
             }
             .store(in: &cancellables)
@@ -83,15 +84,15 @@ final class MyPageViewModel: BaseViewModel {
             .store(in: &statisticsViewModel.cancellables)
     }
     
-    private func showMessageBadgeIfNeeded() {
-        guard dependency.preference.shownMessageNewBadge.isNot else { return }
-        dependency.preference.shownMessageNewBadge = true
+    private func showCouponBadgeIfNeeded() {
+        guard dependency.preference.shownCouponNewBadge.isNot else { return }
+        dependency.preference.shownCouponNewBadge = true
         output.showNewBadge.send(())
     }
     
-    private func showMessageTooltipIfNeeded() {
-        let shownMessageTooptip = dependency.preference.shownMyPageMessageTooltip
-        output.showMessageTooptip.send(!shownMessageTooptip)
+    private func showCouponTooltipIfNeeded() {
+        let shownCouponTooltip = dependency.preference.shownMyPageCouponTooltip
+        output.showCouponTooltip.send(!shownCouponTooltip)
     }
 }
 

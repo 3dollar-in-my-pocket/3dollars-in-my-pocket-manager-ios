@@ -91,7 +91,9 @@
 "my_page.sub_tab.statistics" = "리뷰통계";
 "my_page.sub_tab.notice" = "가게소식";
 "my_page.sub_tab.message" = "메세지";
+"my_page.sub_tab.coupon" = "쿠폰 관리";
 "my_page.message.tool_tip" = "고객님들께 첫 인사를 보내보세요!";
+"my_page.coupon.tool_tip" = "쿠폰으로 단골을 만들어보세요!";
 
 // My Store Info
 "my_store_info_introduction_placeholder" = "손님들에게 하고 싶은 말을 적어주세요!\nex) 오전에 오시면 서비스가 있습니다!";
