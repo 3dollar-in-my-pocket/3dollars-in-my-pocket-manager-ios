@@ -30,20 +30,23 @@ final class SettingReactor: BaseReactor, Reactor {
     let goToSigninPublisher = PublishRelay<Void>()
     let showCopyTokenSuccessAlertPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
+    private let authRepository: AuthRepository
     private let deviceService: DeviceServiceType
-    private let userDefaults: Preference
+    private let preference: Preference
     private let logManager: LogManager
     
     init(
         authService: AuthServiceType,
+        authRepository: AuthRepository = AuthRepositoryImpl(),
         deviceService: DeviceServiceType,
-        userDefaults: Preference,
+        preference: Preference = .shared,
         logManager: LogManager,
         state: State = State(user: User())
     ) {
         self.authService = authService
+        self.authRepository = authRepository
         self.deviceService = deviceService
-        self.userDefaults = userDefaults
+        self.preference = preference
         self.logManager = logManager
         self.initialState = state
     }
@@ -133,27 +136,36 @@ final class SettingReactor: BaseReactor, Reactor {
     }
     
     private func logout() -> Observable<Mutation> {
-        let fcmToken = userDefaults.fcmToken
-        let deviceRequest = BossLogOutDeviceRequest(pushPlatform: "FCM", pushToken: fcmToken)
-        let logoutRequest = BossLogOutRequest(logoutDevice: deviceRequest)
-        return self.authService.logout(input: logoutRequest)
-            .do(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                logManager.sendEvent(.init(
-                    screen: .setting,
-                    eventName: .logout, 
-                    extraParameters: [.userId: currentState.user.bossId]
-                ))
-                self.userDefaults.clear()
-            })
-            .map { _ in .goToSignin }
-            .catch {
-                .merge([
-                    .just(.showErrorAlert($0)),
-                    .just(.showLoading(isShow: false))
-                ])
+        return Observable.create { observer in
+            let task = Task { [weak self] in
+                guard let self else {
+                    observer.onError(BaseError.nilValue)
+                    return
+                }
                 
+                let request = BossLogOutRequest(fcmToken: self.preference.fcmToken)
+                do {
+                    _ = try await authRepository.logout(request: request).get()
+                    
+                    logManager.sendEvent(.init(
+                        screen: .setting,
+                        eventName: .logout,
+                        extraParameters: [.userId: currentState.user.bossId]
+                    ))
+                    preference.clear()
+                    
+                    observer.onNext(.goToSignin)
+                    observer.onCompleted()
+                } catch {
+                    observer.onNext(.showErrorAlert(error))
+                    observer.onNext(.showLoading(isShow: false))
+                }
             }
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
     }
     
     private func signout() -> Observable<Mutation> {
@@ -166,7 +178,7 @@ final class SettingReactor: BaseReactor, Reactor {
                     eventName: .signout,
                     extraParameters: [.userId: currentState.user.bossId]
                 ))
-                self.userDefaults.clear()
+                self.preference.clear()
             })
             .map { _ in .goToSignin }
             .catch {
