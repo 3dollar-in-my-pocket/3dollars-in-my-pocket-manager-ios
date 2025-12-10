@@ -31,21 +31,21 @@ final class SettingReactor: BaseReactor, Reactor {
     let showCopyTokenSuccessAlertPublisher = PublishRelay<Void>()
     private let authService: AuthServiceType
     private let authRepository: AuthRepository
-    private let deviceService: DeviceServiceType
+    private let userRepository: UserRepository
     private let preference: Preference
     private let logManager: LogManager
     
     init(
         authService: AuthServiceType,
         authRepository: AuthRepository = AuthRepositoryImpl(),
-        deviceService: DeviceServiceType,
+        userRepository: UserRepository = UserRepositoryImpl(),
         preference: Preference = .shared,
         logManager: LogManager,
         state: State = State(user: User())
     ) {
         self.authService = authService
         self.authRepository = authRepository
-        self.deviceService = deviceService
+        self.userRepository = userRepository
         self.preference = preference
         self.logManager = logManager
         self.initialState = state
@@ -60,15 +60,7 @@ final class SettingReactor: BaseReactor, Reactor {
             return self.fetchFCMToken()
             
         case .tapNotificationSwitch(let isEnable):
-            if isEnable {
-                return self.deviceService.registerDevice()
-                    .map { .setNotificationEnable(isEnable: true) }
-                    .catch { .just(.showErrorAlert($0)) }
-            } else {
-                return self.deviceService.unregisterDevice()
-                    .map { .setNotificationEnable(isEnable: false) }
-                    .catch { .just(.showErrorAlert($0)) }
-            }
+            return updateAccountSettings(isEnable: isEnable)
             
         case .tapLogout:
             return .concat([
@@ -188,5 +180,31 @@ final class SettingReactor: BaseReactor, Reactor {
                 ])
                 
             }
+    }
+    
+    private func updateAccountSettings(isEnable: Bool) -> Observable<Mutation> {
+        let input = BossSettingPatchRequest(enableActivitiesPush: isEnable)
+        
+        return Observable.create { observer in
+            let task = Task { [weak self] in
+                guard let self else {
+                    observer.onError(BaseError.nilValue)
+                    return
+                }
+                
+                do {
+                    _ = try await userRepository.updateAccountSettings(input: input).get()
+                    observer.onNext(.setNotificationEnable(isEnable: isEnable))
+                    observer.onCompleted()
+                } catch {
+                    observer.onNext(.showErrorAlert(error))
+                    observer.onCompleted()
+                }
+            }
+            
+            return Disposables.create {
+                task.cancel()
+            }
+        }
     }
 }

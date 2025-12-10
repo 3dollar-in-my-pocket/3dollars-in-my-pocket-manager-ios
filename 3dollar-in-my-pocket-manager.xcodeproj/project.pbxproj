@@ -36,6 +36,7 @@
 		6E089AF52C66653F009D13A2 /* ImageRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E089AF42C66653F009D13A2 /* ImageRequestable.swift */; };
 		6E0AA5DD2C7762F4009117AF /* FeedbackApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0AA5DC2C7762F4009117AF /* FeedbackApi.swift */; };
 		6E0AA5DF2C776773009117AF /* FeedbackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0AA5DE2C776773009117AF /* FeedbackRepository.swift */; };
+		6E0CCF922EE98CB2007CD4B1 /* BossSettingPatchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0CCF912EE98CB2007CD4B1 /* BossSettingPatchRequest.swift */; };
 		6E0DF9852C676384005DB1A2 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0DF9842C676384005DB1A2 /* ImageRepository.swift */; };
 		6E0DF9872C676B19005DB1A2 /* BossStorePatchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0DF9862C676B19005DB1A2 /* BossStorePatchRequest.swift */; };
 		6E0EB1F42C5512B8008A5766 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EB1F32C5512B8008A5766 /* LogManager.swift */; };
@@ -264,7 +265,6 @@
 		6EB3AA9A2D13BC6A007F045B /* ApiErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3AA992D13BC6A007F045B /* ApiErrorType.swift */; };
 		6EB56F2928A223DF00834663 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2828A223DF00834663 /* UIApplicationExtensions.swift */; };
 		6EB56F2C28A229F500834663 /* FAQCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2B28A229F500834663 /* FAQCategoryResponse.swift */; };
-		6EB56F2E28A254D500834663 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2D28A254D500834663 /* DeviceService.swift */; };
 		6EB56F3028A25AF100834663 /* UpsertBossDeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2F28A25AF100834663 /* UpsertBossDeviceRequest.swift */; };
 		6EB5CA882935C93400B6653C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA872935C93400B6653C /* BaseView.swift */; };
 		6EB5CA8A2935CA4200B6653C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA892935CA4200B6653C /* BaseViewController.swift */; };
@@ -433,6 +433,7 @@
 		6E089AF42C66653F009D13A2 /* ImageRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequestable.swift; sourceTree = "<group>"; };
 		6E0AA5DC2C7762F4009117AF /* FeedbackApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackApi.swift; sourceTree = "<group>"; };
 		6E0AA5DE2C776773009117AF /* FeedbackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackRepository.swift; sourceTree = "<group>"; };
+		6E0CCF912EE98CB2007CD4B1 /* BossSettingPatchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossSettingPatchRequest.swift; sourceTree = "<group>"; };
 		6E0DF9842C676384005DB1A2 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		6E0DF9862C676B19005DB1A2 /* BossStorePatchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossStorePatchRequest.swift; sourceTree = "<group>"; };
 		6E0EB1F32C5512B8008A5766 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
@@ -647,7 +648,6 @@
 		6EB3AA992D13BC6A007F045B /* ApiErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErrorType.swift; sourceTree = "<group>"; };
 		6EB56F2828A223DF00834663 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		6EB56F2B28A229F500834663 /* FAQCategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQCategoryResponse.swift; sourceTree = "<group>"; };
-		6EB56F2D28A254D500834663 /* DeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
 		6EB56F2F28A25AF100834663 /* UpsertBossDeviceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsertBossDeviceRequest.swift; sourceTree = "<group>"; };
 		6EB5CA872935C93400B6653C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		6EB5CA892935CA4200B6653C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -1003,7 +1003,6 @@
 				6EBF1AE627FE65950011268B /* StoreService.swift */,
 				6E5E14A02830F5E400B1F450 /* FeedbackService.swift */,
 				6E211846285DD6F600220E5A /* FAQService.swift */,
-				6EB56F2D28A254D500834663 /* DeviceService.swift */,
 				6EBC21042C1C610400C08EE0 /* StorePostRepository.swift */,
 				6EBC21092C1C6B7600C08EE0 /* StorePostApi.swift */,
 				6EAF1EAB2B289AFD00B5295D /* BankRepository.swift */,
@@ -1078,6 +1077,7 @@
 				6E6FD9E32D4663D800359CB4 /* MedalResponse.swift */,
 				6EE910AE2D69C7E80004F17A /* CommentPresetResponse.swift */,
 				6E9BF2332E8BEC5200BCC144 /* StoreSalesRecommendationResponse.swift */,
+				6E0CCF912EE98CB2007CD4B1 /* BossSettingPatchRequest.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -2218,6 +2218,7 @@
 				6EC803232B2C8B3800DA4F5E /* BankListCell.swift in Sources */,
 				6E1AB7A5280D8B040059DCF4 /* EditIntroductionViewModel.swift in Sources */,
 				6E2BD5332CF8A15A00EA89A8 /* SharedRepository.swift in Sources */,
+				6E0CCF922EE98CB2007CD4B1 /* BossSettingPatchRequest.swift in Sources */,
 				6E5DCE6E27FDC93000CA58EE /* BossStoreAppearanceDayResponse.swift in Sources */,
 				6E91A9852841D4B30090361F /* StatisticsViewModel.swift in Sources */,
 				6EF698372CF494A800DC9698 /* StoreMessageCreateResponse.swift in Sources */,
@@ -2239,7 +2240,6 @@
 				20DC1C992E9A7FF10058E3BB /* CouponRepository.swift in Sources */,
 				6E07F9B9284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift in Sources */,
 				20DC1C7B2E9A5F870058E3BB /* CouponViewController.swift in Sources */,
-				6EB56F2E28A254D500834663 /* DeviceService.swift in Sources */,
 				6E473B9427D85D1C00232139 /* InputField.swift in Sources */,
 				6E7A49D827D8CDE300E6653C /* ImageUploadResponse.swift in Sources */,
 				6E8A808A2C18711F00A3C55C /* Font+.swift in Sources */,
