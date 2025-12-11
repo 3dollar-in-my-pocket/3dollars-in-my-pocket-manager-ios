@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.initializeLogger()
         self.initializeFirebase()
         self.initializeNotification(application: application)
-        application.registerForRemoteNotifications()
         return true
     }
 
@@ -73,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
         application.registerForRemoteNotifications()
         Messaging.messaging().delegate = self
+        application.registerForRemoteNotifications()
     }
 }
 
@@ -83,8 +83,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
         let userInfo = notification.request.content.userInfo
-        
-        print("🔥 willPresent userInfo: \(userInfo)")
         
         if let pushTypeString = userInfo["pushOptions"] as? String {
             switch PushType(rawValue: pushTypeString) {
@@ -107,8 +105,6 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         didReceiveRemoteNotification userInfo: [AnyHashable : Any],
         fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void
     ) {
-        print("🔥 didReceiveRemoteNotification userInfo: \(userInfo)")
-        
         if let pushTypeString = userInfo["pushOptions"] as? String {
             switch PushType(rawValue: pushTypeString) {
             case .background:
@@ -157,5 +153,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         Preference.shared.fcmToken = fcmToken
+        
+        Task {
+            guard let fcmToken else { return }
+            _ = await DeviceRepositoryImpl().registerDevice(fcmToken: fcmToken)
+        }
     }
 }

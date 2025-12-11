@@ -2,6 +2,12 @@ import Foundation
 
 struct BossLogOutRequest: Encodable {
     let logoutDevice: BossLogOutDeviceRequest?
+    
+    init?(fcmToken: String?) {
+        guard let fcmToken else { return nil }
+        
+        self.logoutDevice = BossLogOutDeviceRequest(pushPlatform: "FCM", pushToken: fcmToken)
+    }
 }
 
 struct BossLogOutDeviceRequest: Encodable {

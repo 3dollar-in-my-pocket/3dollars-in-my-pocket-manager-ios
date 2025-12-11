@@ -6,8 +6,6 @@ import UIKit
 protocol AuthServiceType {
     func login(socialType: SocialType, token: String) -> Observable<LoginResponse>
     
-    func logout(input: BossLogOutRequest) -> Observable<String>
-    
     func signup(
         ownerName: String,
         storeName: String,
@@ -45,30 +43,6 @@ struct AuthService: AuthServiceType {
                     observer.processHTTPError(response: response)
                 }
             }
-            
-            return Disposables.create()
-        }
-    }
-    
-    func logout(input: BossLogOutRequest) -> Observable<String> {
-        return .create { observer in
-            let urlString = HTTPUtils.url + "/boss/v1/auth/logout"
-            let headers = HTTPUtils.defaultHeader()
-            
-            HTTPUtils.defaultSession.request(
-                urlString,
-                method: .post,
-                parameters: input,
-                encoder: JSONParameterEncoder.default,
-                headers: headers
-            )
-            .responseData(completionHandler: { response in
-                if response.isSuccess() {
-                    observer.processValue(type: String.self, response: response)
-                } else {
-                    observer.processAPIError(response: response)
-                }
-            })
             
             return Disposables.create()
         }

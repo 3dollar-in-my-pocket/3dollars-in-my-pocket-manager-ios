@@ -8,8 +8,6 @@ final class SigninViewController: BaseViewController, View, SigninCoordinator {
         kakaoManager: KakaoSignInManager.shared,
         appleSignInManager: AppleSigninManager.shared,
         authService: AuthService(),
-        deviceService: DeviceService(),
-        userDefaultsUtils: Preference.shared,
         logManager: .shared
     )
     private weak var coordinator: SigninCoordinator?

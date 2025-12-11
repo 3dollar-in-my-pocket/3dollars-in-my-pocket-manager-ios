@@ -46,10 +46,10 @@ final class SignupReactor: BaseReactor, Reactor {
     private let socialType: SocialType
     private let token: String
     private let categoryService: CategoryServiceType
-    private let deviceService: DeviceServiceType
+    private let deviceRepository: DeviceRepository
     private let imageService: ImageServiceType
     private let authService: AuthServiceType
-    private var userDefaultsUtils: Preference
+    private var preference: Preference
     private let logManager: LogManagerProtocol
     
     init(
@@ -59,8 +59,8 @@ final class SignupReactor: BaseReactor, Reactor {
         categoryService: CategoryServiceType,
         imageService: ImageServiceType,
         authService: AuthServiceType,
-        deviceService: DeviceServiceType,
-        userDefaultsUtils: Preference,
+        deviceRepository: DeviceRepository = DeviceRepositoryImpl(),
+        preference: Preference = .shared,
         logManager: LogManagerProtocol
     ) {
         self.initialState = State(ownerName: name ?? "")
@@ -69,8 +69,8 @@ final class SignupReactor: BaseReactor, Reactor {
         self.categoryService = categoryService
         self.imageService = imageService
         self.authService = authService
-        self.deviceService = deviceService
-        self.userDefaultsUtils = userDefaultsUtils
+        self.deviceRepository = deviceRepository
+        self.preference = preference
         self.logManager = logManager
     }
     
@@ -208,21 +208,17 @@ final class SignupReactor: BaseReactor, Reactor {
                     token: token
                 )
                 .do(onNext: { [weak self] response in
-                    self?.userDefaultsUtils.userToken = response.token
-                    self?.userDefaultsUtils.userId = response.bossId
+                    self?.preference.userToken = response.token
+                    self?.preference.userId = response.bossId
                     self?.logManager.setUserId(response.bossId)
                     self?.logManager.sendEvent(.init(
                         screen: .signup,
                         eventName: .signup, 
                         extraParameters: [.userId: response.bossId]
                     ))
+                    self?.registerDevice()
                 })
-                .flatMap { [weak self] _ -> Observable<Mutation> in
-                    guard let self = self else { return .error(BaseError.unknown) }
-                    
-                    return self.registerDevice()
-                        .map { _ in .pushWaiting }
-                }
+                .map { _ in .pushWaiting }
                 .catch { error in
                     if let httpError = error as? HTTPError {
                         switch httpError {
@@ -256,7 +252,13 @@ final class SignupReactor: BaseReactor, Reactor {
         ])
     }
     
-    private func registerDevice() -> Observable<Void> {
-        return self.deviceService.registerDevice()
+    private func registerDevice() {
+        guard let fcmToken = preference.fcmToken else { return }
+        
+        Task { [weak self] in
+            guard let self else { return }
+            
+            _ = try? await self.deviceRepository.registerDevice(fcmToken: fcmToken).get()
+        }
     }
 }

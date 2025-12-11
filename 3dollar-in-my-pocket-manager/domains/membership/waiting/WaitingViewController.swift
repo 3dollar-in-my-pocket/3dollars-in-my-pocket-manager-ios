@@ -5,11 +5,7 @@ import ReactorKit
 
 final class WaitingViewController: BaseViewController, View, WaitingCoordinator {
     private let waitingView = WaitingView()
-    private let waitingReactor = WaitingReactor(
-        authService: AuthService(),
-        userDefaults: Preference.shared,
-        logManager: LogManager.shared
-    )
+    private let waitingReactor = WaitingReactor(logManager: LogManager.shared)
     private weak var coordinator: WaitingCoordinator?
     override var screenName: ScreenName {
         return .waiting
