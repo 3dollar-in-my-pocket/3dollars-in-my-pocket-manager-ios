@@ -36,6 +36,7 @@
 		6E089AF52C66653F009D13A2 /* ImageRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E089AF42C66653F009D13A2 /* ImageRequestable.swift */; };
 		6E0AA5DD2C7762F4009117AF /* FeedbackApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0AA5DC2C7762F4009117AF /* FeedbackApi.swift */; };
 		6E0AA5DF2C776773009117AF /* FeedbackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0AA5DE2C776773009117AF /* FeedbackRepository.swift */; };
+		6E0CCF922EE98CB2007CD4B1 /* BossSettingPatchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0CCF912EE98CB2007CD4B1 /* BossSettingPatchRequest.swift */; };
 		6E0DF9852C676384005DB1A2 /* ImageRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0DF9842C676384005DB1A2 /* ImageRepository.swift */; };
 		6E0DF9872C676B19005DB1A2 /* BossStorePatchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0DF9862C676B19005DB1A2 /* BossStorePatchRequest.swift */; };
 		6E0EB1F42C5512B8008A5766 /* LogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EB1F32C5512B8008A5766 /* LogManager.swift */; };
@@ -264,7 +265,6 @@
 		6EB3AA9A2D13BC6A007F045B /* ApiErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB3AA992D13BC6A007F045B /* ApiErrorType.swift */; };
 		6EB56F2928A223DF00834663 /* UIApplicationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2828A223DF00834663 /* UIApplicationExtensions.swift */; };
 		6EB56F2C28A229F500834663 /* FAQCategoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2B28A229F500834663 /* FAQCategoryResponse.swift */; };
-		6EB56F2E28A254D500834663 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2D28A254D500834663 /* DeviceService.swift */; };
 		6EB56F3028A25AF100834663 /* UpsertBossDeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB56F2F28A25AF100834663 /* UpsertBossDeviceRequest.swift */; };
 		6EB5CA882935C93400B6653C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA872935C93400B6653C /* BaseView.swift */; };
 		6EB5CA8A2935CA4200B6653C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EB5CA892935CA4200B6653C /* BaseViewController.swift */; };
@@ -337,6 +337,10 @@
 		6EDA01F22D44B09E00A3C882 /* ImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA01F12D44B09E00A3C882 /* ImageResponse.swift */; };
 		6EDA7D0F2C2CEAC100457D63 /* MyPageSubTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDA7D0E2C2CEAC100457D63 /* MyPageSubTab.swift */; };
 		6EE041D8288ADAD300E17D5B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE041D7288ADAD300E17D5B /* Lottie */; };
+		6EE097602EE84CF400CD7D4E /* DeviceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE0975F2EE84CF400CD7D4E /* DeviceRepository.swift */; };
+		6EE097622EE853CC00CD7D4E /* DeviceApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE097612EE853CC00CD7D4E /* DeviceApi.swift */; };
+		6EE097642EE85C2300CD7D4E /* AuthApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE097632EE85C2300CD7D4E /* AuthApi.swift */; };
+		6EE097662EE85D6800CD7D4E /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE097652EE85D6800CD7D4E /* AuthRepository.swift */; };
 		6EE0CF9F27CB567B0027A426 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CF9E27CB567B0027A426 /* KakaoSDKAuth */; };
 		6EE0CFA127CB567B0027A426 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CFA027CB567B0027A426 /* KakaoSDKCommon */; };
 		6EE0CFA327CB567B0027A426 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE0CFA227CB567B0027A426 /* KakaoSDKUser */; };
@@ -429,6 +433,7 @@
 		6E089AF42C66653F009D13A2 /* ImageRequestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequestable.swift; sourceTree = "<group>"; };
 		6E0AA5DC2C7762F4009117AF /* FeedbackApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackApi.swift; sourceTree = "<group>"; };
 		6E0AA5DE2C776773009117AF /* FeedbackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackRepository.swift; sourceTree = "<group>"; };
+		6E0CCF912EE98CB2007CD4B1 /* BossSettingPatchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossSettingPatchRequest.swift; sourceTree = "<group>"; };
 		6E0DF9842C676384005DB1A2 /* ImageRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRepository.swift; sourceTree = "<group>"; };
 		6E0DF9862C676B19005DB1A2 /* BossStorePatchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BossStorePatchRequest.swift; sourceTree = "<group>"; };
 		6E0EB1F32C5512B8008A5766 /* LogManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogManager.swift; sourceTree = "<group>"; };
@@ -643,7 +648,6 @@
 		6EB3AA992D13BC6A007F045B /* ApiErrorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiErrorType.swift; sourceTree = "<group>"; };
 		6EB56F2828A223DF00834663 /* UIApplicationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationExtensions.swift; sourceTree = "<group>"; };
 		6EB56F2B28A229F500834663 /* FAQCategoryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQCategoryResponse.swift; sourceTree = "<group>"; };
-		6EB56F2D28A254D500834663 /* DeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
 		6EB56F2F28A25AF100834663 /* UpsertBossDeviceRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsertBossDeviceRequest.swift; sourceTree = "<group>"; };
 		6EB5CA872935C93400B6653C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		6EB5CA892935CA4200B6653C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -715,6 +719,10 @@
 		6EDA01EF2D44AEAA00A3C882 /* StoreReviewResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreReviewResponse.swift; sourceTree = "<group>"; };
 		6EDA01F12D44B09E00A3C882 /* ImageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResponse.swift; sourceTree = "<group>"; };
 		6EDA7D0E2C2CEAC100457D63 /* MyPageSubTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageSubTab.swift; sourceTree = "<group>"; };
+		6EE0975F2EE84CF400CD7D4E /* DeviceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRepository.swift; sourceTree = "<group>"; };
+		6EE097612EE853CC00CD7D4E /* DeviceApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceApi.swift; sourceTree = "<group>"; };
+		6EE097632EE85C2300CD7D4E /* AuthApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApi.swift; sourceTree = "<group>"; };
+		6EE097652EE85D6800CD7D4E /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
 		6EE0CFA427CB573E0027A426 /* KakaoSignInManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoSignInManager.swift; sourceTree = "<group>"; };
 		6EE0CFA827CB5B6C0027A426 /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
 		6EE0CFAE27CB5BA40027A426 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
@@ -995,7 +1003,6 @@
 				6EBF1AE627FE65950011268B /* StoreService.swift */,
 				6E5E14A02830F5E400B1F450 /* FeedbackService.swift */,
 				6E211846285DD6F600220E5A /* FAQService.swift */,
-				6EB56F2D28A254D500834663 /* DeviceService.swift */,
 				6EBC21042C1C610400C08EE0 /* StorePostRepository.swift */,
 				6EBC21092C1C6B7600C08EE0 /* StorePostApi.swift */,
 				6EAF1EAB2B289AFD00B5295D /* BankRepository.swift */,
@@ -1020,6 +1027,10 @@
 				6EDA01ED2D44AC1700A3C882 /* ReviewRepository.swift */,
 				6E9BF2312E8BEBE900BCC144 /* AIApi.swift */,
 				6E9BF2352E8C1B0C00BCC144 /* AIRepository.swift */,
+				6EE0975F2EE84CF400CD7D4E /* DeviceRepository.swift */,
+				6EE097612EE853CC00CD7D4E /* DeviceApi.swift */,
+				6EE097632EE85C2300CD7D4E /* AuthApi.swift */,
+				6EE097652EE85D6800CD7D4E /* AuthRepository.swift */,
 			);
 			path = repository;
 			sourceTree = "<group>";
@@ -1066,6 +1077,7 @@
 				6E6FD9E32D4663D800359CB4 /* MedalResponse.swift */,
 				6EE910AE2D69C7E80004F17A /* CommentPresetResponse.swift */,
 				6E9BF2332E8BEC5200BCC144 /* StoreSalesRecommendationResponse.swift */,
+				6E0CCF912EE98CB2007CD4B1 /* BossSettingPatchRequest.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -2015,6 +2027,7 @@
 				6EBC21172C1C908B00C08EE0 /* Int+.swift in Sources */,
 				6E2BD52F2CF8A0D400EA89A8 /* NonceResponse.swift in Sources */,
 				6E6FD9E22D46637900359CB4 /* UserResponse.swift in Sources */,
+				6EE097602EE84CF400CD7D4E /* DeviceRepository.swift in Sources */,
 				6E479D132C5E66C40057D791 /* CLLocationManager+.swift in Sources */,
 				6EBC20EF2C1C417900C08EE0 /* AccountType.swift in Sources */,
 				6E1F54B227CB98540050BBBA /* HTTPError.swift in Sources */,
@@ -2064,6 +2077,7 @@
 				6E974DAC2CF2BF0D00338FF5 /* MessageRepository.swift in Sources */,
 				6E25FED027F531AB00BE2941 /* TabBarTag.swift in Sources */,
 				6EA53B99284DCDD5007A3839 /* SettingCellType.swift in Sources */,
+				6EE097662EE85D6800CD7D4E /* AuthRepository.swift in Sources */,
 				20DC1C8A2E9A6A5A0058E3BB /* CouponRegisterViewController.swift in Sources */,
 				6E69C0462D3C8A660026CAAF /* StatisticsFeedbackCountCellViewModel.swift in Sources */,
 				6E7A49DA27D8CE1800E6653C /* ImageService.swift in Sources */,
@@ -2091,6 +2105,7 @@
 				6EBF1AE727FE65950011268B /* StoreService.swift in Sources */,
 				6E5F3DD5281D5F39002282B6 /* EditScheduleView.swift in Sources */,
 				20DC1C832E9A626A0058E3BB /* CouponTabViewModel.swift in Sources */,
+				6EE097622EE853CC00CD7D4E /* DeviceApi.swift in Sources */,
 				6E5F2132281976CD00922A99 /* MyStoreInfoSectionModel.swift in Sources */,
 				6EF2C3C22C650E13005BEE17 /* CategoryApi.swift in Sources */,
 				6EE0CFC527CB65C80027A426 /* Preference.swift in Sources */,
@@ -2181,6 +2196,7 @@
 				6E2D406E2C5DB1F90074489E /* StoreRepository.swift in Sources */,
 				6E5DCE6727FDB09400CA58EE /* Land.swift in Sources */,
 				6E6B431F285DB9B300AD84A5 /* FAQCollectionViewCell.swift in Sources */,
+				6EE097642EE85C2300CD7D4E /* AuthApi.swift in Sources */,
 				6E4843C02B1C6AF700EB8CFD /* MyStoreInfoAccountCell.swift in Sources */,
 				6E15C0F62C54889900888984 /* UIImageView+.swift in Sources */,
 				6E6C9C69280BD513009AFAE8 /* MyPageViewController.swift in Sources */,
@@ -2202,6 +2218,7 @@
 				6EC803232B2C8B3800DA4F5E /* BankListCell.swift in Sources */,
 				6E1AB7A5280D8B040059DCF4 /* EditIntroductionViewModel.swift in Sources */,
 				6E2BD5332CF8A15A00EA89A8 /* SharedRepository.swift in Sources */,
+				6E0CCF922EE98CB2007CD4B1 /* BossSettingPatchRequest.swift in Sources */,
 				6E5DCE6E27FDC93000CA58EE /* BossStoreAppearanceDayResponse.swift in Sources */,
 				6E91A9852841D4B30090361F /* StatisticsViewModel.swift in Sources */,
 				6EF698372CF494A800DC9698 /* StoreMessageCreateResponse.swift in Sources */,
@@ -2223,7 +2240,6 @@
 				20DC1C992E9A7FF10058E3BB /* CouponRepository.swift in Sources */,
 				6E07F9B9284D9E2600F45B97 /* MyStoreInfoMenuMoreCell.swift in Sources */,
 				20DC1C7B2E9A5F870058E3BB /* CouponViewController.swift in Sources */,
-				6EB56F2E28A254D500834663 /* DeviceService.swift in Sources */,
 				6E473B9427D85D1C00232139 /* InputField.swift in Sources */,
 				6E7A49D827D8CDE300E6653C /* ImageUploadResponse.swift in Sources */,
 				6E8A808A2C18711F00A3C55C /* Font+.swift in Sources */,
@@ -2460,7 +2476,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11.0;
+				MARKETING_VERSION = 1.12.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2507,7 +2523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11.0;
+				MARKETING_VERSION = 1.12.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";

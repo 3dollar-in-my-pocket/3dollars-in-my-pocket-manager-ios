@@ -4,12 +4,7 @@ import ReactorKit
 
 final class SettingViewController: BaseViewController, View, SettingCoordinator {
     private let settingView = SettingView()
-    let settingReactor = SettingReactor(
-        authService: AuthService(),
-        deviceService: DeviceService(),
-        userDefaults: Preference.shared,
-        logManager: .shared
-    )
+    let settingReactor = SettingReactor(authService: AuthService(), logManager: .shared)
     private weak var coordinator: SettingCoordinator?
     override var screenName: ScreenName {
         return .setting

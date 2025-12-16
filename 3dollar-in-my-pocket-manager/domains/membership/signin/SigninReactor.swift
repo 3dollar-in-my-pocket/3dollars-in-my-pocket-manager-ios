@@ -41,23 +41,23 @@ final class SigninReactor: BaseReactor, Reactor {
     private let kakaoSignInManager: KakaoSignInManagerProtocol
     private let appleSignInManager: AppleSignInManagerProtocol
     private let authService: AuthServiceType
-    private let deviceService: DeviceServiceType
-    private var userDefaultsUtils: Preference
+    private let deviceRepository: DeviceRepository
+    private var preference: Preference
     private let logManager: LogManager
     
     init(
         kakaoManager: KakaoSignInManagerProtocol,
         appleSignInManager: AppleSignInManagerProtocol,
         authService: AuthServiceType,
-        deviceService: DeviceServiceType,
-        userDefaultsUtils: Preference,
+        deviceRepository: DeviceRepository = DeviceRepositoryImpl(),
+        preference: Preference = .shared,
         logManager: LogManager
     ) {
         self.kakaoSignInManager = kakaoManager
         self.appleSignInManager = appleSignInManager
         self.authService = authService
-        self.deviceService = deviceService
-        self.userDefaultsUtils = userDefaultsUtils
+        self.deviceRepository = deviceRepository
+        self.preference = preference
         self.logManager = logManager
     }
     
@@ -139,21 +139,20 @@ final class SigninReactor: BaseReactor, Reactor {
     private func signin(socialType: SocialType, token: String, name: String? = nil) -> Observable<Mutation> {
         let signinObservable = self.authService.login(socialType: socialType, token: token)
             .do(onNext: { [weak self] response in
-                self?.userDefaultsUtils.userId = response.bossId
-                self?.userDefaultsUtils.userToken = response.token
+                self?.preference.userId = response.bossId
+                self?.preference.userToken = response.token
                 self?.logManager.setUserId(response.bossId)
                 self?.logManager.sendEvent(.init(
                     screen: .signin,
                     eventName: .signin, 
                     extraParameters: [.userId: response.bossId]
                 ))
+                self?.registerDevice()
             })
             .flatMap { [weak self] _ -> Observable<Mutation> in
                 guard let self = self else { return .error(BaseError.unknown) }
                 
-                return .zip(self.fetchUserInfo(), self.registerDevice()) { mutation, _ in
-                    return mutation
-                }
+                return fetchUserInfo()
             }
             .catch { error -> Observable<Mutation> in
                 if let httpError = error as? HTTPError {
@@ -184,7 +183,7 @@ final class SigninReactor: BaseReactor, Reactor {
     private func fetchUserInfo() -> Observable<Mutation> {
         return self.authService.fetchMyInfo()
             .do(onNext: { [weak self] response in
-                self?.userDefaultsUtils.enableAIRecommendation = response.settings.enableSalesAIRecommendation
+                self?.preference.enableAIRecommendation = response.settings.enableSalesAIRecommendation
             })
             .map{ _ in .goToMain }
             .catch { error in
@@ -202,15 +201,21 @@ final class SigninReactor: BaseReactor, Reactor {
             }
     }
     
-    private func registerDevice() -> Observable<Void> {
-        return self.deviceService.registerDevice()
+    private func registerDevice() {
+        guard let fcmToken = preference.fcmToken else { return }
+        
+        Task { [weak self] in
+            guard let self else { return }
+            
+            _ = try? await self.deviceRepository.registerDevice(fcmToken: fcmToken).get()
+        }
     }
     
     private func signinDemo(code: String) -> Observable<Mutation> {
         return authService.signinDemo(code: code)
             .do(onNext: { [weak self] response in
-                self?.userDefaultsUtils.userId = response.bossId
-                self?.userDefaultsUtils.userToken = response.token
+                self?.preference.userId = response.bossId
+                self?.preference.userToken = response.token
                 self?.logManager.setUserId(response.bossId)
                 self?.logManager.sendEvent(.init(
                     screen: .signin,
