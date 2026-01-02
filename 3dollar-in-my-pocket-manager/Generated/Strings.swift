@@ -603,6 +603,15 @@ internal enum Strings {
       internal static let colored = Strings.tr("Localizations", "sending_message.description.colored", fallback: "취소가 불가능")
     }
   }
+  internal enum Splash {
+    internal enum ForceUpdate {
+      /// 새로운 버전이 출시되었습니다.
+      /// 원활한 서비스 이용을 위해 업데이트해 주세요.
+      internal static let message = Strings.tr("Localizations", "splash.force_update.message", fallback: "새로운 버전이 출시되었습니다.\n원활한 서비스 이용을 위해 업데이트해 주세요.")
+      /// 업데이트 안내
+      internal static let title = Strings.tr("Localizations", "splash.force_update.title", fallback: "업데이트 안내")
+    }
+  }
   internal enum Statistics {
     internal enum BookmarkCount {
       /// %d명의 고객이 사장님의 가게를

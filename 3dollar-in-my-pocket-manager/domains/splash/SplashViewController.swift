@@ -112,6 +112,23 @@ extension SplashViewController {
             goToMain()
         case .goToWaiting:
             goToWaiting()
+        case .showUpdateAlert(let title, let message, let url):
+            showUpdateAlert(title: title, message: message, url: url)
+        case .showErrorAlert(let error):
+            showErrorAlert(error: error)
+        }
+    }
+
+    private func showUpdateAlert(title: String, message: String, url: URL?) {
+        AlertUtils.showWithAction(
+            viewController: self,
+            title: title,
+            message: message,
+            okbuttonTitle: Strings.commonOk
+        ) {
+            if let url, UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }
     }
     
