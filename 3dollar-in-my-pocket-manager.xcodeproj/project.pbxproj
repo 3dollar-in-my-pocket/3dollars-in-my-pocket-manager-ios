@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F133645BC8BFEDFA8BE6F80 /* AppForceUpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDEF3B4004DCC8211CFCC315 /* AppForceUpdateResponse.swift */; };
 		20DC1C7B2E9A5F870058E3BB /* CouponViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DC1C7A2E9A5F840058E3BB /* CouponViewController.swift */; };
 		20DC1C7D2E9A5F990058E3BB /* CouponViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DC1C7C2E9A5F950058E3BB /* CouponViewModel.swift */; };
 		20DC1C7F2E9A61260058E3BB /* CouponDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DC1C7E2E9A61240058E3BB /* CouponDataSource.swift */; };
@@ -386,6 +387,9 @@
 		8EFA87C62D0BAAB6008FE917 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA87C52D0BAAB6008FE917 /* SplashViewModel.swift */; };
 		8EFA87C82D0BAB8E008FE917 /* UserApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA87C72D0BAB8E008FE917 /* UserApi.swift */; };
 		8EFA87CA2D0BAC48008FE917 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFA87C92D0BAC48008FE917 /* UserRepository.swift */; };
+		B09E5D2ADAEF22ED9BDDF3E8 /* AppRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90DA8CAB6B87AD4F8916EE2B /* AppRepository.swift */; };
+		B882B7A70D5C6999E23EA7E7 /* AppApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF80B26C344C3757F839EF80 /* AppApi.swift */; };
+		DC8FB6DC38E5EA4BEA1B66A8 /* AppStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF43F24E33FEAB0AC8C9C9D7 /* AppStatusResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -761,6 +765,10 @@
 		8EFA87C52D0BAAB6008FE917 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		8EFA87C72D0BAB8E008FE917 /* UserApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApi.swift; sourceTree = "<group>"; };
 		8EFA87C92D0BAC48008FE917 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		90DA8CAB6B87AD4F8916EE2B /* AppRepository.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppRepository.swift; sourceTree = "<group>"; };
+		CF43F24E33FEAB0AC8C9C9D7 /* AppStatusResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppStatusResponse.swift; sourceTree = "<group>"; };
+		EF80B26C344C3757F839EF80 /* AppApi.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppApi.swift; sourceTree = "<group>"; };
+		FDEF3B4004DCC8211CFCC315 /* AppForceUpdateResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppForceUpdateResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -1031,6 +1039,8 @@
 				6EE097612EE853CC00CD7D4E /* DeviceApi.swift */,
 				6EE097632EE85C2300CD7D4E /* AuthApi.swift */,
 				6EE097652EE85D6800CD7D4E /* AuthRepository.swift */,
+				EF80B26C344C3757F839EF80 /* AppApi.swift */,
+				90DA8CAB6B87AD4F8916EE2B /* AppRepository.swift */,
 			);
 			path = repository;
 			sourceTree = "<group>";
@@ -1078,6 +1088,8 @@
 				6EE910AE2D69C7E80004F17A /* CommentPresetResponse.swift */,
 				6E9BF2332E8BEC5200BCC144 /* StoreSalesRecommendationResponse.swift */,
 				6E0CCF912EE98CB2007CD4B1 /* BossSettingPatchRequest.swift */,
+				FDEF3B4004DCC8211CFCC315 /* AppForceUpdateResponse.swift */,
+				CF43F24E33FEAB0AC8C9C9D7 /* AppStatusResponse.swift */,
 			);
 			path = response;
 			sourceTree = "<group>";
@@ -2300,6 +2312,10 @@
 				6EB5CA882935C93400B6653C /* BaseView.swift in Sources */,
 				6E69C0482D3C91E00026CAAF /* NSAttributedString+.swift in Sources */,
 				20DC1C862E9A63580058E3BB /* CouponTabButton.swift in Sources */,
+				1F133645BC8BFEDFA8BE6F80 /* AppForceUpdateResponse.swift in Sources */,
+				DC8FB6DC38E5EA4BEA1B66A8 /* AppStatusResponse.swift in Sources */,
+				B882B7A70D5C6999E23EA7E7 /* AppApi.swift in Sources */,
+				B09E5D2ADAEF22ED9BDDF3E8 /* AppRepository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2476,7 +2492,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.13.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2523,7 +2539,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12.0;
+				MARKETING_VERSION = 1.13.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
