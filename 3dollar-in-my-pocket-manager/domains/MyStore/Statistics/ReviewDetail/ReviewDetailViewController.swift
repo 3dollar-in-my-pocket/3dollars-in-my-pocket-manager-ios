@@ -27,8 +27,6 @@ final class ReviewDetailViewController: BaseViewController {
     
     
     private let viewModel: ReviewDetailViewModel
-    private var commentPresetBottomSheet: CommentPresetBottomSheet?
-    private var addCommentPresetBottomSheet: AddCommentPresetBottomSheet?
     private var originalBottomInset: CGFloat = 0
     private let tapGesture = UITapGestureRecognizer()
     
@@ -312,30 +310,26 @@ extension ReviewDetailViewController {
     }
     
     private func presentCommentPresetBottomSheet(viewModel: CommentPresetBottomSheetViewModel) {
-        if let addCommentPresetBottomSheet {
-            addCommentPresetBottomSheet.dismiss(animated: true) { [weak self] in
+        if let presentedViewController {
+            presentedViewController.dismiss(animated: true) { [weak self] in
                 let viewController = CommentPresetBottomSheet(viewModel: viewModel)
-                self?.commentPresetBottomSheet = viewController
                 self?.presentPanModal(viewController)
             }
         } else {
             let viewController = CommentPresetBottomSheet(viewModel: viewModel)
-            self.commentPresetBottomSheet = viewController
             presentPanModal(viewController)
         }
     }
-    
+
     private func presentAddCommentBottomSheet(viewModel: AddCommentPresetBottomSheetViewModel) {
-        if let commentPresetBottomSheet {
-            commentPresetBottomSheet.dismiss(animated: true) { [weak self] in
+        if let presentedViewController {
+            presentedViewController.dismiss(animated: true) { [weak self] in
                 let viewController = AddCommentPresetBottomSheet(viewModel: viewModel)
                 self?.presentPanModal(viewController)
-                self?.addCommentPresetBottomSheet = viewController
             }
         } else {
             let viewController = AddCommentPresetBottomSheet(viewModel: viewModel)
             presentPanModal(viewController)
-            self.addCommentPresetBottomSheet = viewController
         }
     }
 }
