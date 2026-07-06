@@ -85,23 +85,14 @@ final class MyStoreInfoViewController: BaseViewController {
     private func createCollectionViewLayout() -> UICollectionViewLayout {
         return UICollectionViewCompositionalLayout { [weak self] sectionIndex, _ in
             guard let self,
-                  let sectionType = dataSource.sectionIdentifier(section: sectionIndex)?.type else {
+                  let sectionIdentifier = dataSource.sectionIdentifier(section: sectionIndex) else {
                 fatalError("정의되지 않은 섹션입니다.")
             }
-            
+            let sectionType = sectionIdentifier.type
+
             switch sectionType {
             case .overview:
-                let item = NSCollectionLayoutItem(layoutSize: .init(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(MyStoreInfoOverviewCell.Layout.height)
-                ))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .absolute(MyStoreInfoOverviewCell.Layout.height)
-                ), subitems: [item])
-                let section = NSCollectionLayoutSection(group: group)
-                
-                return section
+                return createOverviewSection(sectionIdentifier: sectionIdentifier)
             case .introduction:
                 let item = NSCollectionLayoutItem(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -193,6 +184,23 @@ final class MyStoreInfoViewController: BaseViewController {
         }
     }
     
+    private func createOverviewSection(sectionIdentifier: MyStoreInfoSection) -> NSCollectionLayoutSection {
+        var height = MyStoreInfoOverviewCell.Layout.height
+        if case .overView(let store) = sectionIdentifier.items.first {
+            height = MyStoreInfoOverviewCell.Layout.calculateHeight(store: store)
+        }
+
+        let item = NSCollectionLayoutItem(layoutSize: .init(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(height)
+        ))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(height)
+        ), subitems: [item])
+        return NSCollectionLayoutSection(group: group)
+    }
+
     private func handleRoute(_ route: MyStoreInfoViewModel.Route) {
         switch route {
         case .pushEditStoreInfo(let viewModel):
