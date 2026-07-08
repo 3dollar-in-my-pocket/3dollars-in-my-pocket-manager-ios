@@ -1913,7 +1913,7 @@
 				6EEBC7BD28731F7700CBA0F0 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				6E2410B32875553C00BADDD5 /* XCRemoteSwiftPackageReference "RxDataSources" */,
-				6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */,
+				6EC8031C2B2C891A00DA4F5E /* XCLocalSwiftPackageReference "Frameworks/PanModal" */,
 				6E893CB82C3A65F100357F66 /* XCRemoteSwiftPackageReference "netfox" */,
 				6E8474BA2C54B3200064DE0A /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 				6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */,
@@ -2651,13 +2651,9 @@
 				version = 2.7.4;
 			};
 		};
-		6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/slackhq/PanModal.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.2.7;
-			};
+		6EC8031C2B2C891A00DA4F5E /* XCLocalSwiftPackageReference "Frameworks/PanModal" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Frameworks/PanModal;
 		};
 		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2785,7 +2781,6 @@
 		};
 		6EC8031D2B2C891A00DA4F5E /* PanModal */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6EC8031C2B2C891A00DA4F5E /* XCRemoteSwiftPackageReference "PanModal" */;
 			productName = PanModal;
 		};
 		6ED8838927CB395B00278E14 /* SnapKit */ = {
