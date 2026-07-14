@@ -48,10 +48,22 @@ final class ReviewDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUI()
         setupKeyboardEvent()
         viewModel.input.firstLoad.send(())
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.isNavigationBarHidden = false
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.isNavigationBarHidden = true
     }
     
     private func setupUI() {
