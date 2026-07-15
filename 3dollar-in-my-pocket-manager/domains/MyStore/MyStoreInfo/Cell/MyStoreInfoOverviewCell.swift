@@ -5,6 +5,44 @@ import Kingfisher
 final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     enum Layout {
         static let height: CGFloat = 477
+        static let categorySpacing: CGFloat = 4
+        static let categoryFont: UIFont = .systemFont(ofSize: 17)
+        static var categoryRowHeight: CGFloat {
+            return ceil(categoryFont.lineHeight) + 8
+        }
+        static var categoryMaxWidth: CGFloat {
+            return UIUtils.windowBounds.width - 80
+        }
+
+        static func calculateHeight(store: BossStoreResponse) -> CGFloat {
+            let lineCount = max(splitCategoriesIntoLines(store.categories).count, 1)
+            return height + CGFloat(lineCount - 1) * (categoryRowHeight + categorySpacing)
+        }
+
+        static func splitCategoriesIntoLines(_ categories: [StoreFoodCategoryResponse]) -> [[StoreFoodCategoryResponse]] {
+            var lines: [[StoreFoodCategoryResponse]] = []
+            var currentLine: [StoreFoodCategoryResponse] = []
+            var currentWidth: CGFloat = 0
+
+            for category in categories {
+                let chipWidth = ceil(category.name.width(font: categoryFont, height: categoryRowHeight)) + 16
+                let spacing = currentLine.isEmpty ? 0 : categorySpacing
+
+                if currentLine.isEmpty.isNot && currentWidth + spacing + chipWidth > categoryMaxWidth {
+                    lines.append(currentLine)
+                    currentLine = [category]
+                    currentWidth = chipWidth
+                } else {
+                    currentLine.append(category)
+                    currentWidth += spacing + chipWidth
+                }
+            }
+
+            if currentLine.isEmpty.isNot {
+                lines.append(currentLine)
+            }
+            return lines
+        }
     }
     
     private lazy var photoCollectionView: UICollectionView = {
@@ -37,10 +75,9 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
     
     private let categoryStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.spacing = 4
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .fill
+        stackView.axis = .vertical
+        stackView.spacing = Layout.categorySpacing
+        stackView.alignment = .center
         return stackView
     }()
     
@@ -127,22 +164,32 @@ final class MyStoreInfoOverviewCell: BaseCollectionViewCell {
         photoCountLabel.bind(count: 1, total: store.representativeImages.count)
         photoCollectionView.reloadData()
         
-        for category in store.categories {
-            let categoryLagel = PaddingLabel(
-                topInset: 4,
-                bottomInset: 4,
-                leftInset: 8,
-                rightInset: 8
-            ).then {
-                $0.backgroundColor = UIColor(r: 0, g: 198, b: 103, a: 0.1)
-                $0.textColor = .green
-                $0.layer.cornerRadius = 8
-                $0.text = category.name
-                $0.layer.masksToBounds = true
-                $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        for line in Layout.splitCategoriesIntoLines(store.categories) {
+            let lineStackView = UIStackView()
+            lineStackView.axis = .horizontal
+            lineStackView.spacing = Layout.categorySpacing
+            lineStackView.alignment = .fill
+
+            for category in line {
+                let categoryLagel = PaddingLabel(
+                    topInset: 4,
+                    bottomInset: 4,
+                    leftInset: 8,
+                    rightInset: 8
+                ).then {
+                    $0.backgroundColor = UIColor(r: 0, g: 198, b: 103, a: 0.1)
+                    $0.textColor = .green
+                    $0.font = Layout.categoryFont
+                    $0.layer.cornerRadius = 8
+                    $0.text = category.name
+                    $0.layer.masksToBounds = true
+                    $0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+                }
+
+                lineStackView.addArrangedSubview(categoryLagel)
             }
-            
-            categoryStackView.addArrangedSubview(categoryLagel)
+
+            categoryStackView.addArrangedSubview(lineStackView)
         }
         
         snsValueLabel.text = store.snsUrl ?? Strings.EditStoreInfo.notExist

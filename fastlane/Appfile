@@ -1,0 +1,9 @@
+# match로 관리하는 모든 Bundle ID (dev / prod)
+app_identifier([
+  "com.macgongmon.-dollar-in-my-pocket-manager-dev",
+  "com.macgongmon.-dollar-in-my-pocket-manager"
+])
+
+apple_id("dbgustlr92@naver.com")
+
+team_id("X975A2HM62")
