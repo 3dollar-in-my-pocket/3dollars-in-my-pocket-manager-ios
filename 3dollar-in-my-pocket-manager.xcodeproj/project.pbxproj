@@ -134,6 +134,7 @@
 		6E4843C62B1C6E6700EB8CFD /* AccountInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4843C52B1C6E6700EB8CFD /* AccountInfo.swift */; };
 		6E4A2B272C5BA66A00317349 /* UIImage+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4A2B262C5BA66A00317349 /* UIImage+.swift */; };
 		6E4A2B292C5BAA6700317349 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4A2B282C5BAA6700317349 /* BaseViewModel.swift */; };
+		6E4C4F4B2E1A000100000001 /* LookinServer in Frameworks */ = {isa = PBXBuildFile; productRef = 6E4C4F4B2E1A000100000003 /* LookinServer */; };
 		6E4E9D912C707D2A00C28ACD /* ImageUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4E9D902C707D2A00C28ACD /* ImageUtil.swift */; };
 		6E5640592D5CCB6700E7D88D /* ReviewItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5640582D5CCB6700E7D88D /* ReviewItemViewModel.swift */; };
 		6E5678C1285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E5678C0285D8B4E0066C037 /* MyStoreInfoMenuEmptyCell.swift */; };
@@ -183,7 +184,6 @@
 		6E6B431F285DB9B300AD84A5 /* FAQCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6B431E285DB9B300AD84A5 /* FAQCollectionViewCell.swift */; };
 		6E6B4321285DBB5900AD84A5 /* FAQHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6B4320285DBB5900AD84A5 /* FAQHeaderView.swift */; };
 		6E6B82B62CF980E300A5BFAC /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 6E6B82B52CF980E300A5BFAC /* Then */; };
-		6E4C4F4B2E1A000100000001 /* LookinServer in Frameworks */ = {isa = PBXBuildFile; productRef = 6E4C4F4B2E1A000100000003 /* LookinServer */; };
 		6E6C9C69280BD513009AFAE8 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C68280BD513009AFAE8 /* MyPageViewController.swift */; };
 		6E6C9C72280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C71280BDC54009AFAE8 /* MyStoreInfoOverviewCell.swift */; };
 		6E6C9C74280BE7B3009AFAE8 /* MyStoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C9C73280BE7B3009AFAE8 /* MyStoreInfoViewController.swift */; };
@@ -2496,12 +2496,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "development-manager-dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development com.macgongmon.-dollar-in-my-pocket-manager-dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2543,12 +2543,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.13.0;
+				MARKETING_VERSION = 1.14.0;
 				PRIVACY_URL = "https://www.notion.so/3-3d0a9c55ddd74086b63582c308ca285e";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-manager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "appstore-manager-prod";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore com.macgongmon.-dollar-in-my-pocket-manager";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -2578,6 +2578,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		6EC8031C2B2C891A00DA4F5E /* XCLocalSwiftPackageReference "Frameworks/PanModal" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Frameworks/PanModal;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		6E2410AF2875550800BADDD5 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2603,20 +2610,20 @@
 				version = 11.6.0;
 			};
 		};
-		6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.0;
-			};
-		};
 		6E4C4F4B2E1A000100000002 /* XCRemoteSwiftPackageReference "LookinServer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/QMUI/LookinServer";
 			requirement = {
 				kind = exactVersion;
 				version = 1.2.8;
+			};
+		};
+		6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = exactVersion;
+				version = 3.0.0;
 			};
 		};
 		6E6C9C75280BEE26009AFAE8 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
@@ -2650,10 +2657,6 @@
 				kind = exactVersion;
 				version = 2.7.4;
 			};
-		};
-		6EC8031C2B2C891A00DA4F5E /* XCLocalSwiftPackageReference "Frameworks/PanModal" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Frameworks/PanModal;
 		};
 		6ED8838827CB395B00278E14 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -2744,15 +2747,15 @@
 			package = 6E37A2E22860AFE4008C046F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
 		};
-		6E6B82B52CF980E300A5BFAC /* Then */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
-		};
 		6E4C4F4B2E1A000100000003 /* LookinServer */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6E4C4F4B2E1A000100000002 /* XCRemoteSwiftPackageReference "LookinServer" */;
 			productName = LookinServer;
+		};
+		6E6B82B52CF980E300A5BFAC /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E6B82B42CF980E300A5BFAC /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
 		};
 		6E6C9C76280BEE26009AFAE8 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
