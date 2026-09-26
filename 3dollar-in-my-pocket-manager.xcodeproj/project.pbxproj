@@ -408,7 +408,18 @@
 		};
 /* End PBXCopyFilesBuildPhase section */
 
+/* Begin PBXContainerItemProxy section */
+		7A1384000000000000000007 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6EB94E9827CB208E00609E77 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6EB94E9F27CB208F00609E77;
+			remoteInfo = "3dollar-in-my-pocket-manager";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		7A1384000000000000000001 /* 3dollar-in-my-pocket-managerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "3dollar-in-my-pocket-managerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20DC1C7A2E9A5F840058E3BB /* CouponViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponViewController.swift; sourceTree = "<group>"; };
 		20DC1C7C2E9A5F950058E3BB /* CouponViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponViewModel.swift; sourceTree = "<group>"; };
 		20DC1C7E2E9A61240058E3BB /* CouponDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponDataSource.swift; sourceTree = "<group>"; };
@@ -773,6 +784,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		7A1384000000000000000002 /* 3dollar-in-my-pocket-managerTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "3dollar-in-my-pocket-managerTests"; sourceTree = "<group>"; };
 		6E1036A22CE89C2E000994D3 /* Message */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Message; sourceTree = "<group>"; };
 		6E1AB1CA2D675EFB009EE0D2 /* ReviewReport */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ReviewReport; sourceTree = "<group>"; };
 		6E24470E2D70275A0005DD7F /* Service */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Service; sourceTree = "<group>"; };
@@ -791,6 +803,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		7A1384000000000000000005 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6EB94E9D27CB208F00609E77 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1414,6 +1433,7 @@
 			children = (
 				6EEEDF912E8FA3CA00AEE6C3 /* AIResponseCellViewModel.swift */,
 				6EB94EA227CB208F00609E77 /* 3dollar-in-my-pocket-manager */,
+				7A1384000000000000000002 /* 3dollar-in-my-pocket-managerTests */,
 				6EB94EA127CB208F00609E77 /* Products */,
 				6E1AA1B827CB215700C96D92 /* Frameworks */,
 			);
@@ -1423,6 +1443,7 @@
 			isa = PBXGroup;
 			children = (
 				6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */,
+				7A1384000000000000000001 /* 3dollar-in-my-pocket-managerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1877,6 +1898,27 @@
 			productReference = 6EB94EA027CB208F00609E77 /* 3dollar-in-my-pocket-manager.app */;
 			productType = "com.apple.product-type.application";
 		};
+		7A1384000000000000000003 /* 3dollar-in-my-pocket-managerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7A138400000000000000000B /* Build configuration list for PBXNativeTarget "3dollar-in-my-pocket-managerTests" */;
+			buildPhases = (
+				7A1384000000000000000004 /* Sources */,
+				7A1384000000000000000005 /* Frameworks */,
+				7A1384000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A1384000000000000000008 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7A1384000000000000000002 /* 3dollar-in-my-pocket-managerTests */,
+			);
+			name = "3dollar-in-my-pocket-managerTests";
+			productName = "3dollar-in-my-pocket-managerTests";
+			productReference = 7A1384000000000000000001 /* 3dollar-in-my-pocket-managerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1889,6 +1931,10 @@
 				TargetAttributes = {
 					6EB94E9F27CB208F00609E77 = {
 						CreatedOnToolsVersion = 13.2.1;
+					};
+					7A1384000000000000000003 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 6EB94E9F27CB208F00609E77;
 					};
 				};
 			};
@@ -1925,11 +1971,19 @@
 			projectRoot = "";
 			targets = (
 				6EB94E9F27CB208F00609E77 /* 3dollar-in-my-pocket-manager */,
+				7A1384000000000000000003 /* 3dollar-in-my-pocket-managerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		7A1384000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6EB94E9E27CB208F00609E77 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1970,6 +2024,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		7A1384000000000000000004 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6EB94E9C27CB208F00609E77 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2325,6 +2386,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		7A1384000000000000000008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6EB94E9F27CB208F00609E77 /* 3dollar-in-my-pocket-manager */;
+			targetProxy = 7A1384000000000000000007 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		6EB94EAE27CB209000609E77 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -2345,6 +2414,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		7A1384000000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-managerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/3dollar-in-my-pocket-manager.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/3dollar-in-my-pocket-manager";
+			};
+			name = Debug;
+		};
+		7A138400000000000000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.macgongmon.-dollar-in-my-pocket-managerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/3dollar-in-my-pocket-manager.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/3dollar-in-my-pocket-manager";
+			};
+			name = Release;
+		};
 		6EB94EB227CB209000609E77 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2558,6 +2665,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7A138400000000000000000B /* Build configuration list for PBXNativeTarget "3dollar-in-my-pocket-managerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7A1384000000000000000009 /* Debug */,
+				7A138400000000000000000A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6EB94E9B27CB208E00609E77 /* Build configuration list for PBXProject "3dollar-in-my-pocket-manager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
