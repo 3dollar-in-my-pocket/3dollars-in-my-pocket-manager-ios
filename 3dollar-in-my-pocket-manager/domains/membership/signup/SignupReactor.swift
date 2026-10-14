@@ -24,6 +24,7 @@ final class SignupReactor: BaseReactor, Reactor {
         case setCategories([StoreCategory])
         case setPhoto(UIImage)
         case setSignupButtonEnable(Bool)
+        case setSigningUp(Bool)
         case showLoading(isShow: Bool)
         case pushWaiting
         case goToSignin
@@ -38,6 +39,7 @@ final class SignupReactor: BaseReactor, Reactor {
         var selectedCategories: [StoreCategory] = []
         var photo: UIImage?
         var isEnableSignupButton = false
+        var isSigningUp = false
     }
     
     let initialState: State
@@ -113,6 +115,9 @@ final class SignupReactor: BaseReactor, Reactor {
             ])
             
         case .tapSignup:
+            // 연타 시 가입 신청이 중복 접수되지 않도록 진행 중인 요청이 끝날 때까지 무시한다
+            guard !self.currentState.isSigningUp else { return .empty() }
+
             return self.signup()
         }
     }
@@ -146,7 +151,10 @@ final class SignupReactor: BaseReactor, Reactor {
             
         case .setSignupButtonEnable(let isEnable):
             newState.isEnableSignupButton = isEnable
-            
+
+        case .setSigningUp(let isSigningUp):
+            newState.isSigningUp = isSigningUp
+
         case .showLoading(let isShow):
             self.showLoadginPublisher.accept(isShow)
             
@@ -232,23 +240,20 @@ final class SignupReactor: BaseReactor, Reactor {
                             break
                         }
                     }
-                    return .merge([
-                        .just(.showErrorAlert(error)),
-                        .just(.showLoading(isShow: false))
-                    ])
+                    return .just(.showErrorAlert(error))
                 }
             }
             .catch { error in
-                return .merge([
-                    .just(.showErrorAlert(error)),
-                    .just(.showLoading(isShow: false))
-                ])
+                return .just(.showErrorAlert(error))
             }
-        
+
+        // 로딩·진행 상태는 시작과 끝에서 한 번씩만 바꾼다 (실패해도 catch 후 concat 이 이어져 복구된다)
         return .concat([
+            .just(.setSigningUp(true)),
             .just(.showLoading(isShow: true)),
             signupObservable,
-            .just(.showLoading(isShow: false))
+            .just(.showLoading(isShow: false)),
+            .just(.setSigningUp(false))
         ])
     }
     
