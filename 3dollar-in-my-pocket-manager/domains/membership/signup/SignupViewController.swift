@@ -165,7 +165,7 @@ final class SignupViewController: BaseViewController, View, SignupCoordinator {
             .disposed(by: self.disposeBag)
         
         reactor.state
-            .map { $0.isEnableSignupButton }
+            .map { $0.isEnableSignupButton && !$0.isSigningUp }
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: false)
             .drive(self.signupView.signupButton.rx.isEnabled)
