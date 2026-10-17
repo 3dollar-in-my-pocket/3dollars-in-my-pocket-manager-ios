@@ -28,6 +28,17 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "7A1384000000000000000003"
+               BuildableName = "3dollar-in-my-pocket-managerTests.xctest"
+               BlueprintName = "3dollar-in-my-pocket-managerTests"
+               ReferencedContainer = "container:3dollar-in-my-pocket-manager.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

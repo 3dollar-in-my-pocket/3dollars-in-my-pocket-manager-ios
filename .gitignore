@@ -9,3 +9,7 @@ DerivedData/
 .DS_Store
 3dollar-in-my-pocket-manager.xcodeproj/project.xcworkspace/xcuserdata/hyunsikyoo.xcuserdatad/UserInterfaceState.xcuserstate
 *.xcuserstate
+
+# 테스트 결과 번들 등
+*.xcresult
+.swiftlint.tmp.yml
